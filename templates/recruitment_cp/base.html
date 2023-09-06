@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% if debug %} {D} {% endif %} {% block title %}{% endblock %} RECRUITMENT</title>
+    <link rel="stylesheet" href="{% static 'recruitment_cp/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'recruitment_cp/css/sweetalert.css' %}">
+    <link rel="stylesheet" href="{% static 'recruitment_cp/css/style.css' %}">
+    <script src="{% static 'recruitment_cp/js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'recruitment_cp/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'recruitment_cp/js/sweetalert.min.js' %}"></script>
+    <!-- <link rel="stylesheet" href="{% static 'npe_main/css/handsontable.full.min.css' %}">
+    <script src="{% static 'npe_main/js/handsontable.full.min.js' %}"></script>
+    <script src="{% static 'npe_main/js/numeral.min.js' %}"></script> -->
+
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    {#    <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=your_API_key"></script>#} -->
+    {% block stylesheets %}
+
+    {% endblock %}
+</head>
+<body>
+<nav id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid navbar-first">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+                CONTROL PANEL
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{% url 'admin:index' %}">Admin Page</a></li>
+                <li><a href="{% url 'main-index' %}">Main Page</a></li>
+                <li><a href="{% url 'cp-index' %}">Contol Page</a></li>
+                <li class="disabled"><a href="">Tables</a></li>
+                <li class="disabled"><a href="">Matrices</a></li>
+                <li class="disabled"><a href="">Rules</a></li>
+                <li class="disabled"><a href="">Account</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid navbar-second">
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid navbar-third">
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav nav-third">
+
+            </ul>
+        </div>
+    </div>
+</nav>
+{% block content %}
+
+{% endblock %}
+{% comment %}
+
+<footer>
+    <div class="container">
+        <p class="text-muted"></p>
+    </div>
+</footer>
+{% endcomment %}
+
+{% block scripts %}{% endblock %}
+
+</body>
+</html>

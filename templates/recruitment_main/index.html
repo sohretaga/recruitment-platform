@@ -1,0 +1,8 @@
+{% extends 'recruitment_main/base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h1>{{ page_data.page_title | default:'Default Index Page' }}</h1>
+        <p>{{ page_data.page_content | default:'Defaul Index Content' | safe }}</p>
+    </div>
+{% endblock %}

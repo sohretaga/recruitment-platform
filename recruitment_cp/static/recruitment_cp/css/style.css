@@ -1,0 +1,106 @@
+.navbar .navbar-first {
+    background: #417690;
+}
+
+.navbar .navbar-first .navbar-brand{
+    color: #fff;
+}
+
+.navbar .navbar-first li a{
+    color: #fff;
+}
+
+.navbar .navbar-first li a:hover{
+    color: #fff;
+}
+
+.navbar .navbar-second {
+    background: #6495af;
+}
+.navbar .navbar-second li a{
+    color: #fff;
+}
+.navbar .navbar-second li a:hover{
+    color: #fff;
+}
+
+.navbar .navbar-third li a{
+    color: #fff;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 1rem;
+}
+
+.navbar .navbar-third li a:hover{
+    color: #fff;
+}
+
+.navbar-third li.active a,.navbar-third li.active a:hover, .navbar-third li.active a:focus {
+    background: #e7e7e7 !important;
+    color: #555 !important;
+    width: 100% !important;
+}
+
+.navbar-third {
+    background: rgba(120, 179, 210, 1);
+    color: #fff;
+}
+
+.largest-content {
+    height: 37px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    font-size: 1rem;
+    line-height: .9rem;
+    display: flex;
+    align-items: center;
+}
+
+footer {
+    margin-top: 30px;
+    text-align: center;
+}
+
+body{
+    padding-top: 160px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.caption {
+    background-color: #1B4F84;
+    color: #fff;
+    text-align: center;
+}
+
+.spotlight{
+    background-color:#337AB6!important;
+    color:#fff;
+    padding:10px!important;
+    text-align:center;
+}
+
+.chboxstyle {
+    background-color: #ECECEC;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+    margin-right: 5px;
+    display: flex;
+    max-width: max-content;
+    align-items: center;
+    height: 40px;
+}
+
+.yearbox {
+    max-width: 450px;
+}
+
+.command-btn {
+    width: 60px;
+    text-align: center;
+    font-size: 60%;
+}
