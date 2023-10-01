@@ -1,0 +1,253 @@
+{% extends 'cp/base.html' %}
+
+{% block title %}FTE - Control Panel{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .handsontable thead th .relative {
+        background-color: #337AB6;
+        color: #fff;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div data-jsfiddle="career-level" class="ajax-container">
+
+        {% include 'cp/parameters/partials/command_buttons.html' %}
+
+        <div id="import-data-form-container" style="display: none;">
+            <hr>
+            <p class="alert alert-info">To get template for import data, please use export for this table...</p>
+            <form action="" method="post" enctype="multipart/form-data"
+                  id="import-data-form">
+                {% csrf_token %}
+                <input id="file_input" type="file" name="csv_file" style="display: inline;">
+                <input id="submit_input" type="submit" value="Upload and Import">
+            </form>
+            <hr>
+        </div>
+
+        <br>
+        <div id="career-level" class="career-level"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            var
+                $$ = function (id) {
+                    return document.getElementById(id);
+                },
+                container = $$('career-level'),
+                exampleConsole = $$('career-level-console'),
+                load = $$('load'),
+                save = $$('save'),
+                clear = $$('clear'),
+                add = $$('add'),
+                import_data = $$('import_data'),
+                file = $$('file'),
+                hot;
+
+            hot = new Handsontable(container, {
+                allowEmpty: false,
+                manualColumnResize: false,
+                rowHeaders: true,
+                colHeaders: true,
+                dropdownMenu: false,
+                contextMenu: true,
+                stretchH: 'all',
+                startRows: 1,     
+                licenseKey: 'non-commercial-and-evaluation',
+                wordWrap: true,
+                hiddenColumns: {
+                    columns: [0],
+                    indicators: false
+                },
+                data: [
+                        {
+                            column_1: 'İş 1',
+                            column_2: 'Açıklama 1',
+                            column_3: 'Bölge 1',
+                            column_4: 'Şirket 1',
+                            column_5: 'Tarih 1'
+                        },
+                        {
+                            column_1: 'İş 2',
+                            column_2: 'Açıklama 2',
+                            column_3: 'Bölge 2',
+                            column_4: 'Şirket 2',
+                            column_5: 'Tarih 2'
+                        },
+                        {
+                            column_1: 'İş 3',
+                            column_2: 'Açıklama 3',
+                            column_3: 'Bölge 3',
+                            column_4: 'Şirket 3',
+                            column_5: 'Tarih 3'
+                        },
+                        {
+                            column_1: 'İş 4',
+                            column_2: 'Açıklama 4',
+                            column_3: 'Bölge 4',
+                            column_4: 'Şirket 4',
+                            column_5: 'Tarih 4'
+                        },
+                        {
+                            column_1: 'İş 5',
+                            column_2: 'Açıklama 5',
+                            column_3: 'Bölge 5',
+                            column_4: 'Şirket 5',
+                            column_5: 'Tarih 5'
+                        }
+                    ],
+                columns: [
+                    {
+                        title: 'Column 1',
+                        data: 'column_1'
+                    },
+                    {
+                        title: 'Column 2',
+                        data: 'column_2'
+                    },
+                    {
+                        title: 'Column 3',
+                        data: 'column_3'
+                    },
+                    {
+                        title: 'Column 4',
+                        data: 'column_4'
+                    },
+                    {
+                        title: 'Column 5',
+                        data: 'column_5'
+                    }
+                ]
+            });
+
+            function loadData() {
+                $.ajax({
+                    url: "",
+                    data: JSON.stringify({request: 'ees_page'}),
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function (resp) {
+                        hot.loadData(resp);
+                    }
+                });
+            }
+
+            function saveData() {
+                $.ajax({
+                    url: "",
+                    data: {data: JSON.stringify(hot.getSourceData())},
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function (resp) {
+                        if (resp.message) {
+                            exampleConsole.innerText = resp.message;
+                        }
+                        loadData();
+                    }
+                });
+            }
+
+            function clearData() {
+                $.ajax({
+                    url: "",
+                    dataType: 'json',
+                    type: 'DELETE',
+                    success: function (resp) {
+                        loadData();
+                        exampleConsole.innerText = 'EES Pages ::  Data was cleared...';
+                    }
+                });
+            }
+
+            Handsontable.dom.addEvent(load, 'click', function (event) {
+                event.preventDefault();
+                loadData();
+                exampleConsole.innerText = 'EES Pages ::  Data loaded...';
+            });
+
+            Handsontable.dom.addEvent(save, 'click', function (event) {
+                event.preventDefault();
+                saveData();
+                exampleConsole.innerText = 'EES Pages ::  Data saved...';
+
+            });
+
+            Handsontable.dom.addEvent(clear, 'click', function (event) {
+                event.preventDefault();
+                swal({
+                        title: "Are you sure?",
+                        text: "You will not be able to recover data!",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Yes, clear table!",
+                        closeOnConfirm: false
+
+                    },
+                    function () {
+                        clearData();
+                        swal("Cleared!", "All data has been deleted.", "success");
+                    });
+            });
+
+            Handsontable.dom.addEvent(import_data, 'click', function (event) {
+                event.preventDefault();
+                $('#import-data-form-container').toggle();
+            });
+
+            Handsontable.dom.addEvent(add_row, 'click', function (event) {
+                event.preventDefault();
+                hot.alter('insert_row', '', 1);
+                exampleConsole.innerText = 'EES Questions ::  New row added...';
+            });
+
+            Handsontable.dom.addEvent(add_col, 'click', function (event) {
+                event.preventDefault();
+                hot.alter('insert_col', '', 1);
+                exampleConsole.innerText = 'EES Questions ::  New col added...';
+            });
+
+            Handsontable.dom.addEvent(del_row, 'click', function (event) {
+                event.preventDefault();
+                var lastRow = hot.countRows() - 1;
+                var idColumnIndex = 1;
+                hot.setDataAtCell(lastRow, idColumnIndex, '');
+                saveData();
+                exampleConsole.innerText = 'EES Questions ::  Last row deleted...';
+            });
+
+            Handsontable.dom.addEvent(del_col, 'click', function (event) {
+                event.preventDefault();
+                hot.alter('remove_col', '', 1);
+                exampleConsole.innerText = 'EES Questions ::  Last col deleted...';
+            });
+
+            Handsontable.hooks.add('afterChange', function () {
+            });
+
+            $.ajaxSetup({
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+                    $('body').css('cursor', 'wait');
+                },
+                complete: function () {
+                    $('body').css('cursor', 'default');
+                },
+                error: function () {
+                    exampleConsole.innerText = 'Failure when operation performed...';
+                }
+            });
+
+            loadData();
+            exampleConsole.innerText = 'EES Pages ::  Data Loaded...';
+        });
+    </script>
+{% endblock %}

@@ -28,9 +28,11 @@
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{% url 'admin:index' %}">Admin Page</a></li>
-                <li><a href="{% url 'main-index' %}">Main Page</a></li>
-                <li><a href="{% url 'cp-index' %}">Contol Page</a></li>
+                {% if request.user.is_superuser %}
+                    <li><a href="{% url 'admin:index' %}">Admin Page</a></li>
+                    <li><a href="{% url 'cp:cp-index' %}">Control Page</a></li>
+                {% endif %}
+                <li><a href="{% url 'main:main-index' %}">Main Page</a></li>
                 <li class="disabled"><a href="">Tables</a></li>
                 <li class="disabled"><a href="">Matrices</a></li>
                 <li class="disabled"><a href="">Rules</a></li>
