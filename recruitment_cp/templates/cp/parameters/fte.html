@@ -1,4 +1,5 @@
 {% extends 'cp/base.html' %}
+{% load filters %}
 
 {% block title %}FTE - Control Panel{% endblock %}
 
@@ -30,6 +31,26 @@
         </div>
 
         <br>
+
+        <div style="display: flex; margin-bottom: 10px;">
+            <div class="chb-style">
+                <span style="margin-right: 5px;">Language: </span>
+                <div class="filter-chb">
+                    {% languages as language_list %}
+                    {% for language in language_list reversed %}
+                        {% if forloop.first %}
+                            <span title="{{language.name}}"><input type="checkbox" id="id-{{language.code}}" name="language" value="{{language.code}}"
+                                    checked="checked"></span>
+                            <label for="id-{{language.code}}"></label>
+                        {% else %}
+                            <span title="{{language.name}}"><input type="checkbox" id="id-{{language.code}}" name="language" value="{{language.code}}"></span>
+                            <label for="id-{{language.code}}"></label>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
         <div id="career-level" class="career-level"></div>
     </div>
 </div>
@@ -209,12 +230,6 @@
                 exampleConsole.innerText = 'EES Questions ::  New row added...';
             });
 
-            Handsontable.dom.addEvent(add_col, 'click', function (event) {
-                event.preventDefault();
-                hot.alter('insert_col', '', 1);
-                exampleConsole.innerText = 'EES Questions ::  New col added...';
-            });
-
             Handsontable.dom.addEvent(del_row, 'click', function (event) {
                 event.preventDefault();
                 var lastRow = hot.countRows() - 1;
@@ -222,12 +237,6 @@
                 hot.setDataAtCell(lastRow, idColumnIndex, '');
                 saveData();
                 exampleConsole.innerText = 'EES Questions ::  Last row deleted...';
-            });
-
-            Handsontable.dom.addEvent(del_col, 'click', function (event) {
-                event.preventDefault();
-                hot.alter('remove_col', '', 1);
-                exampleConsole.innerText = 'EES Questions ::  Last col deleted...';
             });
 
             Handsontable.hooks.add('afterChange', function () {
@@ -249,5 +258,27 @@
             loadData();
             exampleConsole.innerText = 'EES Pages ::  Data Loaded...';
         });
+
+        let checkboxLanguage = document.querySelectorAll("input[name='language']");
+
+        function selected() {
+            console.log('selected')
+        }
+
+        for (let i = 0; i < checkboxLanguage.length; i++) {
+            checkboxLanguage[i].addEventListener('change', function() {
+            if (this.checked) {
+                for (let j = 0; j < checkboxLanguage.length; j++) {
+                if (checkboxLanguage[j] !== this) {
+                    checkboxLanguage[j].checked = false;
+                }
+                }
+            }
+            });
+        }
+
+        checkboxLanguage.forEach(checkboxLanguage => {
+            checkboxLanguage.addEventListener("change", selected)
+        })
     </script>
 {% endblock %}

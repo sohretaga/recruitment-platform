@@ -14,9 +14,9 @@ urlpatterns = [
 
     path('parameters/career-type-and-level', parameters.career_type_level_index, name='career_type_level'),
 
-    path('parameters/location', parameters.location, name='location'),
+    path('parameters/location', parameters.location_index, name='location'),
 
-    path('parameters/fte', parameters.fte, name='fte'),
+    path('parameters/fte', parameters.fte_index, name='fte'),
 
-    path('parameters/job-catalogue', parameters.job_catalogue, name='job_catalogue')
+    path('parameters/job-catalogue', parameters.job_catalogue_index, name='job_catalogue')
 ]

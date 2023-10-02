@@ -14,13 +14,13 @@ def career_type_level_index(request):
     return render(request, 'cp/parameters/career_type_level.html')
 
 #======================================================================================================
-def location(request):
+def location_index(request):
     return render(request, 'cp/parameters/location.html')
 
 #======================================================================================================
-def fte(request):
+def fte_index(request):
     return render(request, 'cp/parameters/fte.html')
 
 #======================================================================================================
-def job_catalogue(request):
+def job_catalogue_index(request):
     return render(request, 'cp/parameters/job_catalogue.html')
