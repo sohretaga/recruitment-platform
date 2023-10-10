@@ -12,3 +12,32 @@ class Language(models.Model):
     def save(self,*args, **kwargs) -> None:
         self.code = self.code.lower()
         super().save(*args, **kwargs)
+
+class ParameterCommonFields(models.Model):
+    no = models.IntegerField()
+    name = models.CharField(max_length=500)
+    definition = models.CharField(max_length=500, blank=True, null=True)
+    note = models.CharField(max_length=500, blank=True, null=True)
+    language = models.CharField(max_length=5)
+
+    class Meta:
+        abstract = True
+        ordering = ['no']
+
+class ParameterCareerType(ParameterCommonFields):
+    pass
+
+class ParameterCareerLevel(ParameterCommonFields):
+    pass
+
+class ParameterCareerTypeLevel(ParameterCommonFields):
+    pass
+
+class ParameterLocation(ParameterCommonFields):
+    pass
+
+class ParameterFTE(ParameterCommonFields):
+    pass
+
+class ParameterJobCatalogue(ParameterCommonFields):
+    pass

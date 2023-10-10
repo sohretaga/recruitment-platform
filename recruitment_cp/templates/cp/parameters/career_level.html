@@ -71,6 +71,7 @@
                 add = $$('add'),
                 import_data = $$('import_data'),
                 file = $$('file'),
+                delete_list = [],
                 hot;
 
             hot = new Handsontable(container, {
@@ -88,71 +89,39 @@
                     columns: [0],
                     indicators: false
                 },
-                data: [
-                        {
-                            column_1: 'İş 1',
-                            column_2: 'Açıklama 1',
-                            column_3: 'Bölge 1',
-                            column_4: 'Şirket 1',
-                            column_5: 'Tarih 1'
-                        },
-                        {
-                            column_1: 'İş 2',
-                            column_2: 'Açıklama 2',
-                            column_3: 'Bölge 2',
-                            column_4: 'Şirket 2',
-                            column_5: 'Tarih 2'
-                        },
-                        {
-                            column_1: 'İş 3',
-                            column_2: 'Açıklama 3',
-                            column_3: 'Bölge 3',
-                            column_4: 'Şirket 3',
-                            column_5: 'Tarih 3'
-                        },
-                        {
-                            column_1: 'İş 4',
-                            column_2: 'Açıklama 4',
-                            column_3: 'Bölge 4',
-                            column_4: 'Şirket 4',
-                            column_5: 'Tarih 4'
-                        },
-                        {
-                            column_1: 'İş 5',
-                            column_2: 'Açıklama 5',
-                            column_3: 'Bölge 5',
-                            column_4: 'Şirket 5',
-                            column_5: 'Tarih 5'
-                        }
-                    ],
                 columns: [
                     {
-                        title: 'Column 1',
-                        data: 'column_1'
+                        title: 'id',
+                        data: 'id',
+                        readOnly: true
                     },
                     {
-                        title: 'Column 2',
-                        data: 'column_2'
+                        title: 'No',
+                        data: 'no'
                     },
                     {
-                        title: 'Column 3',
-                        data: 'column_3'
+                        title: 'Name',
+                        data: 'name'
                     },
                     {
-                        title: 'Column 4',
-                        data: 'column_4'
+                        title: 'Definition',
+                        data: 'definition'
                     },
                     {
-                        title: 'Column 5',
-                        data: 'column_5'
+                        title: 'Note',
+                        data: 'note'
                     }
                 ]
             });
 
             function loadData() {
+                let language = document.querySelector("input[name='language']:checked").value;
+
                 $.ajax({
-                    url: "",
-                    data: JSON.stringify({request: 'ees_page'}),
+                    url: "{% url 'cp:career_level_load' %}",
+                    data: {
+                        'language': language
+                    },
                     dataType: 'json',
                     type: 'POST',
                     success: function (resp) {
@@ -162,15 +131,18 @@
             }
 
             function saveData() {
+                let language = document.querySelector("input[name='language']:checked").value;
+
                 $.ajax({
-                    url: "",
-                    data: {data: JSON.stringify(hot.getSourceData())},
+                    url: "{% url 'cp:career_level_save' %}",
+                    data: {data: JSON.stringify(hot.getSourceData()),
+                            'language': language,
+                            'delete_list': JSON.stringify(delete_list)},
                     dataType: 'json',
                     type: 'POST',
                     success: function (resp) {
-                        if (resp.message) {
-                            exampleConsole.innerText = resp.message;
-                        }
+                        exampleConsole.innerText = 'EES Pages ::  Data saved...';
+                        delete_list = [];
                         loadData();
                     }
                 });
@@ -233,9 +205,11 @@
             Handsontable.dom.addEvent(del_row, 'click', function (event) {
                 event.preventDefault();
                 var lastRow = hot.countRows() - 1;
-                var idColumnIndex = 1;
-                hot.setDataAtCell(lastRow, idColumnIndex, '');
-                saveData();
+                id = hot.getDataAtCell(lastRow, 0);
+                if (id != null) {
+                    delete_list.push(id);
+                }
+                hot.alter("remove_row", lastRow)
                 exampleConsole.innerText = 'EES Questions ::  Last row deleted...';
             });
 
