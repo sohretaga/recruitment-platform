@@ -25,19 +25,22 @@ class ParameterCommonFields(models.Model):
         ordering = ['no']
 
 class ParameterCareerType(ParameterCommonFields):
-    pass
+    ...
 
 class ParameterCareerLevel(ParameterCommonFields):
-    pass
+    ...
 
 class ParameterCareerTypeLevel(ParameterCommonFields):
-    pass
+    ...
 
 class ParameterLocation(ParameterCommonFields):
-    pass
+    ...
 
 class ParameterFTE(ParameterCommonFields):
-    pass
+    ...
 
 class ParameterJobCatalogue(ParameterCommonFields):
-    pass
+    ...
+
+class ParameterEmployeeType(ParameterCommonFields):
+    ...

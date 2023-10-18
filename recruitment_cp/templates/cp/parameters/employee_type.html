@@ -1,7 +1,7 @@
 {% extends 'cp/base.html' %}
 {% load filters %}
 
-{% block title %}Career Type & Level - Control Panel{% endblock %}
+{% block title %}Employee Type - Control Panel{% endblock %}
 
 {% block stylesheets %}
 <style>
@@ -14,7 +14,7 @@
 
 {% block content %}
 <div class="container">
-    <div data-jsfiddle="career-type-and-level" class="ajax-container">
+    <div data-jsfiddle="employee-type" class="ajax-container">
 
         {% include 'cp/parameters/partials/command_buttons.html' %}
 
@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        <div id="career-type-and-level" class="career-type-and-level"></div>
+        <div id="employee-type" class="employee-type"></div>
     </div>
 </div>
 {% endblock %}
@@ -63,7 +63,7 @@
                 $$ = function (id) {
                     return document.getElementById(id);
                 },
-                container = $$('career-type-and-level'),
+                container = $$('employee-type'),
                 dataConsole = $$('dataConsole'),
                 load = $$('load'),
                 save = $$('save'),
@@ -118,7 +118,7 @@
                 let language = document.querySelector("input[name='language']:checked").value;
 
                 $.ajax({
-                    url: "{% url 'cp:career_type_level_load' %}",
+                    url: "{% url 'cp:employee_type_load' %}",
                     data: {
                         'language': language
                     },
@@ -134,7 +134,7 @@
                 let language = document.querySelector("input[name='language']:checked").value;
 
                 $.ajax({
-                    url: "{% url 'cp:career_type_level_save' %}",
+                    url: "{% url 'cp:employee_type_save' %}",
                     data: {data: JSON.stringify(hot.getSourceData()),
                             'language': language,
                             'delete_list': JSON.stringify(delete_list)},
@@ -232,11 +232,11 @@
             loadData();
             dataConsole.innerText = 'EES Pages ::  Data Loaded...';
         });
-        
+
         let checkboxLanguage = document.querySelectorAll("input[name='language']");
 
         function selected() {
-            dataConsole.log('selected')
+            console.log('selected')
         }
 
         for (let i = 0; i < checkboxLanguage.length; i++) {

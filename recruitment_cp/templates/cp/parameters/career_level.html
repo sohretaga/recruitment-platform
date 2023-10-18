@@ -64,7 +64,7 @@
                     return document.getElementById(id);
                 },
                 container = $$('career-level'),
-                exampleConsole = $$('career-level-console'),
+                dataConsole = $$('dataConsole'),
                 load = $$('load'),
                 save = $$('save'),
                 clear = $$('clear'),
@@ -141,7 +141,7 @@
                     dataType: 'json',
                     type: 'POST',
                     success: function (resp) {
-                        exampleConsole.innerText = 'EES Pages ::  Data saved...';
+                        dataConsole.innerText = 'EES Pages ::  Data saved...';
                         delete_list = [];
                         loadData();
                     }
@@ -155,7 +155,7 @@
                     type: 'DELETE',
                     success: function (resp) {
                         loadData();
-                        exampleConsole.innerText = 'EES Pages ::  Data was cleared...';
+                        dataConsole.innerText = 'EES Pages ::  Data was cleared...';
                     }
                 });
             }
@@ -163,13 +163,13 @@
             Handsontable.dom.addEvent(load, 'click', function (event) {
                 event.preventDefault();
                 loadData();
-                exampleConsole.innerText = 'EES Pages ::  Data loaded...';
+                dataConsole.innerText = 'EES Pages ::  Data loaded...';
             });
 
             Handsontable.dom.addEvent(save, 'click', function (event) {
                 event.preventDefault();
                 saveData();
-                exampleConsole.innerText = 'EES Pages ::  Data saved...';
+                dataConsole.innerText = 'EES Pages ::  Data saved...';
 
             });
 
@@ -199,7 +199,7 @@
             Handsontable.dom.addEvent(add_row, 'click', function (event) {
                 event.preventDefault();
                 hot.alter('insert_row', '', 1);
-                exampleConsole.innerText = 'EES Questions ::  New row added...';
+                dataConsole.innerText = 'EES Questions ::  New row added...';
             });
 
             Handsontable.dom.addEvent(del_row, 'click', function (event) {
@@ -210,7 +210,7 @@
                     delete_list.push(id);
                 }
                 hot.alter("remove_row", lastRow)
-                exampleConsole.innerText = 'EES Questions ::  Last row deleted...';
+                dataConsole.innerText = 'EES Questions ::  Last row deleted...';
             });
 
             Handsontable.hooks.add('afterChange', function () {
@@ -225,19 +225,19 @@
                     $('body').css('cursor', 'default');
                 },
                 error: function () {
-                    exampleConsole.innerText = 'Failure when operation performed...';
+                    dataConsole.innerText = 'Failure when operation performed...';
                 }
             });
 
             loadData();
-            exampleConsole.innerText = 'EES Pages ::  Data Loaded...';
+            dataConsole.innerText = 'EES Pages ::  Data Loaded...';
         });
 
 
         let checkboxLanguage = document.querySelectorAll("input[name='language']");
 
         function selected() {
-            console.log('selected')
+            dataConsole.log('selected')
         }
 
         for (let i = 0; i < checkboxLanguage.length; i++) {
