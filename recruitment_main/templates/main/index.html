@@ -2,7 +2,91 @@
 
 {% block content %}
     <div class="container">
-        <h1>{{ page_data.page_title | default:'Default Index Page' }}</h1>
-        <p>{{ page_data.page_content | default:'Defaul Index Content' | safe }}</p>
+        <div class="container" style="margin-bottom: 20px;">
+    
+            <div class="row">
+                <div class="col-md-4 col-sm-3">
+                    <div class="form-group">
+                        <label for="organization">Select 1</label>
+                        <select name="organization" id="organization" class="form-control">
+                            <option selected="selected">---</option>
+                        </select>
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="respondent">Select 2</label>
+                        <select name="respondent" id="respondent" class="form-control">
+                            <option selected="selected">---</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-3">
+                    <div class="form-group">
+                        <label for="age_group">Select 3</label>
+                        <select name="age_group" id="age_group" class="form-control">
+                            <option selected="selected">---</option>
+                        </select>
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="career_type">Select 4</label>
+                        <select name="career_type" id="career_type" class="form-control">
+                            <option selected="selected">---</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-3">
+                    <div class="form-group">
+                        <label for="age_group">Select 5</label>
+                        <select name="gender" id="gender" class="form-control">
+                            <option selected="selected">---</option>
+                        </select>
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="tenure">Select 6</label>
+                        <select name="tenure" id="tenure" class="form-control">
+                            <option selected="selected">---</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                </div>
+                <div class="col-md-3 col-sm-3">
+                </div>
+            </div>
+    
+            <div class="row">
+                <div id="categories" class="col-md-3 col-sm-3">
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label><input name="sector" type="checkbox" value="">Checkbox 1</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label><input name="sector" type="checkbox" value="">Checkbox 2</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label><input name="sector" type="checkbox" value="">Checkbox 3</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label><input name="sector" type="checkbox" value="">Checkbox 4</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9 col-sm-9">
+                    <div id="container" style="width:100%;"></div>
+                </div>
+            </div>
+    
+        </div>
     </div>
 {% endblock %}
