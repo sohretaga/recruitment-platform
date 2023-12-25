@@ -76,11 +76,31 @@
                         </div>
                     {% endfor %}
                 </div>
+
                 <div class="col-md-9 col-sm-9">
-                    <div id="container" style="width:100%;"></div>
+                        <div class="container" style="max-width: 100%;">
+                            <div class="row">
+                                {% for vacancy in vacancies %}
+                                    <div class="col-md-6 col-lg-12">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title">{{ vacancy.name }}</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                <p><strong>Location:</strong> {{ vacancy.location }}</p>
+                                                <p><strong>Salary:</strong> $2500 - $3500 / pm</p>
+                                                <p><strong>Type:</strong> {{ vacancy.fte }}</p>
+                                                <a href="#" class="btn btn-primary">Apply Now</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        
+                    </div>
                 </div>
             </div>
-    
         </div>
     </div>
 {% endblock %}
