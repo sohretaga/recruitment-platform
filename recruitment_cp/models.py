@@ -47,9 +47,9 @@ class ParameterEmployeeType(ParameterCommonFields):
 
 class ParameterVacancy(ParameterCommonFields):
     note = None
-    career_type = models.CharField(max_length = 100)
-    career_level = models.CharField(max_length = 100)
-    location = models.CharField(max_length = 100)
-    fte = models.CharField(max_length = 100)
-    job_catalogue = models.CharField(max_length = 100)
-    employee_type = models.CharField(max_length = 100)
+    career_type = models.CharField(max_length = 100, blank=True, null=True)
+    career_level = models.CharField(max_length = 100, blank=True, null=True)
+    location = models.CharField(max_length = 100, blank=True, null=True)
+    fte = models.CharField(max_length = 100, blank=True, null=True)
+    job_catalogue = models.CharField(max_length = 100, blank=True, null=True)
+    employee_type = models.CharField(max_length = 100, blank=True, null=True)

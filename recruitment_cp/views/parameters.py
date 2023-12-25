@@ -446,7 +446,7 @@ def vacancy_save(request):
             job_catalogue:str|None = data[index].get('job_catalogue', None)
             employee_type:str|None = data[index].get('employee_type', None)
 
-            if no:
+            if no and name:
                 if id:
                     vacancy = cp_models.ParameterVacancy.objects.filter(pk=id)
                     vacancy.update(
