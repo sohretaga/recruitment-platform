@@ -35,4 +35,8 @@ urlpatterns = [
     path('parameters/employee-type', parameters.employee_type_index, name='employee_type'),
     path('parameters/employee-type-load', parameters.employee_type_load, name='employee_type_load'),
     path('parameters/employee-type-save', parameters.employee_type_save, name='employee_type_save'),
+
+    path('parameters/vacancy', parameters.vacancy_index, name='vacancy'),
+    path('parameters/vacancy-load', parameters.vacancy_load, name='vacancy_load'),
+    path('parameters/vacancy-save', parameters.vacancy_save, name='vacancy_save'),
 ]

@@ -59,6 +59,7 @@
                     <li {% if 'fte' in request.path %} class="active" {% endif %}><a href="{% url 'cp:fte' %}">FTE</a></li>
                     <li {% if 'job-catalogue' in request.path %} class="active" {% endif %}><a href="{% url 'cp:job_catalogue' %}">Job Catalogue</a></li>
                     <li {% if 'employee-type' in request.path %} class="active" {% endif %}><a href="{% url 'cp:employee_type' %}">ET</a></li>
+                    <li {% if 'vacancy' in request.path %} class="active" {% endif %}><a href="{% url 'cp:vacancy' %}">Vacancy</a></li>
                 {% endif %}
             </ul>
         </div>

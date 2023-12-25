@@ -1,0 +1,300 @@
+{% extends 'cp/base.html' %}
+{% load filters %}
+
+{% block title %}Location - Control Panel{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .handsontable thead th .relative {
+        background-color: #337AB6;
+        color: #fff;
+    }
+    .htCore td {
+        max-width: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div data-jsfiddle="vacancy" class="ajax-container">
+
+        {% include 'cp/parameters/partials/command_buttons.html' %}
+
+        <div id="import-data-form-container" style="display: none;">
+            <hr>
+            <p class="alert alert-info">To get template for import data, please use export for this table...</p>
+            <form action="" method="post" enctype="multipart/form-data"
+                  id="import-data-form">
+                {% csrf_token %}
+                <input id="file_input" type="file" name="csv_file" style="display: inline;">
+                <input id="submit_input" type="submit" value="Upload and Import">
+            </form>
+            <hr>
+        </div>
+
+        <br>
+
+        
+    </div>
+</div>
+
+<div style="margin-left: 20px; margin-right: 20px;">
+    <div style="display: flex; margin-bottom: 10px;">
+        <div class="chb-style">
+            <span style="margin-right: 5px;">Language: </span>
+            <div class="filter-chb">
+                {% languages as language_list %}
+                {% for language in language_list reversed %}
+                    {% if forloop.first %}
+                        <span title="{{language.name}}"><input type="checkbox" id="id-{{language.code}}" name="language" value="{{language.code}}"
+                                checked="checked"></span>
+                        <label for="id-{{language.code}}"></label>
+                    {% else %}
+                        <span title="{{language.name}}"><input type="checkbox" id="id-{{language.code}}" name="language" value="{{language.code}}"></span>
+                        <label for="id-{{language.code}}"></label>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    <div id="vacancy" class="vacancy"></div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            var
+                $$ = function (id) {
+                    return document.getElementById(id);
+                },
+                container = $$('vacancy'),
+                dataConsole = $$('dataConsole'),
+                load = $$('load'),
+                save = $$('save'),
+                clear = $$('clear'),
+                add = $$('add'),
+                import_data = $$('import_data'),
+                file = $$('file'),
+                delete_list = [],
+                hot;
+
+            hot = new Handsontable(container, {
+                allowEmpty: false,
+                manualColumnResize: false,
+                rowHeaders: true,
+                colHeaders: true,
+                dropdownMenu: false,
+                contextMenu: true,
+                stretchH: 'all',
+                startRows: 1,     
+                licenseKey: 'non-commercial-and-evaluation',
+                wordWrap: true,
+                hiddenColumns: {
+                    columns: [0],
+                    indicators: false
+                },
+                columns: [
+                    {
+                        title: 'id',
+                        data: 'id',
+                        readOnly: true
+                    },
+                    {
+                        title: 'No',
+                        data: 'no',
+                        className: 'htCenter',
+                        colWidths: 10
+                    },
+                    {
+                        title: 'Name',
+                        data: 'name',
+                        colWidths: 100
+                    },
+                    {
+                        title: 'Definition',
+                        data: 'definition',
+                        colWidths: 100
+                    },
+                    {
+                        title: 'Career Type',
+                        data: 'career_type',
+                        colWidths: 100
+                    },
+                    {
+                        title: 'Career Level',
+                        data: 'career_level',
+                        colWidths: 100
+                    },
+                    {
+                        title: 'Location',
+                        data: 'location',
+                        colWidths: 100
+                    },
+                    {
+                        title: 'FTE',
+                        data: 'fte',
+                        colWidths: 100
+                    },
+                    {
+                        title: 'Job Title',
+                        data: 'job_catalogue',
+                        colWidths: 100
+                    },
+                    {
+                        title: 'Employee Type',
+                        data: 'employee_type',
+                        colWidths: 100
+                    }
+
+                ]
+            });
+
+            function loadData() {
+                let language = document.querySelector("input[name='language']:checked").value;
+
+                $.ajax({
+                    url: "{% url 'cp:vacancy_load' %}",
+                    data: {
+                        'language': language
+                    },
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function (resp) {
+                        hot.loadData(resp);
+                    }
+                });
+            }
+
+            function saveData() {
+                let language = document.querySelector("input[name='language']:checked").value;
+
+                $.ajax({
+                    url: "{% url 'cp:vacancy_save' %}",
+                    data: {data: JSON.stringify(hot.getSourceData()),
+                            'language': language,
+                            'delete_list': JSON.stringify(delete_list)},
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function (resp) {
+                        dataConsole.innerText = 'EES Pages ::  Data saved...';
+                        delete_list = [];
+                        loadData();
+                    }
+                });
+            }
+
+            function clearData() {
+                $.ajax({
+                    url: "",
+                    dataType: 'json',
+                    type: 'DELETE',
+                    success: function (resp) {
+                        loadData();
+                        dataConsole.innerText = 'EES Pages ::  Data was cleared...';
+                    }
+                });
+            }
+
+            Handsontable.dom.addEvent(load, 'click', function (event) {
+                event.preventDefault();
+                loadData();
+                dataConsole.innerText = 'EES Pages ::  Data loaded...';
+            });
+
+            Handsontable.dom.addEvent(save, 'click', function (event) {
+                event.preventDefault();
+                saveData();
+                dataConsole.innerText = 'EES Pages ::  Data saved...';
+
+            });
+
+            Handsontable.dom.addEvent(clear, 'click', function (event) {
+                event.preventDefault();
+                swal({
+                        title: "Are you sure?",
+                        text: "You will not be able to recover data!",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Yes, clear table!",
+                        closeOnConfirm: false
+
+                    },
+                    function () {
+                        clearData();
+                        swal("Cleared!", "All data has been deleted.", "success");
+                    });
+            });
+
+            Handsontable.dom.addEvent(import_data, 'click', function (event) {
+                event.preventDefault();
+                $('#import-data-form-container').toggle();
+            });
+
+            Handsontable.dom.addEvent(add_row, 'click', function (event) {
+                event.preventDefault();
+                hot.alter('insert_row', '', 1);
+                dataConsole.innerText = 'EES Questions ::  New row added...';
+            });
+
+            Handsontable.dom.addEvent(del_row, 'click', function (event) {
+                event.preventDefault();
+                var lastRow = hot.countRows() - 1;
+                id = hot.getDataAtCell(lastRow, 0);
+                if (id != null) {
+                    delete_list.push(id);
+                }
+                hot.alter("remove_row", lastRow)
+                dataConsole.innerText = 'EES Questions ::  Last row deleted...';
+            });
+
+            Handsontable.hooks.add('afterChange', function () {
+            });
+
+            $.ajaxSetup({
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+                    $('body').css('cursor', 'wait');
+                },
+                complete: function () {
+                    $('body').css('cursor', 'default');
+                },
+                error: function () {
+                    dataConsole.innerText = 'Failure when operation performed...';
+                }
+            });
+
+            loadData();
+            dataConsole.innerText = 'EES Pages ::  Data Loaded...';
+        });
+
+        let checkboxLanguage = document.querySelectorAll("input[name='language']");
+
+        function selected() {
+            dataConsole.log('selected')
+        }
+
+        for (let i = 0; i < checkboxLanguage.length; i++) {
+            checkboxLanguage[i].addEventListener('change', function() {
+            if (this.checked) {
+                for (let j = 0; j < checkboxLanguage.length; j++) {
+                if (checkboxLanguage[j] !== this) {
+                    checkboxLanguage[j].checked = false;
+                }
+                }
+            }
+            });
+        }
+
+        checkboxLanguage.forEach(checkboxLanguage => {
+            checkboxLanguage.addEventListener("change", selected)
+        })
+    </script>
+{% endblock %}

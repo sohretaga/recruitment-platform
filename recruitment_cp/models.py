@@ -44,3 +44,12 @@ class ParameterJobCatalogue(ParameterCommonFields):
 
 class ParameterEmployeeType(ParameterCommonFields):
     ...
+
+class ParameterVacancy(ParameterCommonFields):
+    note = None
+    career_type = models.CharField(max_length = 100)
+    career_level = models.CharField(max_length = 100)
+    location = models.CharField(max_length = 100)
+    fte = models.CharField(max_length = 100)
+    job_catalogue = models.CharField(max_length = 100)
+    employee_type = models.CharField(max_length = 100)

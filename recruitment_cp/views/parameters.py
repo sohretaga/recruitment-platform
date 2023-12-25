@@ -410,3 +410,81 @@ def employee_type_save(request):
         return JsonResponse({'status':200})
     else:
         raise PermissionError
+    
+#======================================================================================================
+def vacancy_index(request):
+    return render(request, 'cp/parameters/vacancy.html')
+
+def vacancy_load(request):
+    if is_ajax(request) and request.POST:
+        langauge = request.POST.get('language')
+
+        vacancy = cp_models.ParameterVacancy.objects.filter(language=langauge).values()
+        json_data = json.dumps(list(vacancy))
+
+        return HttpResponse(json_data)
+
+    else:
+        raise PermissionError
+
+def vacancy_save(request):
+    if is_ajax(request) and request.POST:
+        data:str = json.loads(request.POST.get('data'))
+        language:str = request.POST.get('language')
+        delete_list:list[int] = eval(request.POST.get('delete_list'))
+        index:int = 0
+
+        while index < len(data):
+            id:str|None = data[index].get('id', None)
+            no:str|None = data[index].get('no', None)
+            name:str|None = data[index].get('name', None)
+            definition:str|None = data[index].get('definition', None)
+            career_type:str|None = data[index].get('career_type', None)
+            career_level:str|None = data[index].get('career_level', None)
+            location:str|None = data[index].get('location', None)
+            fte:str|None = data[index].get('fte', None)
+            job_catalogue:str|None = data[index].get('job_catalogue', None)
+            employee_type:str|None = data[index].get('employee_type', None)
+
+            if no:
+                if id:
+                    vacancy = cp_models.ParameterVacancy.objects.filter(pk=id)
+                    vacancy.update(
+                        no = no,
+                        name = name,
+                        definition = definition,
+                        career_type = career_type,
+                        career_level = career_level,
+                        location = location,
+                        fte = fte,
+                        job_catalogue = job_catalogue,
+                        employee_type = employee_type)
+
+                else:
+                    cp_models.ParameterVacancy.objects.create(
+                        language = language,
+                        no = no,
+                        name = name,
+                        definition = definition,
+                        career_type = career_type,
+                        career_level = career_level,
+                        location = location,
+                        fte = fte,
+                        job_catalogue = job_catalogue,
+                        employee_type = employee_type)
+            else:
+                if id:
+                    vacancy = cp_models.ParameterVacancy.objects.filter(pk=id)
+                    vacancy.delete()
+
+            index += 1
+                
+        # delete row with 'DEL ROW' button
+        if delete_list:
+            for id in delete_list:
+                vacancy = cp_models.ParameterVacancy.objects.filter(pk=id)
+                vacancy.delete()
+
+        return JsonResponse({'status':200})
+    else:
+        raise PermissionError
