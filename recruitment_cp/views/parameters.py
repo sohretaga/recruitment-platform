@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from recruitment_cp import models as cp_models
-from recruitment_cp.functions import is_ajax
+from recruitment_cp.functions import is_ajax, datetime_to_string
 
 import json
                         
@@ -420,7 +420,7 @@ def vacancy_load(request):
         langauge = request.POST.get('language')
 
         vacancy = cp_models.ParameterVacancy.objects.filter(language=langauge).values()
-        json_data = json.dumps(list(vacancy))
+        json_data = json.dumps(list(vacancy), default=datetime_to_string)
 
         return HttpResponse(json_data)
 
@@ -443,6 +443,9 @@ def vacancy_save(request):
             career_level:str|None = data[index].get('career_level', None)
             location:str|None = data[index].get('location', None)
             fte:str|None = data[index].get('fte', None)
+            salary_minimum:str|None = data[index].get('salary_minimum', None)
+            salary_midpoint:str|None = data[index].get('salary_midpoint', None)
+            salary_maximum:str|None = data[index].get('salary_maximum', None)
             job_catalogue:str|None = data[index].get('job_catalogue', None)
             employee_type:str|None = data[index].get('employee_type', None)
 
@@ -458,7 +461,10 @@ def vacancy_save(request):
                         location = location,
                         fte = fte,
                         job_catalogue = job_catalogue,
-                        employee_type = employee_type)
+                        employee_type = employee_type,
+                        salary_minimum = salary_minimum,
+                        salary_midpoint = salary_midpoint,
+                        salary_maximum = salary_maximum)
 
                 else:
                     cp_models.ParameterVacancy.objects.create(
@@ -471,7 +477,10 @@ def vacancy_save(request):
                         location = location,
                         fte = fte,
                         job_catalogue = job_catalogue,
-                        employee_type = employee_type)
+                        employee_type = employee_type,
+                        salary_minimum = salary_minimum,
+                        salary_midpoint = salary_midpoint,
+                        salary_maximum = salary_maximum)
             else:
                 if id:
                     vacancy = cp_models.ParameterVacancy.objects.filter(pk=id)

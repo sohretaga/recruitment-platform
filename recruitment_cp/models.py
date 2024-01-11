@@ -18,7 +18,7 @@ class ParameterCommonFields(models.Model):
     name = models.CharField(max_length=500)
     definition = models.CharField(max_length=500, blank=True, null=True)
     note = models.CharField(max_length=500, blank=True, null=True)
-    language = models.CharField(max_length=5)
+    language = models.CharField(max_length=5) # must be ForeignKey filed
 
     class Meta:
         abstract = True
@@ -47,9 +47,14 @@ class ParameterEmployeeType(ParameterCommonFields):
 
 class ParameterVacancy(ParameterCommonFields):
     note = None
+    organization = models.CharField(max_length=100, blank=True, null=True) # must be ForeignKey filed
     career_type = models.CharField(max_length = 100, blank=True, null=True)
     career_level = models.CharField(max_length = 100, blank=True, null=True)
     location = models.CharField(max_length = 100, blank=True, null=True)
     fte = models.CharField(max_length = 100, blank=True, null=True)
+    salary_minimum = models.IntegerField(default=0)
+    salary_midpoint = models.IntegerField(default=0)
+    salary_maximum = models.IntegerField(default=0)
     job_catalogue = models.CharField(max_length = 100, blank=True, null=True)
     employee_type = models.CharField(max_length = 100, blank=True, null=True)
+    created_date = models.DateTimeField(auto_now_add=True, null=True)
