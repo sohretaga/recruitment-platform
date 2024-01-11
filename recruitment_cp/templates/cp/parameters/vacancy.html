@@ -21,8 +21,32 @@
 {% block content %}
 <div class="container">
     <div data-jsfiddle="vacancy" class="ajax-container">
-
-        {% include 'cp/parameters/partials/command_buttons.html' %}
+        <div class="row">
+            <div>
+                <div class="pull-left" style="width: 40%;">
+                    <pre id="dataConsole" class="console">Click "Load" to load data from server</pre>
+                </div>
+            </div>
+            <div>
+                <div class="controls pull-right">
+                    <div style="margin-top: 5px;">
+                        <button id="clearConditions" class="btn btn-default command-btn"
+                                style="background-color: #58cd05; color: #fff; width: fit-content;">
+                            <i class="fa fa-filter" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" name="load" id="load" class="btn btn-primary command-btn">LOAD</button>
+                        <button type="button" name="save" id="save" class="btn btn-primary command-btn">SAVE</button>
+                        <button type="button" name="add" id="add_row" class="btn btn-primary command-btn">ADD ROW</button>
+                        <button type="button" name="add" id="del_row" class="btn btn-primary command-btn">DEL ROW</button>
+        
+                        <a href="#" class="btn btn-primary command-btn">EXPORT</a>
+        
+                        <button type="button" name="import_data" id="import_data" class="btn btn-primary command-btn">IMPORT</button>
+                        <button type="button" name="clear" id="clear" class="btn btn-danger command-btn">CLEAR</button>
+                    </div>
+                 </div>
+            </div>
+        </div>
 
         <div id="import-data-form-container" style="display: none;">
             <hr>
@@ -271,6 +295,17 @@
                 error: function () {
                     dataConsole.innerText = 'Failure when operation performed...';
                 }
+            });
+
+            $('#clearConditions').click(function () {
+                const filter = hot.getPlugin('Filters');
+
+                for (let i = 0; i < hot.countCols(); i++) {
+                    filter.removeConditions(i);
+                }
+
+                filter.filter();
+                dataConsole.innerText = 'EES Calculate ::  All filters have been cleaned!';
             });
 
             loadData();
