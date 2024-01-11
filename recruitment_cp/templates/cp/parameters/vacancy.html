@@ -87,10 +87,8 @@
 
             hot = new Handsontable(container, {
                 allowEmpty: false,
-                manualColumnResize: false,
                 rowHeaders: true,
                 colHeaders: true,
-                dropdownMenu: false,
                 contextMenu: true,
                 stretchH: 'all',
                 startRows: 1,     
@@ -98,6 +96,7 @@
                 wordWrap: true,
                 dropdownMenu: ['filter_by_condition', 'filter_by_value', 'filter_action_bar'],
                 filters: true,
+                fixedColumnsStart: 3,
                 hiddenColumns: {
                     columns: [0],
                     indicators: false
@@ -112,10 +111,10 @@
                         title: 'No',
                         data: 'no',
                         className: 'htCenter',
-                        colWidths: 10
+                        colWidths: 5
                     },
                     {
-                        title: 'Name',
+                        title: 'Position Title',
                         data: 'name',
                         colWidths: 100
                     },
