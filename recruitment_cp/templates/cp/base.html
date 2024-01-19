@@ -32,7 +32,7 @@
             <ul class="nav navbar-nav navbar-right">
                 {% if request.user.is_superuser %}
                     <li><a href="{% url 'admin:index' %}">Admin Page</a></li>
-                    <li><a href="{% url 'cp:cp-index' %}">Control Page</a></li>
+                    <li><a href="{% url 'cp:career_type' %}">Control Page</a></li> {# {% url 'cp:cp-index' %} #}
                 {% endif %}
                 <li><a href="{% url 'main:main-index' %}">Main Page</a></li>
                 <li class="disabled"><a href="">Tables</a></li>
