@@ -9,12 +9,10 @@
         background-color: #337AB6;
         color: #fff;
     }
-    .htCore td {
-        max-width: 100px;
-        /* overflow: hidden;
-        text-overflow: ellipsis; */
-        /* white-space: nowrap; */
+    .htCore th {
+        vertical-align: middle;
     }
+
 </style>
 {% endblock %}
 
@@ -70,7 +68,6 @@
                     value = ''
                 }
                 td.innerHTML = `<div class='largest-content'>${value}</div>`;
-                return td;
             };
 
             var
@@ -103,6 +100,7 @@
                     columns: [0],
                     indicators: false
                 },
+                colWidths: [0, 20, 100, 250, 100],
                 columns: [
                     {
                         title: 'id',
@@ -112,24 +110,21 @@
                     {
                         title: 'No',
                         data: 'no',
-                        colWidths: 10,
-                        className: 'htCenter'
+                        className: 'htCenter htMiddle'
                     },
                     {
                         title: 'Name',
                         data: 'name',
-                        colWidths: 50
+                        className: 'htMiddle'
                     },
                     {
                         title: 'Definition',
                         data: 'definition',
-                        colWidths: 50,
                         renderer: largestTextRenderer
                     },
                     {
                         title: 'Note',
                         data: 'note',
-                        colWidths: 100
                     }
                 ]
             });
