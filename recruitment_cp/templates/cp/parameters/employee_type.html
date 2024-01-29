@@ -65,6 +65,14 @@
 {% block scripts %}
     <script>
         $(document).ready(function () {
+            function largestTextRenderer(hotInstance, td, row, column, prop, value, cellProperties) {
+                if (value === null){
+                    value = ''
+                }
+                td.innerHTML = `<div class='largest-content'>${value}</div>`;
+                return td;
+            };
+
             var
                 $$ = function (id) {
                     return document.getElementById(id);
@@ -103,19 +111,25 @@
                     },
                     {
                         title: 'No',
-                        data: 'no'
+                        data: 'no',
+                        colWidths: 10,
+                        className: 'htCenter'
                     },
                     {
                         title: 'Name',
-                        data: 'name'
+                        data: 'name',
+                        colWidths: 50
                     },
                     {
                         title: 'Definition',
-                        data: 'definition'
+                        data: 'definition',
+                        colWidths: 100,
+                        renderer: largestTextRenderer
                     },
                     {
                         title: 'Note',
-                        data: 'note'
+                        data: 'note',
+                        colWidths: 100
                     }
                 ]
             });
