@@ -1,4 +1,5 @@
 {% extends 'main/base.html' %}
+{% load static %}
 
 {% block content %}
     <div class="container">
@@ -7,8 +8,8 @@
             <div class="row">
                 <div class="col-md-6 col-sm-3">
                     <div class="form-group">
-                        <label for="organization">Career Type</label>
-                        <select name="organization" id="organization" class="form-control">
+                        <label for="career_type">Career Type</label>
+                        <select name="career_type" id="career_type" class="form-control">
                             <option selected="selected">---</option>
                             {% for career_type in career_types %}
                                 <option>{{ career_type.name }}</option>
@@ -17,8 +18,8 @@
                     </div>
     
                     <div class="form-group">
-                        <label for="respondent">Career Level</label>
-                        <select name="respondent" id="respondent" class="form-control">
+                        <label for="career_level">Career Level</label>
+                        <select name="career_level" id="career_level" class="form-control">
                             <option selected="selected">---</option>
                             {% for career_level in career_levels %}
                                 <option>{{ career_level.name }}</option>
@@ -28,8 +29,8 @@
                 </div>
                 <div class="col-md-6 col-sm-3">
                     <div class="form-group">
-                        <label for="age_group">Location</label>
-                        <select name="age_group" id="age_group" class="form-control">
+                        <label for="location">Location</label>
+                        <select name="location" id="location" class="form-control">
                             <option selected="selected">---</option>
                             {% for location in locations %}
                                 <option>{{ location.name }}</option>
@@ -38,8 +39,8 @@
                     </div>
     
                     <div class="form-group">
-                        <label for="career_type">FTE</label>
-                        <select name="career_type" id="career_type" class="form-control">
+                        <label for="fte">FTE</label>
+                        <select name="fte" id="fte" class="form-control">
                             <option selected="selected">---</option>
                             {% for fte in fte %}
                                 <option>{{ fte.name }}</option>
@@ -67,9 +68,9 @@
 
                     {% for employment_type in employment_types %}
                         <div class="form-group">
-                            <div class="checkbox">
+                            <div class="checkbox" id="employee-type-filters">
                                 <label>
-                                    <input name="employment-type" type="checkbox" value="{{ employment_type.name }}">
+                                    <input name="employment-type" checked type="checkbox" value="{{ employment_type.name }}">
                                     {{ employment_type.name }}
                                 </label>
                             </div>
@@ -79,7 +80,7 @@
 
                 <div class="col-md-9 col-sm-9">
                         <div class="container" style="max-width: 100%;">
-                            <div class="row">
+                            <div class="row" id="vacancies">
                                 {% for vacancy in vacancies %}
                                     <div class="col-md-6 col-lg-12">
                                         <div class="panel panel-default">
@@ -97,10 +98,17 @@
                                 {% endfor %}
                             </div>
                         </div>
-                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
 {% endblock %}
+
+{% block script %}
+    <script>
+        var csrfToken = "{{ csrf_token }}";
+        var loadUrl = "{% url 'main:vacancy-load' %}";
+    </script>
+    <script src="{% static 'main/js/index.js' %}"></script>
+{% endblock script %}
