@@ -156,21 +156,25 @@
                     {
                         title: 'Career Type',
                         data: 'career_type',
+                        type: 'dropdown',
                         colWidths: 100
                     },
                     {
                         title: 'Career Level',
                         data: 'career_level',
+                        type: 'dropdown',
                         colWidths: 100
                     },
                     {
                         title: 'Location',
                         data: 'location',
+                        type: 'dropdown',
                         colWidths: 100
                     },
                     {
                         title: 'FTE',
                         data: 'fte',
+                        type: 'dropdown',
                         colWidths: 100
                     },
                     {
@@ -196,6 +200,7 @@
                     {
                         title: 'Employment Type',
                         data: 'employee_type',
+                        type: 'dropdown',
                         colWidths: 100
                     },
                     {
@@ -218,7 +223,19 @@
                     dataType: 'json',
                     type: 'POST',
                     success: function (resp) {
-                        hot.loadData(resp);
+                        let columns = hot.getSettings().columns;
+                        let data = JSON.parse(resp.vacancies);
+                        
+                        columns[5].source = JSON.parse(resp.career_types);
+                        columns[6].source = JSON.parse(resp.career_levels);
+                        columns[7].source = JSON.parse(resp.locations);
+                        columns[8].source = JSON.parse(resp.fte);
+                        columns[13].source = JSON.parse(resp.employee_types);
+
+                        hot.updateSettings({
+                            columns: columns,
+                            data: data
+                        });
                     }
                 });
             }

@@ -16,7 +16,7 @@ class Language(models.Model):
 class ParameterCommonFields(models.Model):
     no = models.IntegerField()
     name = models.CharField(max_length=500)
-    definition = models.CharField(max_length=500, blank=True, null=True)
+    definition = models.TextField(blank=True, null=True)
     note = models.CharField(max_length=500, blank=True, null=True)
     language = models.CharField(max_length=5) # must be ForeignKey filed
 

@@ -417,12 +417,25 @@ def vacancy_index(request):
 
 def vacancy_load(request):
     if is_ajax(request) and request.POST:
-        langauge = request.POST.get('language')
+        language:str = request.POST.get('language')
 
-        vacancy = cp_models.ParameterVacancy.objects.filter(language=langauge).values()
-        json_data = json.dumps(list(vacancy), default=datetime_to_string)
+        vacancies = cp_models.ParameterVacancy.objects.filter(language = language).values()
+        career_types = cp_models.ParameterCareerType.objects.filter(language = language).values_list('name', flat=True)
+        career_levels = cp_models.ParameterCareerTypeLevel.objects.filter(language = language).values_list('name', flat=True)
+        locations = cp_models.ParameterLocation.objects.filter(language = language).values_list('name', flat=True)
+        fte = cp_models.ParameterFTE.objects.filter(language = language).values_list('name', flat=True)
+        employee_types = cp_models.ParameterEmployeeType.objects.filter(language = language).values_list('name', flat=True)
 
-        return HttpResponse(json_data)
+        context = {
+            'vacancies': json.dumps(list(vacancies), default=datetime_to_string),
+            'career_levels': json.dumps(list(career_levels)),
+            'career_types': json.dumps(list(career_types)),
+            'locations': json.dumps(list(locations)),
+            'fte': json.dumps(list(fte)),
+            'employee_types': json.dumps(list(employee_types))
+        }
+
+        return JsonResponse(context)
 
     else:
         raise PermissionError
