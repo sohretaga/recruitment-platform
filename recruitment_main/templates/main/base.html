@@ -12,7 +12,11 @@
         <meta content="Themesdesign" name="author" />
 
         <!-- App favicon -->
-        <link rel="shortcut icon" href="{% static 'main/images/favicon.ico' %}">
+        <link rel="shortcut icon" href="{% static 'main/images/icon/favicon.ico' %}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{% static 'main/images/icon/apple-touch-icon.png' %}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{% static 'main/images/icon/favicon-32x32.png' %}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{% static 'main/images/icon/favicon-16x16.png' %}">
+        <link rel="manifest" href="{% static 'main/images/icon/site.webmanifest' %}">
 
         <!-- Choise Css -->
         <link rel="stylesheet" href="{% static 'main/libs/choices.js/public/assets/styles/choices.min.css' %}">
@@ -89,9 +93,14 @@
                                     <div class="dropdown d-inline-block language-switch">
                                         <button type="button" class="btn" data-bs-toggle="dropdown" aria-haspopup="true"
                                             aria-expanded="false">
-                                            <img id="header-lang-img" src="{% static 'main/images/flags/us.jpg' %}" alt="Header Language" height="16" />
+                                            <img id="header-lang-img" src="{% static 'main/images/flags/turkish.jpg' %}" alt="Header Language" height="16" />
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-end">
+                                            <!-- item-->
+                                            <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="eng">
+                                                <img src="{% static 'main/images/flags/turkish.jpg' %}" alt="user-image" class="me-1" height="12" />
+                                                <span class="align-middle">Turkish</span>
+                                            </a>
                                             <!-- item-->
                                             <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="eng">
                                                 <img src="{% static 'main/images/flags/us.jpg' %}" alt="user-image" class="me-1" height="12" />
@@ -133,9 +142,9 @@
             <!--Navbar Start-->
             <nav class="navbar navbar-expand-lg fixed-top sticky" id="navbar">
                 <div class="container-fluid custom-container">
-                    <a class="navbar-brand text-dark fw-bold me-auto" href="index.html">
-                        <img src="{% static 'main/images/logo-dark.png' %}" height="22" alt="" class="logo-dark" />
-                        <img src="{% static 'main/images/logo-light.png' %}" height="22" alt="" class="logo-light" />
+                    <a class="navbar-brand text-dark fw-bold me-auto" href="{% url 'main:main-index' %}">
+                        <img src="{% static 'main/images/mec-logo.png' %}" height="40" alt="" class="logo-dark" />
+                        <img src="{% static 'main/images/mec-logo.png' %}" height="40" alt="" class="logo-light" />
                     </a>
                     <div>
                         <button class="navbar-toggler me-3" type="button" data-bs-toggle="collapse"
@@ -305,13 +314,17 @@
                         <li class="list-inline-item dropdown">
                             <a href="javascript:void(0)" class="header-item" id="userdropdown" data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                                <img src="{% static 'main/images/profile.jpg' %}" alt="mdo" width="35" height="35" class="rounded-circle me-1"> <span class="d-none d-md-inline-block fw-medium">Hi, Sohrat</span>
+                                <img src="{% static 'main/images/profile.jpg' %}" alt="mdo" width="35" height="35" class="rounded-circle me-1"> <span class="d-none d-md-inline-block fw-medium">Hi, {{ user.first_name }}</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown">
                                 <li><a class="dropdown-item" href="manage-jobs.html">Manage Jobs</a></li>
                                 <li><a class="dropdown-item" href="bookmark-jobs.html">Bookmarks Jobs</a></li>
                                 <li><a class="dropdown-item" href="profile.html">My Profile</a></li>
                                 <li><a class="dropdown-item" href="sign-out.html">Logout</a></li>
+                                {% if user.is_superuser  %}
+                                    <li><a class="dropdown-item" target="_blank" href="/admin">Admin Panel</a></li>
+                                    <li><a class="dropdown-item" target="_blank" href="/cp">Control Panel</a></li>
+                                {% endif %}
                             </ul>
                         </li>
                     </ul><!--end header-menu-->
