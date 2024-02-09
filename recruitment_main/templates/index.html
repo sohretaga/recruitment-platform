@@ -1,7 +1,25 @@
-{% extends 'main/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block title %}Home{% endblock title %}
+
+{% block head %}
+
+    <!-- Choise Css -->
+    <link rel="stylesheet" href="{% static 'main/libs/choices.js/public/assets/styles/choices.min.css' %}">
+
+    <!-- Swiper Css -->
+    <link rel="stylesheet" href="{% static 'main/libs/swiper/swiper-bundle.min.css' %}">
+
+    <!-- Bootstrap Css -->
+    <link href="{% static 'main/css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="{% static 'main/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="{% static 'main/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
+    <!--Custom Css-->
+
+{% endblock head %}
 
 {% block content %}
 
@@ -374,7 +392,7 @@
                                 <i class="uim uim-airplay"></i>
                             </div>
                             <div class="popu-category-content mt-4">
-                                <a href="job-categories.html" class="text-dark stretched-link">
+                                <a href="{% url 'job:categories' %}" class="text-dark stretched-link">
                                     <h5 class="fs-18">Technology</h5>
                                 </a>
                                 <p class="text-muted mb-0">1250 Jobs</p>
@@ -388,7 +406,7 @@
                                 <i class="uim uim-bag"></i>
                             </div>
                             <div class="popu-category-content mt-4">
-                                <a href="job-categories.html" class="text-dark stretched-link">
+                                <a href="{% url 'job:categories' %}" class="text-dark stretched-link">
                                     <h5 class="fs-18">Government</h5>
                                 </a>
                                 <p class="text-muted mb-0">802 Jobs</p>
@@ -402,7 +420,7 @@
                                 <i class="uim uim-user-md"></i>
                             </div>
                             <div class="popu-category-content mt-4">
-                                <a href="job-categories.html" class="text-dark stretched-link">
+                                <a href="{% url 'job:categories' %}" class="text-dark stretched-link">
                                     <h5 class="fs-18">Accounting / Finance</h5>
                                 </a>
                                 <p class="text-muted mb-0">577 Jobs</p>
@@ -416,7 +434,7 @@
                                 <i class="uim uim-hospital"></i>
                             </div>
                             <div class="popu-category-content mt-4">
-                                <a href="job-categories.html" class="text-dark stretched-link">
+                                <a href="{% url 'job:categories' %}" class="text-dark stretched-link">
                                     <h5 class="fs-18">Construction / Facilities</h5>
                                 </a>
                                 <p class="text-muted mb-0">285 Jobs</p>
@@ -430,7 +448,7 @@
                                 <i class="uim uim-telegram-alt"></i>
                             </div>
                             <div class="popu-category-content mt-4">
-                                <a href="job-categories.html" class="text-dark stretched-link">
+                                <a href="{% url 'job:categories' %}" class="text-dark stretched-link">
                                     <h5 class="fs-18">Tele-communications</h5>
                                 </a>
                                 <p class="text-muted mb-0">495 Jobs</p>
@@ -444,7 +462,7 @@
                                 <i class="uim uim-scenery"></i>
                             </div>
                             <div class="popu-category-content mt-4">
-                                <a href="job-categories.html" class="text-dark stretched-link">
+                                <a href="{% url 'job:categories' %}" class="text-dark stretched-link">
                                     <h5 class="fs-18">Design & Multimedia</h5>
                                 </a>
                                 <p class="text-muted mb-0">1045 Jobs</p>
@@ -458,7 +476,7 @@
                                 <i class="uim uim-android-alt"></i>
                             </div>
                             <div class="popu-category-content mt-4">
-                                <a href="job-categories.html" class="text-dark stretched-link">
+                                <a href="{% url 'job:categories' %}" class="text-dark stretched-link">
                                     <h5 class="fs-18">Human Resource</h5>
                                 </a>
                                 <p class="text-muted mb-0">1516 Jobs</p>
@@ -471,7 +489,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="mt-5 text-center">
-                            <a href="job-categories.html" class="btn btn-primary btn-hover">Browse All Categories <i class="uil uil-arrow-right"></i></a>
+                            <a href="{% url 'job:categories' %}" class="btn btn-primary btn-hover">Browse All Categories <i class="uil uil-arrow-right"></i></a>
                         </div>
                     </div><!--end col-->
                 </div><!--end row-->
@@ -538,7 +556,7 @@
                                             </div><!--end col-->
                                             <div class="col-lg-10">
                                                 <div class="mt-3 mt-lg-0">
-                                                    <h5 class="fs-17 mb-1"><a href="job-details.html" class="text-dark">HTML Developer</a> <small class="text-muted fw-normal">(0-2 Yrs Exp.)</small></h5>
+                                                    <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' %}" class="text-dark">HTML Developer</a> <small class="text-muted fw-normal">(0-2 Yrs Exp.)</small></h5>
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
                                                             <p class="text-muted fs-14 mb-0">Jobcy Technology Pvt.Ltd</p>
@@ -594,7 +612,7 @@
                                             </div><!--end col-->
                                             <div class="col-lg-10">
                                                 <div class="mt-3 mt-lg-0">
-                                                    <h5 class="fs-17 mb-1"><a href="job-details.html" class="text-dark">Marketing Director</a> <small class="text-muted fw-normal">(2-4 Yrs Exp.)</small></h5>
+                                                    <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' %}" class="text-dark">Marketing Director</a> <small class="text-muted fw-normal">(2-4 Yrs Exp.)</small></h5>
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
                                                             <p class="text-muted fs-14 mb-0">Creative Agency</p>
@@ -649,7 +667,7 @@
                                             </div><!--end col-->
                                             <div class="col-lg-10">
                                                 <div class="mt-3 mt-lg-0">
-                                                    <h5 class="fs-17 mb-1"><a href="job-details.html" class="text-dark">HTML Developer</a> <small class="text-muted fw-normal">(2-4 Yrs Exp.)</small></h5>
+                                                    <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' %}" class="text-dark">HTML Developer</a> <small class="text-muted fw-normal">(2-4 Yrs Exp.)</small></h5>
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
                                                             <p class="text-muted fs-14 mb-0">Jobcy Technology Pvt.Ltd</p>
@@ -704,7 +722,7 @@
                                             </div><!--end col-->
                                             <div class="col-lg-10">
                                                 <div class="mt-3 mt-lg-0">
-                                                    <h5 class="fs-17 mb-1"><a href="job-details.html" class="text-dark">Product Sales Specialist</a> <small class="text-muted fw-normal">(5+ Yrs Exp.)</small></h5>
+                                                    <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' %}" class="text-dark">Product Sales Specialist</a> <small class="text-muted fw-normal">(5+ Yrs Exp.)</small></h5>
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
                                                             <p class="text-muted fs-14 mb-0">Jobcy Technology Pvt.Ltd</p>
@@ -759,7 +777,7 @@
                                             </div><!--end col-->
                                             <div class="col-lg-10">
                                                 <div class="mt-3 mt-lg-0">
-                                                    <h5 class="fs-17 mb-1"><a href="job-details.html" class="text-dark">Product Designer</a> <small class="text-muted fw-normal">(0-5 Yrs Exp.)</small></h5>
+                                                    <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' %}" class="text-dark">Product Designer</a> <small class="text-muted fw-normal">(0-5 Yrs Exp.)</small></h5>
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
                                                             <p class="text-muted fs-14 mb-0">Creative Agency</p>
@@ -806,7 +824,7 @@
                                 <!--end job-box-->
 
                                 <div class="text-center mt-4 pt-2">
-                                    <a href="job-list.html" class="btn btn-primary">View More <i class="uil uil-arrow-right"></i></a>
+                                    <a href="{% url 'job:vacancies' %}" class="btn btn-primary">View More <i class="uil uil-arrow-right"></i></a>
                                 </div>
 
                             </div>
@@ -821,7 +839,7 @@
                                             </div><!--end col-->
                                             <div class="col-lg-10">
                                                 <div class="mt-3 mt-lg-0">
-                                                    <h5 class="fs-17 mb-1"><a href="job-details.html" class="text-dark">HTML Developer</a> <small class="text-muted fw-normal">(0-2 Yrs Exp.)</small></h5>
+                                                    <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' %}" class="text-dark">HTML Developer</a> <small class="text-muted fw-normal">(0-2 Yrs Exp.)</small></h5>
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
                                                             <p class="text-muted fs-14 mb-0">Jobcy Technology Pvt.Ltd</p>
@@ -877,7 +895,7 @@
                                             </div><!--end col-->
                                             <div class="col-lg-10">
                                                 <div class="mt-3 mt-lg-0">
-                                                    <h5 class="fs-17 mb-1"><a href="job-details.html" class="text-dark">Marketing Director</a> <small class="text-muted fw-normal">(2-4 Yrs Exp.)</small></h5>
+                                                    <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' %}" class="text-dark">Marketing Director</a> <small class="text-muted fw-normal">(2-4 Yrs Exp.)</small></h5>
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
                                                             <p class="text-muted fs-14 mb-0">Creative Agency</p>
@@ -932,7 +950,7 @@
                                             </div><!--end col-->
                                             <div class="col-lg-10">
                                                 <div class="mt-3 mt-lg-0">
-                                                    <h5 class="fs-17 mb-1"><a href="job-details.html" class="text-dark">HTML Developer</a> <small class="text-muted fw-normal">(2-4 Yrs Exp.)</small></h5>
+                                                    <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' %}" class="text-dark">HTML Developer</a> <small class="text-muted fw-normal">(2-4 Yrs Exp.)</small></h5>
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
                                                             <p class="text-muted fs-14 mb-0">Jobcy Technology Pvt.Ltd</p>
@@ -987,7 +1005,7 @@
                                             </div><!--end col-->
                                             <div class="col-lg-10">
                                                 <div class="mt-3 mt-lg-0">
-                                                    <h5 class="fs-17 mb-1"><a href="job-details.html" class="text-dark">Product Sales Specialist</a> <small class="text-muted fw-normal">(5+ Yrs Exp.)</small></h5>
+                                                    <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' %}" class="text-dark">Product Sales Specialist</a> <small class="text-muted fw-normal">(5+ Yrs Exp.)</small></h5>
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
                                                             <p class="text-muted fs-14 mb-0">Jobcy Technology Pvt.Ltd</p>
@@ -1042,7 +1060,7 @@
                                             </div><!--end col-->
                                             <div class="col-lg-10">
                                                 <div class="mt-3 mt-lg-0">
-                                                    <h5 class="fs-17 mb-1"><a href="job-details.html" class="text-dark">Product Designer</a> <small class="text-muted fw-normal">(0-5 Yrs Exp.)</small></h5>
+                                                    <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' %}" class="text-dark">Product Designer</a> <small class="text-muted fw-normal">(0-5 Yrs Exp.)</small></h5>
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
                                                             <p class="text-muted fs-14 mb-0">Creative Agency</p>
@@ -1089,7 +1107,7 @@
                                 <!--end job-box-->
 
                                 <div class="text-center mt-4 pt-2">
-                                    <a href="job-list.html" class="btn btn-primary">View More <i class="uil uil-arrow-right"></i></a>
+                                    <a href="{% url 'job:vacancies' %}" class="btn btn-primary">View More <i class="uil uil-arrow-right"></i></a>
                                 </div>
                             </div>
                             <!--end featured-jobs-tab-->
@@ -1103,7 +1121,7 @@
                                             </div><!--end col-->
                                             <div class="col-lg-10">
                                                 <div class="mt-3 mt-lg-0">
-                                                    <h5 class="fs-17 mb-1"><a href="job-details.html" class="text-dark">HTML Developer</a> <small class="text-muted fw-normal">(0-2 Yrs Exp.)</small></h5>
+                                                    <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' %}" class="text-dark">HTML Developer</a> <small class="text-muted fw-normal">(0-2 Yrs Exp.)</small></h5>
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
                                                             <p class="text-muted fs-14 mb-0">Jobcy Technology Pvt.Ltd</p>
@@ -1159,7 +1177,7 @@
                                             </div><!--end col-->
                                             <div class="col-lg-10">
                                                 <div class="mt-3 mt-lg-0">
-                                                    <h5 class="fs-17 mb-1"><a href="job-details.html" class="text-dark">Marketing Director</a> <small class="text-muted fw-normal">(2-4 Yrs Exp.)</small></h5>
+                                                    <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' %}" class="text-dark">Marketing Director</a> <small class="text-muted fw-normal">(2-4 Yrs Exp.)</small></h5>
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
                                                             <p class="text-muted fs-14 mb-0">Creative Agency</p>
@@ -1214,7 +1232,7 @@
                                             </div><!--end col-->
                                             <div class="col-lg-10">
                                                 <div class="mt-3 mt-lg-0">
-                                                    <h5 class="fs-17 mb-1"><a href="job-details.html" class="text-dark">HTML Developer</a> <small class="text-muted fw-normal">(2-4 Yrs Exp.)</small></h5>
+                                                    <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' %}" class="text-dark">HTML Developer</a> <small class="text-muted fw-normal">(2-4 Yrs Exp.)</small></h5>
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
                                                             <p class="text-muted fs-14 mb-0">Jobcy Technology Pvt.Ltd</p>
@@ -1269,7 +1287,7 @@
                                             </div><!--end col-->
                                             <div class="col-lg-10">
                                                 <div class="mt-3 mt-lg-0">
-                                                    <h5 class="fs-17 mb-1"><a href="job-details.html" class="text-dark">Product Sales Specialist</a> <small class="text-muted fw-normal">(5+ Yrs Exp.)</small></h5>
+                                                    <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' %}" class="text-dark">Product Sales Specialist</a> <small class="text-muted fw-normal">(5+ Yrs Exp.)</small></h5>
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
                                                             <p class="text-muted fs-14 mb-0">Jobcy Technology Pvt.Ltd</p>
@@ -1324,7 +1342,7 @@
                                             </div><!--end col-->
                                             <div class="col-lg-10">
                                                 <div class="mt-3 mt-lg-0">
-                                                    <h5 class="fs-17 mb-1"><a href="job-details.html" class="text-dark">Product Designer</a> <small class="text-muted fw-normal">(0-5 Yrs Exp.)</small></h5>
+                                                    <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' %}" class="text-dark">Product Designer</a> <small class="text-muted fw-normal">(0-5 Yrs Exp.)</small></h5>
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
                                                             <p class="text-muted fs-14 mb-0">Creative Agency</p>
@@ -1371,7 +1389,7 @@
                                 <!--end job-box-->
 
                                 <div class="text-center mt-4 pt-2">
-                                    <a href="job-list.html" class="btn btn-primary">View More <i class="uil uil-arrow-right"></i></a>
+                                    <a href="{% url 'job:vacancies' %}" class="btn btn-primary">View More <i class="uil uil-arrow-right"></i></a>
                                 </div>
                             </div>
                             <!--end freelancer-tab-->
@@ -1385,7 +1403,7 @@
                                             </div><!--end col-->
                                             <div class="col-lg-10">
                                                 <div class="mt-3 mt-lg-0">
-                                                    <h5 class="fs-17 mb-1"><a href="job-details.html" class="text-dark">HTML Developer</a> <small class="text-muted fw-normal">(0-2 Yrs Exp.)</small></h5>
+                                                    <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' %}" class="text-dark">HTML Developer</a> <small class="text-muted fw-normal">(0-2 Yrs Exp.)</small></h5>
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
                                                             <p class="text-muted fs-14 mb-0">Jobcy Technology Pvt.Ltd</p>
@@ -1441,7 +1459,7 @@
                                             </div><!--end col-->
                                             <div class="col-lg-10">
                                                 <div class="mt-3 mt-lg-0">
-                                                    <h5 class="fs-17 mb-1"><a href="job-details.html" class="text-dark">Marketing Director</a> <small class="text-muted fw-normal">(2-4 Yrs Exp.)</small></h5>
+                                                    <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' %}" class="text-dark">Marketing Director</a> <small class="text-muted fw-normal">(2-4 Yrs Exp.)</small></h5>
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
                                                             <p class="text-muted fs-14 mb-0">Creative Agency</p>
@@ -1496,7 +1514,7 @@
                                             </div><!--end col-->
                                             <div class="col-lg-10">
                                                 <div class="mt-3 mt-lg-0">
-                                                    <h5 class="fs-17 mb-1"><a href="job-details.html" class="text-dark">HTML Developer</a> <small class="text-muted fw-normal">(2-4 Yrs Exp.)</small></h5>
+                                                    <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' %}" class="text-dark">HTML Developer</a> <small class="text-muted fw-normal">(2-4 Yrs Exp.)</small></h5>
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
                                                             <p class="text-muted fs-14 mb-0">Jobcy Technology Pvt.Ltd</p>
@@ -1551,7 +1569,7 @@
                                             </div><!--end col-->
                                             <div class="col-lg-10">
                                                 <div class="mt-3 mt-lg-0">
-                                                    <h5 class="fs-17 mb-1"><a href="job-details.html" class="text-dark">Product Sales Specialist</a> <small class="text-muted fw-normal">(5+ Yrs Exp.)</small></h5>
+                                                    <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' %}" class="text-dark">Product Sales Specialist</a> <small class="text-muted fw-normal">(5+ Yrs Exp.)</small></h5>
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
                                                             <p class="text-muted fs-14 mb-0">Jobcy Technology Pvt.Ltd</p>
@@ -1606,7 +1624,7 @@
                                             </div><!--end col-->
                                             <div class="col-lg-10">
                                                 <div class="mt-3 mt-lg-0">
-                                                    <h5 class="fs-17 mb-1"><a href="job-details.html" class="text-dark">Product Designer</a> <small class="text-muted fw-normal">(0-5 Yrs Exp.)</small></h5>
+                                                    <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' %}" class="text-dark">Product Designer</a> <small class="text-muted fw-normal">(0-5 Yrs Exp.)</small></h5>
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
                                                             <p class="text-muted fs-14 mb-0">Creative Agency</p>
@@ -1653,7 +1671,7 @@
                                 <!--end job-box-->
                                 
                                 <div class="text-center mt-4 pt-2">
-                                    <a href="job-list.html" class="btn btn-primary">View More <i class="uil uil-arrow-right"></i></a>
+                                    <a href="{% url 'job:vacancies' %}" class="btn btn-primary">View More <i class="uil uil-arrow-right"></i></a>
                                 </div>
                             </div>
                             <!--end part-time-tab-->
@@ -1667,7 +1685,7 @@
                                             </div><!--end col-->
                                             <div class="col-lg-10">
                                                 <div class="mt-3 mt-lg-0">
-                                                    <h5 class="fs-17 mb-1"><a href="job-details.html" class="text-dark">HTML Developer</a> <small class="text-muted fw-normal">(0-2 Yrs Exp.)</small></h5>
+                                                    <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' %}" class="text-dark">HTML Developer</a> <small class="text-muted fw-normal">(0-2 Yrs Exp.)</small></h5>
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
                                                             <p class="text-muted fs-14 mb-0">Jobcy Technology Pvt.Ltd</p>
@@ -1723,7 +1741,7 @@
                                             </div><!--end col-->
                                             <div class="col-lg-10">
                                                 <div class="mt-3 mt-lg-0">
-                                                    <h5 class="fs-17 mb-1"><a href="job-details.html" class="text-dark">Marketing Director</a> <small class="text-muted fw-normal">(2-4 Yrs Exp.)</small></h5>
+                                                    <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' %}" class="text-dark">Marketing Director</a> <small class="text-muted fw-normal">(2-4 Yrs Exp.)</small></h5>
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
                                                             <p class="text-muted fs-14 mb-0">Creative Agency</p>
@@ -1778,7 +1796,7 @@
                                             </div><!--end col-->
                                             <div class="col-lg-10">
                                                 <div class="mt-3 mt-lg-0">
-                                                    <h5 class="fs-17 mb-1"><a href="job-details.html" class="text-dark">HTML Developer</a> <small class="text-muted fw-normal">(2-4 Yrs Exp.)</small></h5>
+                                                    <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' %}" class="text-dark">HTML Developer</a> <small class="text-muted fw-normal">(2-4 Yrs Exp.)</small></h5>
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
                                                             <p class="text-muted fs-14 mb-0">Jobcy Technology Pvt.Ltd</p>
@@ -1833,7 +1851,7 @@
                                             </div><!--end col-->
                                             <div class="col-lg-10">
                                                 <div class="mt-3 mt-lg-0">
-                                                    <h5 class="fs-17 mb-1"><a href="job-details.html" class="text-dark">Product Sales Specialist</a> <small class="text-muted fw-normal">(5+ Yrs Exp.)</small></h5>
+                                                    <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' %}" class="text-dark">Product Sales Specialist</a> <small class="text-muted fw-normal">(5+ Yrs Exp.)</small></h5>
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
                                                             <p class="text-muted fs-14 mb-0">Jobcy Technology Pvt.Ltd</p>
@@ -1888,7 +1906,7 @@
                                             </div><!--end col-->
                                             <div class="col-lg-10">
                                                 <div class="mt-3 mt-lg-0">
-                                                    <h5 class="fs-17 mb-1"><a href="job-details.html" class="text-dark">Product Designer</a> <small class="text-muted fw-normal">(0-5 Yrs Exp.)</small></h5>
+                                                    <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' %}" class="text-dark">Product Designer</a> <small class="text-muted fw-normal">(0-5 Yrs Exp.)</small></h5>
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
                                                             <p class="text-muted fs-14 mb-0">Creative Agency</p>
@@ -1935,7 +1953,7 @@
                                 <!--end job-box-->
 
                                 <div class="text-center mt-4 pt-2">
-                                    <a href="job-list.html" class="btn btn-primary">View More <i class="uil uil-arrow-right"></i></a>
+                                    <a href="{% url 'job:vacancies' %}" class="btn btn-primary">View More <i class="uil uil-arrow-right"></i></a>
                                 </div>
                             </div>
                             <!--end full-time-tab-->
@@ -2316,6 +2334,11 @@
 
 {% block script %}
 
+<!-- JAVASCRIPT -->
+<script src="{% static 'main/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+
+
 <!-- Choice Js -->
 <script src="{% static 'main/libs/choices.js/public/assets/scripts/choices.min.js' %}"></script>
 
@@ -2325,6 +2348,11 @@
 <!-- Job-list Init Js -->
 <script src="{% static 'main/js/pages/job-list.init.js' %}"></script>
 
+<!-- Switcher Js -->
+<script src="{% static 'main/js/pages/switcher.init.js' %}"></script>
+
 <script src="{% static 'main/js/pages/index.init.js' %}"></script>
+
+<script src="{% static 'main/js/app.js' %}"></script>
 
 {% endblock script %}

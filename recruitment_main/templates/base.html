@@ -17,21 +17,7 @@
         <link rel="icon" type="image/png" sizes="32x32" href="{% static 'main/images/icon/favicon-32x32.png' %}">
         <link rel="icon" type="image/png" sizes="16x16" href="{% static 'main/images/icon/favicon-16x16.png' %}">
         <link rel="manifest" href="{% static 'main/images/icon/site.webmanifest' %}">
-
-        <!-- Choise Css -->
-        <link rel="stylesheet" href="{% static 'main/libs/choices.js/public/assets/styles/choices.min.css' %}">
-
-        <!-- Swiper Css -->
-        <link rel="stylesheet" href="{% static 'main/libs/swiper/swiper-bundle.min.css' %}">
-
-        <!-- Bootstrap Css -->
-        <link href="{% static 'main/css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
-        <!-- Icons Css -->
-        <link href="{% static 'main/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
-        <!-- App Css-->
-        <link href="{% static 'main/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
-        <!--Custom Css-->
-
+        
         {% block head %}
 
         {% endblock head %}
@@ -168,7 +154,7 @@
                                     Company <div class="arrow-down"></div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="jobsdropdown">
-                                    <li><a class="dropdown-item" href="about.html">About Us</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'main:about' %}">About Us</a></li>
                                     <li><a class="dropdown-item" href="services.html">Services</a></li>
                                     <li><a class="dropdown-item" href="team.html">Team</a></li>
                                     <li><a class="dropdown-item" href="pricing.html">Pricing</a></li>
@@ -183,14 +169,6 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-center" aria-labelledby="pagesdoropdown">
                                     <div class="row">
-                                        <div class="col-lg-4">
-                                            <span class="dropdown-header">Jobs</span>
-                                            <div>
-                                                <a class="dropdown-item" href="job-list-2.html">Job List-2</a>
-                                                <a class="dropdown-item" href="job-details.html">Job Details</a>
-                                                <a class="dropdown-item" href="job-categories.html">Jobs Categories</a>
-                                            </div>
-                                        </div><!--end col-->
                                         <div class="col-lg-4">
                                             <span class="dropdown-header">Candidates / Companys</span>
                                             <div>
@@ -517,15 +495,6 @@
 
         </div>
         <!-- END layout-wrapper -->
-
-        <!-- JAVASCRIPT -->
-        <script src="{% static 'main/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-        <script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
-
-        <!-- Switcher Js -->
-        <script src="{% static 'main/js/pages/switcher.init.js' %}"></script>
-        
-        <script src="{% static 'main/js/app.js' %}"></script>
 
         {% block script %}
 

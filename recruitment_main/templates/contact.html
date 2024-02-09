@@ -1,7 +1,17 @@
-{% extends 'main/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block title %}Contact{% endblock title %}
+
+{% block head %}
+    <!-- Bootstrap Css -->
+    <link href="{% static 'main/css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="{% static 'main/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="{% static 'main/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
+    <!--Custom Css-->
+{% endblock head %}
 
 {% block content %}
     <div class="page-content">
@@ -139,7 +149,18 @@
 
 {% block script %}
 
+<!-- JAVASCRIPT -->
+<script src="{% static 'main/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+
+
+<!-- Switcher Js -->
+<script src="{% static 'main/js/pages/switcher.init.js' %}"></script>
+
 <!-- Contact Js -->
 <script src="{% static 'main/js/pages/contact.js' %}"></script>
+
+<!-- App Js -->
+<script src="{% static 'main/js/app.js' %}"></script>
 
 {% endblock script %}

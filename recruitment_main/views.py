@@ -24,35 +24,14 @@ def index(request):
         'vacancies': vacancies,
     }
 
-    return render(request, 'main/index.html', context)
+    return render(request, 'index.html', context)
 
-def vacancy_load(request):
-    career_type = request.POST.get('career_type')
-    career_level = request.POST.get('career_level')
-    location = request.POST.get('location')
-    fte = request.POST.get('fte')
-    employee_type = literal_eval(request.POST.get('employee_type'))
 
-    filters = {}
+def contact(request):
+    if request.POST:
+        ...
 
-    if career_type != '---':
-        filters['career_type'] = career_type
-    
-    if career_level != '---':
-        filters['career_level'] = career_level
+    return render(request, 'contact.html')
 
-    if location != '---':
-        filters['location'] = location
-
-    if fte != '---':
-        filters['fte'] = fte
-
-    vacancies = ParameterVacancy.objects.filter(**filters, employee_type__in = employee_type)
-
-    vacancies_json = serializers.serialize('json', vacancies)
-
-    context = {
-        'vacancies': vacancies_json
-    }
-
-    return JsonResponse(context)
+def about(request):
+    return render(request, 'about.html')

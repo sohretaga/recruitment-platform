@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Categories{% endblock title %}
+
+{% block head %}
+ <!-- Choise Css -->
+ <link rel="stylesheet" href="{% static 'main/libs/choices.js/public/assets/styles/choices.min.css' %}">
+
+ <!-- Bootstrap Css -->
+ <link href="{% static 'main/css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+ <!-- Icons Css -->
+ <link href="{% static 'main/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+ <!-- App Css-->
+ <link href="{% static 'main/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
+ <!--Custom Css-->
+{% endblock head %}
+
+{% block content %}
+<div class="page-content">
+
+    <!-- Start home -->
+    <section class="page-title-box">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="text-center text-white">
+                        <h3 class="mb-4">Jobs Categories</h3>
+                        <div class="page-next">
+                            <nav class="d-inline-block" aria-label="breadcrumb text-center">
+                                <ol class="breadcrumb justify-content-center">
+                                    <li class="breadcrumb-item"><a href="{% url 'main:main-index' %}">Home</a></li>
+                                    <!-- <li class="breadcrumb-item"><a href="javascript:void(0)">Company</a></li> -->
+                                    <li class="breadcrumb-item active" aria-current="page"> Jobs Categories </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <!--end col-->
+            </div>
+            <!--end row-->
+        </div>
+        <!--end container-->
+    </section>
+    <!-- end home -->
+
+    <!-- START SHAPE -->
+    <div class="position-relative" style="z-index: 1">
+        <div class="shape">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 250">
+                <path fill="#FFFFFF" fill-opacity="1"
+                    d="M0,192L120,202.7C240,213,480,235,720,234.7C960,235,1200,213,1320,202.7L1440,192L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path>
+            </svg>
+        </div>
+    </div>
+    <!-- END SHAPE -->
+
+
+    <!-- START CATEGORIES -->
+    <section class="section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="text-center mb-5">
+                        <p class="badge bg-warning fs-14 mb-2">Jobs Live Today</p>
+                        <h4>Browse Job By Categories</h4>
+                        <p class="text-muted">Post a job to tell us about your project. We'll quickly match you with the right freelancers.</p>
+                    </div>
+                </div><!--end col-->
+            </div><!--end row-->
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card job-Categories-box bg-light border-0">
+                        <div class="card-body p-4">
+                            <ul class="list-unstyled job-Categories-list mb-0">
+                                <li>
+                                    <a href="{% url 'job:vacancies' %}" class="primary-link">Accounting & Finance <span class="badge bg-soft-info float-end">25</span></a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'job:vacancies' %}" class="primary-link">Bank Jobs <span class="badge bg-soft-info float-end">10</span></a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'job:vacancies' %}" class="primary-link">Data Entry Job <span class="badge bg-soft-info float-end">71</span></a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'job:vacancies' %}" class="primary-link">Purchasing Manager <span class="badge bg-soft-info float-end">40</span></a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'job:vacancies' %}" class="primary-link">Project Manager <span class="badge bg-soft-info float-end">86</span></a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'job:vacancies' %}" class="primary-link">Education & training <span class="badge bg-soft-info float-end">47</span></a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'job:vacancies' %}" class="primary-link">Marketing & Advertising <span class="badge bg-soft-info float-end">47</span></a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'job:vacancies' %}" class="primary-link">Catering & Tourism <span class="badge bg-soft-info float-end">47</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div><!--end col-->
+                <div class="col-lg-4">
+                    <div class="card job-Categories-box bg-light border-0">
+                        <div class="card-body p-4">
+                            <ul class="list-unstyled job-Categories-list mb-0">
+                                <li>
+                                    <a href="{% url 'job:vacancies' %}" class="primary-link">Government Jobs <span class="badge bg-soft-info float-end">120</span></a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'job:vacancies' %}" class="primary-link">Defence Jobs <span class="badge bg-soft-info float-end">73</span></a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'job:vacancies' %}" class="primary-link">Teaching Jobs <span class="badge bg-soft-info float-end">88</span></a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'job:vacancies' %}" class="primary-link">Retail & Customer Services <span class="badge bg-soft-info float-end">10</span></a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'job:vacancies' %}" class="primary-link">Diploma Jobs <span class="badge bg-soft-info float-end">55</span></a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'job:vacancies' %}" class="primary-link">Health Care Jobs <span class="badge bg-soft-info float-end">99</span></a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'job:vacancies' %}" class="primary-link">Manufacturing & production <span class="badge bg-soft-info float-end">27</span></a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'job:vacancies' %}" class="primary-link">Performing arts & media <span class="badge bg-soft-info float-end">11</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div><!--end col-->
+                <div class="col-lg-4">
+                    <div class="card job-Categories-box bg-light border-0">
+                        <div class="card-body p-4">
+                            <ul class="list-unstyled job-Categories-list mb-0">
+                                <li>
+                                    <a href="{% url 'job:vacancies' %}" class="primary-link">It / Software Jobs <span class="badge bg-soft-info float-end">175</span></a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'job:vacancies' %}" class="primary-link">Logistics / Transportation <span class="badge bg-soft-info float-end">60</span></a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'job:vacancies' %}" class="primary-link">Sports Jobs <span class="badge bg-soft-info float-end">42</span></a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'job:vacancies' %}" class="primary-link">Forest Worker <span class="badge bg-soft-info float-end">30</span></a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'job:vacancies' %}" class="primary-link">Animal Care Worker <span class="badge bg-soft-info float-end">120</span></a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'job:vacancies' %}" class="primary-link">Digital Marketing  <span class="badge bg-soft-info float-end">88</span></a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'job:vacancies' %}" class="primary-link">Administrative Officer <span class="badge bg-soft-info float-end">04</span></a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'job:vacancies' %}" class="primary-link">Garage services <span class="badge bg-soft-info float-end">75</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div><!--end col-->
+            </div><!--end row-->
+        </div><!--end container-->
+    </section>
+    <!-- END CATEGORIES -->
+    
+    <!-- START CTA -->
+    <section class="section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="section-title text-center">
+                    <h3 class="title mb-4 pb-2">See everything about your employee at one place.</h3>
+                    <p class="para-desc text-muted mx-auto">Start working with Jobcy that can provide everything you need to generate awareness, drive traffic, connect.</p>
+                    <div class="mt-4">
+                        <a href="javascript:void(0)" class="btn btn-primary btn-hover mt-2"><i class="uil uil-rocket"></i> Get Started Now</a>
+                        <a href="javascript:void(0)" class="btn btn-outline-primary btn-hover ms-sm-1 mt-2"><i class="uil uil-capsule"></i> Free Trial</a>
+                    </div>
+                </div>
+            </div><!--end row-->
+        </div><!--end container-->
+    </section>
+    <!-- END CTA -->
+
+</div>
+<!-- End Page-content -->
+{% endblock content %}
+
+{% block script %}
+<!-- JAVASCRIPT -->
+<script src="{% static 'main/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
+
+
+<!-- Choice Js -->
+<script src="{% static 'main/libs/choices.js/public/assets/scripts/choices.min.js' %}"></script>
+
+<!-- Switcher Js -->
+<script src="{% static 'main/js/pages/switcher.init.js' %}"></script>
+
+<script src="{% static 'main/js/app.js' %}"></script>
+{% endblock script %}
