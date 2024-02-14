@@ -7,6 +7,3 @@ def blog(request):
 
 def detail(request):
     return render(request, 'blog/detail.html')
-
-def grid(request):
-    return render(request, 'blog/grid.html')

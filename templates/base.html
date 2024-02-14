@@ -174,16 +174,9 @@
                                     </div>
                                 </div>
                             </li><!--end dropdown-->
-                            <li class="nav-item dropdown dropdown-hover">
-                                <a class="nav-link" href="javascript:void(0)" id="productdropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Blog 
-                                    <div class="arrow-down"></div>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="productdropdown">
-                                    <li><a class="dropdown-item" href="{% url 'blog:blog' %}">Blog</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'blog:grid' %}">Blog Grid</a></li>
-                                </ul>
-                            </li><!--end dropdown-->
+                            <li class="nav-item">
+                                <a href="{% url 'blog:blog' %}" class="nav-link">Blog</a>
+                            </li>
                             <li class="nav-item">
                                 <a href="{% url 'main:contact' %}" class="nav-link">Contact</a>
                             </li>
