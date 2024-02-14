@@ -24,14 +24,14 @@ def index(request):
         'vacancies': vacancies,
     }
 
-    return render(request, 'index.html', context)
+    return render(request, 'main/index.html', context)
 
 
 def contact(request):
     if request.POST:
         ...
 
-    return render(request, 'contact.html')
+    return render(request, 'main/contact.html')
 
 def about(request):
-    return render(request, 'about.html')
+    return render(request, 'main/about.html')

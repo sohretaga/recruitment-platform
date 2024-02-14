@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'fontawesomefree',
     'recruitment_cp',
     'recruitment_main',
-    'job'
+    'job',
+    'blog',
 ]
 
 MIDDLEWARE = [
@@ -63,7 +64,7 @@ ROOT_URLCONF = 'recruitment.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

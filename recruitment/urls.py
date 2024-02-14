@@ -24,6 +24,7 @@ urlpatterns = [
     path('cp/', include('recruitment_cp.urls')),
     path('', include('recruitment_main.urls')),
     path('', include('job.urls')),
+    path('blog/', include('blog.urls'))
 ]
 
 urlpatterns += static(settings.STATIC_URL, documents_root=settings.STATIC_ROOT)
