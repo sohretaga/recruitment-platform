@@ -8,23 +8,7 @@ from ast import literal_eval
 # Create your views here.
 
 def index(request):
-    career_types = ParameterCareerType.objects.all()
-    career_levles = ParameterCareerLevel.objects.all()
-    locations = ParameterLocation.objects.all()
-    fte = ParameterFTE.objects.all()
-    employment_types = ParameterEmployeeType.objects.all()
-    vacancies = ParameterVacancy.objects.all()
-
-    context = {
-        'career_types': career_types,
-        'career_levels': career_levles,
-        'locations': locations,
-        'fte': fte,
-        'employment_types': employment_types,
-        'vacancies': vacancies,
-    }
-
-    return render(request, 'main/index.html', context)
+    return render(request, 'main/index.html')
 
 
 def contact(request):
@@ -35,3 +19,18 @@ def contact(request):
 
 def about(request):
     return render(request, 'main/about.html')
+
+def services(request):
+    return render(request, 'main/services.html')
+
+def team(request):
+    return render(request, 'main/team.html')
+
+def pricing(request):
+    return render(request, 'main/pricing.html')
+
+def privacy_policy(request):
+    return render(request, 'main/privacy-policy.html')
+
+def faqs(request):
+    return render(request, 'main/faqs.html')

@@ -137,11 +137,11 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="jobsdropdown">
                                     <li><a class="dropdown-item" href="{% url 'main:about' %}">About Us</a></li>
-                                    <li><a class="dropdown-item" href="services.html">Services</a></li>
-                                    <li><a class="dropdown-item" href="team.html">Team</a></li>
-                                    <li><a class="dropdown-item" href="pricing.html">Pricing</a></li>
-                                    <a class="dropdown-item" href="privacy-policy.html">Priacy & Policy</a>
-                                    <li><a class="dropdown-item" href="faqs.html">Faqs</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'main:services' %}">Services</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'main:team' %}">Team</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'main:pricing' %}">Pricing</a></li>
+                                    <a class="dropdown-item" href="{% url 'main:privacy-policy' %}">Priacy & Policy</a>
+                                    <li><a class="dropdown-item" href="{% url 'main:faqs' %}">Faqs</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown dropdown-hover">
