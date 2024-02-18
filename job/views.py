@@ -10,3 +10,9 @@ def vacancy(request):
 
 def categories(request):
     return render(request, 'job/categories.html')
+
+def manage_jobs(request):
+    return render(request, 'job/manage-jobs.html')
+
+def bookmarks(request):
+    return render(request, 'job/bookmarks.html')

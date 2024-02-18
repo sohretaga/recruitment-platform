@@ -35,3 +35,6 @@ def reset_password(request):
         ...
 
     return render(request, 'user/reset-password.html')
+
+def profile(request):
+    return render(request, 'user/profile.html')
