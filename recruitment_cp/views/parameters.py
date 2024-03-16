@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, Http404
 from recruitment_cp import models as cp_models
 from recruitment_cp.functions import is_ajax, datetime_to_string
 
@@ -10,58 +10,48 @@ def career_type_index(request):
     return render(request, 'cp/parameters/career_type.html')
 
 def career_type_load(request):
-    if is_ajax(request) and request.POST:
-        langauge = request.POST.get('language')
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            language = request.POST.get('language')
+            
+            career_types = cp_models.ParameterCareerType.objects.filter(language=language).values()
+            json_data = json.dumps(list(career_types))
 
-        career_types = cp_models.ParameterCareerType.objects.filter(language=langauge).values()
-        json_data = json.dumps(list(career_types))
-
-        return HttpResponse(json_data)
-
+            return JsonResponse(json_data, safe=False)
+        else:
+            raise PermissionError
     else:
-        raise PermissionError
+        raise Http404
 
 def career_type_save(request):
-    if is_ajax(request) and request.POST:
-        data:str = json.loads(request.POST.get('data'))
-        language:str = request.POST.get('language')
-        delete_list:list[int] = eval(request.POST.get('delete_list'))
-        index:int = 0
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            hot = json.loads(request.POST.get('hot'))
+            language = request.POST.get('language')
+            index = 0
 
-        while index < len(data):
-            id:str|None = data[index].get('id', None)
-            no:str|None = data[index].get('no', None)
-            name:str|None = data[index].get('name', None)
-            definition:str|None = data[index].get('definition', None)
-            note:str|None = data[index].get('note', None)
+            while index < len(hot):
+                pk = hot[index].pop('id', None)
+                name = hot[index].get('name', None)
 
-            if no:
-                if id:
-                    career_type = cp_models.ParameterCareerType.objects.filter(pk=id)
-                    career_type.update(
-                        no = no, name = name,
-                        definition = definition, note = note)
-
+                if name:
+                    if pk:
+                        career_types = cp_models.ParameterCareerType.objects.filter(pk=pk)
+                        career_types.update(**hot[index])
+                    else:
+                        career_types = cp_models.ParameterCareerType(language = language, **hot[index])
+                        career_types.save()
                 else:
-                    cp_models.ParameterCareerType.objects.create(
-                        no = no, name = name, language = language,
-                        definition = definition, note = note)
-            else:
-                if id:
-                    career_type = cp_models.ParameterCareerType.objects.filter(pk=id)
-                    career_type.delete()
-
-            index += 1
+                    career_types = cp_models.ParameterCareerType.objects.filter(pk = pk)
+                    career_types.delete()
                 
-        # delete row with 'DEL ROW' button
-        if len(delete_list) > 0:
-            for id in delete_list:
-                career_type = cp_models.ParameterCareerType.objects.filter(pk=id)
-                career_type.delete()
+                index += 1
 
-        return JsonResponse({'status':200})
+            return JsonResponse({'status': 200})
+        else:
+            raise PermissionError
     else:
-        raise PermissionError
+        raise Http404
     
 
 #======================================================================================================
@@ -69,444 +59,333 @@ def career_level_index(request):
     return render(request, 'cp/parameters/career_level.html')
 
 def career_level_load(request):
-    if is_ajax(request) and request.POST:
-        langauge = request.POST.get('language')
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            language = request.POST.get('language')
+            
+            career_levels = cp_models.ParameterCareerLevel.objects.filter(language=language).values()
+            json_data = json.dumps(list(career_levels))
 
-        career_levels = cp_models.ParameterCareerLevel.objects.filter(language=langauge).values()
-        json_data = json.dumps(list(career_levels))
-
-        return HttpResponse(json_data)
-
+            return JsonResponse(json_data, safe=False)
+        else:
+            raise PermissionError
     else:
-        raise PermissionError
+        raise Http404
 
 def career_level_save(request):
-    if is_ajax(request) and request.POST:
-        data:str = json.loads(request.POST.get('data'))
-        language:str = request.POST.get('language')
-        delete_list:list[int] = eval(request.POST.get('delete_list'))
-        index:int = 0
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            hot = json.loads(request.POST.get('hot'))
+            language = request.POST.get('language')
+            index = 0
 
-        while index < len(data):
-            id:str|None = data[index].get('id', None)
-            no:str|None = data[index].get('no', None)
-            name:str|None = data[index].get('name', None)
-            definition:str|None = data[index].get('definition', None)
-            note:str|None = data[index].get('note', None)
+            while index < len(hot):
+                pk = hot[index].pop('id', None)
+                name = hot[index].get('name', None)
 
-            if no:
-                if id:
-                    career_level = cp_models.ParameterCareerLevel.objects.filter(pk=id)
-                    career_level.update(
-                        no = no, name = name,
-                        definition = definition, note = note)
-
+                if name:
+                    if pk:
+                        career_level = cp_models.ParameterCareerLevel.objects.filter(pk=pk)
+                        career_level.update(**hot[index])
+                    else:
+                        career_level = cp_models.ParameterCareerLevel(language = language, **hot[index])
+                        career_level.save()
                 else:
-                    cp_models.ParameterCareerLevel.objects.create(
-                        no = no, name = name, language = language,
-                        definition = definition, note = note)
-            else:
-                if id:
-                    career_level = cp_models.ParameterCareerLevel.objects.filter(pk=id)
+                    career_level = cp_models.ParameterCareerLevel.objects.filter(pk = pk)
                     career_level.delete()
-
-            index += 1
                 
-        # delete row with 'DEL ROW' button
-        if len(delete_list) > 0:
-            for id in delete_list:
-                career_level = cp_models.ParameterCareerLevel.objects.filter(pk=id)
-                career_level.delete()
+                index += 1
 
-        return JsonResponse({'status':200})
+            return JsonResponse({'status': 200})
+        else:
+            raise PermissionError
     else:
-        raise PermissionError
+        raise Http404
+
 #======================================================================================================
 def career_type_level_index(request):
     return render(request, 'cp/parameters/career_type_level.html')
 
-def career_type_level_load(request):
-    if is_ajax(request) and request.POST:
-        langauge = request.POST.get('language')
+def career_type_level_load(request):    
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            language = request.POST.get('language')
+            
+            career_types_levels = cp_models.ParameterCareerTypeLevel.objects.filter(language=language).values()
+            json_data = json.dumps(list(career_types_levels))
 
-        career_types_levels = cp_models.ParameterCareerTypeLevel.objects.filter(language=langauge).values()
-        json_data = json.dumps(list(career_types_levels))
-
-        return HttpResponse(json_data)
-
+            return JsonResponse(json_data, safe=False)
+        else:
+            raise PermissionError
     else:
-        raise PermissionError
+        raise Http404
 
 def career_type_level_save(request):
-    if is_ajax(request) and request.POST:
-        data:str = json.loads(request.POST.get('data'))
-        language:str = request.POST.get('language')
-        delete_list:list[int] = eval(request.POST.get('delete_list'))
-        index:int = 0
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            hot = json.loads(request.POST.get('hot'))
+            language = request.POST.get('language')
+            index = 0
 
-        while index < len(data):
-            id:str|None = data[index].get('id', None)
-            no:str|None = data[index].get('no', None)
-            name:str|None = data[index].get('name', None)
-            definition:str|None = data[index].get('definition', None)
-            note:str|None = data[index].get('note', None)
+            while index < len(hot):
+                pk = hot[index].pop('id', None)
+                name = hot[index].get('name', None)
 
-            if no:
-                if id:
-                    career_type_level = cp_models.ParameterCareerTypeLevel.objects.filter(pk=id)
-                    career_type_level.update(
-                        no = no, name = name,
-                        definition = definition, note = note)
-
+                if name:
+                    if pk:
+                        career_types_levels = cp_models.ParameterCareerTypeLevel.objects.filter(pk=pk)
+                        career_types_levels.update(**hot[index])
+                    else:
+                        career_types_levels = cp_models.ParameterCareerTypeLevel(language = language, **hot[index])
+                        career_types_levels.save()
                 else:
-                    cp_models.ParameterCareerTypeLevel.objects.create(
-                        no = no, name = name, language = language,
-                        definition = definition, note = note)
-            else:
-                if id:
-                    career_type_level = cp_models.ParameterCareerTypeLevel.objects.filter(pk=id)
-                    career_type_level.delete()
-
-            index += 1
+                    career_types_levels = cp_models.ParameterCareerTypeLevel.objects.filter(pk = pk)
+                    career_types_levels.delete()
                 
-        # delete row with 'DEL ROW' button
-        if len(delete_list) > 0:
-            for id in delete_list:
-                career_type_level = cp_models.ParameterCareerTypeLevel.objects.filter(pk=id)
-                career_type_level.delete()
+                index += 1
 
-        return JsonResponse({'status':200})
+            return JsonResponse({'status': 200})
+        else:
+            raise PermissionError
     else:
-        raise PermissionError
+        raise Http404
 
 #======================================================================================================
 def location_index(request):
     return render(request, 'cp/parameters/location.html')
 
 def location_load(request):
-    if is_ajax(request) and request.POST:
-        langauge = request.POST.get('language')
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            language = request.POST.get('language')
+            
+            locations = cp_models.ParameterLocation.objects.filter(language=language).values()
+            json_data = json.dumps(list(locations))
 
-        locations = cp_models.ParameterLocation.objects.filter(language=langauge).values()
-        json_data = json.dumps(list(locations))
-
-        return HttpResponse(json_data)
-
+            return JsonResponse(json_data, safe=False)
+        else:
+            raise PermissionError
     else:
-        raise PermissionError
+        raise Http404
 
 def location_save(request):
-    if is_ajax(request) and request.POST:
-        data:str = json.loads(request.POST.get('data'))
-        language:str = request.POST.get('language')
-        delete_list:list[int] = eval(request.POST.get('delete_list'))
-        index:int = 0
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            hot = json.loads(request.POST.get('hot'))
+            language = request.POST.get('language')
+            index = 0
 
-        while index < len(data):
-            id:str|None = data[index].get('id', None)
-            no:str|None = data[index].get('no', None)
-            name:str|None = data[index].get('name', None)
-            definition:str|None = data[index].get('definition', None)
-            note:str|None = data[index].get('note', None)
+            while index < len(hot):
+                pk = hot[index].pop('id', None)
+                name = hot[index].get('name', None)
 
-            if no:
-                if id:
-                    location = cp_models.ParameterLocation.objects.filter(pk=id)
-                    location.update(
-                        no = no, name = name,
-                        definition = definition, note = note)
-
+                if name:
+                    if pk:
+                        locations = cp_models.ParameterLocation.objects.filter(pk=pk)
+                        locations.update(**hot[index])
+                    else:
+                        locations = cp_models.ParameterLocation(language = language, **hot[index])
+                        locations.save()
                 else:
-                    cp_models.ParameterLocation.objects.create(
-                        no = no, name = name, language = language,
-                        definition = definition, note = note)
-            else:
-                if id:
-                    location = cp_models.ParameterLocation.objects.filter(pk=id)
-                    location.delete()
-
-            index += 1
+                    locations = cp_models.ParameterLocation.objects.filter(pk = pk)
+                    locations.delete()
                 
-        # delete row with 'DEL ROW' button
-        if len(delete_list) > 0:
-            for id in delete_list:
-                location = cp_models.ParameterLocation.objects.filter(pk=id)
-                location.delete()
+                index += 1
 
-        return JsonResponse({'status':200})
+            return JsonResponse({'status': 200})
+        else:
+            raise PermissionError
     else:
-        raise PermissionError
+        raise Http404
     
 #======================================================================================================
 def fte_index(request):
     return render(request, 'cp/parameters/fte.html')
 
 def fte_load(request):
-    if is_ajax(request) and request.POST:
-        langauge = request.POST.get('language')
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            language = request.POST.get('language')
+            
+            fte = cp_models.ParameterFTE.objects.filter(language=language).values()
+            json_data = json.dumps(list(fte))
 
-        fte = cp_models.ParameterFTE.objects.filter(language=langauge).values()
-        json_data = json.dumps(list(fte))
-
-        return HttpResponse(json_data)
-
+            return JsonResponse(json_data, safe=False)
+        else:
+            raise PermissionError
     else:
-        raise PermissionError
+        raise Http404
 
 def fte_save(request):
-    if is_ajax(request) and request.POST:
-        data:str = json.loads(request.POST.get('data'))
-        language:str = request.POST.get('language')
-        delete_list:list[int] = eval(request.POST.get('delete_list'))
-        index:int = 0
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            hot = json.loads(request.POST.get('hot'))
+            language = request.POST.get('language')
+            index = 0
 
-        while index < len(data):
-            id:str|None = data[index].get('id', None)
-            no:str|None = data[index].get('no', None)
-            name:str|None = data[index].get('name', None)
-            definition:str|None = data[index].get('definition', None)
-            note:str|None = data[index].get('note', None)
+            while index < len(hot):
+                pk = hot[index].pop('id', None)
+                name = hot[index].get('name', None)
 
-            if no:
-                if id:
-                    fte = cp_models.ParameterFTE.objects.filter(pk=id)
-                    fte.update(
-                        no = no, name = name,
-                        definition = definition, note = note)
-
+                if name:
+                    if pk:
+                        fte = cp_models.ParameterFTE.objects.filter(pk=pk)
+                        fte.update(**hot[index])
+                    else:
+                        fte = cp_models.ParameterFTE(language = language, **hot[index])
+                        fte.save()
                 else:
-                    cp_models.ParameterFTE.objects.create(
-                        no = no, name = name, language = language,
-                        definition = definition, note = note)
-            else:
-                if id:
-                    fte = cp_models.ParameterFTE.objects.filter(pk=id)
+                    fte = cp_models.ParameterFTE.objects.filter(pk = pk)
                     fte.delete()
-
-            index += 1
                 
-        # delete row with 'DEL ROW' button
-        if len(delete_list) > 0:
-            for id in delete_list:
-                fte = cp_models.ParameterFTE.objects.filter(pk=id)
-                fte.delete()
+                index += 1
 
-        return JsonResponse({'status':200})
+            return JsonResponse({'status': 200})
+        else:
+            raise PermissionError
     else:
-        raise PermissionError
+        raise Http404
 
 #======================================================================================================
 def job_catalogue_index(request):
     return render(request, 'cp/parameters/job_catalogue.html')
 
 def job_catalogue_load(request):
-    if is_ajax(request) and request.POST:
-        langauge = request.POST.get('language')
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            language = request.POST.get('language')
+            
+            job_catalogues = cp_models.ParameterJobCatalogue.objects.filter(language=language).values()
+            json_data = json.dumps(list(job_catalogues))
 
-        job_catalogues = cp_models.ParameterJobCatalogue.objects.filter(language=langauge).values()
-        json_data = json.dumps(list(job_catalogues))
-
-        return HttpResponse(json_data)
-
+            return JsonResponse(json_data, safe=False)
+        else:
+            raise PermissionError
     else:
-        raise PermissionError
+        raise Http404
 
 def job_catalogue_save(request):
-    if is_ajax(request) and request.POST:
-        data:str = json.loads(request.POST.get('data'))
-        language:str = request.POST.get('language')
-        delete_list:list[int] = eval(request.POST.get('delete_list'))
-        index:int = 0
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            hot = json.loads(request.POST.get('hot'))
+            language = request.POST.get('language')
+            index = 0
 
-        while index < len(data):
-            id:str|None = data[index].get('id', None)
-            no:str|None = data[index].get('no', None)
-            name:str|None = data[index].get('name', None)
-            definition:str|None = data[index].get('definition', None)
-            note:str|None = data[index].get('note', None)
+            while index < len(hot):
+                pk = hot[index].pop('id', None)
+                name = hot[index].get('name', None)
 
-            if no:
-                if id:
-                    job_catalogue = cp_models.ParameterJobCatalogue.objects.filter(pk=id)
-                    job_catalogue.update(
-                        no = no, name = name,
-                        definition = definition, note = note)
-
+                if name:
+                    if pk:
+                        job_catalogues = cp_models.ParameterJobCatalogue.objects.filter(pk=pk)
+                        job_catalogues.update(**hot[index])
+                    else:
+                        job_catalogues = cp_models.ParameterJobCatalogue(language = language, **hot[index])
+                        job_catalogues.save()
                 else:
-                    cp_models.ParameterJobCatalogue.objects.create(
-                        no = no, name = name, language = language,
-                        definition = definition, note = note)
-            else:
-                if id:
-                    job_catalogue = cp_models.ParameterJobCatalogue.objects.filter(pk=id)
-                    job_catalogue.delete()
-
-            index += 1
+                    job_catalogues = cp_models.ParameterJobCatalogue.objects.filter(pk = pk)
+                    job_catalogues.delete()
                 
-        # delete row with 'DEL ROW' button
-        if len(delete_list) > 0:
-            for id in delete_list:
-                job_catalogue = cp_models.ParameterJobCatalogue.objects.filter(pk=id)
-                job_catalogue.delete()
+                index += 1
 
-        return JsonResponse({'status':200})
+            return JsonResponse({'status': 200})
+        else:
+            raise PermissionError
     else:
-        raise PermissionError
+        raise Http404
     
 #======================================================================================================
 def employee_type_index(request):
     return render(request, 'cp/parameters/employee_type.html')
 
 def employee_type_load(request):
-    if is_ajax(request) and request.POST:
-        langauge = request.POST.get('language')
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            language = request.POST.get('language')
+            
+            employee_type = cp_models.ParameterEmployeeType.objects.filter(language=language).values()
+            json_data = json.dumps(list(employee_type))
 
-        employee_type = cp_models.ParameterEmployeeType.objects.filter(language=langauge).values()
-        json_data = json.dumps(list(employee_type))
-
-        return HttpResponse(json_data)
-
+            return JsonResponse(json_data, safe=False)
+        else:
+            raise PermissionError
     else:
-        raise PermissionError
+        raise Http404
 
 def employee_type_save(request):
-    if is_ajax(request) and request.POST:
-        data:str = json.loads(request.POST.get('data'))
-        language:str = request.POST.get('language')
-        delete_list:list[int] = eval(request.POST.get('delete_list'))
-        index:int = 0
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            hot = json.loads(request.POST.get('hot'))
+            language = request.POST.get('language')
+            index = 0
 
-        while index < len(data):
-            id:str|None = data[index].get('id', None)
-            no:str|None = data[index].get('no', None)
-            name:str|None = data[index].get('name', None)
-            definition:str|None = data[index].get('definition', None)
-            note:str|None = data[index].get('note', None)
+            while index < len(hot):
+                pk = hot[index].pop('id', None)
+                name = hot[index].get('name', None)
 
-            if no:
-                if id:
-                    employee_type = cp_models.ParameterEmployeeType.objects.filter(pk=id)
-                    employee_type.update(
-                        no = no, name = name,
-                        definition = definition, note = note)
-
+                if name:
+                    if pk:
+                        employee_type = cp_models.ParameterEmployeeType.objects.filter(pk=pk)
+                        employee_type.update(**hot[index])
+                    else:
+                        employee_type = cp_models.ParameterEmployeeType(language = language, **hot[index])
+                        employee_type.save()
                 else:
-                    cp_models.ParameterEmployeeType.objects.create(
-                        no = no, name = name, language = language,
-                        definition = definition, note = note)
-            else:
-                if id:
-                    employee_type = cp_models.ParameterEmployeeType.objects.filter(pk=id)
+                    employee_type = cp_models.ParameterEmployeeType.objects.filter(pk = pk)
                     employee_type.delete()
-
-            index += 1
                 
-        # delete row with 'DEL ROW' button
-        if len(delete_list) > 0:
-            for id in delete_list:
-                employee_type = cp_models.ParameterEmployeeType.objects.filter(pk=id)
-                employee_type.delete()
+                index += 1
 
-        return JsonResponse({'status':200})
+            return JsonResponse({'status': 200})
+        else:
+            raise PermissionError
     else:
-        raise PermissionError
+        raise Http404
     
 #======================================================================================================
 def vacancy_index(request):
     return render(request, 'cp/parameters/vacancy.html')
 
 def vacancy_load(request):
-    if is_ajax(request) and request.POST:
-        language:str = request.POST.get('language')
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            language = request.POST.get('language')
+            
+            vacancies = cp_models.ParameterVacancy.objects.filter(language = language).values()
+            json_data = json.dumps(list(vacancies), default=datetime_to_string)
 
-        vacancies = cp_models.ParameterVacancy.objects.filter(language = language).values()
-        career_types = cp_models.ParameterCareerType.objects.filter(language = language).values_list('name', flat=True)
-        career_levels = cp_models.ParameterCareerTypeLevel.objects.filter(language = language).values_list('name', flat=True)
-        locations = cp_models.ParameterLocation.objects.filter(language = language).values_list('name', flat=True)
-        fte = cp_models.ParameterFTE.objects.filter(language = language).values_list('name', flat=True)
-        employee_types = cp_models.ParameterEmployeeType.objects.filter(language = language).values_list('name', flat=True)
-
-        context = {
-            'vacancies': json.dumps(list(vacancies), default=datetime_to_string),
-            'career_levels': json.dumps(list(career_levels)),
-            'career_types': json.dumps(list(career_types)),
-            'locations': json.dumps(list(locations)),
-            'fte': json.dumps(list(fte)),
-            'employee_types': json.dumps(list(employee_types))
-        }
-
-        return JsonResponse(context)
-
+            return JsonResponse(json_data, safe=False)
+        else:
+            raise PermissionError
     else:
-        raise PermissionError
+        raise Http404
 
 def vacancy_save(request):
-    if is_ajax(request) and request.POST:
-        data:str = json.loads(request.POST.get('data'))
-        language:str = request.POST.get('language')
-        delete_list:list[int] = eval(request.POST.get('delete_list'))
-        index:int = 0
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            hot = json.loads(request.POST.get('hot'))
+            language = request.POST.get('language')
+            index = 0
 
-        while index < len(data):
-            id:str|None = data[index].get('id', None)
-            no:str|None = data[index].get('no', None)
-            name:str|None = data[index].get('name', None)
-            definition:str|None = data[index].get('definition', None)
-            career_type:str|None = data[index].get('career_type', None)
-            career_level:str|None = data[index].get('career_level', None)
-            location:str|None = data[index].get('location', None)
-            fte:str|None = data[index].get('fte', None)
-            salary_minimum:str|None = data[index].get('salary_minimum', None)
-            salary_midpoint:str|None = data[index].get('salary_midpoint', None)
-            salary_maximum:str|None = data[index].get('salary_maximum', None)
-            job_catalogue:str|None = data[index].get('job_catalogue', None)
-            employee_type:str|None = data[index].get('employee_type', None)
+            while index < len(hot):
+                pk = hot[index].pop('id', None)
+                name = hot[index].get('name', None)
 
-            if no and name:
-                if id:
-                    vacancy = cp_models.ParameterVacancy.objects.filter(pk=id)
-                    vacancy.update(
-                        no = no,
-                        name = name,
-                        definition = definition,
-                        career_type = career_type,
-                        career_level = career_level,
-                        location = location,
-                        fte = fte,
-                        job_catalogue = job_catalogue,
-                        employee_type = employee_type,
-                        salary_minimum = salary_minimum,
-                        salary_midpoint = salary_midpoint,
-                        salary_maximum = salary_maximum)
-
+                if name:
+                    if pk:
+                        vacancies = cp_models.ParameterVacancy.objects.filter(pk=pk)
+                        vacancies.update(**hot[index])
+                    else:
+                        vacancies = cp_models.ParameterVacancy(language = language, **hot[index])
+                        vacancies.save()
                 else:
-                    cp_models.ParameterVacancy.objects.create(
-                        language = language,
-                        no = no,
-                        name = name,
-                        definition = definition,
-                        career_type = career_type,
-                        career_level = career_level,
-                        location = location,
-                        fte = fte,
-                        job_catalogue = job_catalogue,
-                        employee_type = employee_type,
-                        salary_minimum = salary_minimum,
-                        salary_midpoint = salary_midpoint,
-                        salary_maximum = salary_maximum)
-            else:
-                if id:
-                    vacancy = cp_models.ParameterVacancy.objects.filter(pk=id)
-                    vacancy.delete()
-
-            index += 1
+                    vacancies = cp_models.ParameterVacancy.objects.filter(pk = pk)
+                    vacancies.delete()
                 
-        # delete row with 'DEL ROW' button
-        if delete_list:
-            for id in delete_list:
-                vacancy = cp_models.ParameterVacancy.objects.filter(pk=id)
-                vacancy.delete()
+                index += 1
 
-        return JsonResponse({'status':200})
+            return JsonResponse({'status': 200})
+        else:
+            raise PermissionError
     else:
-        raise PermissionError
+        raise Http404

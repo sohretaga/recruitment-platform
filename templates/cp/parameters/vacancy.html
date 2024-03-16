@@ -1,379 +1,186 @@
 {% extends 'cp/base.html' %}
+{% load static %}
 {% load filters %}
 
 {% block title %}Vacancy - Control Panel{% endblock %}
 
 {% block stylesheets %}
-<style>
-    .handsontable thead th .relative {
-        background-color: #337AB6;
-        color: #fff;
-    }
-    .htCore td {
-        max-width: 100px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-</style>
+<link rel="stylesheet" href="{% static 'cp/css/tables.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div data-jsfiddle="vacancy" class="ajax-container">
-        <div class="row">
-            <div>
-                <div class="pull-left" style="width: 40%;">
-                    <pre id="dataConsole" class="console">Click "Load" to load data from server</pre>
+
+{% include 'cp/container.html' %}
+
+<div class="table-container">
+    <div id="data-filter">
+        <div style="display: flex; margin-bottom: 10px;">
+            <div class="chb-style">
+                <span style="margin-right: 5px;">Language: </span>
+                <div class="filter-chb">
+                    {% languages as language_list %}
+                    {% for language in language_list reversed %}
+                        {% if forloop.first %}
+                            <span title="{{language.name}}"><input type="checkbox" id="id-{{language.code}}" name="language" value="{{language.code}}"
+                                    checked="checked"></span>
+                            <label for="id-{{language.code}}"></label>
+                        {% else %}
+                            <span title="{{language.name}}"><input type="checkbox" id="id-{{language.code}}" name="language" value="{{language.code}}"></span>
+                            <label for="id-{{language.code}}"></label>
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
-            <div>
-                <div class="controls pull-right">
-                    <div style="margin-top: 5px;">
-                        <button id="clearConditions" class="btn btn-default command-btn"
-                                style="background-color: #58cd05; color: #fff; width: fit-content;">
-                            <i class="fa fa-filter" aria-hidden="true"></i>
-                        </button>
-                        <button type="button" name="load" id="load" class="btn btn-primary command-btn">LOAD</button>
-                        <button type="button" name="save" id="save" class="btn btn-primary command-btn">SAVE</button>
-                        <button type="button" name="add" id="add_row" class="btn btn-primary command-btn">ADD ROW</button>
-                        <button type="button" name="add" id="del_row" class="btn btn-primary command-btn">DEL ROW</button>
-        
-                        <a href="#" class="btn btn-primary command-btn">EXPORT</a>
-        
-                        <button type="button" name="import_data" id="import_data" class="btn btn-primary command-btn">IMPORT</button>
-                        <button type="button" name="clear" id="clear" class="btn btn-danger command-btn">CLEAR</button>
-                    </div>
-                 </div>
-            </div>
-        </div>
-
-        <div id="import-data-form-container" style="display: none;">
-            <hr>
-            <p class="alert alert-info">To get template for import data, please use export for this table...</p>
-            <form action="" method="post" enctype="multipart/form-data"
-                  id="import-data-form">
-                {% csrf_token %}
-                <input id="file_input" type="file" name="csv_file" style="display: inline;">
-                <input id="submit_input" type="submit" value="Upload and Import">
-            </form>
-            <hr>
-        </div>
-
-        <br>
-
-        
-    </div>
-</div>
-
-<div style="margin-left: 20px; margin-right: 20px;">
-    <div style="display: flex; margin-bottom: 10px;">
-        <div class="chb-style">
-            <span style="margin-right: 5px;">Language: </span>
-            <div class="filter-chb">
-                {% languages as language_list %}
-                {% for language in language_list reversed %}
-                    {% if forloop.first %}
-                        <span title="{{language.name}}"><input type="checkbox" id="id-{{language.code}}" name="language" value="{{language.code}}"
-                                checked="checked"></span>
-                        <label for="id-{{language.code}}"></label>
-                    {% else %}
-                        <span title="{{language.name}}"><input type="checkbox" id="id-{{language.code}}" name="language" value="{{language.code}}"></span>
-                        <label for="id-{{language.code}}"></label>
-                    {% endif %}
-                {% endfor %}
-            </div>
         </div>
     </div>
-    
-    <div id="vacancy" class="vacancy"></div>
-</div>
 
-{% endblock %}
+    <div class="caption" id="caption">Vacancy</div>
+    <div id="table"></div>
+</div>
+{% endblock content %}
 
 {% block scripts %}
-    <script>
-        $(document).ready(function () {
-            var
-                $$ = function (id) {
-                    return document.getElementById(id);
+<script src="{% static 'cp/js/command.js' %}"></script>
+<script src="{% static 'cp/js/processes.js' %}"></script>
+<script>
+    var hot;
+    const saveUrl = "{% url 'cp:vacancy_save' %}";
+    const loadUrl = "{% url 'cp:vacancy_load' %}";
+    const bmtTable = document.getElementById('table');
+    const consoleText = 'Vacancy';
+    const modelColumnMap = {
+        'career_types':[5],
+        'career_levels':[6],
+        'locations':[7],
+        'fte':[8],
+        'employee_types':[13]
+
+        /* We specify the names of the models from which data will be retrieved for updating as keys,
+        and the IDs of the columns to be updated as values. This structure is used to clearly define
+        which column will be updated from which model. */
+    };
+
+    $.ajaxSetup({
+        beforeSend: function (xhr, settings) {
+            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+            $('body').css('cursor', 'wait');
+        },
+        complete: function () {
+            $('body').css('cursor', 'default');
+        },
+        error: function () {
+            tableConsole.innerText = 'Failure when operation performed...';
+        }
+    });
+
+    $(document).ready(function() {
+        hot = new Handsontable(bmtTable, {
+            rowHeaders: true,
+            colHeaders: true,
+            stretchH: 'all',
+            startRows: 1,
+            wordWrap: true,
+            filters: true,
+            data: [{id:''}],
+            height: $(document).height() - 300,
+            dropdownMenu:  ['filter_by_value', 'filter_action_bar'],
+            licenseKey: 'non-commercial-and-evaluation',
+
+            hiddenColumns: {
+                columns: [0],
+                indicators: false
+            },
+
+            columns: [
+                {
+                    title: 'id',
+                    data: 'id',
+                    readOnly: true
                 },
-                container = $$('vacancy'),
-                dataConsole = $$('dataConsole'),
-                load = $$('load'),
-                save = $$('save'),
-                clear = $$('clear'),
-                add = $$('add'),
-                import_data = $$('import_data'),
-                file = $$('file'),
-                delete_list = [],
-                hot;
-
-            hot = new Handsontable(container, {
-                allowEmpty: false,
-                rowHeaders: true,
-                colHeaders: true,
-                contextMenu: true,
-                stretchH: 'all',
-                height: $(document).height() - 300,
-                startRows: 1,     
-                licenseKey: 'non-commercial-and-evaluation',
-                wordWrap: true,
-                dropdownMenu: ['filter_by_condition', 'filter_by_value', 'filter_action_bar'],
-                filters: true,
-                fixedColumnsStart: 3,
-                hiddenColumns: {
-                    columns: [0],
-                    indicators: false
+                {
+                    title: 'No',
+                    data: 'no',
+                    className: 'htCenter',
+                    colWidths: 5
                 },
-                columns: [
-                    {
-                        title: 'id',
-                        data: 'id',
-                        readOnly: true
-                    },
-                    {
-                        title: 'No',
-                        data: 'no',
-                        className: 'htCenter',
-                        colWidths: 5
-                    },
-                    {
-                        title: 'Organizatio',
-                        data: 'organization',
-                        colWidths: 100
-                    },
-                    {
-                        title: 'Position Title',
-                        data: 'name',
-                        colWidths: 100
-                    },
-                    {
-                        title: 'Definition',
-                        data: 'definition',
-                        colWidths: 100
-                    },
-                    {
-                        title: 'Career Type',
-                        data: 'career_type',
-                        type: 'dropdown',
-                        colWidths: 100
-                    },
-                    {
-                        title: 'Career Level',
-                        data: 'career_level',
-                        type: 'dropdown',
-                        colWidths: 100
-                    },
-                    {
-                        title: 'Location',
-                        data: 'location',
-                        type: 'dropdown',
-                        colWidths: 100
-                    },
-                    {
-                        title: 'FTE',
-                        data: 'fte',
-                        type: 'dropdown',
-                        colWidths: 100
-                    },
-                    {
-                        title: 'Salary Minimum',
-                        data: 'salary_minimum',
-                        colWidths: 100
-                    },
-                    {
-                        title: 'Salary Midpoint',
-                        data: 'salary_midpoint',
-                        colWidths: 100
-                    },
-                    {
-                        title: 'Salary Maximum',
-                        data: 'salary_maximum',
-                        colWidths: 100
-                    },
-                    {
-                        title: 'Job Title',
-                        data: 'job_catalogue',
-                        colWidths: 100
-                    },
-                    {
-                        title: 'Employment Type',
-                        data: 'employee_type',
-                        type: 'dropdown',
-                        colWidths: 100
-                    },
-                    {
-                        title: 'Created Date',
-                        data: 'created_date',
-                        colWidths: 100
-                    }
-
-                ]
-            });
-
-            function loadData() {
-                let language = document.querySelector("input[name='language']:checked").value;
-
-                $.ajax({
-                    url: "{% url 'cp:vacancy_load' %}",
-                    data: {
-                        'language': language
-                    },
-                    dataType: 'json',
-                    type: 'POST',
-                    success: function (resp) {
-                        let columns = hot.getSettings().columns;
-                        let data = JSON.parse(resp.vacancies);
-                        
-                        columns[5].source = JSON.parse(resp.career_types);
-                        columns[6].source = JSON.parse(resp.career_levels);
-                        columns[7].source = JSON.parse(resp.locations);
-                        columns[8].source = JSON.parse(resp.fte);
-                        columns[13].source = JSON.parse(resp.employee_types);
-
-                        hot.updateSettings({
-                            columns: columns,
-                            data: data
-                        });
-                    }
-                });
-            }
-
-            function saveData() {
-                let language = document.querySelector("input[name='language']:checked").value;
-
-                $.ajax({
-                    url: "{% url 'cp:vacancy_save' %}",
-                    data: {data: JSON.stringify(hot.getSourceData()),
-                            'language': language,
-                            'delete_list': JSON.stringify(delete_list)},
-                    dataType: 'json',
-                    type: 'POST',
-                    success: function (resp) {
-                        dataConsole.innerText = 'EES Pages ::  Data saved...';
-                        delete_list = [];
-                        loadData();
-                    }
-                });
-            }
-
-            function clearData() {
-                $.ajax({
-                    url: "",
-                    dataType: 'json',
-                    type: 'DELETE',
-                    success: function (resp) {
-                        loadData();
-                        dataConsole.innerText = 'EES Pages ::  Data was cleared...';
-                    }
-                });
-            }
-
-            Handsontable.dom.addEvent(load, 'click', function (event) {
-                event.preventDefault();
-                loadData();
-                dataConsole.innerText = 'EES Pages ::  Data loaded...';
-            });
-
-            Handsontable.dom.addEvent(save, 'click', function (event) {
-                event.preventDefault();
-                saveData();
-                dataConsole.innerText = 'EES Pages ::  Data saved...';
-
-            });
-
-            Handsontable.dom.addEvent(clear, 'click', function (event) {
-                event.preventDefault();
-                swal({
-                        title: "Are you sure?",
-                        text: "You will not be able to recover data!",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "Yes, clear table!",
-                        closeOnConfirm: false
-
-                    },
-                    function () {
-                        clearData();
-                        swal("Cleared!", "All data has been deleted.", "success");
-                    });
-            });
-
-            Handsontable.dom.addEvent(import_data, 'click', function (event) {
-                event.preventDefault();
-                $('#import-data-form-container').toggle();
-            });
-
-            Handsontable.dom.addEvent(add_row, 'click', function (event) {
-                event.preventDefault();
-                hot.alter('insert_row', '', 1);
-                dataConsole.innerText = 'EES Questions ::  New row added...';
-            });
-
-            Handsontable.dom.addEvent(del_row, 'click', function (event) {
-                event.preventDefault();
-                var lastRow = hot.countRows() - 1;
-                id = hot.getDataAtCell(lastRow, 0);
-                if (id != null) {
-                    delete_list.push(id);
-                }
-                hot.alter("remove_row", lastRow)
-                dataConsole.innerText = 'EES Questions ::  Last row deleted...';
-            });
-
-            Handsontable.hooks.add('afterChange', function () {
-            });
-
-            $.ajaxSetup({
-                beforeSend: function (xhr, settings) {
-                    xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
-                    $('body').css('cursor', 'wait');
+                {
+                    title: 'Organizatio',
+                    data: 'organization',
+                    colWidths: 100
                 },
-                complete: function () {
-                    $('body').css('cursor', 'default');
+                {
+                    title: 'Position Title',
+                    data: 'name',
+                    colWidths: 100
                 },
-                error: function () {
-                    dataConsole.innerText = 'Failure when operation performed...';
-                }
-            });
-
-            $('#clearConditions').click(function () {
-                const filter = hot.getPlugin('Filters');
-
-                for (let i = 0; i < hot.countCols(); i++) {
-                    filter.removeConditions(i);
+                {
+                    title: 'Definition',
+                    data: 'definition',
+                    colWidths: 100
+                },
+                {
+                    title: 'Career Type',
+                    data: 'career_type',
+                    type: 'dropdown',
+                    colWidths: 100
+                },
+                {
+                    title: 'Career Level',
+                    data: 'career_level',
+                    type: 'dropdown',
+                    colWidths: 100
+                },
+                {
+                    title: 'Location',
+                    data: 'location',
+                    type: 'dropdown',
+                    colWidths: 100
+                },
+                {
+                    title: 'FTE',
+                    data: 'fte',
+                    type: 'dropdown',
+                    colWidths: 100
+                },
+                {
+                    title: 'Salary Minimum',
+                    data: 'salary_minimum',
+                    colWidths: 100
+                },
+                {
+                    title: 'Salary Midpoint',
+                    data: 'salary_midpoint',
+                    colWidths: 100
+                },
+                {
+                    title: 'Salary Maximum',
+                    data: 'salary_maximum',
+                    colWidths: 100
+                },
+                {
+                    title: 'Job Title',
+                    data: 'job_catalogue',
+                    colWidths: 100
+                },
+                {
+                    title: 'Employment Type',
+                    data: 'employee_type',
+                    type: 'dropdown',
+                    colWidths: 100
+                },
+                {
+                    title: 'Created Date',
+                    data: 'created_date',
+                    colWidths: 100
                 }
 
-                filter.filter();
-                dataConsole.innerText = 'EES Calculate ::  All filters have been cleaned!';
-            });
-
-            loadData();
-            dataConsole.innerText = 'EES Pages ::  Data Loaded...';
+            ],
         });
+        
 
-        let checkboxLanguage = document.querySelectorAll("input[name='language']");
+        loadData();
+    })
 
-        function selected() {
-            dataConsole.log('selected')
-        }
+</script>
 
-        for (let i = 0; i < checkboxLanguage.length; i++) {
-            checkboxLanguage[i].addEventListener('change', function() {
-            if (this.checked) {
-                for (let j = 0; j < checkboxLanguage.length; j++) {
-                if (checkboxLanguage[j] !== this) {
-                    checkboxLanguage[j].checked = false;
-                }
-                }
-            }
-            });
-        }
-
-        checkboxLanguage.forEach(checkboxLanguage => {
-            checkboxLanguage.addEventListener("change", selected)
-        })
-    </script>
-{% endblock %}
+{% endblock scripts %}

@@ -7,6 +7,8 @@ app_name = 'cp'
 urlpatterns = [
     path('', main.index, name='cp-index'),
 
+    path('load-source', main.load_source, name='load_source'),
+
     #PARAMETER URLS
     path('parameters/career-type', parameters.career_type_index, name='career_type'),
     path('parameters/career-type-load', parameters.career_type_load, name='career_type_load'),
