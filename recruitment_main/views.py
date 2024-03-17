@@ -1,14 +1,17 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from recruitment_cp.models import ParameterCareerType, ParameterCareerLevel, ParameterLocation, ParameterFTE, ParameterEmployeeType, ParameterVacancy
-from django.core import serializers
-
-from ast import literal_eval
+from recruitment_cp import models
 
 # Create your views here.
 
 def index(request):
-    return render(request, 'main/index.html')
+    locations = models.ParameterLocation.objects.filter(language = 'en').values_list('name', flat=True)
+
+    context = {
+        'locations': locations
+    }
+
+    return render(request, 'main/index.html', context)
 
 
 def contact(request):
