@@ -5,10 +5,10 @@ from recruitment_cp import models
 # Create your views here.
 
 def index(request):
-    locations = models.ParameterLocation.objects.filter(language = 'en').values_list('name', flat=True)
+    catalogues = models.ParameterJobCatalogue.objects.filter(language = 'en').values_list('name', flat=True)
 
     context = {
-        'locations': locations
+        'catalogues': catalogues
     }
 
     return render(request, 'main/index.html', context)
