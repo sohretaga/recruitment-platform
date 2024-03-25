@@ -39,9 +39,25 @@
                                     <div class="w-100">
                                         <div class="text-center">
                                             <h5>Let's Get Started</h5>
-                                            <p class="text-white-70">Sign Up and get access to all the features of Jobcy</p>
+                                            <p class="text-white-70">Sign Up and get access to all the features of platform</p>
                                         </div>
-                                        <form action="{% url 'main:main-index' %}" class="auth-form">
+                                        <form class="auth-form" method="post">
+                                            {% csrf_token %}
+                                            
+                                            <div class="wedget-popular-title mt-4">
+                                                <div class="row justify-content-center">
+                                                    <ul class="job-list-menu nav nav-pills nav-justified flex-column flex-sm-row mb-4" id="pills-tab"
+                                                        role="tablist">
+                                                        <li class="nav-item" role="presentation">
+                                                            <button class="nav-link active" data-bs-toggle="pill" type="button" name="candidate" role="tab" >Candidate</button>
+                                                        </li>
+                                                        <li class="nav-item" role="presentation">
+                                                            <button class="nav-link" data-bs-toggle="pill" type="button" name="employer" role="tab">Employer</button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            
                                             <div class="mb-3">
                                                 <label for="usernameInput" class="form-label">Username</label>
                                                 <input type="text" name="username" class="form-control" required id="usernameInput" placeholder="Enter your username">

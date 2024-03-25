@@ -79,7 +79,7 @@
                                 </li>
                                 {% if not user.is_authenticated %}
                                     <li class="list-inline-item py-2 me-2 align-middle">
-                                        <a href="{% url 'user:sign-up' %}" class="text-dark fw-medium fs-13" data-bs-toggle="modal"><i class="uil uil-lock"></i>Sign Up</a> <!-- #signupModal -->
+                                        <a href="{% url 'user:sign-up' %}" class="text-dark fw-medium fs-13" ><i class="uil uil-lock"></i>Sign Up</a> <!-- #signupModal data-bs-toggle="modal" -->
                                     </li>
                                 {% endif %}
                                 <li class="list-inline-item align-middle">
