@@ -14,15 +14,15 @@ class CustomUserCreationForm(forms.ModelForm):
         model = CustomUser
         fields = ('username', 'email', 'user_type', 'password')
 
-    # def save(self, commit=True):
-    #     user = super().save(commit=False)
-    #     password = self.changed_data['password']
-    #     user.set_password(password)
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        password = self.cleaned_data.get('password')
+        user.set_password(password)
 
-    #     if commit:
-    #         user.save()
+        if commit:
+            user.save()
         
-    #     return user
+        return user
 
 class CustomUserChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):

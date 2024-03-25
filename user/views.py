@@ -26,12 +26,14 @@ def sign_up(request):
         if form.is_valid():
             form.save()
 
-            # username = form.cleaned_data.get('username')
-            # password = form.cleaned_data.get('password')
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
 
-            # user = authenticate(user, username, password)
-            # if user:
-            #     login(request, user)
+            user = authenticate(request, username=username, password=password)
+            
+            if user:
+                login(request, user=user)
+                return redirect('main:main-index')
 
     return render(request, 'user/sign-up.html')
 
