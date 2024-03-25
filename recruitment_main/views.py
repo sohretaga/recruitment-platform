@@ -37,3 +37,6 @@ def privacy_policy(request):
 
 def faqs(request):
     return render(request, 'main/faqs.html')
+
+def coming_soon(request):
+    return render(request, 'main/coming-soon.html')

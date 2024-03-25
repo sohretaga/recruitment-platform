@@ -38,3 +38,19 @@ def reset_password(request):
 
 def profile(request):
     return render(request, 'user/profile.html')
+
+
+def candidate_list(request):
+    return render(request, 'user/candidate-list.html')
+
+
+def candidate_details(request):
+    return render(request, 'user/candidate-details.html')
+
+
+def company_list(request):
+    return render(request, 'user/company-list.html')
+
+
+def company_details(request):
+    return render(request, 'user/company-details.html')

@@ -154,16 +154,16 @@
                                         <div class="col-lg-4">
                                             <span class="dropdown-header">Candidates / Companys</span>
                                             <div>
-                                                <a class="dropdown-item" href="candidate-list.html">Candidate List</a>
-                                                <a class="dropdown-item" href="candidate-details.html">Candidate Details</a>
-                                                <a class="dropdown-item" href="company-list.html">Company List</a>
-                                                <a class="dropdown-item" href="company-details.html">Company Details</a>
+                                                <a class="dropdown-item" href="{% url 'user:candidate-list' %}">Candidate List</a>
+                                                <a class="dropdown-item" href="{% url 'user:candidate-details' %}">Candidate Details</a>
+                                                <a class="dropdown-item" href="{% url 'user:company-list' %}">Company List</a>
+                                                <a class="dropdown-item" href="{% url 'user:company-details' %}">Company Details</a>
                                             </div>
                                         </div><!--end col-->
                                         <div class="col-lg-4">
                                             <span class="dropdown-header">Extra Pages</span>
                                             <div>
-                                                <a class="dropdown-item" href="coming-soon.html">Coming Soon</a>
+                                                <a class="dropdown-item" href="{% url 'main:coming-soon' %}">Coming Soon</a>
                                                 <a class="dropdown-item" href="404-error.html">404 Error</a>
                                             </div>
                                         </div><!--end col-->
