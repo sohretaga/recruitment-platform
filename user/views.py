@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from . import forms
 from .decorators import logout_required
 
-# Create your views here.
 
 @logout_required
 def sign_in(request):
@@ -19,7 +19,8 @@ def sign_in(request):
 
             if user:
                 login(request, user=user)
-                return redirect('main:main-index')
+                next_url = request.GET.get('next', '/')
+                return redirect(next_url)
             else:
                 messages.error(request, 'Username or password is wrong!')
 
@@ -48,15 +49,18 @@ def sign_up(request):
     return render(request, 'user/sign-up.html')
 
 def sign_out(request):
-    logout(request)
+    if request.user.is_authenticated:
+        logout(request)
     return render(request, 'user/sign-out.html')
 
+@login_required
 def reset_password(request):
     if request.POST:
         ...
 
     return render(request, 'user/reset-password.html')
 
+@login_required
 def profile(request):
     return render(request, 'user/profile.html')
 

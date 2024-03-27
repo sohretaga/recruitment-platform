@@ -1,14 +1,16 @@
 from django.shortcuts import render
-from django.http import JsonResponse, Http404
+from django.http import JsonResponse, Http404 
 from recruitment_cp.functions import is_ajax
 from recruitment_cp import models as cp_models
 
 import json
 
-# Create your views here.
 
 def index(request):
-    return render(request, 'cp/index.html')
+    if request.user.is_superuser:
+        return render(request, 'cp/index.html')
+    
+    raise Http404
 
 def load_source(request):
     if request.user.is_superuser:

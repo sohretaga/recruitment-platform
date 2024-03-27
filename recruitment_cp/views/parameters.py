@@ -7,7 +7,10 @@ import json
                         
 #======================================================================================================
 def career_type_index(request):
-    return render(request, 'cp/parameters/career_type.html')
+    if request.user.is_superuser:
+        return render(request, 'cp/parameters/career_type.html')
+
+    raise Http404
 
 def career_type_load(request):
     if request.user.is_superuser:
@@ -56,7 +59,10 @@ def career_type_save(request):
 
 #======================================================================================================
 def career_level_index(request):
-    return render(request, 'cp/parameters/career_level.html')
+    if request.user.is_superuser:
+        return render(request, 'cp/parameters/career_level.html')
+    
+    raise Http404
 
 def career_level_load(request):
     if request.user.is_superuser:
@@ -104,7 +110,10 @@ def career_level_save(request):
 
 #======================================================================================================
 def career_type_level_index(request):
-    return render(request, 'cp/parameters/career_type_level.html')
+    if request.user.is_superuser:
+        return render(request, 'cp/parameters/career_type_level.html')
+    
+    raise Http404
 
 def career_type_level_load(request):    
     if request.user.is_superuser:
@@ -152,7 +161,10 @@ def career_type_level_save(request):
 
 #======================================================================================================
 def location_index(request):
-    return render(request, 'cp/parameters/location.html')
+    if request.user.is_superuser:
+        return render(request, 'cp/parameters/location.html')
+    
+    raise Http404
 
 def location_load(request):
     if request.user.is_superuser:
@@ -200,7 +212,10 @@ def location_save(request):
     
 #======================================================================================================
 def fte_index(request):
-    return render(request, 'cp/parameters/fte.html')
+    if request.user.is_superuser:
+        return render(request, 'cp/parameters/fte.html')
+    
+    raise Http404
 
 def fte_load(request):
     if request.user.is_superuser:
@@ -248,7 +263,10 @@ def fte_save(request):
 
 #======================================================================================================
 def job_catalogue_index(request):
-    return render(request, 'cp/parameters/job_catalogue.html')
+    if request.user.is_superuser:
+        return render(request, 'cp/parameters/job_catalogue.html')
+    
+    raise Http404
 
 def job_catalogue_load(request):
     if request.user.is_superuser:
@@ -296,7 +314,10 @@ def job_catalogue_save(request):
     
 #======================================================================================================
 def employee_type_index(request):
-    return render(request, 'cp/parameters/employee_type.html')
+    if request.user.is_superuser:
+        return render(request, 'cp/parameters/employee_type.html')
+    
+    raise Http404
 
 def employee_type_load(request):
     if request.user.is_superuser:
@@ -344,7 +365,10 @@ def employee_type_save(request):
     
 #======================================================================================================
 def vacancy_index(request):
-    return render(request, 'cp/parameters/vacancy.html')
+    if request.user.is_superuser:
+        return render(request, 'cp/parameters/vacancy.html')
+    
+    raise Http404
 
 def vacancy_load(request):
     if request.user.is_superuser:

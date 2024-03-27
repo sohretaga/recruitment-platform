@@ -11,7 +11,7 @@
     <!-- App Css-->
     <link href="{% static 'main/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
     <!--Custom Css-->
-    <link href="{% static 'main/css/sign-up.css' %}" id="app-style" rel="stylesheet" type="text/css" />
+    <link href="{% static 'main/css/sign-process.css' %}" id="app-style" rel="stylesheet" type="text/css" />
 {% endblock head %}
 
 {% block content %}
@@ -24,7 +24,7 @@
                 <div class="col-xl-10 col-lg-12">
                     <div class="card auth-box">
                         <div class="row align-items-center">
-                            <div class="col-lg-6 text-center sign-up-banner">
+                            <div class="col-lg-6 text-center sign-page-banner">
                                 <div class="card-body p-4">
                                     <!-- <a href="index.html">
                                         <img src="assets/images/logo-light.png" alt="" class="logo-light">
@@ -41,14 +41,16 @@
                                         <div class="text-center">
                                             <h5>Let's Get Started</h5>
                                             {% if messages %}
-                                                {% for message in messages %}
-                                                    <p class="text-white-70 form-alert">{{ message }}</p>
-                                                {% endfor %}
+                                                <div class="alert alert-warning text-center mb-4" role="alert">
+                                                    {% for message in messages %}
+                                                        {{ message }}<br>
+                                                    {% endfor %}
+                                                </div>
                                             {% endif %}
                                         </div>
                                         <div class="wedget-popular-title mt-4">
                                             <div class="row justify-content-center">
-                                                <ul class="job-list-menu nav nav-pills nav-justified flex-column flex-sm-row mb-4" id="pills-tab"
+                                                <ul class="job-list-menu nav nav-pills nav-justified flex-sm-row mb-4" id="pills-tab"
                                                     role="tablist">
                                                     <li class="nav-item" role="presentation">
                                                         <button class="nav-link active" data-bs-toggle="pill" type="button" role="tab" onclick="changeUserType(this)" value="employer">Employer</button>
@@ -113,5 +115,5 @@
 
 <script src="{% static 'main/js/app.js' %}"></script>
 
-<script src="{% static 'main/js/pages/sign-up.js' %}"></script>
+<script src="{% static 'main/js/pages/sign-process.js' %}"></script>
 {% endblock script %}
