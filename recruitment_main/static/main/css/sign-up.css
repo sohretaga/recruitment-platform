@@ -4,4 +4,8 @@
     .sign-up-banner {
       display: none;
     }
+
+    .flex-column {
+        flex-direction: row !important;
+    }
 }
