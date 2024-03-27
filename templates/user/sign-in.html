@@ -11,6 +11,7 @@
     <!-- App Css-->
     <link href="{% static 'main/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
     <!--Custom Css-->
+    <link href="{% static 'main/css/sign-in.css' %}" id="app-style" rel="stylesheet" type="text/css" />
 {% endblock head %}
 
 {% block content %}
@@ -39,7 +40,11 @@
                                     <div class="w-100">
                                         <div class="text-center mb-4">
                                             <h5>Welcome Back !</h5>
-                                            <p class="text-white-70">Sign in to continue to Recruitment Platform.</p>
+                                            {% if messages %}
+                                                {% for message in messages %}
+                                                    <p class="text-white-70 form-alert">{{ message }}</p>
+                                                {% endfor %}
+                                            {% endif %}
                                         </div>
                                         <form class="auth-form" method="post">
                                             {% csrf_token %}

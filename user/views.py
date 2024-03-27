@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
+from django.contrib import messages
 
 from . import forms
+from .decorators import logout_required
 
 # Create your views here.
 
+@logout_required
 def sign_in(request):
     if request.method == "POST":
         form = forms.LoginForm(request.POST)
@@ -17,9 +20,12 @@ def sign_in(request):
             if user:
                 login(request, user=user)
                 return redirect('main:main-index')
+            else:
+                messages.error(request, 'Username or password is wrong!')
 
     return render(request, 'user/sign-in.html')
 
+@logout_required
 def sign_up(request):
     if request.POST:
         form = forms.CustomUserCreationForm(request.POST)
@@ -34,6 +40,10 @@ def sign_up(request):
             if user:
                 login(request, user=user)
                 return redirect('main:main-index')
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, error)
 
     return render(request, 'user/sign-up.html')
 

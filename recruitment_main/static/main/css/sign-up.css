@@ -1,0 +1,7 @@
+.form-alert { color: #FFF455; }
+
+@media only screen and (max-width: 600px) {
+    .sign-up-banner {
+      display: none;
+    }
+}

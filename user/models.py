@@ -9,6 +9,7 @@ class CustomUser(AbstractUser):
         ('candidate', 'Candidate'),
     )
 
+    email = models.EmailField(unique=True)
     user_type = models.CharField(max_length = 10, choices = USER_TYPE_CHOICES)
 
 
@@ -16,5 +17,5 @@ class Employer(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='employer')
     company_name = models.CharField(max_length=255)
 
-class Candidate:
+class Candidate(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='candidate')
