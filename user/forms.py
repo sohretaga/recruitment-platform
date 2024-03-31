@@ -8,10 +8,11 @@ class LoginForm(forms.Form):
 
 class CustomUserCreationForm(forms.ModelForm):
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
+    terms = forms.BooleanField(required=True, error_messages={'required': "You must accept the terms and conditions to complete the registration process."})
 
     class Meta:
         model = CustomUser
-        fields = ('username', 'email', 'user_type', 'password')
+        fields = ('username', 'email', 'user_type', 'password', 'terms')
 
     def save(self, commit=True):
         user = super().save(commit=False)

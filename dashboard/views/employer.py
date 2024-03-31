@@ -13,7 +13,6 @@ def complete_register(request):
 
             if form.is_valid():
                 user = request.user
-                print('inn')
 
                 user.first_name = form.cleaned_data.get('first_name')
                 user.last_name = form.cleaned_data.get('last_name')
