@@ -41,11 +41,7 @@ def sign_up(request):
             if user:
                 login(request, user=user)
                 
-                if form.cleaned_data.get('user_type') == 'employer':
-                    return redirect('dashboard:employer-complete-register')
-
-                elif form.cleaned_data.get('user_type') == 'candidate':
-                    return redirect('dashboard:candidate-complete-register')
+                return redirect('main:main-index')
 
         else:
             for field, errors in form.errors.items():
