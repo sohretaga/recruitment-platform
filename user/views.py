@@ -13,8 +13,8 @@ def sign_in(request):
         form = forms.LoginForm(request.POST)
 
         if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
             user = authenticate(request, username=username, password=password)
 
             if user:
@@ -40,7 +40,6 @@ def sign_up(request):
             
             if user:
                 login(request, user=user)
-                
                 return redirect('main:main-index')
 
         else:

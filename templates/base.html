@@ -274,6 +274,7 @@
                                     <li><a class="dropdown-item" href="{% url 'job:manage-jobs' %}">Manage Jobs</a></li>
                                     <li><a class="dropdown-item" href="{% url 'job:bookmarks' %}">Bookmarks Jobs</a></li>
                                     <li><a class="dropdown-item" href="{% url 'user:profile' %}">My Profile</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'dashboard:post-vacancy' %}">Dashboard</a></li>
                                     <li><a class="dropdown-item" href="{% url 'user:sign-out' %}">Logout</a></li>
                                     {% if user.is_superuser  %}
                                         <li><a class="dropdown-item" target="_blank" href="/admin">Admin Panel</a></li>

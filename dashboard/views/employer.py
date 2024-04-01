@@ -2,9 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 
+from dashboard.decorators import is_employer
 from dashboard.forms import CompleteRegisterForm
 from user.models import Employer
 
+@is_employer
 @login_required
 def complete_register(request):
     if not request.user.is_registration_complete:
@@ -28,3 +30,12 @@ def complete_register(request):
         return render(request, 'dashboard/employer/complete-register.html')
     
     raise Http404
+
+
+@is_employer
+@login_required
+def post_vacancy(request):
+    if request.POST:
+        ...
+    
+    return render(request, 'dashboard/employer/post-vacancy.html')
