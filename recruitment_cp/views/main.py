@@ -30,7 +30,7 @@ def load_source(request):
             elif source_model == 'fte':
                 source = cp_models.ParameterFTE.objects.filter(language = language).values_list('name', flat=True)
             
-            elif source_model == 'employee_types':
+            elif source_model == 'employment_type':
                 source = cp_models.ParameterEmployeeType.objects.filter(language = language).values_list('name', flat=True)
             
             source = json.dumps(list(source))

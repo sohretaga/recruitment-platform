@@ -38,182 +38,214 @@
         </div>
         <!-- end page title -->
 
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div id="basic-pills-wizard" class="twitter-bs-wizard">
-                            <ul class="twitter-bs-wizard-nav">
-                                <li class="nav-item">
-                                    <a href="#titles-and-career" class="nav-link" data-toggle="tab">
-                                        <span class="step-number">01</span>
-                                        <span class="step-title">Titles and Career</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#location-and-salary" class="nav-link" data-toggle="tab">
-                                        <span class="step-number">02</span>
-                                        <span class="step-title">Location and Salary</span>
-                                    </a>
-                                </li>
-                                
-                                <li class="nav-item">
-                                    <a href="#definition" class="nav-link" data-toggle="tab">
-                                        <span class="step-number">03</span>
-                                        <span class="step-title">Definition</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#confirm-detail" class="nav-link" data-toggle="tab">
-                                        <span class="step-number">04</span>
-                                        <span class="step-title">Confirm Detail</span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <div class="tab-content twitter-bs-wizard-tab-content">
-                                <div class="tab-pane" id="titles-and-career">
-                                    <form>
+        <form method="post" id="post-vacancy">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="basic-pills-wizard" class="twitter-bs-wizard">
+                                <ul class="twitter-bs-wizard-nav">
+                                    <li class="nav-item">
+                                        <a href="#titles-and-career" class="nav-link" data-toggle="tab">
+                                            <span class="step-number">01</span>
+                                            <span class="step-title">Titles and Career</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#location-and-salary" class="nav-link" data-toggle="tab">
+                                            <span class="step-number">02</span>
+                                            <span class="step-title">Location and Salary</span>
+                                        </a>
+                                    </li>
+                                    
+                                    <li class="nav-item">
+                                        <a href="#definition" class="nav-link" data-toggle="tab">
+                                            <span class="step-number">03</span>
+                                            <span class="step-title">Definition</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#confirm-detail" class="nav-link" data-toggle="tab">
+                                            <span class="step-number">04</span>
+                                            <span class="step-title">Confirm Detail</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content twitter-bs-wizard-tab-content">
+                                    <div class="tab-pane" id="titles-and-career">
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label for="basicpill-firstname-input">Position Title</label>
-                                                    <input type="text" class="form-control" id="basicpill-firstname-input">
+                                                    <input type="text" class="form-control" name="position_title" id="basicpill-firstname-input">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label for="basicpill-lastname-input">Job Title</label>
-                                                    <input type="text" class="form-control" id="basicpill-lastname-input">
+                                                    <input type="text" class="form-control" name="job_title" id="basicpill-lastname-input">
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="row">
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label>Language</label>
-                                                    <select class="custom-select">
-                                                        <option value="en" selected>English</option>
+                                                    <select class="custom-select" name="language">
+                                                        {% for language in languages %}
+                                                            {% if forloop.first %}
+                                                                <option value="{{ language.code }}" selected>{{ language.name }}</option>
+                                                            {% else %}
+                                                                <option value="{{ language.code }}">{{ language.name }}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label>Career Type</label>
-                                                    <select class="custom-select">
-                                                        <option value="test" selected>Test</option>
+                                                    <select class="custom-select" name="career_type">
+                                                        {% for type in career_types %}
+                                                            {% if forloop.first %}
+                                                                <option value="{{ type.name }}" selected>{{ type.name }}</option>
+                                                            {% else %}
+                                                                <option value="{{ type.name }}" selected>{{ type.name }}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label>Career Level</label>
-                                                    <select class="custom-select">
-                                                        <option value="test" selected>Test</option>
+                                                    <select class="custom-select" name="career_level">
+                                                        {% for type in career_levels %}
+                                                            {% if forloop.firs %}
+                                                                <option value="{{ type.name }}" selected>{{ type.name }}</option>
+                                                            {% else %}
+                                                                <option value="{{ type.name }}" selected>{{ type.name }}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
-                                </div>
-                                <div class="tab-pane" id="location-and-salary">
-                                  <div>
-                                    <form>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label>Location</label>
-                                                    <select class="custom-select">
-                                                        <option value="test" selected>Test</option>
-                                                    </select>
+                                    </div>
+                                    <div class="tab-pane" id="location-and-salary">
+                                        <div>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Location</label>
+                                                        <select class="custom-select" name="location">
+                                                            {% for location in locations %}
+                                                                {% if forloop.first %}
+                                                                    <option value="{{ location.name }}" selected>{{ location.name }}</option>
+                                                                {% else %}
+                                                                    <option value="{{ location.name }}">{{ location.name }}</option>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label for="input-currency">Salary Minimum</label>
-                                                    <input id="input-currency" class="form-control input-mask text-left" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label for="input-currency">Salary Minimum</label>
+                                                        <input id="input-currency" name="salary_minimum" class="form-control input-mask text-left" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label>Employment Type</label>
-                                                    <select class="custom-select">
-                                                        <option value="test" selected>Test</option>
-                                                    </select>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Employment Type</label>
+                                                        <select class="custom-select" name="employment_type">
+                                                            {% for type in employment_types %}
+                                                                {% if forloop.first %}
+                                                                    <option value="{{ type.name }}" selected>{{ type.name }}</option>
+                                                                {% else %}
+                                                                    <option value="{{ type.name }}">{{ type.name }}</option>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label for="input-currency">Salary Midpoint</label>
-                                                    <input id="input-currency" class="form-control input-mask text-left" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label for="input-currency">Salary Midpoint</label>
+                                                        <input id="input-currency" name="salary_midpoint" class="form-control input-mask text-left" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label>FTE</label>
-                                                    <select class="custom-select">
-                                                        <option value="test" selected>Test</option>
-                                                    </select>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>FTE</label>
+                                                        <select class="custom-select" name="fte">
+                                                            {% for fte in ftes %}
+                                                                {% if forloop.first %}
+                                                                    <option value="{{ fte.name }}" selected>{{ fte.name }}</option>
+                                                                {% else %}
+                                                                    <option value="{{ fte.name }}" selected>{{ fte.name }}</option>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label for="input-currency">Salary Maximum</label>
-                                                    <input id="input-currency" class="form-control input-mask text-left" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                  </div>
-                                </div>
-                                <div class="tab-pane" id="definition">
-                                    <div>
-                                      <form>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <div class="summernote"></div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label for="input-currency">Salary Maximum</label>
+                                                        <input id="input-currency" name="salary_maximum" class="form-control input-mask text-left" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                      </form>
                                     </div>
-                                  </div>
-                                <div class="tab-pane" id="confirm-detail">
-                                    <div class="row justify-content-center">
-                                        <div class="col-lg-6">
-                                            <div class="text-center">
-                                                <div class="mb-4">
-                                                    <i class="mdi mdi-check-circle-outline text-success display-4"></i>
-                                                </div>
-                                                <div>
-                                                    <h5>Confirm Detail</h5>
-                                                    <p class="text-muted">If several languages coalesce, the grammar of the resulting</p>
+                                    <div class="tab-pane" id="definition">
+                                        <div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <textarea class="summernote" name="definition"></textarea>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="tab-pane" id="confirm-detail">
+                                        <div class="row justify-content-center">
+                                            <div class="col-lg-6">
+                                                <div class="text-center">
+                                                    <div class="mb-4">
+                                                        <i class="mdi mdi-check-circle-outline text-success display-4"></i>
+                                                    </div>
+                                                    <div>
+                                                        <h5>Confirm Detail</h5>
+                                                        <p class="text-muted">If several languages coalesce, the grammar of the resulting</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
-                                
+                                <ul class="pager wizard twitter-bs-wizard-pager-link">
+                                    <li class="previous"><a href="#">Previous</a></li>
+                                    <li class="next"><a href="#">Next</a></li>
+                                </ul>
                             </div>
-                            <ul class="pager wizard twitter-bs-wizard-pager-link">
-                                <li class="previous"><a href="#">Previous</a></li>
-                                <li class="next"><a href="#">Next</a></li>
-                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
         <!-- end row -->
         
     </div> <!-- container-fluid -->
@@ -254,7 +286,9 @@
 
     <script src="{% static 'dashboard/libs/parsleyjs/parsley.min.js' %}"></script>
 
-    <script src="{% static 'dashboard/js/pages/form-validation.init.js' %}"></script>
-
     <script src="{% static 'dashboard/js/app.js' %}"></script>
+
+    <!-- custom javascript -->
+    <script src="{% static 'dashboard/js/pages/post-vacancy.js' %}"></script>
+
 {% endblock script %}
