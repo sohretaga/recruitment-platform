@@ -3,8 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 
 from dashboard.decorators import is_employer
-from dashboard.forms import CompleteRegisterForm, PostVacancyForm
-from user.models import Employer
+from dashboard.forms import CompleteEmployerRegisterForm, PostVacancyForm
 from recruitment_cp.models import Language, ParameterCareerType, ParameterCareerLevel, ParameterLocation, ParameterEmployeeType, ParameterFTE
 
 @is_employer
@@ -12,7 +11,7 @@ from recruitment_cp.models import Language, ParameterCareerType, ParameterCareer
 def complete_register(request):
     if not request.user.is_registration_complete:
         if request.POST:
-            form = CompleteRegisterForm(request.POST)
+            form = CompleteEmployerRegisterForm(request.POST)
 
             if form.is_valid():
                 user = request.user
@@ -20,15 +19,12 @@ def complete_register(request):
                 user.first_name = form.cleaned_data.get('first_name')
                 user.last_name = form.cleaned_data.get('last_name')
                 user.is_registration_complete = True
+                user.employer.company_name = form.cleaned_data.get('company_name')
                 user.save()
-
-                employer = Employer.objects.get(user=user)
-                employer.company_name = form.cleaned_data.get('company_name')
-                employer.save()
             
             return redirect('main:main-index')
 
-        return render(request, 'dashboard/employer/complete-register.html')
+        return render(request, 'dashboard/complete-register.html')
     
     raise Http404
 

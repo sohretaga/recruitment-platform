@@ -2,10 +2,14 @@ from django import forms
 
 from recruitment_cp.models import ParameterVacancy
 
-class CompleteRegisterForm(forms.Form):
+class CompleteEmployerRegisterForm(forms.Form):
     first_name = forms.CharField(max_length=30)
     last_name = forms.CharField(max_length=30)
     company_name = forms.CharField(max_length=100)
+
+class CompleteCandidateRegisterForm(forms.Form):
+    first_name = forms.CharField(max_length=30)
+    last_name = forms.CharField(max_length=30)
 
 class PostVacancyForm(forms.ModelForm):
     class Meta:

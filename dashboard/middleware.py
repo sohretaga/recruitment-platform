@@ -11,11 +11,13 @@ class RegistrationCompletionMiddleware:
         if not request.user.is_superuser and request.user.is_authenticated:
 
             if not request.user.is_registration_complete:
-                
-                if request.user.user_type == 'employer' and request.path != reverse('dashboard:employer-complete-register'):
-                    return redirect(reverse('dashboard:employer-complete-register'))
+                employer_complete_register_path = reverse('dashboard:employer-complete-register')
+                candidate_complete_register_path = reverse('dashboard:candidate-complete-register')
 
-                elif request.user.user_type == 'candidate' and request.path != reverse('dashboard:candidate-complete-register'):
-                    return redirect(reverse('dashboard:candidate-complete-register'))
+                if request.user.user_type == 'employer' and request.path != employer_complete_register_path:
+                    return redirect(employer_complete_register_path)
+
+                elif request.user.user_type == 'candidate' and request.path != candidate_complete_register_path:
+                    return redirect(candidate_complete_register_path)
 
         return self.get_response(request)
