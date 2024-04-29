@@ -1,0 +1,107 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block title %}Post Blog{% endblock title %}
+
+{% block head %}
+    <!-- Summernote css -->
+    <link href="{% static 'dashboard/libs/summernote/summernote-bs4.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <!-- Bootstrap Css -->
+    <link href="{% static 'dashboard/css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="{% static 'dashboard/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="{% static 'dashboard/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
+{% endblock head %}
+
+{% block content %}
+<div class="page-content">
+    <div class="container-fluid">
+
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
+                    <h4 class="mb-0">Post Blog</h4>
+
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Blog</a></li>
+                            <li class="breadcrumb-item active">Post Blog</li>
+                        </ol>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="form-group row">
+                            <label for="example-text-input" class="col-md-2 col-form-label">Blog Title</label>
+                            <div class="col-md-10">
+                                <input class="form-control" type="text" placeholder="Example Title" id="example-text-input">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label">Select Category</label>
+                            <div class="col-md-10">
+                                <select class="form-control">
+                                    <option>Select</option>
+                                    <option>Large select</option>
+                                    <option>Small select</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label">Cover Photo</label>
+                            <div class="col-md-10">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile">
+                                    <label class="custom-file-label" for="customFile">Choose file</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="summernote"></div>
+                    </div>
+                </div>
+            </div> <!-- end col -->
+        </div> <!-- end row -->
+
+    </div> <!-- container-fluid -->
+</div>
+<!-- End Page-content -->
+{% endblock content %}
+
+{% block script %}
+    <!-- JAVASCRIPT -->
+    <script src="{% static 'dashboard/libs/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'dashboard/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'dashboard/libs/metismenu/metisMenu.min.js' %}"></script>
+    <script src="{% static 'dashboard/libs/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'dashboard/libs/node-waves/waves.min.js' %}"></script>
+
+    <!-- bs custom file input plugin -->
+    <script src="{% static 'dashboard/libs/bs-custom-file-input/bs-custom-file-input.min.js' %}"></script>
+
+    <script src="{% static 'dashboard/js/pages/form-element.init.js' %}"></script>
+
+    <!-- Summernote js -->
+    <script src="{% static 'dashboard/libs/summernote/summernote-bs4.min.js' %}"></script>
+
+    <!--tinymce js-->
+    <script src="{% static 'dashboard/libs/tinymce/tinymce.min.js' %}"></script>
+
+    <!-- init js -->
+    <script src="{% static 'dashboard/js/pages/form-editor.init.js' %}"></script>
+
+    <script src="{% static 'dashboard/js/app.js' %}"></script>
+{% endblock script %}

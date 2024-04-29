@@ -267,6 +267,20 @@
                                         <span>Chart</span>
                                     </a>
                                 </li>
+                            {% elif request.user.user_type == 'blogger' %}
+                                <li>
+                                    <a href="{% url 'dashboard:all-blog' %}" class=" waves-effect">
+                                        <i class="ri-calendar-2-line"></i>
+                                        <span>All Blog</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="{% url 'dashboard:post-blog' %}" class="waves-effect">
+                                        <i class="ri-dashboard-line"></i>
+                                        <span>Post Blog</span>
+                                    </a>
+                                </li>
                             {% endif %}
 
                         </ul>

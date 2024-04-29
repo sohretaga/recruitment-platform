@@ -18,3 +18,13 @@ def is_candidate(function):
             raise Http404
     
     return wrap
+
+
+def is_blogger(function):
+    def wrap(request, *args, **kwargs):
+        if request.user.user_type == 'blogger':
+            return function(request, *args, **kwargs)
+        else:
+            raise Http404
+    
+    return wrap
