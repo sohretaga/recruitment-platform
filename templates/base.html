@@ -268,15 +268,7 @@
                                     <li><a class="dropdown-item" href="{% url 'job:manage-jobs' %}">Manage Jobs</a></li>
                                     <li><a class="dropdown-item" href="{% url 'job:bookmarks' %}">Bookmarks Jobs</a></li>
                                     <li><a class="dropdown-item" href="{% url 'user:profile' %}">My Profile</a></li>
-
-                                    {% if request.user.user_type == 'employer' %}
-                                        <li><a class="dropdown-item" href="{% url 'dashboard:post-vacancy' %}">Dashboard</a></li>
-                                    {% elif reques.user.user_type == 'candidate' %}
-                                        <li><a class="dropdown-item" href="#">Dashboard</a></li>
-                                    {% elif request.user.user_type == 'blogger' %}
-                                        <li><a class="dropdown-item" href="{% url 'dashboard:all-blog' %}">Dashboard</a></li>
-                                    {% endif %}
-
+                                    <li><a class="dropdown-item" href="{% url 'dashboard:index' %}">Dashboard</a></li>
                                     <li><a class="dropdown-item" href="{% url 'user:sign-out' %}">Logout</a></li>
                                     {% if user.is_superuser  %}
                                         <li><a class="dropdown-item" target="_blank" href="/admin">Admin Panel</a></li>

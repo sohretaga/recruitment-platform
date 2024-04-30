@@ -6,7 +6,7 @@ class CustomUser(AbstractUser):
     USER_TYPE_CHOICES = (
         ('employer', 'Employer'),
         ('candidate', 'Candidate'),
-        ('blogger', 'Blogger'),
+        ('blogger', 'Content'),
     )
 
     email = models.EmailField(unique=True)
