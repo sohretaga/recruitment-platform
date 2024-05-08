@@ -13,4 +13,3 @@ def index(request):
 
     elif request.user.user_type == 'blogger':
         return redirect(reverse('dahsboard:all-blog'))
-    

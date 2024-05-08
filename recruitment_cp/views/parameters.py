@@ -375,7 +375,11 @@ def vacancy_load(request):
         if is_ajax(request) and request.POST:
             language = request.POST.get('language')
             
-            vacancies = cp_models.ParameterVacancy.objects.filter(language = language).values()
+            vacancies = cp_models.ParameterVacancy.objects.filter(language = language)\
+                .values('id', 'no', 'organization', 'career_type', 'career_level', 'location', 'fte', 'salary_minimum',
+                        'salary_midpoint', 'salary_maximum', 'job_catalogue', 'position_title', 'job_title',
+                        'employment_type', 'definition', 'created_date')
+            
             json_data = json.dumps(list(vacancies), default=datetime_to_string)
 
             return JsonResponse(json_data, safe=False)
@@ -393,9 +397,9 @@ def vacancy_save(request):
 
             while index < len(hot):
                 pk = hot[index].pop('id', None)
-                name = hot[index].get('name', None)
+                position_title = hot[index].get('position_title', None)
 
-                if name:
+                if position_title:
                     if pk:
                         vacancies = cp_models.ParameterVacancy.objects.filter(pk=pk)
                         vacancies.update(**hot[index])

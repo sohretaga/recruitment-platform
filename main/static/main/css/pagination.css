@@ -1,0 +1,7 @@
+@media only screen and (max-width: 600px) {
+    .pagination .page-item .page-link {
+      height: 30px;
+      width: 30px;
+      margin: 0 2px;
+    }
+}

@@ -1,14 +1,19 @@
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.core.paginator import Paginator
+
 from recruitment_cp import models
 
 # Create your views here.
 
 def index(request):
-    catalogues = models.ParameterJobCatalogue.objects.filter(language = 'en').values_list('name', flat=True)
+
+    # Set up Paginator
+    paginator = Paginator(models.ParameterVacancy.objects.all(), 10)
+    current_page = request.GET.get('page')
+    vacancies = paginator.get_page(current_page)
 
     context = {
-        'catalogues': catalogues
+        'vacancies': vacancies,
     }
 
     return render(request, 'main/index.html', context)
