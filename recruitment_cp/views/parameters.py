@@ -69,7 +69,9 @@ def career_level_load(request):
         if is_ajax(request) and request.POST:
             language = request.POST.get('language')
             
-            career_levels = cp_models.ParameterCareerLevel.objects.filter(language=language).values()
+            career_levels = cp_models.ParameterCareerLevel.objects.filter(language=language).values(
+                'id', 'no', 'name', 'definition', 'note'
+            )
             json_data = json.dumps(list(career_levels))
 
             return JsonResponse(json_data, safe=False)
@@ -120,7 +122,9 @@ def career_type_level_load(request):
         if is_ajax(request) and request.POST:
             language = request.POST.get('language')
             
-            career_types_levels = cp_models.ParameterCareerTypeLevel.objects.filter(language=language).values()
+            career_types_levels = cp_models.ParameterCareerTypeLevel.objects.filter(language=language).values(
+                'id', 'no', 'name', 'definition', 'note'
+            )
             json_data = json.dumps(list(career_types_levels))
 
             return JsonResponse(json_data, safe=False)
@@ -171,7 +175,9 @@ def location_load(request):
         if is_ajax(request) and request.POST:
             language = request.POST.get('language')
             
-            locations = cp_models.ParameterLocation.objects.filter(language=language).values()
+            locations = cp_models.ParameterLocation.objects.filter(language=language).values(
+                'id', 'no', 'name', 'definition', 'note'
+            )
             json_data = json.dumps(list(locations))
 
             return JsonResponse(json_data, safe=False)
@@ -222,7 +228,9 @@ def fte_load(request):
         if is_ajax(request) and request.POST:
             language = request.POST.get('language')
             
-            fte = cp_models.ParameterFTE.objects.filter(language=language).values()
+            fte = cp_models.ParameterFTE.objects.filter(language=language).values(
+                'id', 'no', 'name', 'definition', 'note'
+            )
             json_data = json.dumps(list(fte))
 
             return JsonResponse(json_data, safe=False)
@@ -273,7 +281,9 @@ def job_catalogue_load(request):
         if is_ajax(request) and request.POST:
             language = request.POST.get('language')
             
-            job_catalogues = cp_models.ParameterJobCatalogue.objects.filter(language=language).values()
+            job_catalogues = cp_models.ParameterJobCatalogue.objects.filter(language=language).values(
+                'id', 'no', 'name', 'definition', 'note'
+            )
             json_data = json.dumps(list(job_catalogues))
 
             return JsonResponse(json_data, safe=False)
@@ -324,7 +334,9 @@ def employee_type_load(request):
         if is_ajax(request) and request.POST:
             language = request.POST.get('language')
             
-            employee_type = cp_models.ParameterEmployeeType.objects.filter(language=language).values()
+            employee_type = cp_models.ParameterEmployeeType.objects.filter(language=language).values(
+                'id', 'no', 'name', 'definition', 'note'
+            )
             json_data = json.dumps(list(employee_type))
 
             return JsonResponse(json_data, safe=False)
