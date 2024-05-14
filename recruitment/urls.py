@@ -23,11 +23,12 @@ urlpatterns = [
     path('', include('main.urls')),
     path('', include('job.urls')),
     path('', include('user.urls')),
+    path('froala_editor/', include('froala_editor.urls')),
     path('admin/', admin.site.urls),
     path('cp/', include('recruitment_cp.urls')),
     path('blog/', include('blog.urls')),
     path('dashboard/', include('dashboard.urls'))
 ]
 
-urlpatterns += static(settings.STATIC_URL, documents_root=settings.STATIC_ROOT)
-urlpatterns += static(settings.MEDIA_URL, documents_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

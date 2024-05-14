@@ -12,4 +12,4 @@ def index(request):
         pass
 
     elif request.user.user_type == 'blogger':
-        return redirect(reverse('dahsboard:all-blog'))
+        return redirect(reverse('dashboard:all-blog'))

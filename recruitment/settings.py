@@ -41,8 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    
+    'froala_editor',
     'fontawesomefree',
+
     'recruitment_cp',
     'dashboard',
     'main',
@@ -147,3 +149,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'user.CustomUser'
 
 LOGIN_URL = 'user:sign-in'
+
+FROALA_UPLOAD_PATH = 'blog/editor'
+FRAOLA_EDITOR_THIRD_PARTY = ('image_aviary', 'spell_checker')  

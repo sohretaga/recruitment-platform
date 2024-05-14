@@ -5,7 +5,7 @@
 
 {% block head %}
     <!-- Summernote css -->
-    <link href="{% static 'dashboard/libs/summernote/summernote-bs4.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'dashboard/libs/froala/froala_editor.pkgd.min.css' %}" rel="stylesheet" type="text/css" />
 
     <!-- Bootstrap Css -->
     <link href="{% static 'dashboard/css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
@@ -70,8 +70,8 @@
                                     </div>
                                 </div>
                             </div>
-    
-                            <textarea class="summernote" name="content"></textarea>
+
+                            <textarea id="froala-editor" name="content"></textarea>
 
                             <button class="btn btn-primary" type="submit">Post</button>
                         </form>
@@ -98,14 +98,49 @@
 
     <script src="{% static 'dashboard/js/pages/form-element.init.js' %}"></script>
 
-    <!-- Summernote js -->
-    <script src="{% static 'dashboard/libs/summernote/summernote-bs4.min.js' %}"></script>
+    <!-- Froala js -->
+    <script type="text/javascript" src="{% static 'dashboard/libs/froala/froala_editor.pkgd.min.js' %}"></script>
 
     <!--tinymce js-->
     <script src="{% static 'dashboard/libs/tinymce/tinymce.min.js' %}"></script>
 
     <!-- init js -->
-    <script src="{% static 'dashboard/js/pages/form-editor.init.js' %}"></script>
 
     <script src="{% static 'dashboard/js/app.js' %}"></script>
+    
+    <script>
+        var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        var editor = new FroalaEditor('#froala-editor', {
+            requestWithCredentials: true,
+
+            // Upload Image
+            imageUploadURL: "{% url 'dashboard:upload-editor-image' %}",
+            imageUploadParams: {
+                csrfmiddlewaretoken: csrftoken,
+            },
+
+            // Delete Uploaded Image
+            events: {
+                'image.removed': function ($img) {
+                    $.ajax({
+                        headers: {"X-CSRFToken": csrftoken},
+                        data: {src: $img.attr('src')}, 
+                        url: "{% url 'dashboard:delete-editor-image' %}",
+                        type: 'POST',
+
+                        // on success
+                        success: function (response) {
+                            console.log(response.message)
+                        },
+                        // on error
+                        error: function (response) {
+                            console.log(response.error)
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+
 {% endblock script %}

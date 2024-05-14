@@ -1,5 +1,6 @@
-Django==4.2.5
+Django==5.0.6
 python-dotenv==1.0.0
 psycopg2-binary==2.9.8
 fontawesomefree==6.5.1
 pillow==10.3.0
+django-froala-editor==4.2.0
