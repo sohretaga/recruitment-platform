@@ -277,7 +277,7 @@
                             <li class="list-inline-item dropdown">
                                 <a href="javascript:void(0)" class="header-item" id="userdropdown" data-bs-toggle="dropdown"
                                     aria-expanded="false">
-                                    <img src="{% static 'main/images/profile.jpg' %}" alt="mdo" width="35" height="35" class="rounded-circle me-1"> <span class="d-none d-md-inline-block fw-medium">Hi, {{ user.first_name }}</span>
+                                    <img src="{% static 'main/images/profile.jpg' %}" alt="{{ user.get_full_name }}" width="35" height="35" class="rounded-circle me-1"> <span class="d-none d-md-inline-block fw-medium">Hi, {{ user.first_name }}</span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown">
                                     <li><a class="dropdown-item" href="{% url 'job:manage-jobs' %}">Manage Jobs</a></li>
@@ -290,6 +290,10 @@
                                         <li><a class="dropdown-item" target="_blank" href="/cp">Control Panel</a></li>
                                     {% endif %}
                                 </ul>
+
+                                {% if user.user_type == 'employer' or user.is_superuser %}
+                                    <a href="{% url 'dashboard:post-vacancy' %}"><span class="d-none d-md-inline-block fw-medium">| Post Vacancy</span></a>
+                                {% endif %}
                             </li>
                         {% else %}
                             <li class="list-inline-item py-2 me-2 align-middle dropdown login-mobile">
