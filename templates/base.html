@@ -75,7 +75,11 @@
                                         <i class="uil uil-moon mode-light"></i>
                                     </a>
                                 </li>
-                                {% if not user.is_authenticated %}
+                                {% if user.is_authenticated %}
+                                    <li class="list-inline-item py-2 me-2 align-middle">
+                                        <a href="{% url 'dashboard:index' %}" class="text-dark fw-medium fs-13" >Dashboard</a> <!-- #signupModal data-bs-toggle="modal" -->
+                                    </li>
+                                {% else %}
                                     <li class="list-inline-item py-2 me-2 align-middle dropdown">
                                         <a class="list-inline-item py-2 me-2 align-middle text-dark fw-medium fs-13" href="#" id="logindropdown" role="button" data-bs-toggle="dropdown">
                                             Login <div class="arrow-down"></div>
