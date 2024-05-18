@@ -1,0 +1,15 @@
+.login-mobile {
+    display: none !important;
+}
+
+@media only screen and (max-width: 768px) {
+    .login-mobile {
+      display: inline !important;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    #logindropdown .arrow-down {
+        display: none !important;
+    }
+}

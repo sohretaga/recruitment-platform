@@ -17,6 +17,10 @@
         <link rel="icon" type="image/png" sizes="32x32" href="{% static 'main/images/icon/favicon-32x32.png' %}">
         <link rel="icon" type="image/png" sizes="16x16" href="{% static 'main/images/icon/favicon-16x16.png' %}">
         <link rel="manifest" href="{% static 'main/images/icon/site.webmanifest' %}">
+
+        <!-- Custom CSS -->
+        <link href="{% static 'main/css/login.css' %}" id="app-style" rel="stylesheet" type="text/css" />
+
         
         {% block head %}
 
@@ -72,8 +76,15 @@
                                     </a>
                                 </li>
                                 {% if not user.is_authenticated %}
-                                    <li class="list-inline-item py-2 me-2 align-middle">
-                                        <a href="{% url 'user:sign-up' %}" class="text-dark fw-medium fs-13" ><i class="uil uil-lock"></i>Sign Up</a> <!-- #signupModal data-bs-toggle="modal" -->
+                                    <li class="list-inline-item py-2 me-2 align-middle dropdown">
+                                        <a class="list-inline-item py-2 me-2 align-middle text-dark fw-medium fs-13" href="#" id="logindropdown" role="button" data-bs-toggle="dropdown">
+                                            Login <div class="arrow-down"></div>
+                                        </a>
+
+                                        <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="logindropdown">
+                                            <li><a class="dropdown-item" href="{% url 'user:sign-up' %}"><i class="uil uil-lock"></i>Sign Up</a></li>
+                                            <li><a class="dropdown-item" href="{% url 'user:sign-in' %}"><i class="uil uil-unlock"></i>Sign In</a></li>
+                                        </ul>
                                     </li>
                                 {% endif %}
                                 <li class="list-inline-item align-middle">
@@ -277,9 +288,15 @@
                                 </ul>
                             </li>
                         {% else %}
-                            <li class="list-inline-item py-2 me-2 align-middle">
-                                <a href="{% url 'user:sign-in' %}" class="text-dark fw-medium fs-13"><i class="uil uil-unlock"></i>
-                                    Sign In</a>
+                            <li class="list-inline-item py-2 me-2 align-middle dropdown login-mobile">
+                                <a class="list-inline-item py-2 me-2 align-middle text-dark fw-medium fs-13" href="#" id="logindropdown" role="button" data-bs-toggle="dropdown">
+                                    Login <div class="arrow-down"></div>
+                                </a>
+
+                                <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="logindropdown">
+                                    <li><a class="dropdown-item" href="{% url 'user:sign-up' %}"><i class="uil uil-lock"></i>Sign Up</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'user:sign-in' %}"><i class="uil uil-unlock"></i>Sign In</a></li>
+                                </ul>
                             </li>
                         {% endif %}
                     </ul><!--end header-menu-->
