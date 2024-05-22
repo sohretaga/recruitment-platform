@@ -273,7 +273,7 @@ def country_save(request):
 
 def work_experience_index(request):
     if request.user.is_superuser:
-        return render(request, 'cp/parameters/work-experience.html')
+        return render(request, 'cp/parameters/work_experience.html')
     
     raise Http404
 
