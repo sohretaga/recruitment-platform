@@ -160,7 +160,7 @@
                                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-center" aria-labelledby="pagesdoropdown">
                                     <div class="row">
                                         <div class="col-lg-4">
-                                            <span class="dropdown-header">Candidates / Companys</span>
+                                            <span class="dropdown-header">Candidates / Companies</span>
                                             <div>
                                                 <a class="dropdown-item" href="{% url 'user:candidate-list' %}">Candidate List</a>
                                                 <a class="dropdown-item" href="{% url 'user:candidate-details' %}">Candidate Details</a>
@@ -178,6 +178,9 @@
                                     </div>
                                 </div>
                             </li><!--end dropdown-->
+                            <li class="nav-item">
+                                <a href="{% url 'job:vacancies' %}" class="nav-link">Vacancies</a>
+                            </li>
                             <li class="nav-item">
                                 <a href="{% url 'blog:blog' %}" class="nav-link">Blog</a>
                             </li>
