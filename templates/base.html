@@ -287,7 +287,7 @@
                                     <li><a class="dropdown-item" href="{% url 'user:sign-out' %}">Logout</a></li>
                                     {% if user.is_superuser  %}
                                         <li><a class="dropdown-item" target="_blank" href="/admin">Admin Panel</a></li>
-                                        <li><a class="dropdown-item" target="_blank" href="/cp">Control Panel</a></li>
+                                        <li><a class="dropdown-item" target="_blank" href="{% url 'cp:vacancy' %}">Control Panel</a></li>
                                     {% endif %}
                                 </ul>
 

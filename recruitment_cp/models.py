@@ -33,7 +33,13 @@ class ParameterCareerLevel(ParameterCommonFields):
 class ParameterCareerTypeLevel(ParameterCommonFields):
     ...
 
+class ParameterCountry(ParameterCommonFields):
+    ...
+
 class ParameterLocation(ParameterCommonFields):
+    ...
+
+class ParameterWorkExperience(ParameterCommonFields):
     ...
 
 class ParameterFTE(ParameterCommonFields):
@@ -52,6 +58,7 @@ class ParameterVacancy(ParameterCommonFields):
     career_level = models.CharField(max_length = 100, blank=True, null=True)
     location = models.CharField(max_length = 100, blank=True, null=True)
     fte = models.CharField(max_length = 100, blank=True, null=True)
+    salary = models.IntegerField(default=0)
     salary_minimum = models.IntegerField(default=0)
     salary_midpoint = models.IntegerField(default=0)
     salary_maximum = models.IntegerField(default=0)

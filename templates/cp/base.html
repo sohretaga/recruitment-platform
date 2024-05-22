@@ -56,9 +56,11 @@
                     <li {% if 'career-type' in request.path and 'career-type-and-level' not in request.path %} class="active" {% endif %}><a href="{% url 'cp:career_type' %}">Career Type</a></li>
                     <li {% if 'career-level' in request.path %} class="active" {% endif %}><a href="{% url 'cp:career_level' %}">Career Level</a></li>
                     <li {% if 'career-type-and-level' in request.path %} class="active" {% endif %}><a href="{% url 'cp:career_type_level' %}">Career Type & Level</a></li>
+                    <li {% if 'country' in request.path %} class="active" {% endif %}><a href="{% url 'cp:country' %}">Country</a></li>
                     <li {% if 'location' in request.path %} class="active" {% endif %}><a href="{% url 'cp:location' %}">Location</a></li>
                     <li {% if 'fte' in request.path %} class="active" {% endif %}><a href="{% url 'cp:fte' %}">FTE</a></li>
                     <li {% if 'job-catalogue' in request.path %} class="active" {% endif %}><a href="{% url 'cp:job_catalogue' %}">Job Catalogue</a></li>
+                    <li {% if 'work-experience' in request.path %} class="active" {% endif %}><a href="{% url 'cp:work_experience' %}">Work Experience</a></li>
                     <li {% if 'employee-type' in request.path %} class="active" {% endif %}><a href="{% url 'cp:employee_type' %}">ET</a></li>
                     <li {% if 'vacancy' in request.path %} class="active" {% endif %}><a href="{% url 'cp:vacancy' %}">Vacancy</a></li>
                 {% endif %}

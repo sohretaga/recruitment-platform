@@ -217,6 +217,113 @@ def location_save(request):
         raise Http404
     
 #======================================================================================================
+def country_index(request):
+    if request.user.is_superuser:
+        return render(request, 'cp/parameters/country.html')
+    
+    raise Http404
+
+def country_load(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            language = request.POST.get('language')
+            
+            countries = cp_models.ParameterCountry.objects.filter(language=language).values(
+                'id', 'no', 'name', 'definition', 'note'
+            )
+            json_data = json.dumps(list(countries))
+
+            return JsonResponse(json_data, safe=False)
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+
+def country_save(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            hot = json.loads(request.POST.get('hot'))
+            language = request.POST.get('language')
+            index = 0
+
+            while index < len(hot):
+                pk = hot[index].pop('id', None)
+                name = hot[index].get('name', None)
+
+                if name:
+                    if pk:
+                        countries = cp_models.ParameterCountry.objects.filter(pk=pk)
+                        countries.update(**hot[index])
+                    else:
+                        countries = cp_models.ParameterCountry(language = language, **hot[index])
+                        countries.save()
+                else:
+                    countries = cp_models.ParameterCountry.objects.filter(pk = pk)
+                    countries.delete()
+                
+                index += 1
+
+            return JsonResponse({'status': 200})
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+    
+#======================================================================================================
+
+def work_experience_index(request):
+    if request.user.is_superuser:
+        return render(request, 'cp/parameters/work-experience.html')
+    
+    raise Http404
+
+def work_experience_load(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            language = request.POST.get('language')
+            
+            work_experience = cp_models.ParameterWorkExperience.objects.filter(language=language).values(
+                'id', 'no', 'name', 'definition', 'note'
+            )
+            json_data = json.dumps(list(work_experience))
+
+            return JsonResponse(json_data, safe=False)
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+
+def work_experience_save(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            hot = json.loads(request.POST.get('hot'))
+            language = request.POST.get('language')
+            index = 0
+
+            while index < len(hot):
+                pk = hot[index].pop('id', None)
+                name = hot[index].get('name', None)
+
+                if name:
+                    if pk:
+                        work_experience = cp_models.ParameterWorkExperience.objects.filter(pk=pk)
+                        work_experience.update(**hot[index])
+                    else:
+                        work_experience = cp_models.ParameterWorkExperience(language = language, **hot[index])
+                        work_experience.save()
+                else:
+                    work_experience = cp_models.ParameterWorkExperience.objects.filter(pk = pk)
+                    work_experience.delete()
+                
+                index += 1
+
+            return JsonResponse({'status': 200})
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+
+#======================================================================================================
 def fte_index(request):
     if request.user.is_superuser:
         return render(request, 'cp/parameters/fte.html')
@@ -389,7 +496,7 @@ def vacancy_load(request):
             
             vacancies = cp_models.ParameterVacancy.objects.filter(language = language)\
                 .values('id', 'no', 'organization', 'career_type', 'career_level', 'location', 'fte', 'salary_minimum',
-                        'salary_midpoint', 'salary_maximum', 'job_catalogue', 'position_title', 'job_title',
+                        'salary_midpoint', 'salary_maximum', 'salary', 'job_catalogue', 'position_title', 'job_title',
                         'employment_type', 'definition', 'created_date')
             
             json_data = json.dumps(list(vacancies), default=datetime_to_string)

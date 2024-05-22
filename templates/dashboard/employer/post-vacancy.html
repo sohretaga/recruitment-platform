@@ -75,16 +75,23 @@
                                 <div class="tab-content twitter-bs-wizard-tab-content">
                                     <div class="tab-pane" id="titles-and-career">
                                         <div class="row">
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label for="basicpill-firstname-input">Position Title</label>
                                                     <input type="text" class="form-control" name="position_title" id="basicpill-firstname-input">
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label for="basicpill-lastname-input">Job Title</label>
                                                     <input type="text" class="form-control" name="job_title" id="basicpill-lastname-input">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label for="input-currency">Salary</label>
+                                                    <input id="input-currency" name="salary" class="form-control input-mask text-left" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
                                                 </div>
                                             </div>
                                         </div>
@@ -111,7 +118,7 @@
                                                             {% if forloop.first %}
                                                                 <option value="{{ type.name }}" selected>{{ type.name }}</option>
                                                             {% else %}
-                                                                <option value="{{ type.name }}" selected>{{ type.name }}</option>
+                                                                <option value="{{ type.name }}">{{ type.name }}</option>
                                                             {% endif %}
                                                         {% endfor %}
                                                     </select>
@@ -125,7 +132,7 @@
                                                             {% if forloop.firs %}
                                                                 <option value="{{ type.name }}" selected>{{ type.name }}</option>
                                                             {% else %}
-                                                                <option value="{{ type.name }}" selected>{{ type.name }}</option>
+                                                                <option value="{{ type.name }}">{{ type.name }}</option>
                                                             {% endif %}
                                                         {% endfor %}
                                                     </select>

@@ -22,9 +22,17 @@ urlpatterns = [
     path('parameters/career-type-and-level-load', parameters.career_type_level_load, name='career_type_level_load'),
     path('parameters/career-type-and-level-save', parameters.career_type_level_save, name='career_type_level_save'),
 
+    path('parameters/country', parameters.country_index, name='country'),
+    path('parameters/country-load', parameters.country_load, name='country_load'),
+    path('parameters/country-save', parameters.country_save, name='country_save'),
+
     path('parameters/location', parameters.location_index, name='location'),
     path('parameters/location-load', parameters.location_load, name='location_load'),
     path('parameters/location-save', parameters.location_save, name='location_save'),
+
+    path('parameters/work-experience', parameters.work_experience_index, name='work_experience'),
+    path('parameters/work-experience-load', parameters.work_experience_load, name='work_experience_load'),
+    path('parameters/work-experience-save', parameters.work_experience_save, name='work_experience_save'),
 
     path('parameters/fte', parameters.fte_index, name='fte'),
     path('parameters/fte-load', parameters.fte_load, name='fte_load'),
