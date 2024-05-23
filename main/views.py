@@ -12,8 +12,16 @@ def index(request):
     current_page = request.GET.get('page')
     vacancies = paginator.get_page(current_page)
 
+    # Filter Fields
+    countries = models.ParameterCountry.objects.all().values('name')
+    experiences = models.ParameterWorkExperience.objects.all().values('id', 'name')
+    employments = models.ParameterEmployeeType.objects.all().values('id', 'name')
+
     context = {
         'vacancies': vacancies,
+        'countries': countries,
+        'experiences': experiences,
+        'employments': employments
     }
 
     return render(request, 'main/index.html', context)
