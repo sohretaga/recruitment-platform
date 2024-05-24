@@ -46,7 +46,18 @@ class ParameterFTE(ParameterCommonFields):
     ...
 
 class ParameterJobCatalogue(ParameterCommonFields):
-    ...
+    """
+    - Job Title is name field
+    - Common Duties and Responsibilities is definition field
+    """
+
+    job_family = models.CharField(max_length=100, blank=True, null=True)
+    job_sub_family = models.CharField(max_length=100, blank=True, null=True)
+    career_type = models.CharField(max_length=100, blank=True, null=True)
+    career_level = models.CharField(max_length=100, blank=True, null=True)
+    typical_education = models.CharField(max_length=100, blank=True, null=True)
+    relevant_experience = models.CharField(max_length=100, blank=True, null=True)
+    job_code = models.CharField(max_length=100, blank=True, null=True)
 
 class ParameterEmployeeType(ParameterCommonFields):
     ...

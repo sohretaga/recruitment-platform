@@ -43,11 +43,23 @@
 <script src="{% static 'cp/js/command.js' %}"></script>
 <script src="{% static 'cp/js/processes.js' %}"></script>
 <script>
+    var hot;
     const saveUrl = "{% url 'cp:job_catalogue_save' %}";
     const loadUrl = "{% url 'cp:job_catalogue_load' %}";
     const bmtTable = document.getElementById('table');
     const consoleText = 'Job Catalogue';
-    var hot;
+    const modelColumnMap = {
+        // 'job_family':[3],
+        // 'job_sub_family':[4],
+        'career_levels':[5],
+        'career_types':[6],
+        // 'typical_education':[8],
+        'work_experience':[9]
+
+        /* We specify the names of the models from which data will be retrieved for updating as keys,
+        and the IDs of the columns to be updated as values. This structure is used to clearly define
+        which column will be updated from which model. */
+    };
 
     $(document).ready(function() {
         hot = new Handsontable(bmtTable, {
@@ -58,6 +70,8 @@
             wordWrap: true,
             filters: true,
             data: [{id:''}],
+            height: $(document).height() - 300,
+            fixedColumnsStart: 1,
             dropdownMenu:  ['filter_by_value', 'filter_action_bar'],
             licenseKey: 'non-commercial-and-evaluation',
 
@@ -78,20 +92,63 @@
                     className: 'htCenter htMiddle',
                 },
                 {
-                    title: 'Name',
-                    data: 'name'
+                    title: 'Job Title',
+                    data: 'name',
+                    colWidths: 100
                 },
                 {
-                    title: 'Definition',
-                    data: 'definition'
+                    title: 'Job Family',
+                    type: 'dropdown',
+                    data: 'job_family',
+                    colWidths: 100
+                },
+                {
+                    title: 'Job Sub-Family',
+                    type: 'dropdown',
+                    data: 'job_sub_family',
+                    colWidths: 100
+                },
+                {
+                    title: 'Career Type',
+                    type: 'dropdown',
+                    data: 'career_type',
+                    colWidths: 100
+                },
+                {
+                    title: 'Career Level',
+                    type: 'dropdown',
+                    data: 'career_level',
+                    colWidths: 100
+                },
+                {
+                    title: 'Common Duties and Responsibilities',
+                    data: 'definition',
+                    colWidths: 200
+                },
+                {
+                    title: 'Typical Education',
+                    type: 'dropdown',
+                    data: 'typical_education',
+                    colWidths: 100
+                },
+                {
+                    title: 'Relevant Experience',
+                    type: 'dropdown',
+                    data: 'relevant_experience',
+                    colWidths: 100
                 },
                 {
                     title: 'Note',
-                    data: 'note'
+                    data: 'note',
+                    colWidths: 100
+                },
+                {
+                    title: 'Job Code',
+                    data: 'job_code',
+                    colWidths: 100
                 }
             ],
         });
-        
 
         loadData();
     })
