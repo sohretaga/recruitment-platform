@@ -33,6 +33,9 @@ def load_source(request):
             elif source_model == 'employment_type':
                 source = cp_models.ParameterEmployeeType.objects.filter(language = language).values_list('name', flat=True)
             
+            elif source_model == 'work_experience':
+                source = cp_models.ParameterWorkExperience.objects.filter(language = language).values_list('name', flat=True)
+            
             source = json.dumps(list(source))
             return JsonResponse(source, safe=False)
         

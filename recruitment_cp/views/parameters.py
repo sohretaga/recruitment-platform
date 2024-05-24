@@ -17,7 +17,9 @@ def career_type_load(request):
         if is_ajax(request) and request.POST:
             language = request.POST.get('language')
             
-            career_types = cp_models.ParameterCareerType.objects.filter(language=language).values()
+            career_types = cp_models.ParameterCareerType.objects.filter(language=language).values(
+                'id', 'no', 'name', 'definition', 'note'
+            )
             json_data = json.dumps(list(career_types))
 
             return JsonResponse(json_data, safe=False)
@@ -497,7 +499,7 @@ def vacancy_load(request):
             vacancies = cp_models.ParameterVacancy.objects.filter(language = language)\
                 .values('id', 'no', 'organization', 'career_type', 'career_level', 'location', 'fte', 'salary_minimum',
                         'salary_midpoint', 'salary_maximum', 'salary', 'job_catalogue', 'position_title', 'job_title',
-                        'employment_type', 'definition', 'created_date')
+                        'employment_type', 'work_experience', 'definition', 'created_date')
             
             json_data = json.dumps(list(vacancies), default=datetime_to_string)
 

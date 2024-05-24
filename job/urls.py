@@ -8,5 +8,8 @@ urlpatterns = [
     path('vacancy', views.vacancy, name='vacancy'),
     path('categories', views.categories, name='categories'),
     path('manage-jobs', views.manage_jobs, name='manage-jobs'),
-    path('bookmarks', views.bookmarks, name='bookmarks')
+    path('bookmarks', views.bookmarks, name='bookmarks'),
+
+    # Ajax requests for filters
+    path('ajax/filter-vacancies', views.ajax_filter_vacancies, name='ajax_filter_vacancies'),
 ]

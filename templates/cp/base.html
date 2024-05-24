@@ -18,6 +18,8 @@
     {% endblock %}
 </head>
 <body>
+<input id="csrf-token" type="text" value="{{ csrf_token }}" style="visibility: hidden;">
+
 <nav id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid navbar-first">
         <div class="navbar-header">

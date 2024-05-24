@@ -299,7 +299,7 @@
                             </div><!--end wedget-popular-title-->
 
                             <!-- Job-list -->
-                            <div>
+                            <div id="job-list-container">
                                 {% for vacancy in vacancies %}
                                     <div class="job-box bookmark-post card mt-5">
                                         <div class="p-4">
@@ -363,7 +363,7 @@
                             <div class="row">
                                 <div class="col-lg-12 mt-4 pt-2">
                                     <nav aria-label="Page navigation example">
-                                        <ul class="pagination job-pagination mb-0 justify-content-center">
+                                        <ul class="pagination job-pagination mb-0 justify-content-center" id="pagination-container">
                                             {% if vacancies.has_previous %}
                                                 <li class="page-item">
                                                     <a class="page-link" href="?page={{ vacancies.previous_page_number }}#job-list" tabindex="-1">
@@ -930,6 +930,7 @@
 <script src="{% static 'main/js/pages/salary-filter-range.init.js' %}"></script>
 
 <!-- JAVASCRIPT -->
+<script src="{% static 'dashboard/libs/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'main/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 <script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
 
@@ -945,9 +946,11 @@
 
 <!-- Switcher Js -->
 <script src="{% static 'main/js/pages/switcher.init.js' %}"></script>
-
 <script src="{% static 'main/js/pages/index.init.js' %}"></script>
-
 <script src="{% static 'main/js/app.js' %}"></script>
+
+<!-- Ajax -->
+<script src="{% static 'main/js/vacancies-filters.js' %}"></script>
+
 
 {% endblock script %}

@@ -1,3 +1,18 @@
+const csrf_token = document.getElementById('csrf-token').value;
+
+$.ajaxSetup({
+    beforeSend: function (xhr, settings) {
+        xhr.setRequestHeader('X-CSRFToken', csrf_token);
+        $('body').css('cursor', 'wait');
+    },
+    complete: function () {
+        $('body').css('cursor', 'default');
+    },
+    error: function () {
+        tableConsole.innerText = 'Failure when operation performed...';
+    }
+});
+
 $$ = function(id) {
     return document.getElementById(id);
 };

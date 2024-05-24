@@ -53,25 +53,13 @@
         'career_levels':[6],
         'locations':[7],
         'fte':[8],
-        'employment_type':[13]
+        'employment_type':[14],
+        'work_experience':[15]
 
         /* We specify the names of the models from which data will be retrieved for updating as keys,
         and the IDs of the columns to be updated as values. This structure is used to clearly define
         which column will be updated from which model. */
     };
-
-    $.ajaxSetup({
-        beforeSend: function (xhr, settings) {
-            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
-            $('body').css('cursor', 'wait');
-        },
-        complete: function () {
-            $('body').css('cursor', 'default');
-        },
-        error: function () {
-            tableConsole.innerText = 'Failure when operation performed...';
-        }
-    });
 
     $(document).ready(function() {
         hot = new Handsontable(bmtTable, {
@@ -186,6 +174,12 @@
                 {
                     title: 'Employment Type',
                     data: 'employment_type',
+                    type: 'dropdown',
+                    colWidths: 100
+                },
+                {
+                    title: 'Work Experience',
+                    data: 'work_experience',
                     type: 'dropdown',
                     colWidths: 100
                 },

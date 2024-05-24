@@ -49,19 +49,6 @@
     const consoleText = 'Career Type';
     var hot;
 
-    $.ajaxSetup({
-        beforeSend: function (xhr, settings) {
-            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
-            $('body').css('cursor', 'wait');
-        },
-        complete: function () {
-            $('body').css('cursor', 'default');
-        },
-        error: function () {
-            tableConsole.innerText = 'Failure when operation performed...';
-        }
-    });
-
     $(document).ready(function() {
         hot = new Handsontable(bmtTable, {
             rowHeaders: true,
