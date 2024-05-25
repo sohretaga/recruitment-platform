@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from django.http import JsonResponse, HttpResponse, Http404
+from django.http import JsonResponse, Http404
 from recruitment_cp import models as cp_models
-from recruitment_cp.functions import is_ajax, datetime_to_string
+from recruitment_cp.utils import is_ajax, datetime_to_string
 
 import json
                         

@@ -4,14 +4,21 @@ from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
 
 from recruitment_cp import models
-from recruitment_cp.functions import is_ajax, datetime_to_string
+from recruitment_cp.utils import is_ajax
+from .utils import fetch_vacancies
 
 import json
 
 # Create your views here.
 
 def vacancies(request):
-    return render(request, 'job/vacancies.html')
+    vacancies = fetch_vacancies(request)
+
+    context = {
+        **vacancies
+    }
+
+    return render(request, 'job/vacancies.html', context)
 
 def vacancy(request):
     return render(request, 'job/vacancy.html')

@@ -1,10 +1,9 @@
 from django.shortcuts import render
 from django.http import JsonResponse, Http404 
-from recruitment_cp.functions import is_ajax
+from recruitment_cp.utils import is_ajax
 from recruitment_cp import models as cp_models
 
 import json
-
 
 def index(request):
     if request.user.is_superuser:
