@@ -188,16 +188,16 @@ const filterRequest = () => {
     const data = new DataCollector();
     const collectded_data = data.collectData();
 
-    // $.ajax({
-    //     url: `/ajax/filter-vacancies`,
-    //     type: 'POST',
-    //     data: JSON.stringify(collectded_data),
-    //     success: (response) => {
-    //         listVacancies(response.vacancies);
-    //         generatePagination(response.pagination);
-    //     }
+    $.ajax({
+        url: `/ajax/filter-vacancies`,
+        type: 'POST',
+        data: JSON.stringify(collectded_data),
+        success: (response) => {
+            listVacancies(response.vacancies);
+            generatePagination(response.pagination);
+        }
         
-    // });
+    });
 };
 
 // Salary Range Listener
