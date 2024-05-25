@@ -18,10 +18,12 @@ $.ajaxSetup({
 class DataCollector {
 
     getSalaryRangeValue() {
-        const salary_range = parseInt(slider.noUiSlider.get());
-        setUrl('salary_range', salary_range);
+        const lowerValue = document.querySelector('.noUi-handle-lower').getAttribute('aria-valuenow');
+        const upperValue = document.querySelector('.noUi-handle-upper').getAttribute('aria-valuenow');
+        const salaryRangeList = [parseInt(lowerValue), parseInt(upperValue)]
+        setUrl('salary_range', salaryRangeList.join(','));
 
-        return salary_range;
+        return salaryRangeList;
     };
 
     getWorkExperiences() {
@@ -45,8 +47,9 @@ class DataCollector {
     };
 
     collectData() {
-        data = {
-            salary_range: this.getSalaryRangeValue(),
+        const data = {
+            salary_range_lower: this.getSalaryRangeValue()[0],
+            salary_range_upper: this.getSalaryRangeValue()[1],
             work_experiences: this.getWorkExperiences(),
             employment_type: this.getEmploymentTypes()
         };
@@ -182,19 +185,19 @@ const listVacancies = (vacanciesInfo) => {
 
 // Filter Request
 const filterRequest = () => {
-    data = new DataCollector();
-    collectded_data = data.collectData();
+    const data = new DataCollector();
+    const collectded_data = data.collectData();
 
-    $.ajax({
-        url: `/ajax/filter-vacancies`,
-        type: 'POST',
-        data: JSON.stringify(collectded_data),
-        success: (response) => {
-            listVacancies(response.vacancies);
-            generatePagination(response.pagination);
-        }
+    // $.ajax({
+    //     url: `/ajax/filter-vacancies`,
+    //     type: 'POST',
+    //     data: JSON.stringify(collectded_data),
+    //     success: (response) => {
+    //         listVacancies(response.vacancies);
+    //         generatePagination(response.pagination);
+    //     }
         
-    });
+    // });
 };
 
 // Salary Range Listener
@@ -221,7 +224,7 @@ addCheckboxListener('#jobtype input[type="checkbox"]', filterRequest); // Type o
 
 // Set filter inputs from url parameters
 try {
-    slider.noUiSlider.set(getUrlParameterValue('salary_range'));
+    slider.noUiSlider.set(getUrlParameterValue('salary_range').split(','));
     setFilterCheckboxes('#experience input[type="checkbox"]', getUrlParameterValue('work_experiences').split(',')); // Set work experience
     setFilterCheckboxes('#jobtype input[type="checkbox"]', getUrlParameterValue('employment_type').split(',')); // Set type of employment
 } catch (error) {}

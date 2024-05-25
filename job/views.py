@@ -29,13 +29,17 @@ def bookmarks(request):
 def ajax_filter_vacancies(request):
     if is_ajax and request.POST:
         data = json.loads(request.body.decode('utf-8'))
-        salary_range = data.get('salary_range', 0)
+        salary_range_lower = data.get('salary_range_lower', 0)
+        salary_range_upper = data.get('salary_range_upper', 0)
         work_experiences = data.get('work_experiences', [])
         employment_type = data.get('employment_type', [])
 
         params = {}
-        if salary_range:
-            params.update({'salary__lte': salary_range})
+        if salary_range_lower:
+            params.update({'salary__gte': salary_range_lower})
+        
+        if salary_range_upper:
+            params.update({'salary__lte': salary_range_upper})
 
         if work_experiences:
             params.update({'work_experience__in': work_experiences})
