@@ -109,6 +109,7 @@ const generatePagination = (paginationInfo) => {
     const numPages = paginationInfo.num_pages;
     const hasPrevious = paginationInfo.has_previous;
     const hasNext = paginationInfo.has_next;
+    const separator = url.searchParams.size ? '&':'?'; // return & or ? symbol
 
     url.hash = ''; // delete #job-list hash from url
     setUrl('page'); // delete page parameter from url
@@ -117,7 +118,7 @@ const generatePagination = (paginationInfo) => {
     if (hasPrevious) {
         const previousItem = document.createElement('li');
         previousItem.className = 'page-item';
-        previousItem.innerHTML = `<a class="page-link" href="${url}&page=${currentPage - 1}#job-list" tabindex="-1"><i class="mdi mdi-chevron-double-left fs-15"></i></a>`;
+        previousItem.innerHTML = `<a class="page-link" href="${url}${separator}page=${currentPage - 1}#job-list" tabindex="-1"><i class="mdi mdi-chevron-double-left fs-15"></i></a>`;
         container.appendChild(previousItem);
     };
 
@@ -126,7 +127,7 @@ const generatePagination = (paginationInfo) => {
         if (i === 1 || i === numPages || (i >= currentPage - 2 && i <= currentPage + 2)) {
             const pageItem = document.createElement('li');
             pageItem.className = `page-item ${i === currentPage ? 'active' : ''}`;
-            pageItem.innerHTML = `<a class="page-link" href="${url}&page=${i}#job-list">${i}</a>`;
+            pageItem.innerHTML = `<a class="page-link" href="${url}${separator}page=${i}#job-list">${i}</a>`;
             container.appendChild(pageItem);
         } else if (i === currentPage - 3 || i === currentPage + 3) {
             const dotsItem = document.createElement('li');
@@ -140,7 +141,7 @@ const generatePagination = (paginationInfo) => {
     if (hasNext) {
         const nextItem = document.createElement('li');
         nextItem.className = 'page-item';
-        nextItem.innerHTML = `<a class="page-link" href="${url}&page=${currentPage + 1}#job-list"><i class="mdi mdi-chevron-double-right fs-15"></i></a>`;
+        nextItem.innerHTML = `<a class="page-link" href="${url}${separator}page=${currentPage + 1}#job-list"><i class="mdi mdi-chevron-double-right fs-15"></i></a>`;
         container.appendChild(nextItem);
     };
 };
