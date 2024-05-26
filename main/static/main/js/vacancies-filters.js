@@ -18,7 +18,7 @@ $.ajaxSetup({
 var slider1 = document.getElementById("slider1");
 
 noUiSlider.create(slider1, {
-    start: [1000, 10000],
+    start: [0, 10000],
     step: 1,
     connect: true,
     range: {

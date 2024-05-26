@@ -4,7 +4,7 @@ from django.http import Http404
 
 from dashboard.decorators import is_employer
 from dashboard.forms import CompleteEmployerRegisterForm, PostVacancyForm
-from recruitment_cp.models import Language, ParameterCareerType, ParameterCareerLevel, ParameterLocation, ParameterEmployeeType, ParameterFTE
+from recruitment_cp.models import Language, ParameterCareerType, ParameterCareerLevel, ParameterLocation, ParameterEmployeeType, ParameterFTE, ParameterJobCatalogue
 
 @is_employer
 @login_required
@@ -42,6 +42,7 @@ def post_vacancy(request):
 
     selected_language = 'en'
     languages = Language.objects.all()
+    job_catalogue = ParameterJobCatalogue.objects.filter(language = selected_language)
     career_types = ParameterCareerType.objects.filter(language=selected_language)
     career_levels = ParameterCareerLevel.objects.filter(language=selected_language)
     locations = ParameterLocation.objects.filter(language=selected_language)
@@ -50,6 +51,7 @@ def post_vacancy(request):
 
     context = {
         'languages': languages,
+        'job_catalogues': job_catalogue,
         'career_types': career_types,
         'career_levels': career_levels,
         'locations': locations,

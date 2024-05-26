@@ -83,8 +83,16 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="form-group">
-                                                    <label for="basicpill-lastname-input">Job Title</label>
-                                                    <input type="text" class="form-control" name="job_title" id="basicpill-lastname-input">
+                                                    <label>Job Title</label>
+                                                    <select class="custom-select" name="language">
+                                                        {% for catalogue in job_catalogues %}
+                                                            {% if forloop.first %}
+                                                                <option value="{{ catalogue.name }}" selected>{{ catalogue.name }}</option>
+                                                            {% else %}
+                                                                <option value="{{ catalogue.name }}">{{ catalogue.name }}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
                                                 </div>
                                             </div>
 
