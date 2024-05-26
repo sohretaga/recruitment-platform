@@ -18,9 +18,9 @@ $.ajaxSetup({
 class DataCollector {
 
     getSalaryRangeValue() {
-        const lowerValue = document.querySelector('.noUi-handle-lower').getAttribute('aria-valuenow');
-        const upperValue = document.querySelector('.noUi-handle-upper').getAttribute('aria-valuenow');
-        const salaryRangeList = [parseInt(lowerValue), parseInt(upperValue)]
+        const lowerValue = parseInt(document.querySelector('.noUi-handle-lower').getAttribute('aria-valuenow'));
+        const upperValue = parseInt(document.querySelector('.noUi-handle-upper').getAttribute('aria-valuenow'));
+        const salaryRangeList = lowerValue || upperValue ? [lowerValue, upperValue]: [];
         setUrl('salary_range', salaryRangeList.join(','));
 
         return salaryRangeList;
@@ -31,7 +31,7 @@ class DataCollector {
         const selectedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
         const selectedValues = selectedCheckboxes.map(checkbox => checkbox.value);
         setUrl('work_experiences', selectedValues.join(','));
-        
+
         return selectedValues;
 
     };
@@ -43,7 +43,7 @@ class DataCollector {
         setUrl('employment_type', selectedValues.join(','))
 
         return selectedValues;
-        
+
     };
 
     collectData() {
@@ -61,10 +61,15 @@ class DataCollector {
 const setUrl = (parameter, value) => {
     const query_parameter = url.searchParams.has(parameter);
 
-    if (query_parameter) {
-        url.searchParams.set(parameter, value);
-    }else {
-        url.searchParams.append(parameter, value);
+    if (value) {
+        if (query_parameter) {
+            url.searchParams.set(parameter, value);
+        } else {
+            url.searchParams.append(parameter, value);
+        };
+
+    } else {
+        url.searchParams.delete(parameter);
     };
 
     window.history.pushState('', '', url);
@@ -87,34 +92,39 @@ const generatePagination = (paginationInfo) => {
     const hasPrevious = paginationInfo.has_previous;
     const hasNext = paginationInfo.has_next;
 
+    const jobListParam = url.hash.includes('#job-list') ? '' : '#job-list';
+
     // Previous button
     if (hasPrevious) {
+        setUrl('page', currentPage); // currentPage - 1
         const previousItem = document.createElement('li');
         previousItem.className = 'page-item';
-        previousItem.innerHTML = `<a class="page-link" href="${url}&page=${currentPage - 1}#job-list" tabindex="-1"><i class="mdi mdi-chevron-double-left fs-15"></i></a>`;
+        previousItem.innerHTML = `<a class="page-link" href="${url}${jobListParam}" tabindex="-1"><i class="mdi mdi-chevron-double-left fs-15"></i></a>`;
         container.appendChild(previousItem);
     };
 
     // Page numbers
     for (let i = 1; i <= numPages; i++) {
         if (i === 1 || i === numPages || (i >= currentPage - 2 && i <= currentPage + 2)) {
+            setUrl('page', i);
             const pageItem = document.createElement('li');
             pageItem.className = `page-item ${i === currentPage ? 'active' : ''}`;
-            pageItem.innerHTML = `<a class="page-link" href="${url}&page=${i}#job-list">${i}</a>`;
+            pageItem.innerHTML = `<a class="page-link" href="${url}${jobListParam}">${i}</a>`;
             container.appendChild(pageItem);
         } else if (i === currentPage - 3 || i === currentPage + 3) {
             const dotsItem = document.createElement('li');
             dotsItem.className = 'page-item';
-            dotsItem.innerHTML = `<a class="page-link" href="${url}#job-list">...</a>`;
+            dotsItem.innerHTML = `<a class="page-link" href="${url}${jobListParam}">...</a>`;
             container.appendChild(dotsItem);
         };
     };
 
     // Next button
     if (hasNext) {
+        setUrl('page', currentPage); // currentPage + 1
         const nextItem = document.createElement('li');
         nextItem.className = 'page-item';
-        nextItem.innerHTML = `<a class="page-link" href="${url}&page=${currentPage + 1}#job-list"><i class="mdi mdi-chevron-double-right fs-15"></i></a>`;
+        nextItem.innerHTML = `<a class="page-link" href="${url}${jobListParam}"><i class="mdi mdi-chevron-double-right fs-15"></i></a>`;
         container.appendChild(nextItem);
     };
 };
@@ -196,7 +206,7 @@ const filterRequest = () => {
             listVacancies(response.vacancies);
             generatePagination(response.pagination);
         }
-        
+
     });
 };
 
@@ -213,7 +223,7 @@ const addCheckboxListener = (selector, callback) => {
 const setFilterCheckboxes = (selector, values) => {
     const checkboxes = document.querySelectorAll(selector);
     checkboxes.forEach(checkbox => {
-        if (values.includes(checkbox.value)){
+        if (values.includes(checkbox.value)) {
             checkbox.checked = true;
         };
     });
@@ -227,4 +237,4 @@ try {
     slider.noUiSlider.set(getUrlParameterValue('salary_range').split(','));
     setFilterCheckboxes('#experience input[type="checkbox"]', getUrlParameterValue('work_experiences').split(',')); // Set work experience
     setFilterCheckboxes('#jobtype input[type="checkbox"]', getUrlParameterValue('employment_type').split(',')); // Set type of employment
-} catch (error) {}
+} catch (error) { };

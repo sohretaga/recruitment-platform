@@ -47,41 +47,31 @@
                             <ul class="list-inline">
                                 <li class="list-inline-item">
                                     <div class="popular-box d-flex align-items-center">
-                                        <div class="number flex-shrink-0 me-2">
-                                            20  
-                                        </div>
+                                        <div class="number flex-shrink-0 me-2">20</div>
                                         <a href="javascript:void(0)" class="primary-link stretched-link"><h6 class="fs-14 mb-0">UI/UX designer</h6></a>
                                     </div>
                                 </li>
                                 <li class="list-inline-item">
                                     <div class="popular-box d-flex align-items-center">
-                                        <div class="number flex-shrink-0 me-2">
-                                            18  
-                                        </div>
+                                        <div class="number flex-shrink-0 me-2">18</div>
                                         <a href="javascript:void(0)" class="primary-link stretched-link"><h6 class="fs-14 mb-0">HR manager</h6></a>
                                     </div>
                                 </li>
                                 <li class="list-inline-item">
                                     <div class="popular-box d-flex align-items-center">
-                                        <div class="number flex-shrink-0 me-2">
-                                            10  
-                                        </div>
+                                        <div class="number flex-shrink-0 me-2">10</div>
                                         <a href="javascript:void(0)" class="primary-link stretched-link"><h6 class="fs-14 mb-0">Product manager</h6></a>
                                     </div>
                                 </li>
                                 <li class="list-inline-item">
                                     <div class="popular-box d-flex align-items-center">
-                                        <div class="number flex-shrink-0 me-2">
-                                            15  
-                                        </div>
+                                        <div class="number flex-shrink-0 me-2">15</div>
                                         <a href="javascript:void(0)" class="primary-link stretched-link"><h6 class="fs-14 mb-0">Sales manager</h6></a>
                                     </div>
                                 </li>
                                 <li class="list-inline-item">
                                     <div class="popular-box d-flex align-items-center">
-                                        <div class="number flex-shrink-0 me-2">
-                                            28  
-                                        </div>
+                                        <div class="number flex-shrink-0 me-2">28</div>
                                         <a href="javascript:void(0)" class="primary-link stretched-link"><h6 class="fs-14 mb-0">Developer</h6></a>
                                     </div>
                                 </li>
@@ -187,14 +177,14 @@
                                 <ul class="pagination job-pagination mb-0 justify-content-center" id="pagination-container">
                                     {% if vacancies.has_previous %}
                                         <li class="page-item">
-                                            <a class="page-link" href="?page={{ vacancies.previous_page_number }}#job-list" tabindex="-1">
+                                            <a class="page-link" href="?page={{ vacancies.previous_page_number }}{{ url }}#job-list" tabindex="-1">
                                                 <i class="mdi mdi-chevron-double-left fs-15"></i>
                                             </a>
                                         </li>
 
                                         {% if vacancies.number > 3 %}
                                             <li class="page-item {% if vacancies.number == 1 %}active{% endif %}">
-                                                <a class="page-link" href="?page={{ 1 }}#job-list">{{ 1 }}</a>
+                                                <a class="page-link" href="?page={{ 1 }}{{ url }}#job-list">{{ 1 }}</a>
                                             </li>
                                             {% if vacancies.number > 4 %}
                                                 <li class="page-item">
@@ -207,11 +197,11 @@
                                     {% for num in vacancies.paginator.page_range %}
                                         {% if vacancies.number == num %}
                                             <li class="page-item {% if vacancies.number == num %}active{% endif %}">
-                                                <a class="page-link" href="?page={{ num }}#job-list">{{ num }}</a>
+                                                <a class="page-link" href="?page={{ num }}{{ url }}#job-list">{{ num }}</a>
                                             </li>
                                         {% elif num > vacancies.number|add:'-3' and num < vacancies.number|add:'3' %}
                                             <li class="page-item {% if vacancies.number == num %}active{% endif %}">
-                                                <a class="page-link" href="?page={{ num }}#job-list">{{ num }}</a>
+                                                <a class="page-link" href="?page={{ num }}{{ url }}#job-list">{{ num }}</a>
                                             </li>
                                         {% endif %}
                                     {% endfor %}
@@ -223,16 +213,16 @@
                                             </li>
 
                                             <li class="page-item {% if vacancies.number == vacancies.paginator.num_pages %}active{% endif %}">
-                                                <a class="page-link" href="?page={{ vacancies.paginator.num_pages }}#job-list">{{ vacancies.paginator.num_pages }}</a>
+                                                <a class="page-link" href="?page={{ vacancies.paginator.num_pages }}{{ url }}#job-list">{{ vacancies.paginator.num_pages }}</a>
                                             </li>
                                         {% elif vacancies.number < vacancies.paginator.num_pages|add:'-2' %}
                                             <li class="page-item {% if vacancies.number == vacancies.paginator.num_pages %}active{% endif %}">
-                                                <a class="page-link" href="?page={{ vacancies.paginator.num_pages }}#job-list">{{ vacancies.paginator.num_pages }}</a>
+                                                <a class="page-link" href="?page={{ vacancies.paginator.num_pages }}{{ url }}#job-list">{{ vacancies.paginator.num_pages }}</a>
                                             </li>
                                         {% endif %}
 
                                         <li class="page-item">
-                                            <a class="page-link" href="?page={{ vacancies.next_page_number }}#job-list">
+                                            <a class="page-link" href="?page={{ vacancies.next_page_number }}{{ url }}#job-list">
                                                 <i class="mdi mdi-chevron-double-right fs-15"></i>
                                             </a>
                                         </li>
