@@ -2,7 +2,9 @@ from django.shortcuts import render, HttpResponse
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
+
 from recruitment import settings
+from blog.models import Blog
 
 from dashboard.decorators import is_blogger
 from dashboard.forms import PostBlogForm
@@ -23,7 +25,13 @@ def post_blog(request):
 @is_blogger
 @login_required
 def all_blog(request):
-    return render(request, 'dashboard/blogger/all-blog.html')
+    blogs = Blog.objects.all()
+
+    context = {
+        'blogs': blogs
+    }
+
+    return render(request, 'dashboard/blogger/all-blog.html', context)
 
 def upload_editor_image(request):
     if request.POST and request.FILES.get('file'):

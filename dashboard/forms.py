@@ -21,4 +21,4 @@ class PostVacancyForm(forms.ModelForm):
 class PostBlogForm(forms.ModelForm):
     class Meta:
         model = Blog
-        fields = ('title', 'category', 'cover_photo', 'content')
+        fields = ('title', 'category', 'cover_photo', 'content', 'status')

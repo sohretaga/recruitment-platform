@@ -74,15 +74,16 @@
                                                 <label class="custom-control-label" for="ordercheck">&nbsp;</label>
                                             </div>
                                         </th>
-                                        <th>Order ID</th>
+                                        <th>Title</th>
                                         <th>Date</th>
-                                        <th>Billing Name</th>
-                                        <th>Total</th>
-                                        <th>Payment Status</th>
+                                        <th>Category</th>
+                                        <th>Views</th>
+                                        <th>Status</th>
                                         <th style="width: 120px;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {% for blog in blogs %}
                                     <tr>
                                         <td>
                                             <div class="custom-control custom-checkbox">
@@ -91,249 +92,25 @@
                                             </div>
                                         </td>
                                         
-                                        <td><a href="javascript: void(0);" class="text-dark font-weight-bold">#NZ1572</a> </td>
+                                        <td><a href="{% url 'blog:detail' blog.slug %}" class="text-dark font-weight-bold" target='_blank'>{{ blog.title|title }}</a></td>
+                                        <td>{{ blog.created_date|date:"M d, Y" }}</td>
+                                        <td>{{ blog.category }}</td>
+                                        <td><i class="mdi mdi-eye"></i> {{ blog.views }}</td>
                                         <td>
-                                            04 Apr, 2020
-                                        </td>
-                                        <td>Walter Brown</td>
-                                        
-                                        <td>
-                                            $172
-                                        </td>
-                                        <td>
-                                            <div class="badge badge-soft-success font-size-12">Paid</div>
-                                        </td>
-                                        <td>
-                                            <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
-                                            <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-trash-can font-size-18"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="ordercheck2">
-                                                <label class="custom-control-label" for="ordercheck2">&nbsp;</label>
-                                            </div>
-                                        </td>
-                                        
-                                        <td><a href="javascript: void(0);" class="text-dark font-weight-bold">#NZ1571</a> </td>
-                                        <td>
-                                            03 Apr, 2020
-                                        </td>
-                                        <td>Jimmy Barker</td>
-                                        
-                                        <td>
-                                            $165
-                                        </td>
-                                        <td>
-                                            <div class="badge badge-soft-warning font-size-12">unpaid</div>
+                                            {% if blog.status == 'published' %}
+                                                <div class="badge badge-soft-success font-size-12">Published</div>
+                                            {% elif blog.status == 'draft' %}
+                                                <div class="badge badge-soft-warning font-size-12">Draft</div>
+                                            {% elif blog.status == 'deactivated' %}
+                                                <div class="badge badge-soft-danger font-size-12">Deactivated</div>
+                                            {% endif %}
                                         </td>
                                         <td>
                                             <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
                                             <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-trash-can font-size-18"></i></a>
                                         </td>
                                     </tr>
-
-                                    <tr>
-                                        <td>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="ordercheck3">
-                                                <label class="custom-control-label" for="ordercheck3">&nbsp;</label>
-                                            </div>
-                                        </td>
-                                        
-                                        <td><a href="javascript: void(0);" class="text-dark font-weight-bold">#NZ1570</a> </td>
-                                        <td>
-                                            03 Apr, 2020
-                                        </td>
-                                        <td>Donald Bailey</td>
-                                        
-                                        <td>
-                                            $146
-                                        </td>
-                                        <td>
-                                            <div class="badge badge-soft-success font-size-12">Paid</div>
-                                        </td>
-                                        <td>
-                                            <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
-                                            <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-trash-can font-size-18"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="ordercheck4">
-                                                <label class="custom-control-label" for="ordercheck4">&nbsp;</label>
-                                            </div>
-                                        </td>
-                                        
-                                        <td><a href="javascript: void(0);" class="text-dark font-weight-bold">#NZ1569</a> </td>
-                                        <td>
-                                            02 Apr, 2020
-                                        </td>
-                                        <td>Paul Jones</td>
-                                        
-                                        <td>
-                                            $183
-                                        </td>
-                                        <td>
-                                            <div class="badge badge-soft-success font-size-12">Paid</div>
-                                        </td>
-                                        <td>
-                                            <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
-                                            <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-trash-can font-size-18"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="ordercheck5">
-                                                <label class="custom-control-label" for="ordercheck5">&nbsp;</label>
-                                            </div>
-                                        </td>
-                                        
-                                        <td><a href="javascript: void(0);" class="text-dark font-weight-bold">#NZ1568</a> </td>
-                                        <td>
-                                            01 Apr, 2020
-                                        </td>
-                                        <td>Jefferson Allen</td>
-                                        
-                                        <td>
-                                            $160
-                                        </td>
-                                        <td>
-                                            <div class="badge badge-soft-danger font-size-12">Chargeback</div>
-                                        </td>
-                                        <td>
-                                            <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
-                                            <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-trash-can font-size-18"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="ordercheck6">
-                                                <label class="custom-control-label" for="ordercheck6">&nbsp;</label>
-                                            </div>
-                                        </td>
-                                        
-                                        <td><a href="javascript: void(0);" class="text-dark font-weight-bold">#NZ1567</a> </td>
-                                        <td>
-                                            31 Mar, 2020
-                                        </td>
-                                        <td>Jeffrey Waltz</td>
-                                        
-                                        <td>
-                                            $105
-                                        </td>
-                                        <td>
-                                            <div class="badge badge-soft-warning font-size-12">unpaid</div>
-                                        </td>
-                                        <td>
-                                            <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
-                                            <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-trash-can font-size-18"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="ordercheck7">
-                                                <label class="custom-control-label" for="ordercheck7">&nbsp;</label>
-                                            </div>
-                                        </td>
-                                        
-                                        <td><a href="javascript: void(0);" class="text-dark font-weight-bold">#NZ1566</a> </td>
-                                        <td>
-                                            30 Mar, 2020
-                                        </td>
-                                        <td>Jewel Buckley</td>
-                                        
-                                        <td>
-                                            $112
-                                        </td>
-                                        <td>
-                                            <div class="badge badge-soft-success font-size-12">Paid</div>
-                                        </td>
-                                        <td>
-                                            <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
-                                            <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-trash-can font-size-18"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="ordercheck8">
-                                                <label class="custom-control-label" for="ordercheck8">&nbsp;</label>
-                                            </div>
-                                        </td>
-                                        
-                                        <td><a href="javascript: void(0);" class="text-dark font-weight-bold">#NZ1565</a> </td>
-                                        <td>
-                                            29 Mar, 2020
-                                        </td>
-                                        <td>Jamison Clark</td>
-                                        
-                                        <td>
-                                            $123
-                                        </td>
-                                        <td>
-                                            <div class="badge badge-soft-success font-size-12">Paid</div>
-                                        </td>
-                                        <td>
-                                            <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
-                                            <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-trash-can font-size-18"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="ordercheck9">
-                                                <label class="custom-control-label" for="ordercheck9">&nbsp;</label>
-                                            </div>
-                                        </td>
-                                        
-                                        <td><a href="javascript: void(0);" class="text-dark font-weight-bold">#NZ1564</a> </td>
-                                        <td>
-                                            28 Mar, 2020
-                                        </td>
-                                        <td>Eddy Torres</td>
-                                        
-                                        <td>
-                                            $141
-                                        </td>
-                                        <td>
-                                            <div class="badge badge-soft-success font-size-12">Paid</div>
-                                        </td>
-                                        <td>
-                                            <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
-                                            <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-trash-can font-size-18"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="ordercheck10">
-                                                <label class="custom-control-label" for="ordercheck10">&nbsp;</label>
-                                            </div>
-                                        </td>
-                                        
-                                        <td><a href="javascript: void(0);" class="text-dark font-weight-bold">#NZ1563</a> </td>
-                                        <td>
-                                            28 Mar, 2020
-                                        </td>
-                                        <td>Frank Dean</td>
-                                        
-                                        <td>
-                                            $164
-                                        </td>
-                                        <td>
-                                            <div class="badge badge-soft-warning font-size-12">unpaid</div>
-                                        </td>
-                                        <td>
-                                            <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
-                                            <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-trash-can font-size-18"></i></a>
-                                        </td>
-                                    </tr>
+                                    {% endfor %}                  
                                 </tbody>
                             </table>
                         </div>
@@ -353,47 +130,14 @@
     <script src="{% static 'dashboard/libs/jquery/jquery.min.js' %}"></script>
     <script src="{% static 'dashboard/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'dashboard/libs/metismenu/metisMenu.min.js' %}"></script>
-    <script src="{% static 'dashboard/libs/simplebar/simplebar.min.js' %}"></script>
     <script src="{% static 'dashboard/libs/node-waves/waves.min.js' %}"></script>
 
     <!-- Required datatable js -->
     <script src="{% static 'dashboard/libs/datatables.net/js/jquery.dataTables.min.js' %}"></script>
     <script src="{% static 'dashboard/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
-    <!-- Buttons examples -->
-    <script src="{% static 'dashboard/libs/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
-    <script src="{% static 'dashboard/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js' %}"></script>
-    <script src="{% static 'dashboard/libs/jszip/jszip.min.js' %}"></script>
-    <script src="{% static 'dashboard/libs/pdfmake/build/pdfmake.min.js' %}"></script>
-    <script src="{% static 'dashboard/libs/pdfmake/build/vfs_fonts.js' %}"></script>
-    <script src="{% static 'dashboard/libs/datatables.net-buttons/js/buttons.html5.min.js' %}"></script>
-    <script src="{% static 'dashboard/libs/datatables.net-buttons/js/buttons.print.min.js' %}"></script>
-    <script src="{% static 'dashboard/libs/datatables.net-buttons/js/buttons.colVis.min.js' %}"></script>
 
-    <script src="{% static 'dashboard/libs/datatables.net-keytable/js/dataTables.keyTable.min.js' %}"></script>
-    <script src="{% static 'dashboard/libs/datatables.net-select/js/dataTables.select.min.js' %}"></script>
-
-    <!-- Responsive examples -->
-    <script src="{% static 'dashboard/libs/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
-    <script src="{% static 'dashboard/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js' %}"></script>
-
-    <!-- Datatable init js -->
-    <script src="{% static 'dashboard/js/pages/datatables.init.js' %}"></script>
-
-    <script src="{% static 'dashboard/js/app.js' %}"></script>
-
-
-    <!-- apexcharts -->
-    <script src="{% static 'dashboard/libs/apexcharts/apexcharts.min.js' %}"></script>
-
-    <!-- jquery.vectormap map -->
-    <script src="{% static 'dashboard/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js' %}"></script>
-    <script src="{% static 'dashboard/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-us-merc-en.js' %}"></script>
-
-    <!-- Required datatable js -->
-    <script src="{% static 'dashboard/libs/datatables.net/js/jquery.dataTables.min.js' %}"></script>
-    <script src="{% static 'dashboard/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
-
-    <script src="{% static 'dashboard/js/pages/dashboard.init.js' %}"></script>
+    <!-- Custom JS -->
+    <script src="{% static 'dashboard/js/datatable.js' %}"></script>
 
     <script src="{% static 'dashboard/js/app.js' %}"></script>
 {% endblock script %}

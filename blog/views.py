@@ -20,6 +20,8 @@ def blog(request):
 
 def detail(request, slug):
     blog = Blog.objects.get(slug=slug)
+    blog.views += 1
+    blog.save()
 
     context = {
         'blog': blog
