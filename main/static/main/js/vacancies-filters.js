@@ -25,6 +25,14 @@ noUiSlider.create(slider1, {
         min: [0],
         max: [10000]
     },
+    format: {
+        to: function (value) {
+            return Math.round(value);
+        },
+        from: function (value) {
+            return Number(value);
+        }
+    }
 });
 
 var slider1Value = document.getElementById("slider1-span");

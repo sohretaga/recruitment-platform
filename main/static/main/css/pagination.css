@@ -1,3 +1,8 @@
+#slider1 {
+  /* Right button of Salary Range slider moves off the page */
+  padding-right: 15px;
+}
+
 @media only screen and (max-width: 600px) {
     .pagination .page-item .page-link {
       height: 30px;
