@@ -65,6 +65,7 @@
                     <li {% if 'work-experience' in request.path %} class="active" {% endif %}><a href="{% url 'cp:work_experience' %}">Work Experience</a></li>
                     <li {% if 'employee-type' in request.path %} class="active" {% endif %}><a href="{% url 'cp:employee_type' %}">ET</a></li>
                     <li {% if 'vacancy' in request.path %} class="active" {% endif %}><a href="{% url 'cp:vacancy' %}">Vacancy</a></li>
+                    <li {% if 'blog-category' in request.path %} class="active" {% endif %}><a href="{% url 'cp:blog_category' %}">Blog Categories</a></li>
                 {% endif %}
             </ul>
         </div>

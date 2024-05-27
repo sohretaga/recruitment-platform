@@ -1,0 +1,101 @@
+{% extends 'cp/base.html' %}
+{% load static %}
+{% load filters %}
+
+{% block title %}Blog Categories - Control Panel{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'cp/css/tables.css' %}">
+{% endblock %}
+
+{% block content %}
+
+{% include 'cp/container.html' %}
+
+<div class="table-container">
+    <div id="data-filter">
+        <div style="display: flex; margin-bottom: 10px;">
+            <div class="chb-style">
+                <span style="margin-right: 5px;">Language: </span>
+                <div class="filter-chb">
+                    {% languages as language_list %}
+                    {% for language in language_list reversed %}
+                        {% if forloop.first %}
+                            <span title="{{language.name}}"><input type="checkbox" id="id-{{language.code}}" name="language" value="{{language.code}}"
+                                    checked="checked"></span>
+                            <label for="id-{{language.code}}"></label>
+                        {% else %}
+                            <span title="{{language.name}}"><input type="checkbox" id="id-{{language.code}}" name="language" value="{{language.code}}"></span>
+                            <label for="id-{{language.code}}"></label>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="caption" id="caption">Blog Categories</div>
+    <div id="table"></div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'cp/js/command.js' %}"></script>
+<script src="{% static 'cp/js/processes.js' %}"></script>
+<script>
+    const saveUrl = "{% url 'cp:blog_category_save' %}";
+    const loadUrl = "{% url 'cp:blog_category_load' %}";
+    const bmtTable = document.getElementById('table');
+    const consoleText = 'Blog Category';
+    var hot;
+
+    $(document).ready(function() {
+        hot = new Handsontable(bmtTable, {
+            rowHeaders: true,
+            colHeaders: true,
+            stretchH: 'all',
+            startRows: 1,
+            wordWrap: true,
+            filters: true,
+            data: [{id:''}],
+            dropdownMenu:  ['filter_by_value', 'filter_action_bar'],
+            licenseKey: 'non-commercial-and-evaluation',
+
+            hiddenColumns: {
+                columns: [0],
+                indicators: false
+            },
+
+            columns: [
+                {
+                    title: 'id',
+                    data: 'id',
+                    readOnly: true
+                },
+                {
+                    title: 'No',
+                    data: 'no',
+                    className: 'htCenter htMiddle',
+                },
+                {
+                    title: 'Name',
+                    data: 'name'
+                },
+                {
+                    title: 'Definition',
+                    data: 'definition'
+                },
+                {
+                    title: 'Note',
+                    data: 'note'
+                }
+            ],
+        });
+        
+
+        loadData();
+    })
+
+</script>
+
+{% endblock scripts %}

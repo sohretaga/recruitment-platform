@@ -49,4 +49,8 @@ urlpatterns = [
     path('parameters/vacancy', parameters.vacancy_index, name='vacancy'),
     path('parameters/vacancy-load', parameters.vacancy_load, name='vacancy_load'),
     path('parameters/vacancy-save', parameters.vacancy_save, name='vacancy_save'),
+
+    path('parameters/blog-category', parameters.blog_category_index, name='blog_category'),
+    path('parameters/blog-category-load', parameters.blog_category_load, name='blog_category_load'),
+    path('parameters/blog-category-save', parameters.blog_category_save, name='blog_category_save'),
 ]

@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import JsonResponse, Http404
+
 from recruitment_cp import models as cp_models
+from blog.models import Category as BlogCategory
 from recruitment_cp.utils import is_ajax, datetime_to_string
 
 import json
@@ -530,6 +532,57 @@ def vacancy_save(request):
                 else:
                     vacancies = cp_models.ParameterVacancy.objects.filter(pk = pk)
                     vacancies.delete()
+                
+                index += 1
+
+            return JsonResponse({'status': 200})
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+    
+#======================================================================================================
+def blog_category_index(request):
+    if request.user.is_superuser:
+        return render(request, 'cp/parameters/blog-category.html')
+    
+    raise Http404
+
+def blog_category_load(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            
+            blog_category = BlogCategory.objects.all().values()
+            
+            json_data = json.dumps(list(blog_category))
+
+            return JsonResponse(json_data, safe=False)
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+
+def blog_category_save(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            hot = json.loads(request.POST.get('hot'))
+            language = request.POST.get('language')
+            index = 0
+
+            while index < len(hot):
+                pk = hot[index].pop('id', None)
+                name = hot[index].get('name', None)
+
+                if name:
+                    if pk:
+                        blog_category = BlogCategory.objects.filter(pk=pk)
+                        blog_category.update(**hot[index])
+                    else:
+                        blog_category = BlogCategory(**hot[index])
+                        blog_category.save()
+                else:
+                    blog_category = BlogCategory.objects.filter(pk = pk)
+                    blog_category.delete()
                 
                 index += 1
 
