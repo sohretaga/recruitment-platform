@@ -18,12 +18,12 @@ $.ajaxSetup({
 var slider1 = document.getElementById("slider1");
 
 noUiSlider.create(slider1, {
-    start: [0, 10000],
+    start: [0, 100000],
     step: 1,
     connect: true,
     range: {
         min: [0],
-        max: [10000]
+        max: [100000]
     },
     format: {
         to: function (value) {
