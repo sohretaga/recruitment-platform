@@ -17,6 +17,8 @@ urlpatterns = [
     # Blog URL's
     path('blog/post', blogger.post_blog, name='post-blog'),
     path('blog/all', blogger.all_blog, name='all-blog'),
+    path('blog/edit/<int:id>', blogger.edit_blog, name='edit-blog'),
+
     path('blog/editor/upload-image', blogger.upload_editor_image, name='upload-editor-image'),
     path('blog/editor/delete-image', blogger.delete_editor_image, name='delete-editor-image')
 ]

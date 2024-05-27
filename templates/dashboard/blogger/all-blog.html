@@ -28,7 +28,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-flex align-items-center justify-content-between">
-                    <h4 class="mb-0">All Blogs</h4>
+                    <a href="{% url 'dashboard:post-blog' %}"><button class="btn btn-info" type="button"><i class="mdi mdi-plus"></i>Add Blog</button></a>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
@@ -62,7 +62,7 @@
                             </div>
                         </div>
 
-                        <h4 class="card-title mb-4">Latest Transactions</h4>
+                        <h4 class="card-title mb-4">All Blogs</h4>
 
                         <div class="table-responsive">
                             <table class="table table-centered datatable dt-responsive nowrap" data-page-length="10" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -87,8 +87,8 @@
                                     <tr>
                                         <td>
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="ordercheck1">
-                                                <label class="custom-control-label" for="ordercheck1">&nbsp;</label>
+                                                <input type="checkbox" class="custom-control-input" id="ordercheck{{ blog.id }}">
+                                                <label class="custom-control-label" for="ordercheck{{ blog.id }}">&nbsp;</label>
                                             </div>
                                         </td>
                                         
@@ -106,7 +106,7 @@
                                             {% endif %}
                                         </td>
                                         <td>
-                                            <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
+                                            <a href="{% url 'dashboard:edit-blog' blog.id %}" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
                                             <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-trash-can font-size-18"></i></a>
                                         </td>
                                     </tr>

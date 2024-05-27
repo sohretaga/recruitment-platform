@@ -6,9 +6,9 @@ from django.core.paginator import Paginator
 
 def blog(request):
 
-
     # Set up Paginator
-    paginator = Paginator(Blog.objects.all(), 8)
+    all_blogs = Blog.objects.filter(status='published').order_by('created_date')
+    paginator = Paginator(all_blogs, 8)
     current_page = request.GET.get('page')
     blogs = paginator.get_page(current_page)
 

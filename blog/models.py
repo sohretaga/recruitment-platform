@@ -18,7 +18,7 @@ class Blog(models.Model):
     content = FroalaField()
     views = models.IntegerField(default=0)
     status = models.CharField(max_length=12, choices=STATUS_CHOICES)
-    slug = models.SlugField(null=True)
+    slug = models.SlugField(unique=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:

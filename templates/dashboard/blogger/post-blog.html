@@ -1,7 +1,13 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
 
-{% block title %}Post Blog{% endblock title %}
+{% block title %}
+    {% if blog %}
+        Edit - {{ blog.title|title }}
+    {% else %}
+        Post Blog
+    {% endif %}
+{% endblock title %}
 
 {% block head %}
     <!-- Summernote css -->
@@ -22,8 +28,15 @@
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
-                <div class="page-title-box d-flex align-items-center justify-content-between">
-                    <h4 class="mb-0">Post Blog</h4>
+                <div class="page-title-box d-flex align-items-center justify-content-between">                        
+                        {% if blog %}
+                            <div>
+                                <a href="{% url 'dashboard:post-blog' %}"><label class="btn btn-info" type="button"><i class="mdi mdi-plus"></i>Add Blog</label></a>
+                                <label class="btn btn-success" for='save' type="submit"><i class="mdi mdi-content-save"></i> Save</label>
+                            </div>
+                        {% else %}
+                            <label class="btn btn-primary" form='post' type="submit"><i class="mdi mdi-send"></i> Post</label>
+                        {% endif %}
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
@@ -46,7 +59,7 @@
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-md-2 col-form-label">Blog Title</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" name="title" type="text" placeholder="Example Title" id="example-text-input">
+                                    <input class="form-control" name="title" type="text" placeholder="Example Title" id="example-text-input" value="{{ blog.title }}">
                                 </div>
                             </div>
     
@@ -55,8 +68,8 @@
                                 <div class="col-md-10">
                                     <select class="form-control" name="category">
                                         <option>Select</option>
-                                        <option>Large select</option>
-                                        <option>Small select</option>
+                                        <option {% if blog.category == 'Large select' %}selected{% endif %}>Large select</option>
+                                        <option {% if blog.category == 'Small select' %}selected{% endif %}>Small select</option>
                                     </select>
                                 </div>
                             </div>
@@ -65,9 +78,9 @@
                                 <label class="col-md-2 col-form-label">Status</label>
                                 <div class="col-md-10">
                                     <select class="form-control" name="status">
-                                        <option value='published'>Publish</option>
-                                        <option value='draft'>Draft</option>
-                                        <option value='deactivated'>Deactivate</option>
+                                        <option value='published'{% if blog.status == 'published' %}selected{% endif %} >Publish</option>
+                                        <option value='draft'{% if blog.status == 'draft' %}selected{% endif %} >Draft</option>
+                                        <option value='deactivated'{% if blog.status == 'deactivated' %}selected{% endif %} >Deactivate</option>
                                     </select>
                                 </div>
                             </div>
@@ -77,14 +90,18 @@
                                 <div class="col-md-10">
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" name="cover_photo" id="customFile">
-                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                        <label class="custom-file-label" for="customFile">{% if blog.cover_photo %}{{ blog.cover_photo.name }}{% else %}Choose file{% endif %}</label>
                                     </div>
                                 </div>
                             </div>
 
-                            <textarea id="froala-editor" name="content"></textarea>
+                            <textarea id="froala-editor" name="content">{{ blog.content }}</textarea>
 
-                            <button class="btn btn-primary" type="submit">Post</button>
+                            {% if blog %}
+                                <button style='display: none;' class="btn btn-success" id='save' type="submit">Save</button>
+                            {% else %}
+                                <button style='display: none;' class="btn btn-primary" id='post' type="submit">Post</button>
+                            {% endif %}
                         </form>
                     </div>
                 </div>

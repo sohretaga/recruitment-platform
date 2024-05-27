@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
@@ -32,6 +32,23 @@ def all_blog(request):
     }
 
     return render(request, 'dashboard/blogger/all-blog.html', context)
+
+@is_blogger
+@login_required
+def edit_blog(request, id):
+    blog = get_object_or_404(Blog, id=id)
+
+    if request.POST:
+        form = PostBlogForm(request.POST, request.FILES, instance=blog)
+
+        if form.is_valid():
+            form.save()
+
+    context = {
+        'blog': blog
+    }
+
+    return render(request, 'dashboard/blogger/post-blog.html', context)
 
 def upload_editor_image(request):
     if request.POST and request.FILES.get('file'):
