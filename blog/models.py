@@ -4,6 +4,12 @@ from froala_editor.fields import FroalaField
 
 # Create your models here.
 
+class Category(models.Model):
+    no = models.IntegerField(blank=True, null=True)
+    name = models.CharField(max_length=500)
+    definition = models.TextField(blank=True, null=True)
+    note = models.CharField(max_length=500, blank=True, null=True)
+
 class Blog(models.Model):
 
     STATUS_CHOICES = [
