@@ -19,13 +19,17 @@ class Blog(models.Model):
     ]
 
     title = models.CharField(max_length=1000)
-    category = models.CharField(max_length=100)
-    cover_photo = models.ImageField(upload_to='blog/cover')
+    category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL)
+    cover_photo = models.ImageField(upload_to='blog/cover', null=True, blank=True)
     content = FroalaField()
     views = models.IntegerField(default=0)
     status = models.CharField(max_length=12, choices=STATUS_CHOICES)
-    slug = models.SlugField(unique=True, null=True)
+    slug = models.SlugField(unique=True)
     created_date = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def category_name(self) -> str:
+        return self.category.name
 
     def __str__(self) -> str:
         return self.title

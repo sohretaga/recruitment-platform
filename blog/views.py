@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Blog
 from django.core.paginator import Paginator
+from django.http import Http404
 
 # Create your views here.
 
@@ -22,6 +23,9 @@ def detail(request, slug):
     blog = Blog.objects.get(slug=slug)
     blog.views += 1
     blog.save()
+
+    if blog.status != 'published' and not request.user.is_superuser:
+        raise Http404
 
     context = {
         'blog': blog

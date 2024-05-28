@@ -94,7 +94,7 @@
                                         
                                         <td><a href="{% url 'blog:detail' blog.slug %}" class="text-dark font-weight-bold" target='_blank'>{{ blog.title|title }}</a></td>
                                         <td>{{ blog.created_date|date:"M d, Y" }}</td>
-                                        <td>{{ blog.category }}</td>
+                                        <td>{{ blog.category_name }}</td>
                                         <td><i class="mdi mdi-eye"></i> {{ blog.views }}</td>
                                         <td>
                                             {% if blog.status == 'published' %}

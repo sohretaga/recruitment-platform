@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 
 from recruitment import settings
-from blog.models import Blog
+from blog.models import Blog, Category
 
 from dashboard.decorators import is_blogger
 from dashboard.forms import PostBlogForm
@@ -19,8 +19,14 @@ def post_blog(request):
 
         if form.is_valid():
             form.save()
+    
+    categories = Category.objects.all()
 
-    return render(request, 'dashboard/blogger/post-blog.html')
+    context = {
+        'categories': categories
+    }
+
+    return render(request, 'dashboard/blogger/post-blog.html', context)
 
 @is_blogger
 @login_required
@@ -28,7 +34,7 @@ def all_blog(request):
     blogs = Blog.objects.all()
 
     context = {
-        'blogs': blogs
+        'blogs': blogs,
     }
 
     return render(request, 'dashboard/blogger/all-blog.html', context)
@@ -37,6 +43,7 @@ def all_blog(request):
 @login_required
 def edit_blog(request, id):
     blog = get_object_or_404(Blog, id=id)
+    categories = Category.objects.all()
 
     if request.POST:
         form = PostBlogForm(request.POST, request.FILES, instance=blog)
@@ -45,7 +52,8 @@ def edit_blog(request, id):
             form.save()
 
     context = {
-        'blog': blog
+        'blog': blog,
+        'categories': categories
     }
 
     return render(request, 'dashboard/blogger/post-blog.html', context)
