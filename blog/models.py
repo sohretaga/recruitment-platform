@@ -27,10 +27,6 @@ class Blog(models.Model):
     slug = models.SlugField(unique=True)
     created_date = models.DateTimeField(auto_now_add=True)
 
-    @property
-    def category_name(self) -> str:
-        return self.category.name
-
     def __str__(self) -> str:
         return self.title
 
