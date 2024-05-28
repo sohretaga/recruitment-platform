@@ -169,34 +169,12 @@
                                 <h6 class="fs-16 mb-3">Categories</h6>
                             </div>
                             <div class="my-3">
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" value="" id="education" />
-                                    <label class="form-check-label ms-2" for="education">Education</label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked1" checked />
-                                    <label class="form-check-label ms-2" for="flexCheckChecked1">Business</label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked2" checked />
-                                    <label class="form-check-label ms-2" for="flexCheckChecked2">Information</label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked3" />
-                                    <label class="form-check-label ms-2" for="flexCheckChecked3">Interview</label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked4" />
-                                    <label class="form-check-label ms-2" for="flexCheckChecked4">Travel</label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked5" />
-                                    <label class="form-check-label ms-2" for="flexCheckChecked5">Jobs</label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked6" />
-                                    <label class="form-check-label ms-2" for="flexCheckChecked6">Fashion</label>
-                                </div>
+                                {% for category in categories %}
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" value="{{ category.id }}" id="category{{ category.id }}" />
+                                        <label class="form-check-label ms-2" for="category{{ category.id }}">{{ category.name }}</label>
+                                    </div>
+                                {% endfor %}
                             </div>
                         </div><!--end Categories-->
 

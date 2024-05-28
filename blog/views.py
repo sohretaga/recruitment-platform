@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Blog
+from .models import Blog, Category
 from django.core.paginator import Paginator
 from django.http import Http404
 
@@ -13,8 +13,11 @@ def blog(request):
     current_page = request.GET.get('page')
     blogs = paginator.get_page(current_page)
 
+    categories = Category.objects.all()
+
     context = {
         'blogs': blogs,
+        'categories': categories
     }
     
     return render(request, 'blog/blog.html', context)
