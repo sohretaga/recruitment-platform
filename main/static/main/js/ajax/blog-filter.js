@@ -183,9 +183,9 @@ const setFilterCheckboxes = (selector, values) => {
     });
 };
 
-addCheckboxListener('#blog-categories input[type="checkbox"]', filterRequest); // Type of Employment Listener
+addCheckboxListener('#blog-categories input[type="checkbox"]', filterRequest); // Categories Listener
 
 // Set filter inputs from url parameters
 try {
-    setFilterCheckboxes('#blog-categories input[type="checkbox"]', getUrlParameterValue('employment_type').split(',')); // Set type of employment
+    setFilterCheckboxes('#blog-categories input[type="checkbox"]', getUrlParameterValue('categories').split(',')); // Set categories
 } catch (error) { };

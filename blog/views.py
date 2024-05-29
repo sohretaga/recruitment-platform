@@ -13,9 +13,17 @@ import json
 # Create your views here.
 
 def blog(request):
+    # URL parameters are taken for filtering and used for the same filtering on the following pages.
+    categories:str|None = request.GET.get('categories')
+    params:dict = {'status':'published'} # only get pusblised blogs
+    url:str = ''
+
+    if categories:
+        url += f'&categories={categories}'
+        params.update({'category__name__in': categories.split(',')})
 
     # Set up Paginator
-    all_blogs = Blog.objects.filter(status='published').order_by('created_date')
+    all_blogs = Blog.objects.filter(**params).order_by('created_date')
     paginator = Paginator(all_blogs, 8)
     current_page = request.GET.get('page')
     blogs = paginator.get_page(current_page)
@@ -24,12 +32,14 @@ def blog(request):
 
     context = {
         'blogs': blogs,
-        'categories': categories
+        'categories': categories,
+        'url': url
     }
     
     return render(request, 'blog/blog.html', context)
 
 def detail(request, slug):
+    categories = Category.objects.all()
     blog = Blog.objects.get(slug=slug)
     blog.views += 1
     blog.save()
@@ -38,7 +48,8 @@ def detail(request, slug):
         raise Http404
 
     context = {
-        'blog': blog
+        'blog': blog,
+        'categories': categories
     }
 
     return render(request, 'blog/detail.html', context)

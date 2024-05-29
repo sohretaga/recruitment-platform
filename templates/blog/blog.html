@@ -60,7 +60,7 @@
 
 
     <!-- START BLOG-GRID -->
-    <section class="section">
+    <section id="blog-list" class="section">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-md-7">
@@ -97,52 +97,52 @@
                                     <ul class="pagination job-pagination mb-0 justify-content-center" id="pagination-container">
                                         {% if blogs.has_previous %}
                                             <li class="page-item">
-                                                <a class="page-link" href="?page={{ blogs.previous_page_number }}" tabindex="-1">
+                                                <a class="page-link" href="?page={{ blogs.previous_page_number }}{{ url }}#blog-list" tabindex="-1">
                                                     <i class="mdi mdi-chevron-double-left fs-15"></i>
                                                 </a>
                                             </li>
-
+    
                                             {% if blogs.number > 3 %}
                                                 <li class="page-item {% if blogs.number == 1 %}active{% endif %}">
-                                                    <a class="page-link" href="?page={{ 1 }}">{{ 1 }}</a>
+                                                    <a class="page-link" href="?page={{ 1 }}{{ url }}#blog-list">{{ 1 }}</a>
                                                 </li>
                                                 {% if blogs.number > 4 %}
                                                     <li class="page-item">
-                                                        <a class="page-link" href="#">...</a>
+                                                        <a class="page-link" href="#blog-list">...</a>
                                                     </li>
                                                 {% endif %}
                                             {% endif %}
                                         {% endif %}
-
+    
                                         {% for num in blogs.paginator.page_range %}
                                             {% if blogs.number == num %}
                                                 <li class="page-item {% if blogs.number == num %}active{% endif %}">
-                                                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                                    <a class="page-link" href="?page={{ num }}{{ url }}#blog-list">{{ num }}</a>
                                                 </li>
                                             {% elif num > blogs.number|add:'-3' and num < blogs.number|add:'3' %}
                                                 <li class="page-item {% if blogs.number == num %}active{% endif %}">
-                                                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                                    <a class="page-link" href="?page={{ num }}{{ url }}#blog-list">{{ num }}</a>
                                                 </li>
                                             {% endif %}
                                         {% endfor %}
-
+    
                                         {% if blogs.has_next %}
                                             {% if blogs.number < blogs.paginator.num_pages|add:'-3' %}
                                                 <li class="page-item">
-                                                    <a class="page-link" href="#">...</a>
+                                                    <a class="page-link" href="#blog-list">...</a>
                                                 </li>
-
+    
                                                 <li class="page-item {% if blogs.number == blogs.paginator.num_pages %}active{% endif %}">
-                                                    <a class="page-link" href="?page={{ blogs.paginator.num_pages }}">{{ blogs.paginator.num_pages }}</a>
+                                                    <a class="page-link" href="?page={{ blogs.paginator.num_pages }}{{ url }}#blog-list">{{ blogs.paginator.num_pages }}</a>
                                                 </li>
                                             {% elif blogs.number < blogs.paginator.num_pages|add:'-2' %}
                                                 <li class="page-item {% if blogs.number == blogs.paginator.num_pages %}active{% endif %}">
-                                                    <a class="page-link" href="?page={{ blogs.paginator.num_pages }}">{{ blogs.paginator.num_pages }}</a>
+                                                    <a class="page-link" href="?page={{ blogs.paginator.num_pages }}{{ url }}#blog-list">{{ blogs.paginator.num_pages }}</a>
                                                 </li>
                                             {% endif %}
-
+    
                                             <li class="page-item">
-                                                <a class="page-link" href="?page={{ blogs.next_page_number }}">
+                                                <a class="page-link" href="?page={{ blogs.next_page_number }}{{ url }}#blog-list">
                                                     <i class="mdi mdi-chevron-double-right fs-15"></i>
                                                 </a>
                                             </li>
