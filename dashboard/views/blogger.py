@@ -52,6 +52,7 @@ def edit_blog(request, id):
 
         if form.is_valid():
             form.save()
+            return redirect(reverse('dashboard:all-blog'))
 
     context = {
         'blog': blog,
