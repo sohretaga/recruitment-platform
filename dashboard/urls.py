@@ -9,7 +9,8 @@ urlpatterns = [
 
     # Employer URL's
     path('employer/complete-register', employer.complete_register, name='employer-complete-register'),
-    path('post-vacancy', employer.post_vacancy, name='post-vacancy'),
+    path('vacnacy/post', employer.post_vacancy, name='post-vacancy'),
+    path('vacancy/all', employer.all_vacancy, name='all-vacancy'),
 
     # Candidate URL's
     path('candidate/complete-register', candidate.complete_register, name='candidate-complete-register'),

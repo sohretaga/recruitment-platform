@@ -65,7 +65,7 @@ def ajax_filter_blog(request):
         if categories:
             params.update({'category__name__in':categories})        
 
-        filtered_blogs = Blog.objects.filter(**params)\
+        filtered_blogs = Blog.objects.filter(**params).order_by('created_date')\
         .values('title', 'category__name', 'cover_photo', 'views', 'slug', 'created_date')
         
         # Set up Paginator

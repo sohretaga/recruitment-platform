@@ -1,7 +1,7 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
 
-{% block title %}All Blogs{% endblock title %}
+{% block title %}All Vacancy{% endblock title %}
 
 {% block head %}
     <!-- DataTables -->
@@ -28,12 +28,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-flex align-items-center justify-content-between">
-                    <a href="{% url 'dashboard:post-blog' %}"><button class="btn btn-info" type="button"><i class="mdi mdi-plus"></i>Add Blog</button></a>
+                    <a href="{% url 'dashboard:post-vacancy' %}"><button class="btn btn-info" type="button"><i class="mdi mdi-plus"></i>Add Vacancy</button></a>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Blog</a></li>
-                            <li class="breadcrumb-item active">All Blogs</li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Vacancies</a></li>
+                            <li class="breadcrumb-item active">All Vacancy</li>
                         </ol>
                     </div>
 
@@ -62,7 +62,7 @@
                             </div>
                         </div>
 
-                        <h4 class="card-title mb-4">All Blogs</h4>
+                        <h4 class="card-title mb-4">All Vacancy</h4>
 
                         <div class="table-responsive">
                             <table class="table table-centered datatable dt-responsive nowrap" data-page-length="10" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -74,39 +74,51 @@
                                                 <label class="custom-control-label" for="ordercheck">&nbsp;</label>
                                             </div>
                                         </th>
-                                        <th>Title</th>
-                                        <th>Date</th>
-                                        <th>Category</th>
+                                        <th>Job Position</th>
+                                        <th>Job Title</th>
+                                        <th>Career Type</th>
+                                        <th>Career Level</th>
+                                        <th>Location</th>
+                                        <th>FTE</th>
+                                        <th>Salary Min</th>
+                                        <th>Salary Mid</th>
+                                        <th>Salary Max</th>
+                                        <th>Salary</th>
+                                        <th>Note</th>
                                         <th>Views</th>
                                         <th>Status</th>
-                                        <th style="width: 120px;">Action</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for blog in blogs %}
+                                    {% for vacancy in vacancies %}
                                     <tr>
                                         <td>
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="ordercheck{{ blog.id }}">
-                                                <label class="custom-control-label" for="ordercheck{{ blog.id }}">&nbsp;</label>
+                                                <input type="checkbox" class="custom-control-input" id="ordercheck{{ vacancy.id }}">
+                                                <label class="custom-control-label" for="ordercheck{{ vacancy.id }}">&nbsp;</label>
                                             </div>
                                         </td>
                                         
-                                        <td><a href="{% url 'blog:detail' blog.slug %}" class="text-dark font-weight-bold" target='_blank'>{{ blog.title|title }}</a></td>
-                                        <td>{{ blog.created_date|date:"M d, Y" }}</td>
-                                        <td>{{ blog.category.name }}</td>
-                                        <td><i class="mdi mdi-eye"></i> {{ blog.views }}</td>
+                                        <td><a href="#" class="text-dark font-weight-bold" target='_blank'>{{ vacancy.position_title|title }}</a></td>
+                                        <td>{{ vacancy.job_title }}</td>
+                                        <td>{{ vacancy.career_type }}</td>
+                                        <td>{{ vacancy.career_level }}</td>
+                                        <td>{{ vacancy.location }}</td>
+                                        <td>{{ vacancy.fte }}</td>
+                                        <td>{{ vacancy.salary_minimum }}</td>
+                                        <td>{{ vacancy.salary_midpoint }}</td>
+                                        <td>{{ vacancy.salary_maximum }}</td>
+                                        <td>{{ vacancy.salary}}</td>
+                                        <td>{% if vacancy.note %}{{ vacancy.note}}{% else %}-{% endif %}</td>
+                                        <td><i class="mdi mdi-eye"></i> {{ vacancy.views }}</td>
                                         <td>
-                                            {% if blog.status == 'published' %}
-                                                <div class="badge badge-soft-success font-size-12">Published</div>
-                                            {% elif blog.status == 'draft' %}
-                                                <div class="badge badge-soft-warning font-size-12">Draft</div>
-                                            {% elif blog.status == 'deactivated' %}
-                                                <div class="badge badge-soft-danger font-size-12">Deactivated</div>
-                                            {% endif %}
+                                            <div class="badge badge-soft-success font-size-12">Active</div>
+                                            {% comment %} <div class="badge badge-soft-warning font-size-12">Draft</div>
+                                            <div class="badge badge-soft-danger font-size-12">Deactivated</div> {% endcomment %}
                                         </td>
                                         <td>
-                                            <a href="{% url 'dashboard:edit-blog' blog.id %}" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
+                                            <a href="#" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
                                             <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-trash-can font-size-18"></i></a>
                                         </td>
                                     </tr>
@@ -136,11 +148,21 @@
     <script src="{% static 'dashboard/libs/datatables.net/js/jquery.dataTables.min.js' %}"></script>
     <script src="{% static 'dashboard/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
 
+    <script src="{% static 'dashboard/js/app.js' %}"></script>
+
     <!-- Custom JS -->
     <script>
         const columns = [
             { orderable: false },
             { orderable: false },
+            { orderable: false },
+            { orderable: false },
+            { orderable: false },
+            { orderable: false },
+            { orderable: false },
+            { orderable: true },
+            { orderable: true },
+            { orderable: true },
             { orderable: true },
             { orderable: true },
             { orderable: true },
@@ -149,6 +171,4 @@
         ];
     </script>
     <script src="{% static 'dashboard/js/datatable.js' %}"></script>
-
-    <script src="{% static 'dashboard/js/app.js' %}"></script>
 {% endblock script %}

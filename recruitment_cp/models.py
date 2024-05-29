@@ -1,5 +1,7 @@
 from django.db import models
 
+from user.models import CustomUser
+
 # Create your models here.
 
 class Language(models.Model):
@@ -63,6 +65,7 @@ class ParameterEmployeeType(ParameterCommonFields):
 
 class ParameterVacancy(ParameterCommonFields):
     note = None
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     organization = models.CharField(max_length=100, blank=True, null=True)
     career_type = models.CharField(max_length=100, blank=True, null=True)
     career_level = models.CharField(max_length=100, blank=True, null=True)
@@ -78,4 +81,5 @@ class ParameterVacancy(ParameterCommonFields):
     employment_type = models.CharField(max_length=100, blank=True, null=True)
     work_experience = models.CharField(max_length=100, blank=True, null=True)
     definition = models.TextField()
+    views = models.IntegerField(default=0)
     created_date = models.DateTimeField(auto_now_add=True, null=True)

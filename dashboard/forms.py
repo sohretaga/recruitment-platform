@@ -15,7 +15,7 @@ class CompleteCandidateRegisterForm(forms.Form):
 class PostVacancyForm(forms.ModelForm):
     class Meta:
         model = ParameterVacancy
-        fields = ('language', 'organization', 'career_type', 'career_level', 'location', 'fte', 'salary', 'salary_minimum',
+        fields = ('language', 'author', 'organization', 'career_type', 'career_level', 'location', 'fte', 'salary', 'salary_minimum',
                   'salary_midpoint', 'salary_maximum', 'position_title', 'job_title', 'employment_type', 'definition')
 
 class PostBlogForm(forms.ModelForm):

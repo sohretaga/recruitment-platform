@@ -3,15 +3,7 @@ $(document).ready(function() {
     $(".datatable").DataTable({
         lengthMenu: [10, 25, 50, 100],
         pageLength: 10,
-        columns: [
-            { orderable: false },
-            { orderable: true },
-            { orderable: true },
-            { orderable: true },
-            { orderable: true },
-            { orderable: true },
-            { orderable: false }
-        ],
+        columns: columns,
         order: [[1, "asc"]],
         language: {
             paginate: {
