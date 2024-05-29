@@ -69,7 +69,7 @@ def ajax_filter_blog(request):
         .values('title', 'category__name', 'cover_photo', 'views', 'slug', 'created_date')
         
         # Set up Paginator
-        paginator = Paginator(filtered_blogs, 10)
+        paginator = Paginator(filtered_blogs, 8)
         current_page_number = request.POST.get('page', 1)
         blogs_page = paginator.get_page(current_page_number)
 
