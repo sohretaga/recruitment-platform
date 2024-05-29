@@ -1,4 +1,5 @@
-from django.shortcuts import render, get_object_or_404, HttpResponse
+from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
+from django.urls import reverse
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
@@ -19,6 +20,7 @@ def post_blog(request):
 
         if form.is_valid():
             form.save()
+            return redirect(reverse('dashboard:all-blog'))
     
     categories = Category.objects.all()
 
