@@ -30,8 +30,6 @@ def fetch_vacancies(request) -> dict:
         url += f'&employment_type={employment_type}'
         params.update({'employment_type__in': employment_type.split(',')})
 
-    print(url)
-
     filtered_vacancies = models.ParameterVacancy.objects.filter(**params)\
     .values('id', 'no', 'organization', 'career_type', 'career_level', 'location', 'fte', 'salary_minimum',
             'salary_midpoint', 'salary_maximum', 'salary', 'job_catalogue', 'position_title', 'job_title',

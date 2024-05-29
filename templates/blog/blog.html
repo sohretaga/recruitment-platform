@@ -65,7 +65,7 @@
             <div class="row">
                 <div class="col-lg-8 col-md-7">
                     <div class="blog-post">
-                        <div class="row">
+                        <div id="blog-list-container" class="row">
                             {% for blog in blogs %}
                             <div class="col-lg-6 mb-4">
                                 <div class="card blog-grid-box p-2">
@@ -94,7 +94,7 @@
                         <div class="row">
                             <div class="col-lg-12 mt-5">
                                 <nav aria-label="Page navigation example">
-                                    <ul class="pagination job-pagination mb-0 justify-content-center">
+                                    <ul class="pagination job-pagination mb-0 justify-content-center" id="pagination-container">
                                         {% if blogs.has_previous %}
                                             <li class="page-item">
                                                 <a class="page-link" href="?page={{ blogs.previous_page_number }}" tabindex="-1">
@@ -168,10 +168,10 @@
                             <div class="sd-title">
                                 <h6 class="fs-16 mb-3">Categories</h6>
                             </div>
-                            <div class="my-3">
+                            <div id="blog-categories" class="my-3">
                                 {% for category in categories %}
                                     <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" value="{{ category.id }}" id="category{{ category.id }}" />
+                                        <input class="form-check-input" type="checkbox" value="{{ category.name }}" id="category{{ category.id }}" />
                                         <label class="form-check-label ms-2" for="category{{ category.id }}">{{ category.name }}</label>
                                     </div>
                                 {% endfor %}
@@ -294,6 +294,7 @@
 
 {% block script %}
 <!-- JAVASCRIPT -->
+<script src="{% static 'dashboard/libs/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'main/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 <script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
 
@@ -305,4 +306,6 @@
 <script src="{% static 'main/js/pages/switcher.init.js' %}"></script>
 
 <script src="{% static 'main/js/app.js' %}"></script>
+
+<script src="{% static 'main/js/ajax/blog-filter.js' %}"></script>
 {% endblock script %}

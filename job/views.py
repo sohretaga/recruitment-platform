@@ -34,7 +34,7 @@ def bookmarks(request):
 
 @require_POST
 def ajax_filter_vacancies(request):
-    if is_ajax and request.POST:
+    if is_ajax:
         data = json.loads(request.body.decode('utf-8'))
         salary_range_lower = data.get('salary_range_lower', 0)
         salary_range_upper = data.get('salary_range_upper', 0)
@@ -82,9 +82,3 @@ def ajax_filter_vacancies(request):
         return JsonResponse(context, safe=False)
 
     return JsonResponse({'error': 'Invalid request'}, status=400)
-
-def ajax_work_experiences(request):
-    ...
-
-def ajax_employment_type(request):
-    ...

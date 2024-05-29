@@ -11,13 +11,12 @@ $.ajaxSetup({
         $('body').css('cursor', 'default');
     },
     error: function () {
-        tableConsole.innerText = 'Failure when operation performed...';
+         console.error('Failure when operation performed...');
     }
 });
 
-var slider1 = document.getElementById("slider1");
 
-noUiSlider.create(slider1, {
+noUiSlider.create(slider, {
     start: [0, 100000],
     step: 1,
     connect: true,
@@ -35,10 +34,10 @@ noUiSlider.create(slider1, {
     }
 });
 
-var slider1Value = document.getElementById("slider1-span");
+var sliderValue = document.getElementById("slider1-span");
 
-slider1.noUiSlider.on("update", function(values, handle) {
-    slider1Value.innerHTML = `${values[0]} - ${values[1]}`;
+slider.noUiSlider.on("update", function(values, handle) {
+    sliderValue.innerHTML = `${values[0]} - ${values[1]}`;
 });
 
 class DataCollector {

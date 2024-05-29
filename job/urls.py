@@ -10,6 +10,6 @@ urlpatterns = [
     path('manage-jobs', views.manage_jobs, name='manage-jobs'),
     path('bookmarks', views.bookmarks, name='bookmarks'),
 
-    # Ajax requests for filters
+    # ajax
     path('ajax/filter-vacancies', views.ajax_filter_vacancies, name='ajax_filter_vacancies'),
 ]
