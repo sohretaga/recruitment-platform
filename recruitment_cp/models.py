@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify
 
 from user.models import CustomUser
 
@@ -82,4 +83,17 @@ class ParameterVacancy(ParameterCommonFields):
     work_experience = models.CharField(max_length=100, blank=True, null=True)
     definition = models.TextField()
     views = models.IntegerField(default=0)
+    slug = models.SlugField(null=True)
     created_date = models.DateTimeField(auto_now_add=True, null=True)
+
+    def save(self, *args, **kwargs) -> None:
+        if not self.slug:  # Only create slug if it's not set
+            self.slug = slugify(self.job_title)
+            original_slug = self.slug
+            queryset = ParameterVacancy.objects.filter(slug=self.slug)
+            counter = 1
+            while queryset.exists():
+                self.slug = f"{original_slug}-{counter}"
+                counter += 1
+                queryset = ParameterVacancy.objects.filter(slug=self.slug)
+        super(ParameterVacancy, self).save(*args, **kwargs)

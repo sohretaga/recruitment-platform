@@ -4,8 +4,8 @@
 {% block title %}Post Vacancy{% endblock title %}
 
 {% block head %}
-    <!-- Summernote css -->
-    <link href="{% static 'dashboard/libs/summernote/summernote-bs4.min.css' %}" rel="stylesheet" type="text/css" />
+    <!-- Froala css -->
+    <link href="{% static 'dashboard/libs/froala/froala_editor.pkgd.min.css' %}" rel="stylesheet" type="text/css" />
     <!-- twitter-bootstrap-wizard css -->
     <link rel="stylesheet" href="{% static 'dashboard/libs/twitter-bootstrap-wizard/prettify.css' %}">
     <!-- Bootstrap Css -->
@@ -24,7 +24,14 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-flex align-items-center justify-content-between">
-                    <h4 class="mb-0">Post Vacancy</h4>
+                    {% if vacancy %}
+                        <div>
+                            <a href="{% url 'dashboard:post-vacancy' %}"><label class="btn btn-info" type="button"><i class="mdi mdi-plus"></i>Add Vacancy</label></a>
+                            <label class="btn btn-success" for='save' type="submit"><i class="mdi mdi-content-save"></i> Save</label>
+                        </div>
+                    {% else %}
+                        <h4 class="mb-0">Post Vacancy</h4>
+                    {% endif %}
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
@@ -78,7 +85,7 @@
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label for="basicpill-firstname-input">Position Title</label>
-                                                    <input type="text" class="form-control" name="position_title" id="basicpill-firstname-input">
+                                                    <input type="text" class="form-control" name="position_title" id="basicpill-firstname-input" value="{{ vacancy.position_title }}">
                                                 </div>
                                             </div>
                                             <div class="col-lg-4">
@@ -86,7 +93,7 @@
                                                     <label>Job Title</label>
                                                     <select class="custom-select" name="language">
                                                         {% for catalogue in job_catalogues %}
-                                                            {% if forloop.first %}
+                                                            {% if catalogue.name == vacancy.name %}
                                                                 <option value="{{ catalogue.name }}" selected>{{ catalogue.name }}</option>
                                                             {% else %}
                                                                 <option value="{{ catalogue.name }}">{{ catalogue.name }}</option>
@@ -99,7 +106,7 @@
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label for="input-currency">Salary</label>
-                                                    <input id="input-currency" name="salary" class="form-control input-mask text-left" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
+                                                    <input id="input-currency" name="salary" class="form-control input-mask text-left" value="{{ vacancy.salary }}" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
                                                 </div>
                                             </div>
                                         </div>
@@ -109,7 +116,7 @@
                                                     <label>Language</label>
                                                     <select class="custom-select" name="language">
                                                         {% for language in languages %}
-                                                            {% if forloop.first %}
+                                                            {% if language.code == vacancy.language %}
                                                                 <option value="{{ language.code }}" selected>{{ language.name }}</option>
                                                             {% else %}
                                                                 <option value="{{ language.code }}">{{ language.name }}</option>
@@ -123,7 +130,7 @@
                                                     <label>Career Type</label>
                                                     <select class="custom-select" name="career_type">
                                                         {% for type in career_types %}
-                                                            {% if forloop.first %}
+                                                            {% if type.name == vacancy.career_type %}
                                                                 <option value="{{ type.name }}" selected>{{ type.name }}</option>
                                                             {% else %}
                                                                 <option value="{{ type.name }}">{{ type.name }}</option>
@@ -136,11 +143,11 @@
                                                 <div class="form-group">
                                                     <label>Career Level</label>
                                                     <select class="custom-select" name="career_level">
-                                                        {% for type in career_levels %}
-                                                            {% if forloop.firs %}
-                                                                <option value="{{ type.name }}" selected>{{ type.name }}</option>
+                                                        {% for level in career_levels %}
+                                                            {% if level.name == vacancy.career_level %}
+                                                                <option value="{{ level.name }}" selected>{{ level.name }}</option>
                                                             {% else %}
-                                                                <option value="{{ type.name }}">{{ type.name }}</option>
+                                                                <option value="{{ level.name }}">{{ level.name }}</option>
                                                             {% endif %}
                                                         {% endfor %}
                                                     </select>
@@ -156,7 +163,7 @@
                                                         <label>Location</label>
                                                         <select class="custom-select" name="location">
                                                             {% for location in locations %}
-                                                                {% if forloop.first %}
+                                                                {% if location.name == vacancy.location %}
                                                                     <option value="{{ location.name }}" selected>{{ location.name }}</option>
                                                                 {% else %}
                                                                     <option value="{{ location.name }}">{{ location.name }}</option>
@@ -169,7 +176,7 @@
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <label for="input-currency">Salary Minimum</label>
-                                                        <input id="input-currency" name="salary_minimum" class="form-control input-mask text-left" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
+                                                        <input id="input-currency" name="salary_minimum" class="form-control input-mask text-left" value="{{ vacancy.salary_minimum }}" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
                                                     </div>
                                                 </div>
                                             </div>
@@ -179,7 +186,7 @@
                                                         <label>Employment Type</label>
                                                         <select class="custom-select" name="employment_type">
                                                             {% for type in employment_types %}
-                                                                {% if forloop.first %}
+                                                                {% if type.name == vacancy.employment_type %}
                                                                     <option value="{{ type.name }}" selected>{{ type.name }}</option>
                                                                 {% else %}
                                                                     <option value="{{ type.name }}">{{ type.name }}</option>
@@ -192,7 +199,7 @@
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <label for="input-currency">Salary Midpoint</label>
-                                                        <input id="input-currency" name="salary_midpoint" class="form-control input-mask text-left" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
+                                                        <input id="input-currency" name="salary_midpoint" class="form-control input-mask text-left" value="{{ vacancy.salary_midpoint }}" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
                                                     </div>
                                                 </div>
                                             </div>
@@ -202,7 +209,7 @@
                                                         <label>FTE</label>
                                                         <select class="custom-select" name="fte">
                                                             {% for fte in ftes %}
-                                                                {% if forloop.first %}
+                                                                {% if fte.name == vacancy.fte %}
                                                                     <option value="{{ fte.name }}" selected>{{ fte.name }}</option>
                                                                 {% else %}
                                                                     <option value="{{ fte.name }}" selected>{{ fte.name }}</option>
@@ -215,7 +222,7 @@
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <label for="input-currency">Salary Maximum</label>
-                                                        <input id="input-currency" name="salary_maximum" class="form-control input-mask text-left" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
+                                                        <input id="input-currency" name="salary_maximum" class="form-control input-mask text-left" value="{{ vacancy.salary_maximum }}" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
                                                     </div>
                                                 </div>
                                             </div>
@@ -227,7 +234,7 @@
                                                 <div class="col-12">
                                                     <div class="card">
                                                         <div class="card-body">
-                                                            <textarea class="summernote" name="definition"></textarea>
+                                                            <textarea id="froala-editor" name="definition">{{ vacancy.definition }}</textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -255,6 +262,7 @@
                                     <li class="previous"><a href="#">Previous</a></li>
                                     <li class="next"><a href="#">Next</a></li>
                                 </ul>
+                                <button id="save" type="submit" style="display: none;"></button>
                             </div>
                         </div>
                     </div>
@@ -276,15 +284,6 @@
     <script src="{% static 'dashboard/libs/simplebar/simplebar.min.js' %}"></script>
     <script src="{% static 'dashboard/libs/node-waves/waves.min.js' %}"></script>
 
-    <!-- Summernote js -->
-    <script src="{% static 'dashboard/libs/summernote/summernote-bs4.min.js' %}"></script>
-
-    <!--tinymce js-->
-    <script src="{% static 'dashboard/libs/tinymce/tinymce.min.js' %}"></script>
-
-    <!-- init js -->
-    <script src="{% static 'dashboard/js/pages/form-editor.init.js' %}"></script>
-
     <!-- form mask -->
     <script src="{% static 'dashboard/libs/inputmask/jquery.inputmask.min.js' %}"></script>
 
@@ -294,16 +293,51 @@
     <!-- twitter-bootstrap-wizard js -->
     <script src="{% static 'dashboard/libs/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js' %}"></script>
 
-    <script src="{% static 'dashboard/libs/twitter-bootstrap-wizard/prettify.js' %}"></script>
-
     <!-- form wizard init -->
     <script src="{% static 'dashboard/js/pages/form-wizard.init.js' %}"></script>
-
     <script src="{% static 'dashboard/libs/parsleyjs/parsley.min.js' %}"></script>
-
     <script src="{% static 'dashboard/js/app.js' %}"></script>
 
     <!-- custom javascript -->
     <script src="{% static 'dashboard/js/pages/post-vacancy.js' %}"></script>
+
+    <!-- Froala js -->
+    <script type="text/javascript" src="{% static 'dashboard/libs/froala/froala_editor.pkgd.min.js' %}"></script>
+
+    <script>
+        var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        var editor = new FroalaEditor('#froala-editor', {
+            requestWithCredentials: true,
+            key: 'e74e3180-2a66-4c1b-9e4f-480cc623552c',
+
+            // Upload Image
+            imageUploadURL: "{% url 'dashboard:upload-editor-image' %}",
+            imageUploadParams: {
+                csrfmiddlewaretoken: csrftoken,
+            },
+
+            // Delete Uploaded Image
+            events: {
+                'image.removed': function ($img) {
+                    $.ajax({
+                        headers: {"X-CSRFToken": csrftoken},
+                        data: {src: $img.attr('src')}, 
+                        url: "{% url 'dashboard:delete-editor-image' %}",
+                        type: 'POST',
+
+                        // on success
+                        success: function (response) {
+                            console.log(response.message)
+                        },
+                        // on error
+                        error: function (response) {
+                            console.log(response.error)
+                        }
+                    });
+                }
+            }
+        });
+    </script>
 
 {% endblock script %}

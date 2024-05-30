@@ -78,8 +78,6 @@
                                         <th>Job Title</th>
                                         <th>Career Type</th>
                                         <th>Career Level</th>
-                                        <th>Location</th>
-                                        <th>FTE</th>
                                         <th>Salary Min</th>
                                         <th>Salary Mid</th>
                                         <th>Salary Max</th>
@@ -104,8 +102,6 @@
                                         <td>{{ vacancy.job_title }}</td>
                                         <td>{{ vacancy.career_type }}</td>
                                         <td>{{ vacancy.career_level }}</td>
-                                        <td>{{ vacancy.location }}</td>
-                                        <td>{{ vacancy.fte }}</td>
                                         <td>{{ vacancy.salary_minimum }}</td>
                                         <td>{{ vacancy.salary_midpoint }}</td>
                                         <td>{{ vacancy.salary_maximum }}</td>
@@ -118,7 +114,7 @@
                                             <div class="badge badge-soft-danger font-size-12">Deactivated</div> {% endcomment %}
                                         </td>
                                         <td>
-                                            <a href="#" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
+                                            <a href="{% url 'dashboard:edit-vacancy' vacancy.id %}" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
                                             <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-trash-can font-size-18"></i></a>
                                         </td>
                                     </tr>
@@ -153,8 +149,6 @@
     <!-- Custom JS -->
     <script>
         const columns = [
-            { orderable: false },
-            { orderable: false },
             { orderable: false },
             { orderable: false },
             { orderable: false },

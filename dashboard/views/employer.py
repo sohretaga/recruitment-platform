@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
+from django.urls import reverse
 
 from dashboard.decorators import is_employer
-from dashboard.forms import CompleteEmployerRegisterForm, PostVacancyForm
+from dashboard.forms import CompleteEmployerRegisterForm, PostVacancyForm, EditVacancyForm
 from recruitment_cp.models import (Language,
                                    ParameterCareerType,
                                    ParameterCareerLevel,
@@ -74,10 +75,46 @@ def post_vacancy(request):
 @is_employer
 @login_required
 def all_vacancy(request):
-    vacancies = ParameterVacancy.objects.filter(author=request.user).order_by('created_date')
+    vacancies = ParameterVacancy.objects.filter(author=request.user).order_by('created_date')\
+    .values('id', 'position_title', 'job_title', 'career_type', 'career_level', 'salary_minimum', 'salary_midpoint', 'salary_maximum', 'salary', 'views')
 
     context = {
         'vacancies': vacancies
     }
 
     return render(request, 'dashboard/employer/all-vacancies.html', context)
+
+@is_employer
+@login_required
+def edit_vacancy(request, id):
+    vacancy = get_object_or_404(ParameterVacancy, id=id)
+
+    selected_language = 'en'
+    languages = Language.objects.all()
+    job_catalogue = ParameterJobCatalogue.objects.filter(language = selected_language)
+    career_types = ParameterCareerType.objects.filter(language=selected_language)
+    career_levels = ParameterCareerLevel.objects.filter(language=selected_language)
+    locations = ParameterLocation.objects.filter(language=selected_language)
+    employment_types = ParameterEmployeeType.objects.filter(language=selected_language)
+    ftes = ParameterFTE.objects.filter(language=selected_language)
+
+    if request.POST:
+        form = EditVacancyForm(request.POST, instance=vacancy)
+        print(form.errors)
+
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('dashboard:all-vacancy'))
+
+    context = {
+        'vacancy': vacancy,
+        'languages': languages,
+        'job_catalogues': job_catalogue,
+        'career_types': career_types,
+        'career_levels': career_levels,
+        'locations': locations,
+        'employment_types': employment_types,
+        'ftes': ftes
+    }
+
+    return render(request, 'dashboard/employer/post-vacancy.html', context)

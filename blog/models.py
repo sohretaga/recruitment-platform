@@ -31,5 +31,13 @@ class Blog(models.Model):
         return self.title
 
     def save(self, *args, **kwargs) -> None:
-        self.slug = slugify(self.title)
+        if not self.slug:  # Only create slug if it's not set
+            self.slug = slugify(self.title)
+            original_slug = self.slug
+            queryset = Blog.objects.filter(slug=self.slug)
+            counter = 1
+            while queryset.exists():
+                self.slug = f"{original_slug}-{counter}"
+                counter += 1
+                queryset = Blog.objects.filter(slug=self.slug)
         super(Blog, self).save(*args, **kwargs)
