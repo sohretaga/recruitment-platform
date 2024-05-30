@@ -68,12 +68,12 @@
                             <table class="table table-centered datatable dt-responsive nowrap" data-page-length="10" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th style="width: 20px;">
+                                        {% comment %} <th style="width: 20px;">
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input" id="ordercheck">
                                                 <label class="custom-control-label" for="ordercheck">&nbsp;</label>
                                             </div>
-                                        </th>
+                                        </th> {% endcomment %}
                                         <th>Job Position</th>
                                         <th>Job Title</th>
                                         <th>Career Type</th>
@@ -91,12 +91,12 @@
                                 <tbody>
                                     {% for vacancy in vacancies %}
                                     <tr>
-                                        <td>
+                                        {% comment %} <td>
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input" id="ordercheck{{ vacancy.id }}">
                                                 <label class="custom-control-label" for="ordercheck{{ vacancy.id }}">&nbsp;</label>
                                             </div>
-                                        </td>
+                                        </td> {% endcomment %}
                                         
                                         <td><a href="#" class="text-dark font-weight-bold" target='_blank'>{{ vacancy.position_title|title }}</a></td>
                                         <td>{{ vacancy.job_title }}</td>
@@ -144,12 +144,15 @@
     <script src="{% static 'dashboard/libs/datatables.net/js/jquery.dataTables.min.js' %}"></script>
     <script src="{% static 'dashboard/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
 
+    <!-- Responsive examples -->
+    <script src="{% static 'dashboard/libs/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'dashboard/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js' %}"></script>
+
     <script src="{% static 'dashboard/js/app.js' %}"></script>
 
     <!-- Custom JS -->
     <script>
         const columns = [
-            { orderable: false },
             { orderable: false },
             { orderable: false },
             { orderable: false },

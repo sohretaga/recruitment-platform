@@ -68,12 +68,12 @@
                             <table class="table table-centered datatable dt-responsive nowrap" data-page-length="10" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th style="width: 20px;">
+                                        {% comment %} <th style="width: 20px;">
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input" id="ordercheck">
                                                 <label class="custom-control-label" for="ordercheck">&nbsp;</label>
                                             </div>
-                                        </th>
+                                        </th> {% endcomment %}
                                         <th>Title</th>
                                         <th>Date</th>
                                         <th>Category</th>
@@ -85,12 +85,12 @@
                                 <tbody>
                                     {% for blog in blogs %}
                                     <tr>
-                                        <td>
+                                        {% comment %} <td>
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input" id="ordercheck{{ blog.id }}">
                                                 <label class="custom-control-label" for="ordercheck{{ blog.id }}">&nbsp;</label>
                                             </div>
-                                        </td>
+                                        </td> {% endcomment %}
                                         
                                         <td><a href="{% url 'blog:detail' blog.slug %}" class="text-dark font-weight-bold" target='_blank'>{{ blog.title|title }}</a></td>
                                         <td>{{ blog.created_date|date:"M d, Y" }}</td>
@@ -136,10 +136,13 @@
     <script src="{% static 'dashboard/libs/datatables.net/js/jquery.dataTables.min.js' %}"></script>
     <script src="{% static 'dashboard/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
 
+    <!-- Responsive examples -->
+    <script src="{% static 'dashboard/libs/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'dashboard/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js' %}"></script>
+
     <!-- Custom JS -->
     <script>
         const columns = [
-            { orderable: false },
             { orderable: false },
             { orderable: true },
             { orderable: true },
