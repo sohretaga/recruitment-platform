@@ -15,6 +15,7 @@ urlpatterns = [
 
     # Candidate URL's
     path('candidate/complete-register', candidate.complete_register, name='candidate-complete-register'),
+    path('your-applies', candidate.your_applies, name='your-applies'),
 
     # Blog URL's
     path('blog/post', blogger.post_blog, name='post-blog'),

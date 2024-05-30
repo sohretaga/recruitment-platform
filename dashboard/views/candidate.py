@@ -25,3 +25,8 @@ def complete_register(request):
         return render(request, 'dashboard/complete-register.html')
 
     raise Http404
+
+@is_candidate
+@login_required
+def your_applies(request):
+    return render(request,  'dashboard/candidate/your-applies.html')
