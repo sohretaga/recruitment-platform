@@ -27,7 +27,7 @@
                     <div class="d-flex">
                         <!-- LOGO -->
                         <div class="navbar-brand-box">
-                            <a href="index.html" class="logo logo-dark">
+                            <a href="{% url 'main:main-index' %}" class="logo logo-dark">
                                 <span class="logo-sm">
                                     <img src="{% static 'main/images/mec-logo.png' %}" alt="mec logo" height="22">
                                 </span>
@@ -36,7 +36,7 @@
                                 </span>
                             </a>
 
-                            <a href="index.html" class="logo logo-light">
+                            <a href="{% url 'main:main-index' %}" class="logo logo-light">
                                 <span class="logo-sm">
                                     <img src="{% static 'main/images/mec-logo.png' %}" alt="mec logo" height="22">
                                 </span>
@@ -57,6 +57,15 @@
                                 <span class="ri-search-line"></span>
                             </div>
                         </form>
+
+                        <div class="dropdown dropdown-mega d-none d-lg-block ml-2">
+                            <a href="{% url 'main:main-index' %}"><button type="button" class="btn header-item">Home</button></a>
+                            
+                            {% if request.user.is_superuser %}
+                                <a href="{% url 'cp:vacancy' %}" target="_blank"><button type="button" class="btn header-item">Control Page</button></a>
+                                <a href="/admin" target="_blank"><button type="button" class="btn header-item">Admin Page</button></a>
+                            {% endif %}
+                        </div>
 
                     </div>
 
