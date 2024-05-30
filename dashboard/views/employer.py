@@ -76,7 +76,7 @@ def post_vacancy(request):
 @login_required
 def all_vacancy(request):
     vacancies = ParameterVacancy.objects.filter(author=request.user).order_by('created_date')\
-    .values('id', 'position_title', 'job_title', 'career_type', 'career_level', 'salary_minimum', 'salary_midpoint', 'salary_maximum', 'salary', 'views')
+    .values('id', 'position_title', 'job_catalogue', 'career_type', 'career_level', 'salary_minimum', 'salary_midpoint', 'salary_maximum', 'salary', 'views')
 
     context = {
         'vacancies': vacancies
@@ -100,7 +100,6 @@ def edit_vacancy(request, id):
 
     if request.POST:
         form = EditVacancyForm(request.POST, instance=vacancy)
-        print(form.errors)
 
         if form.is_valid():
             form.save()
