@@ -75,7 +75,6 @@ class ParameterVacancy(ParameterCommonFields):
     salary_minimum = models.IntegerField(default=0)
     salary_midpoint = models.IntegerField(default=0)
     salary_maximum = models.IntegerField(default=0)
-    job_catalogue = models.CharField(max_length=100, blank=True, null=True)
     position_title = models.CharField(max_length=100, blank=True, null=True)
     job_title = models.CharField(max_length=100, blank=True, null=True)
     employment_type = models.CharField(max_length=100, blank=True, null=True)

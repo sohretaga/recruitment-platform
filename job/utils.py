@@ -32,7 +32,7 @@ def fetch_vacancies(request) -> dict:
 
     filtered_vacancies = models.ParameterVacancy.objects.filter(**params)\
     .values('id', 'no', 'author__employer__company_name', 'career_type', 'career_level', 'location', 'fte', 'salary_minimum',
-            'salary_midpoint', 'salary_maximum', 'salary', 'job_catalogue', 'position_title', 'job_title',
+            'salary_midpoint', 'salary_maximum', 'salary', 'position_title', 'job_title',
             'employment_type', 'work_experience', 'definition', 'created_date')
 
     # Set up Paginator
