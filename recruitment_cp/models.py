@@ -67,7 +67,6 @@ class ParameterEmployeeType(ParameterCommonFields):
 class ParameterVacancy(ParameterCommonFields):
     note = None
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    organization = models.CharField(max_length=100, blank=True, null=True)
     career_type = models.CharField(max_length=100, blank=True, null=True)
     career_level = models.CharField(max_length=100, blank=True, null=True)
     location = models.CharField(max_length=100, blank=True, null=True)
@@ -87,7 +86,7 @@ class ParameterVacancy(ParameterCommonFields):
     created_date = models.DateTimeField(auto_now_add=True, null=True)
 
     def save(self, *args, **kwargs) -> None:
-        if not self.slug:  # Only create slug if it's not set
+        if not self.slug:
             self.slug = slugify(self.job_title)
             original_slug = self.slug
             queryset = ParameterVacancy.objects.filter(slug=self.slug)

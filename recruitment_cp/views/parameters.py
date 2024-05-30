@@ -499,7 +499,7 @@ def vacancy_load(request):
             language = request.POST.get('language')
             
             vacancies = cp_models.ParameterVacancy.objects.filter(language = language)\
-                .values('id', 'no', 'organization', 'career_type', 'career_level', 'location', 'fte', 'salary_minimum',
+                .values('id', 'no', 'author__employer__company_name', 'career_type', 'career_level', 'location', 'fte', 'salary_minimum',
                         'salary_midpoint', 'salary_maximum', 'salary', 'job_catalogue', 'position_title', 'job_title',
                         'employment_type', 'work_experience', 'definition', 'created_date')
             

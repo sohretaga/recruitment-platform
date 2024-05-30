@@ -46,9 +46,9 @@ def post_vacancy(request):
 
         if form.is_valid():
             instance = form.save(commit=False)
-            instance.organization = request.user.employer.company_name
             instance.author = request.user
             instance.save()
+            return redirect(reverse('dashboard:all-vacancy'))
 
     selected_language = 'en'
     languages = Language.objects.all().values('code', 'name')
