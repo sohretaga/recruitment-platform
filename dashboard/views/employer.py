@@ -51,13 +51,13 @@ def post_vacancy(request):
             instance.save()
 
     selected_language = 'en'
-    languages = Language.objects.all()
-    job_catalogue = ParameterJobCatalogue.objects.filter(language = selected_language)
-    career_types = ParameterCareerType.objects.filter(language=selected_language)
-    career_levels = ParameterCareerLevel.objects.filter(language=selected_language)
-    locations = ParameterLocation.objects.filter(language=selected_language)
-    employment_types = ParameterEmployeeType.objects.filter(language=selected_language)
-    ftes = ParameterFTE.objects.filter(language=selected_language)
+    languages = Language.objects.all().values('code', 'name')
+    job_catalogue = ParameterJobCatalogue.objects.filter(language = selected_language).values('name')
+    career_types = ParameterCareerType.objects.filter(language=selected_language).values('name')
+    career_levels = ParameterCareerLevel.objects.filter(language=selected_language).values('name')
+    locations = ParameterLocation.objects.filter(language=selected_language).values('name')
+    employment_types = ParameterEmployeeType.objects.filter(language=selected_language).values('name')
+    ftes = ParameterFTE.objects.filter(language=selected_language).values('name')
 
     context = {
         'languages': languages,
@@ -90,13 +90,13 @@ def edit_vacancy(request, id):
     vacancy = get_object_or_404(ParameterVacancy, id=id)
 
     selected_language = 'en'
-    languages = Language.objects.all()
-    job_catalogue = ParameterJobCatalogue.objects.filter(language = selected_language)
-    career_types = ParameterCareerType.objects.filter(language=selected_language)
-    career_levels = ParameterCareerLevel.objects.filter(language=selected_language)
-    locations = ParameterLocation.objects.filter(language=selected_language)
-    employment_types = ParameterEmployeeType.objects.filter(language=selected_language)
-    ftes = ParameterFTE.objects.filter(language=selected_language)
+    languages = Language.objects.all().values('code', 'name')
+    job_catalogue = ParameterJobCatalogue.objects.filter(language = selected_language).values('name')
+    career_types = ParameterCareerType.objects.filter(language=selected_language).values('name')
+    career_levels = ParameterCareerLevel.objects.filter(language=selected_language).values('name')
+    locations = ParameterLocation.objects.filter(language=selected_language).values('name')
+    employment_types = ParameterEmployeeType.objects.filter(language=selected_language).values('name')
+    ftes = ParameterFTE.objects.filter(language=selected_language).values('name')
 
     if request.POST:
         form = EditVacancyForm(request.POST, instance=vacancy)
