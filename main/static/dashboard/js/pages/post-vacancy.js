@@ -13,9 +13,7 @@ var callback = function(mutationsList, observer) {
                 nextBtn.classList.remove('disabled')
                 targetNode.addEventListener('click', function(event) {
                     event.preventDefault();
-                    document.getElementById('post-vacancy').submit();
-                    console.log('form submit');
-                    
+                    document.getElementById('post-vacancy').submit();                    
                 });
             }
         }

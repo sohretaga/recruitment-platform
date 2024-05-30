@@ -4,7 +4,7 @@ from django.http import Http404
 from django.urls import reverse
 
 from dashboard.decorators import is_employer
-from dashboard.forms import CompleteEmployerRegisterForm, PostVacancyForm, EditVacancyForm
+from dashboard.forms import CompleteEmployerRegisterForm, PostVacancyForm
 from recruitment_cp.models import (Language,
                                    ParameterCareerType,
                                    ParameterCareerLevel,
@@ -99,7 +99,7 @@ def edit_vacancy(request, id):
     ftes = ParameterFTE.objects.filter(language=selected_language).values('name')
 
     if request.POST:
-        form = EditVacancyForm(request.POST, instance=vacancy)
+        form = PostVacancyForm(request.POST, instance=vacancy)
 
         if form.is_valid():
             form.save()
