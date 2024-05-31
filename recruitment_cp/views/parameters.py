@@ -522,6 +522,9 @@ def vacancy_save(request):
                 pk = hot[index].pop('id', None)
                 position_title = hot[index].get('position_title', None)
 
+                # If they are not deleted, ForeignKey gives an error
+                del hot[index]['employer__company_name']
+
                 if position_title:
                     if pk:
                         vacancies = cp_models.ParameterVacancy.objects.filter(pk=pk)
