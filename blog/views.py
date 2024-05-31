@@ -16,7 +16,7 @@ def blog(request):
     # URL parameters are taken for filtering and used for the same filtering on the following pages.
     categories:str|None = request.GET.get('categories')
     params:dict = {'status':'published'} # only get pusblised blogs
-    url:str = ''
+    url:str = '' # Creating URL for Pagination
 
     if categories:
         url += f'&categories={categories}'

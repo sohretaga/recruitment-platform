@@ -12,7 +12,6 @@ from recruitment_cp.models import (Language,
                                    ParameterEmployeeType,
                                    ParameterFTE,
                                    ParameterJobCatalogue,
-                                   ParameterVacancy
                                 )
 
 @is_employer
@@ -46,7 +45,7 @@ def post_vacancy(request):
 
         if form.is_valid():
             instance = form.save(commit=False)
-            instance.author = request.user
+            instance.employer = request.user.employer
             instance.save()
             return redirect(reverse('dashboard:all-vacancy'))
 
@@ -75,8 +74,9 @@ def post_vacancy(request):
 @is_employer
 @login_required
 def all_vacancy(request):
-    vacancies = ParameterVacancy.objects.filter(author=request.user).order_by('created_date')\
-    .values('id', 'position_title', 'job_title', 'career_type', 'career_level', 'salary_minimum', 'salary_midpoint', 'salary_maximum', 'salary', 'views')
+    vacancies = request.user.employer.vacancies.all().order_by('created_date')\
+    .values('id', 'position_title', 'job_title', 'career_type', 'career_level', 'salary_minimum',
+            'salary_midpoint', 'salary_maximum', 'salary', 'slug', 'views')
 
     context = {
         'vacancies': vacancies
@@ -87,7 +87,7 @@ def all_vacancy(request):
 @is_employer
 @login_required
 def edit_vacancy(request, id):
-    vacancy = get_object_or_404(ParameterVacancy, id=id)
+    vacancy = get_object_or_404(request.user.employer.vacancies, id=id)
 
     selected_language = 'en'
     languages = Language.objects.all().values('code', 'name')

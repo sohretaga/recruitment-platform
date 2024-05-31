@@ -63,7 +63,7 @@ def ajax_filter_vacancies(request):
             params.update({'employment_type__in':employment_type})        
 
         filtered_vacancies = models.ParameterVacancy.objects.filter(**params)\
-        .values('id', 'no', 'author__employer__company_name', 'career_type', 'career_level', 'location', 'fte',
+        .values('id', 'no', 'employer__company_name', 'career_type', 'career_level', 'location', 'fte',
                 'salary_minimum', 'salary_midpoint', 'salary_maximum', 'salary', 'position_title', 'job_title',
                 'employment_type', 'work_experience', 'definition', 'slug', 'created_date')
         

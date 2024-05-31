@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 
-from user.models import CustomUser
+from user.models import Employer
 
 # Create your models here.
 
@@ -66,7 +66,7 @@ class ParameterEmployeeType(ParameterCommonFields):
 
 class ParameterVacancy(ParameterCommonFields):
     note = None
-    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    employer = models.ForeignKey(Employer, related_name='vacancies', on_delete=models.CASCADE)
     career_type = models.CharField(max_length=100, blank=True, null=True)
     career_level = models.CharField(max_length=100, blank=True, null=True)
     location = models.CharField(max_length=100, blank=True, null=True)

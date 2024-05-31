@@ -7,7 +7,7 @@ def fetch_vacancies(request) -> dict:
     work_experiences:str|None = request.GET.get('work_experiences')
     employment_type:str|None = request.GET.get('employment_type')
     params:dict = {}
-    url:str = ''
+    url:str = '' # Creating URL for Pagination
 
     if salary_range:
         url += f'&salary_range={salary_range}'
@@ -31,7 +31,7 @@ def fetch_vacancies(request) -> dict:
         params.update({'employment_type__in': employment_type.split(',')})
 
     filtered_vacancies = models.ParameterVacancy.objects.filter(**params)\
-    .values('id', 'no', 'author__employer__company_name', 'career_type', 'career_level', 'location', 'fte', 'salary_minimum',
+    .values('id', 'no', 'employer__company_name', 'career_type', 'career_level', 'location', 'fte', 'salary_minimum',
             'salary_midpoint', 'salary_maximum', 'salary', 'position_title', 'job_title',
             'employment_type', 'work_experience', 'definition', 'slug', 'created_date')
 
