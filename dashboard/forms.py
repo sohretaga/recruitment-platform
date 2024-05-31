@@ -1,6 +1,6 @@
 from django import forms
 
-from recruitment_cp.models import ParameterVacancy
+from job.models import Vacancy
 from blog.models import Blog
 
 class CompleteEmployerRegisterForm(forms.Form):
@@ -20,7 +20,7 @@ class PostVacancyForm(forms.ModelForm):
     salary_maximum = forms.IntegerField(required=False)
 
     class Meta:
-        model = ParameterVacancy
+        model = Vacancy
         fields = ('language', 'career_type', 'career_level', 'location', 'fte', 'salary', 'salary_minimum',
                   'salary_midpoint', 'salary_maximum', 'position_title', 'job_title', 'employment_type', 'definition')
 

@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
 
-from recruitment_cp import models
+from job.models import Vacancy
 from recruitment_cp.utils import is_ajax
 from .utils import fetch_vacancies
 
@@ -21,7 +21,7 @@ def vacancies(request):
     return render(request, 'job/vacancies.html', context)
 
 def vacancy(request, slug):
-    vacancy = get_object_or_404(models.ParameterVacancy, slug=slug)
+    vacancy = get_object_or_404(Vacancy, slug=slug)
     vacancy.views += 1
     vacancy.save()
 
@@ -62,7 +62,7 @@ def ajax_filter_vacancies(request):
         if employment_type:
             params.update({'employment_type__in':employment_type})        
 
-        filtered_vacancies = models.ParameterVacancy.objects.filter(**params)\
+        filtered_vacancies = Vacancy.objects.filter(**params)\
         .values('id', 'no', 'employer__company_name', 'career_type', 'career_level', 'location', 'fte',
                 'salary_minimum', 'salary_midpoint', 'salary_maximum', 'salary', 'position_title', 'job_title',
                 'employment_type', 'work_experience', 'definition', 'slug', 'created_date')

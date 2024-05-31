@@ -1,5 +1,7 @@
 from django.core.paginator import Paginator
+
 from recruitment_cp import models
+from job.models import Vacancy
 
 def fetch_vacancies(request) -> dict:
     # URL parameters are taken for filtering and used for the same filtering on the following pages.
@@ -7,7 +9,7 @@ def fetch_vacancies(request) -> dict:
     work_experiences:str|None = request.GET.get('work_experiences')
     employment_type:str|None = request.GET.get('employment_type')
     params:dict = {}
-    url:str = '' # Creating URL for Pagination
+    url:str = '' # 
 
     if salary_range:
         url += f'&salary_range={salary_range}'
@@ -30,7 +32,7 @@ def fetch_vacancies(request) -> dict:
         url += f'&employment_type={employment_type}'
         params.update({'employment_type__in': employment_type.split(',')})
 
-    filtered_vacancies = models.ParameterVacancy.objects.filter(**params)\
+    filtered_vacancies = Vacancy.objects.filter(**params)\
     .values('id', 'no', 'employer__company_name', 'career_type', 'career_level', 'location', 'fte', 'salary_minimum',
             'salary_midpoint', 'salary_maximum', 'salary', 'position_title', 'job_title',
             'employment_type', 'work_experience', 'definition', 'slug', 'created_date')
