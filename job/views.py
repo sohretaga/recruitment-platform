@@ -22,6 +22,8 @@ def vacancies(request):
 
 def vacancy(request, slug):
     vacancy = get_object_or_404(models.ParameterVacancy, slug=slug)
+    vacancy.views += 1
+    vacancy.save()
 
     context = {
         'vacancy': vacancy
