@@ -12,9 +12,6 @@ def languages():
     langauges = Language.objects.filter(is_active=True)
     return langauges
 
-register = template.Library()
-
-
 @register.filter
 def humanize_time(value):
     now = datetime.datetime.now(datetime.timezone.utc)
