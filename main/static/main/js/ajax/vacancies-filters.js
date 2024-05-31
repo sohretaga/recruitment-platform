@@ -167,10 +167,10 @@ const listVacancies = (vacanciesInfo) => {
                     </div><!--end col-->
                     <div class="col-lg-10">
                         <div class="mt-3 mt-lg-0">
-                            <h5 class="fs-17 mb-1"><a href="/vacancy" class="text-dark">${vacancy.job_title}</a> <small class="text-muted fw-normal">(0-2 Yrs Exp.)</small></h5>
+                            <h5 class="fs-17 mb-1"><a href="/vacancy/${vacancy.slug}" class="text-dark">${vacancy.job_title}</a> <small class="text-muted fw-normal">(0-2 Yrs Exp.)</small></h5>
                             <ul class="list-inline mb-0">
                                 <li class="list-inline-item">
-                                    <p class="text-muted fs-14 mb-0">${vacancy.organization}</p>
+                                    <p class="text-muted fs-14 mb-0">${vacancy.author__employer__company_name}</p>
                                 </li>
                                 <li class="list-inline-item">
                                     <p class="text-muted fs-14 mb-0"><i class="mdi mdi-map-marker"></i>${vacancy.location}</p>

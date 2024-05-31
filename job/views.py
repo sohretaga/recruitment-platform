@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
@@ -20,8 +20,14 @@ def vacancies(request):
 
     return render(request, 'job/vacancies.html', context)
 
-def vacancy(request):
-    return render(request, 'job/vacancy.html')
+def vacancy(request, slug):
+    vacancy = get_object_or_404(models.ParameterVacancy, slug=slug)
+
+    context = {
+        'vacancy': vacancy
+    }
+
+    return render(request, 'job/vacancy.html', context)
 
 def categories(request):
     return render(request, 'job/categories.html')
@@ -55,9 +61,9 @@ def ajax_filter_vacancies(request):
             params.update({'employment_type__in':employment_type})        
 
         filtered_vacancies = models.ParameterVacancy.objects.filter(**params)\
-        .values('id', 'no', 'organization', 'career_type', 'career_level', 'location', 'fte', 'salary_minimum',
-                'salary_midpoint', 'salary_maximum', 'salary', 'job_catalogue', 'position_title', 'job_title',
-                'employment_type', 'work_experience', 'definition', 'created_date')
+        .values('id', 'no', 'author__employer__company_name', 'career_type', 'career_level', 'location', 'fte',
+                'salary_minimum', 'salary_midpoint', 'salary_maximum', 'salary', 'position_title', 'job_title',
+                'employment_type', 'work_experience', 'definition', 'slug', 'created_date')
         
         # Set up Paginator
         paginator = Paginator(filtered_vacancies, 10)

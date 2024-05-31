@@ -86,7 +86,7 @@ class ParameterVacancy(ParameterCommonFields):
 
     def save(self, *args, **kwargs) -> None:
         if not self.slug:
-            self.slug = slugify(self.job_title)
+            self.slug = slugify(self.position_title)
             original_slug = self.slug
             queryset = ParameterVacancy.objects.filter(slug=self.slug)
             counter = 1
