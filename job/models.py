@@ -28,6 +28,9 @@ class Vacancy(models.Model):
     slug = models.SlugField(null=True)
     created_date = models.DateTimeField(auto_now_add=True, null=True)
 
+    class Meta:
+        ordering = ['no']
+
     def save(self, *args, **kwargs) -> None:
         if not self.slug:
             self.slug = slugify(self.position_title)
