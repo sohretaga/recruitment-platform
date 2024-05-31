@@ -1,0 +1,103 @@
+{% extends 'cp/base.html' %}
+{% load static %}
+
+{% block title %}Companies - Control Panel{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'cp/css/tables.css' %}">
+{% endblock %}
+
+{% block content %}
+
+{% include 'cp/container.html' %}
+
+<div class="table-container">
+    <input type="checkbox" name="language" checked="checked" style="display: none;">
+    <!-- In the processes.js file, the "language" input should be entered here to avoid errors. -->
+
+    <div class="caption" id="caption">Companies</div>
+    <div id="table"></div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'cp/js/command.js' %}"></script>
+<script src="{% static 'cp/js/processes.js' %}"></script>
+<script>
+    const saveUrl = "{% url 'cp:company_save' %}";
+    const loadUrl = "{% url 'cp:company_load' %}";
+    const bmtTable = document.getElementById('table');
+    const consoleText = 'Companies';
+    var hot;
+
+    $(document).ready(function() {
+        hot = new Handsontable(bmtTable, {
+            rowHeaders: true,
+            colHeaders: true,
+            stretchH: 'all',
+            startRows: 1,
+            wordWrap: true,
+            filters: true,
+            height: $(document).height() - 350,
+            fixedColumnsStart: 2,
+            data: [{id:''}],
+            dropdownMenu:  ['filter_by_value', 'filter_action_bar'],
+            licenseKey: 'non-commercial-and-evaluation',
+
+            hiddenColumns: {
+                columns: [0],
+                indicators: false
+            },
+
+            columns: [
+                {
+                    title: 'id',
+                    data: 'id',
+                    readOnly: true
+                },
+                {
+                    title: 'No',
+                    data: 'no',
+                    className: 'htCenter htMiddle',
+                },
+                {
+                    title: 'Organization',
+                    data: 'name'
+                },
+                {
+                    title: 'Organization Type',
+                    data: 'organization_type'
+                },
+                {
+                    title: 'Organization Ownership',
+                    data: 'organization_ownership'
+                },
+                {
+                    title: 'Number of Employees',
+                    data: 'number_of_employees'
+                },
+                {
+                    title: 'Primary Email',
+                    data: 'primary_email'
+                },
+                {
+                    title: 'Second Email',
+                    data: 'second_email'
+                },
+                {
+                    title: 'Other Email',
+                    data: 'other_email'
+                },
+                {
+                    title: 'Note',
+                    data: 'note'
+                }
+            ],
+        });
+
+        loadData();
+    })
+
+</script>
+
+{% endblock scripts %}

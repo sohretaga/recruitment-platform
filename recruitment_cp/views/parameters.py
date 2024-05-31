@@ -4,6 +4,7 @@ from django.http import JsonResponse, Http404
 from recruitment_cp import models as cp_models
 from blog.models import Category as BlogCategory
 from job.models import Vacancy
+from user.models import Company
 from recruitment_cp.utils import is_ajax, datetime_to_string
 
 import json
@@ -549,7 +550,7 @@ def vacancy_save(request):
 #======================================================================================================
 def blog_category_index(request):
     if request.user.is_superuser:
-        return render(request, 'cp/parameters/blog-category.html')
+        return render(request, 'cp/parameters/blog_category.html')
     
     raise Http404
 
@@ -588,6 +589,56 @@ def blog_category_save(request):
                 else:
                     blog_category = BlogCategory.objects.filter(pk = pk)
                     blog_category.delete()
+                
+                index += 1
+
+            return JsonResponse({'status': 200})
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+    
+#======================================================================================================
+def company_index(request):
+    if request.user.is_superuser:
+        return render(request, 'cp/parameters/companies.html')
+    
+    raise Http404
+
+def company_load(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            
+            company = Company.objects.all().values()
+            
+            json_data = json.dumps(list(company), default=datetime_to_string)
+
+            return JsonResponse(json_data, safe=False)
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+
+def company_save(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            hot = json.loads(request.POST.get('hot'))
+            index = 0
+
+            while index < len(hot):
+                pk = hot[index].pop('id', None)
+                name = hot[index].get('name', None)
+
+                if name:
+                    if pk:
+                        company = Company.objects.filter(pk=pk)
+                        company.update(**hot[index])
+                    else:
+                        company = Company(**hot[index])
+                        company.save()
+                else:
+                    company = Company.objects.filter(pk = pk)
+                    company.delete()
                 
                 index += 1
 

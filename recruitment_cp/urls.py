@@ -53,4 +53,8 @@ urlpatterns = [
     path('parameters/blog-category', parameters.blog_category_index, name='blog_category'),
     path('parameters/blog-category-load', parameters.blog_category_load, name='blog_category_load'),
     path('parameters/blog-category-save', parameters.blog_category_save, name='blog_category_save'),
+
+    path('parameters/company', parameters.company_index, name='company'),
+    path('parameters/company-load', parameters.company_load, name='company_load'),
+    path('parameters/company-save', parameters.company_save, name='company_save'),
 ]
