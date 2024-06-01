@@ -25,9 +25,10 @@ class Candidate(models.Model):
 class Company(models.Model):
     no = models.IntegerField(blank=True, null=True)
     name = models.CharField(max_length=200)
+    sector = models.CharField(max_length=200, blank=True, null=True)
     organization_type = models.CharField(max_length=200, blank=True, null=True)
     organization_ownership = models.CharField(max_length=200, blank=True, null=True)
-    number_of_employees = models.IntegerField(default=0, null=True)
+    number_of_employees = models.CharField(max_length=15, blank=True, null=True)
     primary_email = models.EmailField(blank=True, null=True)
     second_email = models.EmailField(blank=True, null=True)
     other_email = models.EmailField(blank=True, null=True)

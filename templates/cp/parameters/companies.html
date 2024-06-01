@@ -51,8 +51,9 @@
             wordWrap: true,
             filters: true,
             height: $(document).height() - 350,
-            fixedColumnsStart: 2,
             data: [{id:''}],
+            fixedColumnsLeft: 3,
+            colWidths: [0, 50, 450, 250, 250, 250, 250, 250, 250, 250, 250],
             dropdownMenu:  ['filter_by_value', 'filter_action_bar'],
             licenseKey: 'non-commercial-and-evaluation',
 
@@ -74,43 +75,43 @@
                 },
                 {
                     title: 'Organization',
-                    data: 'name'
+                    data: 'name',
                 },
                 {
                     title: 'Sector',
                     data: 'sector',
-                    type: 'dropdown'
+                    type: 'dropdown',
                 },
                 {
                     title: 'Organization Type',
                     data: 'organization_type',
-                    type: 'dropdown'
+                    type: 'dropdown',
                 },
                 {
                     title: 'Organization Ownership',
                     data: 'organization_ownership',
-                    type: 'dropdown'
+                    type: 'dropdown',
                 },
                 {
                     title: 'Number of Employees',
                     data: 'number_of_employees',
-                    type: 'dropdown'
+                    type: 'dropdown',
                 },
                 {
                     title: 'Primary Email',
-                    data: 'primary_email'
+                    data: 'primary_email',
                 },
                 {
                     title: 'Second Email',
-                    data: 'second_email'
+                    data: 'second_email',
                 },
                 {
                     title: 'Other Email',
-                    data: 'other_email'
+                    data: 'other_email',
                 },
                 {
                     title: 'Note',
-                    data: 'note'
+                    data: 'note',
                 }
             ],
         });
