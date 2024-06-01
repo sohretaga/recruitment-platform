@@ -5,6 +5,8 @@
 
 .sectors {
   flex-basis: auto !important;
+  font-size: 13px;
+  width: 200px;
 }
 
 @media only screen and (max-width: 600px) {
