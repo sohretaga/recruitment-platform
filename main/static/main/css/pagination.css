@@ -3,6 +3,10 @@
   padding-right: 15px;
 }
 
+.sectors {
+  flex-basis: auto !important;
+}
+
 @media only screen and (max-width: 600px) {
     .pagination .page-item .page-link {
       height: 30px;
