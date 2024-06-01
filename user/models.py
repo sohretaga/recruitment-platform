@@ -37,7 +37,7 @@ class Company(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ['no']
+        ordering = ['name']
 
     def save(self, *args, **kwargs) -> None:
         if not self.slug:
