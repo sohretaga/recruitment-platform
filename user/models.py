@@ -35,6 +35,9 @@ class Company(models.Model):
     slug = models.SlugField()
     created_date = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['no']
+
     def save(self, *args, **kwargs) -> None:
         if not self.slug:
             self.slug = slugify(self.name)
