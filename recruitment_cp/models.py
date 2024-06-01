@@ -61,6 +61,9 @@ class ParameterJobCatalogue(ParameterCommonFields):
 class ParameterEmployeeType(ParameterCommonFields):
     ...
 
+class ParameterSector(ParameterCommonFields):
+    ...
+
 class ParameterOrganizationType(ParameterCommonFields):
     ...
 

@@ -649,6 +649,59 @@ def company_save(request):
         raise Http404
 
 #======================================================================================================
+def sector_index(request):
+    if request.user.is_superuser:
+        return render(request, 'cp/parameters/sector.html')
+    
+    raise Http404
+
+def sector_load(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            language = request.POST.get('language')
+            
+            sector = cp_models.ParameterSector.objects.filter(language=language).values(
+                'id', 'no', 'name', 'definition', 'note'
+            )
+            json_data = json.dumps(list(sector))
+
+            return JsonResponse(json_data, safe=False)
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+
+def sector_save(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            hot = json.loads(request.POST.get('hot'))
+            language = request.POST.get('language')
+            index = 0
+
+            while index < len(hot):
+                pk = hot[index].pop('id', None)
+                name = hot[index].get('name', None)
+
+                if name:
+                    if pk:
+                        sector = cp_models.ParameterSector.objects.filter(pk=pk)
+                        sector.update(**hot[index])
+                    else:
+                        sector = cp_models.ParameterSector(language = language, **hot[index])
+                        sector.save()
+                else:
+                    sector = cp_models.ParameterSector.objects.filter(pk = pk)
+                    sector.delete()
+                
+                index += 1
+
+            return JsonResponse({'status': 200})
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+
+#======================================================================================================
 def organization_type_index(request):
     if request.user.is_superuser:
         return render(request, 'cp/parameters/organization_type.html')
