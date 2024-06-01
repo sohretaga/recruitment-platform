@@ -17,6 +17,11 @@
   border-color: #dbdfe2 !important;
 }
 
+body[data-layout-mode="dark"] .sectors-btn {
+  border-color: #3d454e !important;
+  color: #f8f9fa !important;
+}
+
 @media only screen and (max-width: 600px) {
     .pagination .page-item .page-link {
       height: 30px;
