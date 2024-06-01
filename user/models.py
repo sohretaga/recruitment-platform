@@ -27,7 +27,7 @@ class Company(models.Model):
     name = models.CharField(max_length=200)
     organization_type = models.CharField(max_length=200, blank=True, null=True)
     organization_ownership = models.CharField(max_length=200, blank=True, null=True)
-    number_of_employees = models.IntegerField(default=0)
+    number_of_employees = models.IntegerField(default=0, null=True)
     primary_email = models.EmailField(blank=True, null=True)
     second_email = models.EmailField(blank=True, null=True)
     other_email = models.EmailField(blank=True, null=True)
