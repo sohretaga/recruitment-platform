@@ -46,11 +46,13 @@ def fetch_vacancies(request) -> dict:
     countries = models.ParameterCountry.objects.all().values('name')
     experiences = models.ParameterWorkExperience.objects.all().values('id', 'name')
     employments = models.ParameterEmployeeType.objects.all().values('id', 'name')
+    sectors = models.ParameterSector.objects.all().values('id', 'name')
 
     return {
         'vacancies': vacancies,
         'countries': countries,
         'experiences': experiences,
         'employments': employments,
+        'sectors': sectors,
         'url':url
     }

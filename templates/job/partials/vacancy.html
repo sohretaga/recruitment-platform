@@ -1,8 +1,22 @@
 {% load static %}
 <section id="job-list" class="section">
     <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <ul class="job-list-menu nav nav-pills nav-justified flex-column flex-sm-row mb-4" id="pills-tab" role="tablist">
+                {% for sector in sectors %}
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="sector{{ sector.id }}-tab" data-bs-toggle="pill"
+                            data-bs-target="#sector{{ sector.id }}" type="button" role="tab" aria-controls="sector{{ sector.id }}"
+                            aria-selected="true">{{ sector.name }}</button>
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+            <!--end col-->
+        </div>
+        <!--end row-->
         <div class="row">
-
             <div class="col-lg-9">
                 <div class="me-lg-5">
                     <div class="job-list-header">
