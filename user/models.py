@@ -32,7 +32,7 @@ class Company(models.Model):
     second_email = models.EmailField(blank=True, null=True)
     other_email = models.EmailField(blank=True, null=True)
     note = models.TextField(blank=True, null=True)
-    slug = models.SlugField()
+    slug = models.SlugField(max_length=250)
     created_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
