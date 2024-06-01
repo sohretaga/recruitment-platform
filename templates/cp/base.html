@@ -4,6 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title>{% if debug %} {D} {% endif %} {% block title %}RECRUITMENT{% endblock %}</title>
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{% static 'main/images/icon/favicon.ico' %}">
+
     <link rel="stylesheet" href="{% static 'cp/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'cp/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'cp/css/handsontable.full.min.css' %}">
@@ -67,6 +71,9 @@
                     <li {% if 'vacancy' in request.path %} class="active" {% endif %}><a href="{% url 'cp:vacancy' %}">Vacancy</a></li>
                     <li {% if 'blog-category' in request.path %} class="active" {% endif %}><a href="{% url 'cp:blog_category' %}">Blog Categories</a></li>
                     <li {% if 'company' in request.path %} class="active" {% endif %}><a href="{% url 'cp:company' %}">Companies</a></li>
+                    <li {% if 'organization-type' in request.path %} class="active" {% endif %}><a href="{% url 'cp:organization_type' %}">Organization Type</a></li>
+                    <li {% if 'organization-ownership' in request.path %} class="active" {% endif %}><a href="{% url 'cp:organization_ownership' %}">Organization Ownership</a></li>
+                    <li {% if 'number-of-employees' in request.path %} class="active" {% endif %}><a href="{% url 'cp:number_of_employees' %}">Number of Employees</a></li>
                 {% endif %}
             </ul>
         </div>

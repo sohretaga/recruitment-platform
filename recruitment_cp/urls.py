@@ -57,4 +57,16 @@ urlpatterns = [
     path('parameters/company', parameters.company_index, name='company'),
     path('parameters/company-load', parameters.company_load, name='company_load'),
     path('parameters/company-save', parameters.company_save, name='company_save'),
+
+    path('parameters/organization-type', parameters.organization_type_index, name='organization_type'),
+    path('parameters/organization-type-load', parameters.organization_type_load, name='organization_type_load'),
+    path('parameters/organization-type-save', parameters.organization_type_save, name='organization_type_save'),
+
+    path('parameters/organization-ownership', parameters.organization_ownership_index, name='organization_ownership'),
+    path('parameters/organization-ownership-load', parameters.organization_ownership_load, name='organization_ownership_load'),
+    path('parameters/organization-ownership-save', parameters.organization_ownership_save, name='organization_ownership_save'),
+
+    path('parameters/number-of-employees', parameters.number_of_employees_index, name='number_of_employees'),
+    path('parameters/number-of-employees-load', parameters.number_of_employees_load, name='number_of_employees_load'),
+    path('parameters/number-of-employees-save', parameters.number_of_employees_save, name='number_of_employees_save'),
 ]

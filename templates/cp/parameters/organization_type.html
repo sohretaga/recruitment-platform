@@ -1,7 +1,8 @@
 {% extends 'cp/base.html' %}
 {% load static %}
+{% load filters %}
 
-{% block title %}Companies - Control Panel{% endblock %}
+{% block title %}Organization Type - Control Panel{% endblock %}
 
 {% block stylesheets %}
 <link rel="stylesheet" href="{% static 'cp/css/tables.css' %}">
@@ -13,11 +14,27 @@
 
 <div class="table-container">
     <div id="data-filter">
-        <input type="checkbox" name="language" checked="checked" style="display: none;">
-        <!-- In the processes.js file, the "language" input should be entered here to avoid errors. -->
+        <div style="display: flex; margin-bottom: 10px;">
+            <div class="chb-style">
+                <span style="margin-right: 5px;">Language: </span>
+                <div class="filter-chb">
+                    {% languages as language_list %}
+                    {% for language in language_list reversed %}
+                        {% if forloop.first %}
+                            <span title="{{language.name}}"><input type="checkbox" id="id-{{language.code}}" name="language" value="{{language.code}}"
+                                    checked="checked"></span>
+                            <label for="id-{{language.code}}"></label>
+                        {% else %}
+                            <span title="{{language.name}}"><input type="checkbox" id="id-{{language.code}}" name="language" value="{{language.code}}"></span>
+                            <label for="id-{{language.code}}"></label>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="caption" id="caption">Companies</div>
+    <div class="caption" id="caption">Organization Type</div>
     <div id="table"></div>
 </div>
 {% endblock content %}
@@ -26,10 +43,10 @@
 <script src="{% static 'cp/js/command.js' %}"></script>
 <script src="{% static 'cp/js/processes.js' %}"></script>
 <script>
-    const saveUrl = "{% url 'cp:company_save' %}";
-    const loadUrl = "{% url 'cp:company_load' %}";
+    const saveUrl = "{% url 'cp:organization_type_save' %}";
+    const loadUrl = "{% url 'cp:organization_type_load' %}";
     const bmtTable = document.getElementById('table');
-    const consoleText = 'Companies';
+    const consoleText = 'Organization Type';
     var hot;
 
     $(document).ready(function() {
@@ -40,8 +57,6 @@
             startRows: 1,
             wordWrap: true,
             filters: true,
-            height: $(document).height() - 350,
-            fixedColumnsStart: 2,
             data: [{id:''}],
             dropdownMenu:  ['filter_by_value', 'filter_action_bar'],
             licenseKey: 'non-commercial-and-evaluation',
@@ -63,33 +78,12 @@
                     className: 'htCenter htMiddle',
                 },
                 {
-                    title: 'Organization',
+                    title: 'Organization Type',
                     data: 'name'
                 },
                 {
-                    title: 'Organization Type',
-                    data: 'organization_type'
-                },
-                {
-                    title: 'Organization Ownership',
-                    data: 'organization_ownership'
-                },
-                {
-                    title: 'Number of Employees',
-                    data: 'number_of_employees',
-                    type: 'numeric'
-                },
-                {
-                    title: 'Primary Email',
-                    data: 'primary_email'
-                },
-                {
-                    title: 'Second Email',
-                    data: 'second_email'
-                },
-                {
-                    title: 'Other Email',
-                    data: 'other_email'
+                    title: 'Definition',
+                    data: 'definition'
                 },
                 {
                     title: 'Note',
@@ -97,6 +91,7 @@
                 }
             ],
         });
+        
 
         loadData();
     })

@@ -13,9 +13,11 @@
 {% include 'cp/container.html' %}
 
 <div class="table-container">
-    <input type="checkbox" name="language" checked="checked" style="display: none;">
-    <!-- In the processes.js file, the "language" input should be entered here to avoid errors. -->
-
+    <div id="data-filter">
+        <input type="checkbox" name="language" checked="checked" style="display: none;">
+        <!-- In the processes.js file, the "language" input should be entered here to avoid errors. -->
+    </div>
+    
     <div class="caption" id="caption">Blog Categories</div>
     <div id="table"></div>
 </div>

@@ -647,3 +647,162 @@ def company_save(request):
             raise PermissionError
     else:
         raise Http404
+
+#======================================================================================================
+def organization_type_index(request):
+    if request.user.is_superuser:
+        return render(request, 'cp/parameters/organization_type.html')
+    
+    raise Http404
+
+def organization_type_load(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            language = request.POST.get('language')
+            
+            organization_type = cp_models.ParameterOrganizationType.objects.filter(language=language).values(
+                'id', 'no', 'name', 'definition', 'note'
+            )
+            json_data = json.dumps(list(organization_type))
+
+            return JsonResponse(json_data, safe=False)
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+
+def organization_type_save(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            hot = json.loads(request.POST.get('hot'))
+            language = request.POST.get('language')
+            index = 0
+
+            while index < len(hot):
+                pk = hot[index].pop('id', None)
+                name = hot[index].get('name', None)
+
+                if name:
+                    if pk:
+                        organization_type = cp_models.ParameterOrganizationType.objects.filter(pk=pk)
+                        organization_type.update(**hot[index])
+                    else:
+                        organization_type = cp_models.ParameterOrganizationType(language = language, **hot[index])
+                        organization_type.save()
+                else:
+                    organization_type = cp_models.ParameterOrganizationType.objects.filter(pk = pk)
+                    organization_type.delete()
+                
+                index += 1
+
+            return JsonResponse({'status': 200})
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+    
+#======================================================================================================
+def organization_ownership_index(request):
+    if request.user.is_superuser:
+        return render(request, 'cp/parameters/organization_ownership.html')
+    
+    raise Http404
+
+def organization_ownership_load(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            language = request.POST.get('language')
+            
+            organization_ownership = cp_models.ParameterOrganizationOwnership.objects.filter(language=language).values(
+                'id', 'no', 'name', 'definition', 'note'
+            )
+            json_data = json.dumps(list(organization_ownership))
+
+            return JsonResponse(json_data, safe=False)
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+
+def organization_ownership_save(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            hot = json.loads(request.POST.get('hot'))
+            language = request.POST.get('language')
+            index = 0
+
+            while index < len(hot):
+                pk = hot[index].pop('id', None)
+                name = hot[index].get('name', None)
+
+                if name:
+                    if pk:
+                        organization_ownership = cp_models.ParameterOrganizationOwnership.objects.filter(pk=pk)
+                        organization_ownership.update(**hot[index])
+                    else:
+                        organization_ownership = cp_models.ParameterOrganizationOwnership(language = language, **hot[index])
+                        organization_ownership.save()
+                else:
+                    organization_ownership = cp_models.ParameterOrganizationOwnership.objects.filter(pk = pk)
+                    organization_ownership.delete()
+                
+                index += 1
+
+            return JsonResponse({'status': 200})
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+    
+#======================================================================================================
+def number_of_employees_index(request):
+    if request.user.is_superuser:
+        return render(request, 'cp/parameters/number_of_employees.html')
+    
+    raise Http404
+
+def number_of_employees_load(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            language = request.POST.get('language')
+            
+            number_of_employees = cp_models.ParameterNumberOfEmployee.objects.filter(language=language).values(
+                'id', 'no', 'name', 'definition', 'note'
+            )
+            json_data = json.dumps(list(number_of_employees))
+
+            return JsonResponse(json_data, safe=False)
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+
+def number_of_employees_save(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            hot = json.loads(request.POST.get('hot'))
+            language = request.POST.get('language')
+            index = 0
+
+            while index < len(hot):
+                pk = hot[index].pop('id', None)
+                name = hot[index].get('name', None)
+
+                if name:
+                    if pk:
+                        number_of_employees = cp_models.ParameterNumberOfEmployee.objects.filter(pk=pk)
+                        number_of_employees.update(**hot[index])
+                    else:
+                        number_of_employees = cp_models.ParameterNumberOfEmployee(language = language, **hot[index])
+                        number_of_employees.save()
+                else:
+                    number_of_employees = cp_models.ParameterNumberOfEmployee.objects.filter(pk = pk)
+                    number_of_employees.delete()
+                
+                index += 1
+
+            return JsonResponse({'status': 200})
+        else:
+            raise PermissionError
+    else:
+        raise Http404
