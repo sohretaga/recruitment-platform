@@ -12,8 +12,8 @@
 {% include 'cp/container.html' %}
 
 <div class="table-container">
-    <div id="data-filter">
-        <input type="checkbox" name="language" checked="checked" style="display: none;">
+    <div id="data-filter" style="display: none;">
+        <input type="checkbox" name="language" value="" checked="checked">
         <!-- In the processes.js file, the "language" input should be entered here to avoid errors. -->
     </div>
 
@@ -26,11 +26,21 @@
 <script src="{% static 'cp/js/command.js' %}"></script>
 <script src="{% static 'cp/js/processes.js' %}"></script>
 <script>
+    var hot;
     const saveUrl = "{% url 'cp:company_save' %}";
     const loadUrl = "{% url 'cp:company_load' %}";
     const bmtTable = document.getElementById('table');
     const consoleText = 'Companies';
-    var hot;
+    const modelColumnMap = {
+        'sector':[3],
+        'organization_type':[4],
+        'organization_ownership':[5],
+        'number_of_employees':[6]
+
+        /* We specify the names of the models from which data will be retrieved for updating as keys,
+        and the IDs of the columns to be updated as values. This structure is used to clearly define
+        which column will be updated from which model. */
+    };
 
     $(document).ready(function() {
         hot = new Handsontable(bmtTable, {
@@ -67,17 +77,24 @@
                     data: 'name'
                 },
                 {
+                    title: 'Sector',
+                    data: 'sector',
+                    type: 'dropdown'
+                },
+                {
                     title: 'Organization Type',
-                    data: 'organization_type'
+                    data: 'organization_type',
+                    type: 'dropdown'
                 },
                 {
                     title: 'Organization Ownership',
-                    data: 'organization_ownership'
+                    data: 'organization_ownership',
+                    type: 'dropdown'
                 },
                 {
                     title: 'Number of Employees',
                     data: 'number_of_employees',
-                    type: 'numeric'
+                    type: 'dropdown'
                 },
                 {
                     title: 'Primary Email',

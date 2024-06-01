@@ -14,26 +14,44 @@ def index(request):
 def load_source(request):
     if request.user.is_superuser:
         if is_ajax(request) and request.POST:
-            language = request.POST.get('language')
+            language = request.POST.get('language', None)
             source_model = request.POST.get('model')
-            
-            if source_model == 'career_types':
-                source = cp_models.ParameterCareerType.objects.filter(language = language).values_list('name', flat=True)
+            params = {}
 
-            elif source_model == 'career_levels':
-                source = cp_models.ParameterCareerLevel.objects.filter(language = language).values_list('name', flat=True)
+            if language:
+                params.update({'language': language})
+            
+            match source_model:
+            
+                case 'career_types':
+                    source = cp_models.ParameterCareerType.objects.filter(**params).values_list('name', flat=True)
 
-            elif source_model == 'locations':
-                source = cp_models.ParameterLocation.objects.filter(language = language).values_list('name', flat=True)
-            
-            elif source_model == 'fte':
-                source = cp_models.ParameterFTE.objects.filter(language = language).values_list('name', flat=True)
-            
-            elif source_model == 'employment_type':
-                source = cp_models.ParameterEmployeeType.objects.filter(language = language).values_list('name', flat=True)
-            
-            elif source_model == 'work_experience':
-                source = cp_models.ParameterWorkExperience.objects.filter(language = language).values_list('name', flat=True)
+                case 'career_levels':
+                    source = cp_models.ParameterCareerLevel.objects.filter(**params).values_list('name', flat=True)
+
+                case 'locations':
+                    source = cp_models.ParameterLocation.objects.filter(**params).values_list('name', flat=True)
+                
+                case 'fte':
+                    source = cp_models.ParameterFTE.objects.filter(**params).values_list('name', flat=True)
+                
+                case 'employment_type':
+                    source = cp_models.ParameterEmployeeType.objects.filter(**params).values_list('name', flat=True)
+                
+                case 'work_experience':
+                    source = cp_models.ParameterWorkExperience.objects.filter(**params).values_list('name', flat=True)
+                
+                case 'sector':
+                    source = cp_models.ParameterSector.objects.filter(**params).values_list('name', flat=True)
+                
+                case 'organization_type':
+                    source = cp_models.ParameterOrganizationType.objects.filter(**params).values_list('name', flat=True)
+                
+                case 'organization_ownership':
+                    source = cp_models.ParameterOrganizationOwnership.objects.filter(**params).values_list('name', flat=True)
+                
+                case 'number_of_employees':
+                    source = cp_models.ParameterNumberOfEmployee.objects.filter(**params).values_list('name', flat=True)
             
             source = json.dumps(list(source))
             return JsonResponse(source, safe=False)
