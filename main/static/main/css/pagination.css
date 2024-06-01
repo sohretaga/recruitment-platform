@@ -7,11 +7,14 @@
   flex-basis: auto !important;
   font-size: 13px;
   width: 200px;
+  margin: 2px;
 }
 
 .sectors-btn {
   min-height: 50px;
   padding: 0 5px !important;
+  border: 1px solid !important;
+  border-color: #dbdfe2 !important;
 }
 
 @media only screen and (max-width: 600px) {
