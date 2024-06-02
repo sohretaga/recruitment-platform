@@ -19,10 +19,17 @@ class Employer(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='employer')
     company_name = models.CharField(max_length=255)
 
+    def __str__(self) -> str:
+        return self.user.username
+
 class Candidate(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='candidate')
 
+    def __str__(self) -> str:
+        return self.user.username
+
 class Company(models.Model):
+    employer = models.OneToOneField(Employer, models.CASCADE, related_name='company', null=True)
     no = models.IntegerField(blank=True, null=True)
     name = models.CharField(max_length=200)
     sector = models.CharField(max_length=200, blank=True, null=True)
@@ -50,3 +57,6 @@ class Company(models.Model):
                 counter += 1
                 queryset = Company.objects.filter(slug=self.slug)
         super(Company, self).save(*args, **kwargs)
+
+    def __str__(self) -> str:
+        return self.name

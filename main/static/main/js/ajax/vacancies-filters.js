@@ -71,12 +71,25 @@ class DataCollector {
 
     };
 
+    getSelectedSectorValue() {
+        const selectedSectorBtn = document.querySelector('button[aria-selected="true"]');
+        if (selectedSectorBtn) {
+            const selectedSectorValue = selectedSectorBtn.innerText;
+            setUrl('sector', selectedSectorValue);
+
+            return selectedSectorValue;
+        };
+
+        return false;
+    }
+
     collectData() {
         const data = {
             salary_range_lower: this.getSalaryRangeValue()[0],
             salary_range_upper: this.getSalaryRangeValue()[1],
             work_experiences: this.getWorkExperiences(),
-            employment_type: this.getEmploymentTypes()
+            employment_type: this.getEmploymentTypes(),
+            sector: this.getSelectedSectorValue()
         };
 
         return data;
@@ -262,3 +275,18 @@ try {
     setFilterCheckboxes('#experience input[type="checkbox"]', getUrlParameterValue('work_experiences').split(',')); // Set work experience
     setFilterCheckboxes('#jobtype input[type="checkbox"]', getUrlParameterValue('employment_type').split(',')); // Set type of employment
 } catch (error) { };
+
+
+// Sector filter settings
+const sectorsBtn = document.querySelectorAll('button[aria-selected="false"]');
+const sectorUrlParam = getUrlParameterValue('sector');
+
+sectorsBtn.forEach(btn => {
+    if (btn.innerText == sectorUrlParam) {
+        btn.setAttribute('aria-selected', true);
+        btn.classList.add('active');
+    };
+
+    btn.addEventListener('click', filterRequest);
+});
+

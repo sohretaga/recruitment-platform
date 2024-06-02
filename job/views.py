@@ -48,6 +48,7 @@ def ajax_filter_vacancies(request):
         salary_range_upper = data.get('salary_range_upper', 0)
         work_experiences = data.get('work_experiences', [])
         employment_type = data.get('employment_type', [])
+        sector = data.get('sector')
 
         params = {}
         if salary_range_lower:
@@ -60,7 +61,10 @@ def ajax_filter_vacancies(request):
             params.update({'work_experience__in': work_experiences})
         
         if employment_type:
-            params.update({'employment_type__in':employment_type})        
+            params.update({'employment_type__in':employment_type})    
+
+        if sector:
+            params.update({'employer__company__sector': sector})
 
         filtered_vacancies = Vacancy.objects.filter(**params)\
         .values('id', 'no', 'employer__company_name', 'career_type', 'career_level', 'location', 'fte',
