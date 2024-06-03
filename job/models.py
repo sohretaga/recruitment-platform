@@ -23,6 +23,8 @@ class Vacancy(models.Model):
     job_title = models.CharField(max_length=100, blank=True, null=True)
     employment_type = models.CharField(max_length=100, blank=True, null=True)
     work_experience = models.CharField(max_length=100, blank=True, null=True)
+    work_preference = models.CharField(max_length=100, blank=True, null=True)
+    department = models.CharField(max_length=100, blank=True, null=True)
     definition = models.TextField()
     views = models.IntegerField(default=0)
     slug = models.SlugField(null=True)

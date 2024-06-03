@@ -48,10 +48,10 @@ def fetch_vacancies(request) -> dict:
     vacancies = paginator.get_page(current_page)
 
     # Filter Fields
-    countries = models.ParameterCountry.objects.all().values('name')
-    experiences = models.ParameterWorkExperience.objects.all().values('id', 'name')
-    employments = models.ParameterEmployeeType.objects.all().values('id', 'name')
-    sectors = models.ParameterSector.objects.all().values('id', 'name')
+    countries = models.ParameterCountry.objects.values('name')
+    experiences = models.ParameterWorkExperience.objects.values('id', 'name')
+    employments = models.ParameterEmployeeType.objects.values('id', 'name')
+    sectors = models.ParameterSector.objects.values('id', 'name')
     departments = models.ParameterDepartment.objects.values('id', 'name')
     work_preferences = models.ParameterWorkPreference.objects.values('id', 'name')
 

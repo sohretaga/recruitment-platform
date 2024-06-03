@@ -502,8 +502,8 @@ def vacancy_load(request):
             
             vacancies = Vacancy.objects.filter(language = language)\
                 .values('id', 'no', 'employer__company_name', 'career_type', 'career_level', 'location', 'fte', 'salary_minimum',
-                        'salary_midpoint', 'salary_maximum', 'salary', 'position_title', 'job_title',
-                        'employment_type', 'work_experience', 'definition', 'created_date')
+                        'salary_midpoint', 'salary_maximum', 'salary', 'position_title', 'job_title', 'employment_type',
+                        'work_experience', 'definition', 'work_preference', 'department', 'created_date')
             
             json_data = json.dumps(list(vacancies), default=datetime_to_string)
 
@@ -870,8 +870,9 @@ def department_index(request):
 def department_load(request):
     if request.user.is_superuser:
         if is_ajax(request) and request.POST:
+            language = request.POST.get('language')
             
-            department = cp_models.ParameterDepartment.objects.all().values(
+            department = cp_models.ParameterDepartment.objects.filter(language=language).values(
                 'id', 'no', 'name', 'definition', 'note'
             )
             json_data = json.dumps(list(department))
@@ -886,6 +887,7 @@ def department_save(request):
     if request.user.is_superuser:
         if is_ajax(request) and request.POST:
             hot = json.loads(request.POST.get('hot'))
+            language = request.POST.get('language')
             index = 0
 
             while index < len(hot):
@@ -897,7 +899,7 @@ def department_save(request):
                         department = cp_models.ParameterDepartment.objects.filter(pk=pk)
                         department.update(**hot[index])
                     else:
-                        department = cp_models.ParameterDepartment(**hot[index])
+                        department = cp_models.ParameterDepartment(language=language, **hot[index])
                         department.save()
                 else:
                     department = cp_models.ParameterDepartment.objects.filter(pk = pk)
@@ -921,8 +923,9 @@ def work_preference_index(request):
 def work_preference_load(request):
     if request.user.is_superuser:
         if is_ajax(request) and request.POST:
+            language = request.POST.get('language')
             
-            work_preference = cp_models.ParameterWorkPreference.objects.all().values(
+            work_preference = cp_models.ParameterWorkPreference.objects.filter(language=language).values(
                 'id', 'no', 'name', 'definition', 'note'
             )
             json_data = json.dumps(list(work_preference))
@@ -937,6 +940,7 @@ def work_preference_save(request):
     if request.user.is_superuser:
         if is_ajax(request) and request.POST:
             hot = json.loads(request.POST.get('hot'))
+            language = request.POST.get('language')
             index = 0
 
             while index < len(hot):
@@ -948,7 +952,7 @@ def work_preference_save(request):
                         work_preference = cp_models.ParameterWorkPreference.objects.filter(pk=pk)
                         work_preference.update(**hot[index])
                     else:
-                        work_preference = cp_models.ParameterWorkPreference(**hot[index])
+                        work_preference = cp_models.ParameterWorkPreference(language=language, **hot[index])
                         work_preference.save()
                 else:
                     work_preference = cp_models.ParameterWorkPreference.objects.filter(pk = pk)

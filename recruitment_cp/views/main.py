@@ -52,6 +52,12 @@ def load_source(request):
                 
                 case 'number_of_employees':
                     source = cp_models.ParameterNumberOfEmployee.objects.filter(**params).values_list('name', flat=True)
+                
+                case 'work_preference':
+                    source = cp_models.ParameterWorkPreference.objects.filter(**params).values_list('name', flat=True)
+                
+                case 'department':
+                    source = cp_models.ParameterDepartment.objects.filter(**params).values_list('name', flat=True)
             
             source = json.dumps(list(source))
             return JsonResponse(source, safe=False)

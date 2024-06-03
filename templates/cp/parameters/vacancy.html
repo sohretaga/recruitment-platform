@@ -42,6 +42,7 @@
 {% block scripts %}
 <script src="{% static 'cp/js/command.js' %}"></script>
 <script src="{% static 'cp/js/processes.js' %}"></script>
+<script src="{% static 'cp/js/renderer.js' %}"></script>
 <script>
     var hot;
     const saveUrl = "{% url 'cp:vacancy_save' %}";
@@ -49,12 +50,14 @@
     const bmtTable = document.getElementById('table');
     const consoleText = 'Vacancy';
     const modelColumnMap = {
-        'career_types':[5],
-        'career_levels':[6],
-        'locations':[7],
-        'fte':[8],
+        'career_types':[6],
+        'career_levels':[7],
+        'locations':[8],
+        'fte':[9],
         'employment_type':[14],
-        'work_experience':[15]
+        'work_experience':[15],
+        'work_preference':[16],
+        'department':[17],
 
         /* We specify the names of the models from which data will be retrieved for updating as keys,
         and the IDs of the columns to be updated as values. This structure is used to clearly define
@@ -71,7 +74,7 @@
             filters: true,
             data: [{id:''}],
             height: $(document).height() - 350,
-            fixedColumnsStart: 1,
+            fixedColumnsLeft: 3,
             dropdownMenu:  ['filter_by_value', 'filter_action_bar'],
             licenseKey: 'non-commercial-and-evaluation',
 
@@ -103,9 +106,15 @@
                     colWidths: 100
                 },
                 {
+                    title: 'Job Title',
+                    data: 'job_title',
+                    colWidths: 100
+                },
+                {
                     title: 'Definition',
                     data: 'definition',
-                    colWidths: 100
+                    colWidths: 100,
+                    renderer: scrollableTextRenderer
                 },
                 {
                     title: 'Career Type',
@@ -168,11 +177,6 @@
                     },
                 },
                 {
-                    title: 'Job Title',
-                    data: 'job_title',
-                    colWidths: 100
-                },
-                {
                     title: 'Employment Type',
                     data: 'employment_type',
                     type: 'dropdown',
@@ -181,6 +185,18 @@
                 {
                     title: 'Work Experience',
                     data: 'work_experience',
+                    type: 'dropdown',
+                    colWidths: 100
+                },
+                {
+                    title: 'Work Preference',
+                    data: 'work_preference',
+                    type: 'dropdown',
+                    colWidths: 100
+                },
+                {
+                    title: 'Department',
+                    data: 'department',
                     type: 'dropdown',
                     colWidths: 100
                 },
