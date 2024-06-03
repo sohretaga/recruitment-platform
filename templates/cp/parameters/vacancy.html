@@ -75,6 +75,7 @@
             data: [{id:''}],
             height: $(document).height() - 350,
             fixedColumnsLeft: 3,
+            colWidths: [0, 50, 250, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, ],
             dropdownMenu:  ['filter_by_value', 'filter_action_bar'],
             licenseKey: 'non-commercial-and-evaluation',
 
@@ -93,58 +94,57 @@
                     title: 'No',
                     data: 'no',
                     className: 'htCenter',
-                    colWidths: 5
                 },
                 {
                     title: 'Organizatio',
                     data: 'employer__company_name',
-                    colWidths: 100
+                    className: 'htMiddle'
                 },
                 {
                     title: 'Position Title',
                     data: 'position_title',
-                    colWidths: 100
+                    className: 'htMiddle'
                 },
                 {
                     title: 'Job Title',
                     data: 'job_title',
-                    colWidths: 100
+                    className: 'htMiddle'
                 },
                 {
                     title: 'Definition',
                     data: 'definition',
-                    colWidths: 100,
-                    renderer: scrollableTextRenderer
+                    className: 'htMiddle',
+                    renderer: fitTextRenderer
                 },
                 {
                     title: 'Career Type',
                     data: 'career_type',
                     type: 'dropdown',
-                    colWidths: 100
+                    className: 'htMiddle'
                 },
                 {
                     title: 'Career Level',
                     data: 'career_level',
                     type: 'dropdown',
-                    colWidths: 100
+                    className: 'htMiddle'
                 },
                 {
                     title: 'Location',
                     data: 'location',
                     type: 'dropdown',
-                    colWidths: 100
+                    className: 'htMiddle'
                 },
                 {
                     title: 'FTE',
                     data: 'fte',
                     type: 'dropdown',
-                    colWidths: 100
+                    className: 'htMiddle'
                 },
                 {
                     title: 'Salary Minimum',
                     data: 'salary_minimum',
                     type: 'numeric',
-                    colWidths: 100,
+                    className: 'htMiddle',
                     numericFormat: {
                         pattern: '0,0.00',
                     },
@@ -153,7 +153,7 @@
                     title: 'Salary Midpoint',
                     data: 'salary_midpoint',
                     type: 'numeric',
-                    colWidths: 100,
+                    className: 'htMiddle',
                     numericFormat: {
                         pattern: '0,0.00',
                     },
@@ -162,7 +162,7 @@
                     title: 'Salary Maximum',
                     data: 'salary_maximum',
                     type: 'numeric',
-                    colWidths: 100,
+                    className: 'htMiddle',
                     numericFormat: {
                         pattern: '0,0.00',
                     },
@@ -171,7 +171,7 @@
                     title: 'Salary',
                     data: 'salary',
                     type: 'numeric',
-                    colWidths: 100,
+                    className: 'htMiddle',
                     numericFormat: {
                         pattern: '0,0.00',
                     },
@@ -180,30 +180,30 @@
                     title: 'Employment Type',
                     data: 'employment_type',
                     type: 'dropdown',
-                    colWidths: 100
+                    className: 'htMiddle'
                 },
                 {
                     title: 'Work Experience',
                     data: 'work_experience',
                     type: 'dropdown',
-                    colWidths: 100
+                    className: 'htMiddle'
                 },
                 {
                     title: 'Work Preference',
                     data: 'work_preference',
                     type: 'dropdown',
-                    colWidths: 100
+                    className: 'htMiddle'
                 },
                 {
                     title: 'Department',
                     data: 'department',
                     type: 'dropdown',
-                    colWidths: 100
+                    className: 'htMiddle'
                 },
                 {
                     title: 'Created Date',
                     data: 'created_date',
-                    colWidths: 100
+                    className: 'htMiddle'
                 }
 
             ],
