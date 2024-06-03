@@ -52,6 +52,8 @@ def fetch_vacancies(request) -> dict:
     experiences = models.ParameterWorkExperience.objects.all().values('id', 'name')
     employments = models.ParameterEmployeeType.objects.all().values('id', 'name')
     sectors = models.ParameterSector.objects.all().values('id', 'name')
+    departments = models.ParameterDepartment.objects.values('id', 'name')
+    work_preferences = models.ParameterWorkPreference.objects.values('id', 'name')
 
     return {
         'vacancies': vacancies,
@@ -59,5 +61,7 @@ def fetch_vacancies(request) -> dict:
         'experiences': experiences,
         'employments': employments,
         'sectors': sectors,
+        'departments': departments,
+        'work_preferences': work_preferences,
         'url':url
     }
