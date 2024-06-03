@@ -75,6 +75,8 @@
                     <li {% if 'organization-type' in request.path %} class="active" {% endif %}><a href="{% url 'cp:organization_type' %}">Organization Type</a></li>
                     <li {% if 'organization-ownership' in request.path %} class="active" {% endif %}><a href="{% url 'cp:organization_ownership' %}">Organization Ownership</a></li>
                     <li {% if 'number-of-employees' in request.path %} class="active" {% endif %}><a href="{% url 'cp:number_of_employees' %}">Number of Employees</a></li>
+                    <li {% if 'department' in request.path %} class="active" {% endif %}><a href="{% url 'cp:department' %}">Department</a></li>
+                    <li {% if 'work-preference' in request.path %} class="active" {% endif %}><a href="{% url 'cp:work_preference' %}">Work Preference</a></li>
                 {% endif %}
             </ul>
         </div>

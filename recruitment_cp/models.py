@@ -72,3 +72,9 @@ class ParameterOrganizationOwnership(ParameterCommonFields):
 
 class ParameterNumberOfEmployee(ParameterCommonFields):
     ...
+
+class ParameterDepartment(ParameterCommonFields):
+    ...
+
+class ParameterWorkPreference(ParameterCommonFields):
+    ...

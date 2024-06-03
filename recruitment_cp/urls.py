@@ -73,4 +73,12 @@ urlpatterns = [
     path('parameters/number-of-employees', parameters.number_of_employees_index, name='number_of_employees'),
     path('parameters/number-of-employees-load', parameters.number_of_employees_load, name='number_of_employees_load'),
     path('parameters/number-of-employees-save', parameters.number_of_employees_save, name='number_of_employees_save'),
+
+    path('parameters/department', parameters.department_index, name='department'),
+    path('parameters/department-load', parameters.department_load, name='department_load'),
+    path('parameters/department-save', parameters.department_save, name='department_save'),
+
+    path('parameters/work-preference', parameters.work_preference_index, name='work_preference'),
+    path('parameters/work-preference-load', parameters.work_preference_load, name='work_preference_load'),
+    path('parameters/work-preference-save', parameters.work_preference_save, name='work_preference_save'),
 ]

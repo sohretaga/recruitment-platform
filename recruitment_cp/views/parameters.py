@@ -859,3 +859,103 @@ def number_of_employees_save(request):
             raise PermissionError
     else:
         raise Http404
+
+#======================================================================================================
+def department_index(request):
+    if request.user.is_superuser:
+        return render(request, 'cp/parameters/department.html')
+    
+    raise Http404
+
+def department_load(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            
+            department = cp_models.ParameterDepartment.objects.all().values()
+            
+            json_data = json.dumps(list(department))
+
+            return JsonResponse(json_data, safe=False)
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+
+def department_save(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            hot = json.loads(request.POST.get('hot'))
+            index = 0
+
+            while index < len(hot):
+                pk = hot[index].pop('id', None)
+                name = hot[index].get('name', None)
+
+                if name:
+                    if pk:
+                        department = cp_models.ParameterDepartment.objects.filter(pk=pk)
+                        department.update(**hot[index])
+                    else:
+                        department = cp_models.ParameterDepartment(**hot[index])
+                        department.save()
+                else:
+                    department = cp_models.ParameterDepartment.objects.filter(pk = pk)
+                    department.delete()
+                
+                index += 1
+
+            return JsonResponse({'status': 200})
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+
+#======================================================================================================
+def work_preference_index(request):
+    if request.user.is_superuser:
+        return render(request, 'cp/parameters/work_preference.html')
+    
+    raise Http404
+
+def work_preference_load(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            
+            work_preference = cp_models.ParameterWorkPreference.objects.all().values()
+            
+            json_data = json.dumps(list(work_preference))
+
+            return JsonResponse(json_data, safe=False)
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+
+def work_preference_save(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            hot = json.loads(request.POST.get('hot'))
+            index = 0
+
+            while index < len(hot):
+                pk = hot[index].pop('id', None)
+                name = hot[index].get('name', None)
+
+                if name:
+                    if pk:
+                        work_preference = cp_models.ParameterWorkPreference.objects.filter(pk=pk)
+                        work_preference.update(**hot[index])
+                    else:
+                        work_preference = cp_models.ParameterWorkPreference(**hot[index])
+                        work_preference.save()
+                else:
+                    work_preference = cp_models.ParameterWorkPreference.objects.filter(pk = pk)
+                    work_preference.delete()
+                
+                index += 1
+
+            return JsonResponse({'status': 200})
+        else:
+            raise PermissionError
+    else:
+        raise Http404
