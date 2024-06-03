@@ -46,7 +46,7 @@ class DataCollector {
         const lowerValue = parseInt(document.querySelector('.noUi-handle-lower').getAttribute('aria-valuenow'));
         const upperValue = parseInt(document.querySelector('.noUi-handle-upper').getAttribute('aria-valuenow'));
         const salaryRangeList = lowerValue || upperValue ? [lowerValue, upperValue]: [];
-        setUrl('salary_range', salaryRangeList.join(','));
+        setUrl('salary-range', salaryRangeList.join(','));
 
         return salaryRangeList;
     };
@@ -55,7 +55,7 @@ class DataCollector {
         const checkboxes = document.querySelectorAll('#experience input[type="checkbox"]');
         const selectedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
         const selectedValues = selectedCheckboxes.map(checkbox => checkbox.value);
-        setUrl('work_experiences', selectedValues.join(','));
+        setUrl('work-experiences', selectedValues.join(','));
 
         return selectedValues;
 
@@ -65,7 +65,7 @@ class DataCollector {
         const checkboxes = document.querySelectorAll('#jobtype input[type="checkbox"]');
         const selectedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
         const selectedValues = selectedCheckboxes.map(checkbox => checkbox.value);
-        setUrl('employment_type', selectedValues.join(','))
+        setUrl('employment-type', selectedValues.join(','))
 
         return selectedValues;
 
@@ -110,7 +110,7 @@ const setUrl = (parameter, value) => {
         url.searchParams.delete(parameter);
     };
 
-    window.history.pushState('', '', url);
+    window.history.pushState('', '', decodeURIComponent(url));
 };
 
 const getUrlParameterValue = (parameterName) => {

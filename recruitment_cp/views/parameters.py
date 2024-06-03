@@ -871,8 +871,9 @@ def department_load(request):
     if request.user.is_superuser:
         if is_ajax(request) and request.POST:
             
-            department = cp_models.ParameterDepartment.objects.all().values()
-            
+            department = cp_models.ParameterDepartment.objects.all().values(
+                'id', 'no', 'name', 'definition', 'note'
+            )
             json_data = json.dumps(list(department))
 
             return JsonResponse(json_data, safe=False)
@@ -921,8 +922,9 @@ def work_preference_load(request):
     if request.user.is_superuser:
         if is_ajax(request) and request.POST:
             
-            work_preference = cp_models.ParameterWorkPreference.objects.all().values()
-            
+            work_preference = cp_models.ParameterWorkPreference.objects.all().values(
+                'id', 'no', 'name', 'definition', 'note'
+            )
             json_data = json.dumps(list(work_preference))
 
             return JsonResponse(json_data, safe=False)

@@ -64,7 +64,7 @@ const setUrl = (parameter, value) => {
         url.searchParams.delete(parameter);
     };
 
-    window.history.pushState('', '', url);
+    window.history.pushState('', '', decodeURIComponent(url));
 };
 
 const getUrlParameterValue = (parameterName) => {

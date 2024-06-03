@@ -5,15 +5,15 @@ from job.models import Vacancy
 
 def fetch_vacancies(request) -> dict:
     # URL parameters are taken for filtering and used for the same filtering on the following pages.
-    salary_range:str|None = request.GET.get('salary_range')
-    work_experiences:str|None = request.GET.get('work_experiences')
-    employment_type:str|None = request.GET.get('employment_type')
+    salary_range:str|None = request.GET.get('salary-range')
+    work_experiences:str|None = request.GET.get('work-experiences')
+    employment_type:str|None = request.GET.get('employment-type')
     sector:str|None = request.GET.get('sector')
     params:dict = {}
     url:str = '' # Creating URL for Pagination
 
     if salary_range:
-        url += f'&salary_range={salary_range}'
+        url += f'&salary-range={salary_range}'
         salary_range_lower = int(salary_range.split(',')[0])
         salary_range_upper = int(salary_range.split(',')[1])
 
@@ -26,11 +26,11 @@ def fetch_vacancies(request) -> dict:
             params.update({'salary__lte': salary_range_upper})
 
     if work_experiences:
-        url += f'&work_experiences={work_experiences}'
+        url += f'&work-experiences={work_experiences}'
         params.update({'work_experience__in': work_experiences.split(',')})
     
     if employment_type:
-        url += f'&employment_type={employment_type}'
+        url += f'&employment-type={employment_type}'
         params.update({'employment_type__in': employment_type.split(',')})
     
     if sector:
