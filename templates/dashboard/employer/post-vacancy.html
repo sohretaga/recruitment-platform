@@ -153,6 +153,34 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Work Preference</label>
+                                                    <select class="custom-select" name="work_preference">
+                                                        {% for preference in work_preferences %}
+                                                            {% if preference.name == vacancy.work_preference %}
+                                                                <option value="{{ preference.name }}" selected>{{ preference.name }}</option>
+                                                            {% else %}
+                                                                <option value="{{ preference.name }}">{{ preference.name }}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Department</label>
+                                                    <select class="custom-select" name="department">
+                                                        {% for department in departments %}
+                                                            {% if department.name == vacancy.department %}
+                                                                <option value="{{ department.name }}" selected>{{ department.name }}</option>
+                                                            {% else %}
+                                                                <option value="{{ department.name }}">{{ department.name }}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="tab-pane" id="location-and-salary">

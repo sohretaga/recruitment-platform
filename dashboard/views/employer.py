@@ -12,6 +12,8 @@ from recruitment_cp.models import (Language,
                                    ParameterEmployeeType,
                                    ParameterFTE,
                                    ParameterJobCatalogue,
+                                   ParameterWorkPreference,
+                                   ParameterDepartment
                                 )
 
 @is_employer
@@ -57,6 +59,8 @@ def post_vacancy(request):
     locations = ParameterLocation.objects.filter(language=selected_language).values('name')
     employment_types = ParameterEmployeeType.objects.filter(language=selected_language).values('name')
     ftes = ParameterFTE.objects.filter(language=selected_language).values('name')
+    work_preferences = ParameterWorkPreference.objects.filter(language=selected_language).values('name')
+    departments = ParameterDepartment.objects.filter(language=selected_language).values('name')
 
     context = {
         'languages': languages,
@@ -65,7 +69,9 @@ def post_vacancy(request):
         'career_levels': career_levels,
         'locations': locations,
         'employment_types': employment_types,
-        'ftes': ftes
+        'ftes': ftes,
+        'work_preferences': work_preferences,
+        'departments': departments
     }
     
     return render(request, 'dashboard/employer/post-vacancy.html', context)
@@ -97,6 +103,8 @@ def edit_vacancy(request, id):
     locations = ParameterLocation.objects.filter(language=selected_language).values('name')
     employment_types = ParameterEmployeeType.objects.filter(language=selected_language).values('name')
     ftes = ParameterFTE.objects.filter(language=selected_language).values('name')
+    work_preferences = ParameterWorkPreference.objects.filter(language=selected_language).values('name')
+    departments = ParameterDepartment.objects.filter(language=selected_language).values('name')
 
     if request.POST:
         form = PostVacancyForm(request.POST, instance=vacancy)
@@ -113,7 +121,9 @@ def edit_vacancy(request, id):
         'career_levels': career_levels,
         'locations': locations,
         'employment_types': employment_types,
-        'ftes': ftes
+        'ftes': ftes,
+        'work_preferences': work_preferences,
+        'departments': departments
     }
 
     return render(request, 'dashboard/employer/post-vacancy.html', context)
