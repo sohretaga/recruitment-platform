@@ -18,10 +18,10 @@
         <!--end row-->
         <div class="row">
 
-            <!-- START SIDE-BAR -->
+            <!-- START LEFT SIDE-BAR -->
             <div class="col-lg-3">
                 <div class="side-bar mt-5 mt-lg-0">
-                    <div class="accordion" id="accordionExample2">
+                    <div class="accordion" id="accordionLeft">
 
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="departmentOne">
@@ -32,12 +32,12 @@
                             <div id="department" class="accordion-collapse collapse show" aria-labelledby="departmentOne">
                                 <div class="accordion-body">
                                     <div class="side-title">
-                                        <div class="mb-3">
-                                            <form class="position-relative">
-                                                <input class="form-control" type="search" placeholder="Search...">
-                                                <button class="bg-transparent border-0 position-absolute top-50 end-0 translate-middle-y me-2" type="submit"><span class="mdi mdi-magnify text-muted"></span></button>
-                                            </form>
+                                        <form class="position-relative mb-2">
+                                            <input class="form-control" type="search" placeholder="Search...">
+                                            <button class="bg-transparent border-0 position-absolute top-50 end-0 translate-middle-y me-2" type="submit"><span class="mdi mdi-magnify text-muted"></span></button>
+                                        </form>
 
+                                        <div class="mb-3" style="max-height: 250px; overflow: auto;">
                                             {% for department in departments %}
                                                 <div class="form-check mt-2">
                                                     <input class="form-check-input" type="checkbox" value="{{ department.name }}" id="flexCheckChecked-department{{ department.id }}" />
@@ -74,7 +74,7 @@
                     
                 </div><!--end side-bar-->
             </div>
-            <!-- END SIDE-BAR -->
+            <!-- END LEFT SIDE-BAR -->
 
             <div class="col-lg-6" >
                 <div> <!-- class="me-lg-5" -->
@@ -307,10 +307,10 @@
                 </div>
 
             </div>
-            <!-- START SIDE-BAR -->
+            <!-- START RIGHT SIDE-BAR -->
             <div class="col-lg-3">
                 <div class="side-bar mt-5 mt-lg-0">
-                    <div class="accordion" id="accordionExample">
+                    <div class="accordion" id="accordionRight">
                         <div class="side-title">
                             <div class="mb-3">
                                 <form class="position-relative">
@@ -437,7 +437,7 @@
                     
                 </div><!--end side-bar-->
             </div>
-            <!-- END SIDE-BAR -->
+            <!-- END RIGHT SIDE-BAR -->
         </div>
     </div>
 </section>
