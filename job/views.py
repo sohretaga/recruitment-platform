@@ -49,8 +49,11 @@ def ajax_filter_vacancies(request):
         work_experiences = data.get('work_experiences', [])
         employment_type = data.get('employment_type', [])
         sector = data.get('sector')
-
+        department = data.get('department', [])
+        work_preference = data.get('work_preference')
         params = {}
+        value_params = 'employer__company_name', 'location', 'salary_minimum', 'salary_maximum', 'position_title', 'job_title', 'work_experience', 'slug'
+
         if salary_range_lower:
             params.update({'salary__gte': salary_range_lower})
         
@@ -66,10 +69,13 @@ def ajax_filter_vacancies(request):
         if sector:
             params.update({'employer__company__sector': sector})
 
-        filtered_vacancies = Vacancy.objects.filter(**params)\
-        .values('id', 'no', 'employer__company_name', 'career_type', 'career_level', 'location', 'fte',
-                'salary_minimum', 'salary_midpoint', 'salary_maximum', 'salary', 'position_title', 'job_title',
-                'employment_type', 'work_experience', 'definition', 'slug', 'created_date')
+        if department:
+            params.update({'department__in': department})
+
+        if work_preference:
+            params.update({'work_preference__in': work_preference})
+
+        filtered_vacancies = Vacancy.objects.filter(**params).values(*value_params)
         
         # Set up Paginator
         paginator = Paginator(filtered_vacancies, 10)
@@ -77,7 +83,7 @@ def ajax_filter_vacancies(request):
         vacancies_page = paginator.get_page(current_page_number)
 
         # Serialize the data
-        vacancies_list = list(vacancies_page.object_list.values())
+        vacancies_list = list(vacancies_page.object_list.values(*value_params))
 
         pagination_info = {
             'has_next': vacancies_page.has_next(),

@@ -1,6 +1,12 @@
 const csrf_token = document.getElementById('csrf-token').value;
 const slider = document.getElementById('slider1');
 const url = new URL(window.location);
+decodeURIComponent(url);
+
+var workExperiencesCheckboxes = '#experience input[type="checkbox"]';
+var employmentTypeCheckboxes = '#jobtype input[type="checkbox"]';
+var workPreferenceCheckboxes = '#preference input[type="checkbox"]';
+var departmentCheckboxes = '#department input[type="checkbox"]';
 
 $.ajaxSetup({
     beforeSend: function (xhr, settings) {
@@ -42,6 +48,15 @@ slider.noUiSlider.on("update", function(values, handle) {
 
 class DataCollector {
 
+    getSelectedValues(selector, url) {
+        const checkboxes = document.querySelectorAll(selector);
+        const selectedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
+        const selectedValues = selectedCheckboxes.map(checkbox => checkbox.value);
+        setUrl(url, selectedValues.join(','));
+
+        return selectedValues;
+    }
+
     getSalaryRangeValue() {
         const lowerValue = parseInt(document.querySelector('.noUi-handle-lower').getAttribute('aria-valuenow'));
         const upperValue = parseInt(document.querySelector('.noUi-handle-upper').getAttribute('aria-valuenow'));
@@ -49,26 +64,6 @@ class DataCollector {
         setUrl('salary-range', salaryRangeList.join(','));
 
         return salaryRangeList;
-    };
-
-    getWorkExperiences() {
-        const checkboxes = document.querySelectorAll('#experience input[type="checkbox"]');
-        const selectedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
-        const selectedValues = selectedCheckboxes.map(checkbox => checkbox.value);
-        setUrl('work-experiences', selectedValues.join(','));
-
-        return selectedValues;
-
-    };
-
-    getEmploymentTypes() {
-        const checkboxes = document.querySelectorAll('#jobtype input[type="checkbox"]');
-        const selectedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
-        const selectedValues = selectedCheckboxes.map(checkbox => checkbox.value);
-        setUrl('employment-type', selectedValues.join(','))
-
-        return selectedValues;
-
     };
 
     getSelectedSectorValue() {
@@ -87,8 +82,10 @@ class DataCollector {
         const data = {
             salary_range_lower: this.getSalaryRangeValue()[0],
             salary_range_upper: this.getSalaryRangeValue()[1],
-            work_experiences: this.getWorkExperiences(),
-            employment_type: this.getEmploymentTypes(),
+            work_experiences: this.getSelectedValues(workExperiencesCheckboxes, 'work-experience'),
+            employment_type: this.getSelectedValues(employmentTypeCheckboxes, 'employment-type'),
+            work_preference: this.getSelectedValues(workPreferenceCheckboxes, 'work-preference'),
+            department: this.getSelectedValues(departmentCheckboxes, 'department'),
             sector: this.getSelectedSectorValue()
         };
 
@@ -114,11 +111,15 @@ const setUrl = (parameter, value) => {
 };
 
 const getUrlParameterValue = (parameterName) => {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const parameterValue = urlParams.get(parameterName);
+    try {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const parameterValue = urlParams.get(parameterName);
+        return parameterValue.split(',');
 
-    return parameterValue;
+    } catch (error) {
+        return [];
+     };
 };
 
 const generatePagination = (paginationInfo) => {
@@ -171,6 +172,7 @@ const listVacancies = (vacanciesInfo) => {
     container.innerHTML = ''; // Clear existing content
 
     for (const [key, vacancy] of Object.entries(vacanciesInfo)) {
+        console.log(vacancy)
         container.innerHTML += `
         <div class="job-box bookmark-post card mt-5">
             <div class="p-4">
@@ -180,7 +182,7 @@ const listVacancies = (vacanciesInfo) => {
                     </div><!--end col-->
                     <div class="col-lg-10">
                         <div class="mt-3 mt-lg-0">
-                            <h5 class="fs-17 mb-1"><a href="/vacancy/${vacancy.slug}" class="text-dark">${vacancy.job_title}</a> <small class="text-muted fw-normal">(0-2 Yrs Exp.)</small></h5>
+                            <h5 class="fs-17 mb-1"><a href="/vacancy/${vacancy.slug}" class="text-dark">${vacancy.job_title}</a> <small class="text-muted fw-normal">(${vacancy.work_experience})</small></h5>
                             <ul class="list-inline mb-0">
                                 <li class="list-inline-item">
                                     <p class="text-muted fs-14 mb-0">${vacancy.employer__company_name}</p>
@@ -266,15 +268,17 @@ const setFilterCheckboxes = (selector, values) => {
     });
 };
 
-addCheckboxListener('#experience input[type="checkbox"]', filterRequest); // Work Experiences Listener
-addCheckboxListener('#jobtype input[type="checkbox"]', filterRequest); // Type of Employment Listener
+addCheckboxListener(workExperiencesCheckboxes, filterRequest); // Work Experiences Listener
+addCheckboxListener(employmentTypeCheckboxes, filterRequest); // Type of Employment Listener
+addCheckboxListener(workPreferenceCheckboxes, filterRequest); // Work Preference Listener
+addCheckboxListener(departmentCheckboxes, filterRequest); // Department Listener
 
 // Set filter inputs from url parameters
-try {
-    slider.noUiSlider.set(getUrlParameterValue('salary_range').split(','));
-    setFilterCheckboxes('#experience input[type="checkbox"]', getUrlParameterValue('work_experiences').split(',')); // Set work experience
-    setFilterCheckboxes('#jobtype input[type="checkbox"]', getUrlParameterValue('employment_type').split(',')); // Set type of employment
-} catch (error) { };
+slider.noUiSlider.set(getUrlParameterValue('salary-range'));
+setFilterCheckboxes(workExperiencesCheckboxes, getUrlParameterValue('work-experience')); // Set work experience
+setFilterCheckboxes(employmentTypeCheckboxes, getUrlParameterValue('employment-type')); // Set type of employment
+setFilterCheckboxes(workPreferenceCheckboxes, getUrlParameterValue('work-preference')); // Set work preference
+setFilterCheckboxes(departmentCheckboxes, getUrlParameterValue('department')); // Set work preference
 
 
 // Sector filter settings
@@ -290,3 +294,21 @@ sectorsBtn.forEach(btn => {
     btn.addEventListener('click', filterRequest);
 });
 
+
+// Department items searcher
+const departmentSearchInput = document.querySelector('#department input[type="search"]');
+const departmentItems = document.querySelectorAll(departmentCheckboxes);
+
+departmentSearchInput.addEventListener('input', function() {
+    let searchValue = this.value.toLowerCase();
+
+    Array.prototype.forEach.call(departmentItems, function(item) {
+        let label = item.parentElement;
+
+        if (label.textContent.toLowerCase().includes(searchValue)) {
+            label.style.display = 'block';
+        }else {
+            label.style.display = 'none';
+        }
+    });
+});

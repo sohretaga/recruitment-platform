@@ -6,9 +6,11 @@ from job.models import Vacancy
 def fetch_vacancies(request) -> dict:
     # URL parameters are taken for filtering and used for the same filtering on the following pages.
     salary_range:str|None = request.GET.get('salary-range')
-    work_experiences:str|None = request.GET.get('work-experiences')
+    work_experience:str|None = request.GET.get('work-experience')
     employment_type:str|None = request.GET.get('employment-type')
     sector:str|None = request.GET.get('sector')
+    department:str|None = request.GET.get('department')
+    work_preference:str|None = request.GET.get('work-preference')
     params:dict = {}
     url:str = '' # Creating URL for Pagination
 
@@ -25,9 +27,9 @@ def fetch_vacancies(request) -> dict:
         if salary_range_upper:
             params.update({'salary__lte': salary_range_upper})
 
-    if work_experiences:
-        url += f'&work-experiences={work_experiences}'
-        params.update({'work_experience__in': work_experiences.split(',')})
+    if work_experience:
+        url += f'&work-experience={work_experience}'
+        params.update({'work_experience__in': work_experience.split(',')})
     
     if employment_type:
         url += f'&employment-type={employment_type}'
@@ -37,10 +39,16 @@ def fetch_vacancies(request) -> dict:
         url += f'&sector={sector}'
         params.update({'employer__company__sector': sector})
 
+    if department:
+        url += f'&department={department}'
+        params.update({'department__in': department.split(',')})
+
+    if work_preference:
+        url += f'&work-preference={work_preference}'
+        params.update({'work_preference__in': work_preference.split(',')})
+
     filtered_vacancies = Vacancy.objects.filter(**params)\
-    .values('id', 'no', 'employer__company_name', 'career_type', 'career_level', 'location', 'fte', 'salary_minimum',
-            'salary_midpoint', 'salary_maximum', 'salary', 'position_title', 'job_title',
-            'employment_type', 'work_experience', 'definition', 'slug', 'created_date')
+    .values('employer__company_name', 'location', 'salary_minimum', 'salary_maximum', 'position_title', 'job_title', 'work_experience', 'slug')
 
     # Set up Paginator
     paginator = Paginator(filtered_vacancies, 10)
