@@ -7,6 +7,7 @@ var workExperiencesCheckboxes = '#experience input[type="checkbox"]';
 var employmentTypeCheckboxes = '#jobtype input[type="checkbox"]';
 var workPreferenceCheckboxes = '#preference input[type="checkbox"]';
 var departmentCheckboxes = '#department input[type="checkbox"]';
+var datePostedRadios = '#dateposted input[type="radio"]';
 
 $.ajaxSetup({
     beforeSend: function (xhr, settings) {
@@ -86,6 +87,7 @@ class DataCollector {
             employment_type: this.getSelectedValues(employmentTypeCheckboxes, 'employment-type'),
             work_preference: this.getSelectedValues(workPreferenceCheckboxes, 'work-preference'),
             department: this.getSelectedValues(departmentCheckboxes, 'department'),
+            date_posted: this.getSelectedValues(datePostedRadios, 'date')[0],
             sector: this.getSelectedSectorValue()
         };
 
@@ -172,7 +174,6 @@ const listVacancies = (vacanciesInfo) => {
     container.innerHTML = ''; // Clear existing content
 
     for (const [key, vacancy] of Object.entries(vacanciesInfo)) {
-        console.log(vacancy)
         container.innerHTML += `
         <div class="job-box bookmark-post card mt-5">
             <div class="p-4">
@@ -182,7 +183,7 @@ const listVacancies = (vacanciesInfo) => {
                     </div><!--end col-->
                     <div class="col-lg-10">
                         <div class="mt-3 mt-lg-0">
-                            <h5 class="fs-17 mb-1"><a href="/vacancy/${vacancy.slug}" class="text-dark">${vacancy.job_title}</a> <small class="text-muted fw-normal">(${vacancy.work_experience})</small></h5>
+                            <h5 class="fs-17 mb-1"><a href="/vacancy/${vacancy.slug}" class="text-dark">${vacancy.position_title}</a> <small class="text-muted fw-normal">(${vacancy.work_experience})</small></h5>
                             <ul class="list-inline mb-0">
                                 <li class="list-inline-item">
                                     <p class="text-muted fs-14 mb-0">${vacancy.employer__company_name}</p>
@@ -272,6 +273,7 @@ addCheckboxListener(workExperiencesCheckboxes, filterRequest); // Work Experienc
 addCheckboxListener(employmentTypeCheckboxes, filterRequest); // Type of Employment Listener
 addCheckboxListener(workPreferenceCheckboxes, filterRequest); // Work Preference Listener
 addCheckboxListener(departmentCheckboxes, filterRequest); // Department Listener
+addCheckboxListener(datePostedRadios, filterRequest); // Date Posted Listener
 
 // Set filter inputs from url parameters
 slider.noUiSlider.set(getUrlParameterValue('salary-range'));
@@ -279,6 +281,7 @@ setFilterCheckboxes(workExperiencesCheckboxes, getUrlParameterValue('work-experi
 setFilterCheckboxes(employmentTypeCheckboxes, getUrlParameterValue('employment-type')); // Set type of employment
 setFilterCheckboxes(workPreferenceCheckboxes, getUrlParameterValue('work-preference')); // Set work preference
 setFilterCheckboxes(departmentCheckboxes, getUrlParameterValue('department')); // Set work preference
+setFilterCheckboxes(datePostedRadios, getUrlParameterValue('date')); // Set work preference
 
 
 // Sector filter settings

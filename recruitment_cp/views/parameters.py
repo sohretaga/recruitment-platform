@@ -525,7 +525,8 @@ def vacancy_save(request):
                 position_title = hot[index].get('position_title', None)
 
                 # If they are not deleted, ForeignKey gives an error
-                del hot[index]['employer__company_name']
+                if hot[index]['employer__company_name']:
+                    del hot[index]['employer__company_name']
 
                 if position_title:
                     if pk:

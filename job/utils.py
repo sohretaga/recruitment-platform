@@ -1,4 +1,6 @@
 from django.core.paginator import Paginator
+from datetime import timedelta
+from django.utils import timezone
 
 from recruitment_cp import models
 from job.models import Vacancy
@@ -11,6 +13,7 @@ def fetch_vacancies(request) -> dict:
     sector:str|None = request.GET.get('sector')
     department:str|None = request.GET.get('department')
     work_preference:str|None = request.GET.get('work-preference')
+    date:str|None = request.GET.get('date')
     params:dict = {}
     url:str = '' # Creating URL for Pagination
 
@@ -47,6 +50,11 @@ def fetch_vacancies(request) -> dict:
         url += f'&work-preference={work_preference}'
         params.update({'work_preference__in': work_preference.split(',')})
 
+    if date:
+        url += f'&date={date}'
+        params.update({'created_date__gte': timezone.now() - timedelta(hours=int(date))})
+
+
     filtered_vacancies = Vacancy.objects.filter(**params)\
     .values('employer__company_name', 'location', 'salary_minimum', 'salary_maximum', 'position_title', 'job_title', 'work_experience', 'slug')
 
@@ -71,5 +79,5 @@ def fetch_vacancies(request) -> dict:
         'sectors': sectors,
         'departments': departments,
         'work_preferences': work_preferences,
-        'url':url
+        'url':url,
     }

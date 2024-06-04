@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
+from django.utils import timezone
+from datetime import timedelta
 
 from job.models import Vacancy
 from recruitment_cp.utils import is_ajax
@@ -44,15 +46,16 @@ def bookmarks(request):
 def ajax_filter_vacancies(request):
     if is_ajax:
         data = json.loads(request.body.decode('utf-8'))
-        salary_range_lower = data.get('salary_range_lower', 0)
-        salary_range_upper = data.get('salary_range_upper', 0)
-        work_experiences = data.get('work_experiences', [])
-        employment_type = data.get('employment_type', [])
-        sector = data.get('sector')
-        department = data.get('department', [])
-        work_preference = data.get('work_preference')
+        salary_range_lower:str|None = data.get('salary_range_lower')
+        salary_range_upper:str|None = data.get('salary_range_upper')
+        work_experiences:str|None = data.get('work_experiences')
+        employment_type:str|None = data.get('employment_type')
+        sector:str|None = data.get('sector')
+        department:str|None = data.get('department')
+        work_preference:str|None = data.get('work_preference')
+        date = data.get('date_posted')
         params = {}
-        value_params = 'employer__company_name', 'location', 'salary_minimum', 'salary_maximum', 'position_title', 'job_title', 'work_experience', 'slug'
+        value_params = 'employer__company_name', 'location', 'salary_minimum', 'salary_maximum', 'position_title', 'job_title', 'work_experience', 'slug', 'created_date'
 
         if salary_range_lower:
             params.update({'salary__gte': salary_range_lower})
@@ -74,6 +77,9 @@ def ajax_filter_vacancies(request):
 
         if work_preference:
             params.update({'work_preference__in': work_preference})
+        
+        if date:
+            params.update({'created_date__gte': timezone.now() - timedelta(hours=int(date))})
 
         filtered_vacancies = Vacancy.objects.filter(**params).values(*value_params)
         
