@@ -189,10 +189,10 @@ const listVacancies = (vacanciesInfo) => {
                                     <p class="text-muted fs-14 mb-0">${vacancy.employer__company_name}</p>
                                 </li>
                                 <li class="list-inline-item">
-                                    <p class="text-muted fs-14 mb-0"><i class="mdi mdi-map-marker"></i>${vacancy.location}</p>
+                                    <p class="text-muted fs-14 mb-0"><i class="mdi mdi-map-marker"></i> ${vacancy.location}</p>
                                 </li>
                                 <li class="list-inline-item">
-                                    <p class="text-muted fs-14 mb-0"><i class="uil uil-wallet"></i>${vacancy.salary_minimum} ₼ - ${vacancy.salary_maximum} ₼ / month</p>
+                                    <p class="text-muted fs-14 mb-0"><i class="uil uil-wallet"></i> ${vacancy.salary_minimum} ₼ - ${vacancy.salary_maximum} ₼ / month</p>
                                 </li>
                             </ul>
                             <div class="mt-2">
