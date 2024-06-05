@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from django.views.decorators.http import require_POST
 
 from django.http import Http404, JsonResponse
 from django.core.paginator import Paginator
+
+from job.models import Vacancy
+from datetime import timedelta
+from django.utils import timezone
 
 from dashboard.decorators import is_employer
 from dashboard.forms import CompleteEmployerRegisterForm, PostVacancyForm
@@ -54,16 +57,15 @@ def post_vacancy(request):
             instance.save()
             return redirect(reverse('dashboard:all-vacancy'))
 
-    selected_language = 'en'
     languages = Language.objects.all().values('code', 'name')
-    job_catalogue = ParameterJobCatalogue.objects.filter(language = selected_language).values('name')
-    career_types = ParameterCareerType.objects.filter(language=selected_language).values('name')
-    career_levels = ParameterCareerLevel.objects.filter(language=selected_language).values('name')
-    locations = ParameterLocation.objects.filter(language=selected_language).values('name')
-    employment_types = ParameterEmployeeType.objects.filter(language=selected_language).values('name')
-    ftes = ParameterFTE.objects.filter(language=selected_language).values('name')
-    work_preferences = ParameterWorkPreference.objects.filter(language=selected_language).values('name')
-    departments = ParameterDepartment.objects.filter(language=selected_language).values('name')
+    job_catalogue = ParameterJobCatalogue.objects.all().values('name')
+    career_types = ParameterCareerType.objects.all().values('name')
+    career_levels = ParameterCareerLevel.objects.all().values('name')
+    locations = ParameterLocation.objects.all().values('name')
+    employment_types = ParameterEmployeeType.objects.all().values('name')
+    ftes = ParameterFTE.objects.all().values('name')
+    work_preferences = ParameterWorkPreference.objects.all().values('name')
+    departments = ParameterDepartment.objects.all().values('name')
 
     context = {
         'languages': languages,
@@ -130,19 +132,19 @@ def ajax_all_vacancy(request):
 def edit_vacancy(request, id):
     vacancy = get_object_or_404(request.user.employer.vacancies, id=id)
 
-    selected_language = 'en'
     languages = Language.objects.all().values('code', 'name')
-    job_catalogue = ParameterJobCatalogue.objects.filter(language = selected_language).values('name')
-    career_types = ParameterCareerType.objects.filter(language=selected_language).values('name')
-    career_levels = ParameterCareerLevel.objects.filter(language=selected_language).values('name')
-    locations = ParameterLocation.objects.filter(language=selected_language).values('name')
-    employment_types = ParameterEmployeeType.objects.filter(language=selected_language).values('name')
-    ftes = ParameterFTE.objects.filter(language=selected_language).values('name')
-    work_preferences = ParameterWorkPreference.objects.filter(language=selected_language).values('name')
-    departments = ParameterDepartment.objects.filter(language=selected_language).values('name')
+    job_catalogue = ParameterJobCatalogue.objects.all().values('name')
+    career_types = ParameterCareerType.objects.all().values('name')
+    career_levels = ParameterCareerLevel.objects.all().values('name')
+    locations = ParameterLocation.objects.all().values('name')
+    employment_types = ParameterEmployeeType.objects.all().values('name')
+    ftes = ParameterFTE.objects.all().values('name')
+    work_preferences = ParameterWorkPreference.objects.all().values('name')
+    departments = ParameterDepartment.objects.all().values('name')
 
     if request.POST:
         form = PostVacancyForm(request.POST, instance=vacancy)
+        print(form.errors)
 
         if form.is_valid():
             form.save()

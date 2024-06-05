@@ -26,7 +26,7 @@ class Vacancy(models.Model):
     definition = models.TextField(blank=True, null=True)
     views = models.IntegerField(default=0)
     slug = models.SlugField(null=True)
-    created_date = models.DateTimeField(auto_now_add=True, null=True)
+    created_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ['-created_date']

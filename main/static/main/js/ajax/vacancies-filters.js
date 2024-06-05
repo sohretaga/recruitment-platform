@@ -2,6 +2,10 @@ const csrf_token = document.getElementById('csrf-token').value;
 const slider = document.getElementById('slider1');
 const url = new URL(window.location);
 
+// Salary Values
+const minValue = 0;
+const maxValue = 10000;
+
 var workExperiencesCheckboxes = '#experience input[type="checkbox"]';
 var employmentTypeCheckboxes = '#jobtype input[type="checkbox"]';
 var workPreferenceCheckboxes = '#preference input[type="checkbox"]';
@@ -24,12 +28,12 @@ $.ajaxSetup({
 });
 
 noUiSlider.create(slider, {
-    start: [0, 100000],
+    start: [minValue, maxValue],
     step: 1,
     connect: true,
     range: {
-        min: [0],
-        max: [100000]
+        min: [minValue],
+        max: [maxValue]
     },
     format: {
         to: function (value) {
@@ -61,7 +65,7 @@ class DataCollector {
     getSalaryRangeValue() {
         const lowerValue = parseInt(document.querySelector('.noUi-handle-lower').getAttribute('aria-valuenow'));
         const upperValue = parseInt(document.querySelector('.noUi-handle-upper').getAttribute('aria-valuenow'));
-        const salaryRangeList = lowerValue || upperValue ? [lowerValue, upperValue]: [];
+        const salaryRangeList = lowerValue > minValue || upperValue < maxValue? [lowerValue, upperValue]: [];
         setUrl('salary-range', salaryRangeList.join(','));
 
         return salaryRangeList;
