@@ -45,9 +45,13 @@
 <script src="{% static 'cp/js/renderer.js' %}"></script>
 <script>
     var hot;
+    var hotData = [];
+    var offset = 0;
+    var limit = 100;
     const saveUrl = "{% url 'cp:vacancy_save' %}";
     const loadUrl = "{% url 'cp:vacancy_load' %}";
     const bmtTable = document.getElementById('table');
+    const language = document.querySelector("input[name='language']:checked").value;
     const consoleText = 'Vacancy';
     const modelColumnMap = {
         'career_types':[6],
@@ -64,6 +68,15 @@
         which column will be updated from which model. */
     };
 
+    function fetchData(offset, limit) {
+        return $.ajax({
+            url: loadUrl,
+            type: 'POST',
+            data: { offset: offset, limit: limit, language: language},
+            dataType: 'json'
+        });
+    }
+
     $(document).ready(function() {
         hot = new Handsontable(bmtTable, {
             rowHeaders: true,
@@ -75,13 +88,32 @@
             data: [{id:''}],
             height: $(document).height() - 350,
             fixedColumnsLeft: 3,
-            colWidths: [0, 50, 250, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, ],
+            colWidths: [0, 50, 250, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200],
             dropdownMenu:  ['filter_by_value', 'filter_action_bar'],
             licenseKey: 'non-commercial-and-evaluation',
 
             hiddenColumns: {
                 columns: [0],
                 indicators: false
+            },
+
+            afterScrollVertically: function() {
+                var scrollTop = this.view.wt.wtTable.holder.scrollTop;
+                var scrollHeight = this.view.wt.wtTable.holder.scrollHeight;
+                var clientHeight = this.view.wt.wtTable.holder.clientHeight;
+
+                if (scrollTop + clientHeight >= scrollHeight) {
+                    offset = hotData.length;
+
+                    fetchData(offset, limit).then(function(response){
+                        response = JSON.parse(response);
+
+                        if (response.length > 0) {
+                            hotData = hotData.concat(response);
+                            hot.loadData(hotData)
+                        };
+                    });
+                };
             },
 
             columns: [
@@ -93,7 +125,7 @@
                 {
                     title: 'No',
                     data: 'no',
-                    className: 'htCenter',
+                    className: 'htCenter htMiddle',
                 },
                 {
                     title: 'Organizatio',

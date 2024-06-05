@@ -1,13 +1,14 @@
 const csrf_token = document.getElementById('csrf-token').value;
 const slider = document.getElementById('slider1');
 const url = new URL(window.location);
-decodeURIComponent(url);
 
 var workExperiencesCheckboxes = '#experience input[type="checkbox"]';
 var employmentTypeCheckboxes = '#jobtype input[type="checkbox"]';
 var workPreferenceCheckboxes = '#preference input[type="checkbox"]';
 var departmentCheckboxes = '#department input[type="checkbox"]';
 var datePostedRadios = '#dateposted input[type="radio"]';
+
+decodeURIComponent(url);
 
 $.ajaxSetup({
     beforeSend: function (xhr, settings) {
@@ -21,7 +22,6 @@ $.ajaxSetup({
          console.error('Failure when operation performed...');
     }
 });
-
 
 noUiSlider.create(slider, {
     start: [0, 100000],
