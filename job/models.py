@@ -29,7 +29,7 @@ class Vacancy(models.Model):
     created_date = models.DateTimeField(auto_now_add=True, null=True)
 
     class Meta:
-        ordering = ['no']
+        ordering = ['-created_date']
 
     def save(self, *args, **kwargs) -> None:
         if not self.slug:
