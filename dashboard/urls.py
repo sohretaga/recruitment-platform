@@ -11,7 +11,9 @@ urlpatterns = [
     path('employer/complete-register', employer.complete_register, name='employer-complete-register'),
     path('vacnacy/post', employer.post_vacancy, name='post-vacancy'),
     path('vacancy/all', employer.all_vacancy, name='all-vacancy'),
+    path('api/vacancies', employer.ajax_all_vacancy, name='ajax-all-vacancy'),
     path('vacancy/edit/<int:id>', employer.edit_vacancy, name='edit-vacancy'),
+    
 
     # Candidate URL's
     path('candidate/complete-register', candidate.complete_register, name='candidate-complete-register'),

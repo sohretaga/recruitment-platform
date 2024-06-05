@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
 from django.urls import reverse
+from django.views.decorators.http import require_POST
+
+from django.http import Http404, JsonResponse
+from django.core.paginator import Paginator
 
 from dashboard.decorators import is_employer
 from dashboard.forms import CompleteEmployerRegisterForm, PostVacancyForm
@@ -80,15 +83,47 @@ def post_vacancy(request):
 @is_employer
 @login_required
 def all_vacancy(request):
-    vacancies = request.user.employer.vacancies.all().order_by('created_date')\
-    .values('id', 'position_title', 'job_title', 'career_type', 'career_level', 'salary_minimum',
-            'salary_midpoint', 'salary_maximum', 'salary', 'slug', 'views')
+    return render(request, 'dashboard/employer/all-vacancies.html')
 
-    context = {
-        'vacancies': vacancies
+def ajax_all_vacancy(request):
+    start:str = int(request.GET.get('start', 0))
+    length:str = int(request.GET.get('length', 10))
+    search_value:str = request.GET.get('search[value]', '')
+
+    vacancies = request.user.employer.vacancies.all()
+
+    if search_value:
+        vacancies = vacancies.filter(position_title__icontains=search_value)
+
+    paginator = Paginator(vacancies, length)
+    page_number = (start // length) + 1
+    page_vacancies = paginator.get_page(page_number)
+
+    data = []
+    for obj in page_vacancies:
+        data.append([
+            obj.position_title,
+            obj.job_title,
+            obj.career_type,
+            obj.career_level,
+            obj.salary_minimum,
+            obj.salary_midpoint,
+            obj.salary_maximum,
+            obj.salary,
+            obj.views,
+            obj.id,
+            obj.slug,
+        ])
+
+    response = {
+        "draw": request.GET.get('draw', 1),
+        "recordsTotal": paginator.count,
+        "recordsFiltered": paginator.count,
+        "data": data,
     }
 
-    return render(request, 'dashboard/employer/all-vacancies.html', context)
+    return JsonResponse(response)
+
 
 @is_employer
 @login_required

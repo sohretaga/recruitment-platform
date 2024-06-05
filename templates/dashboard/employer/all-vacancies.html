@@ -62,18 +62,12 @@
                             </div>
                         </div>
 
-                        <h4 class="card-title mb-4">All Vacancy</h4>
+                        <h4 class="card-title mb-4">{{user.employer.vacancies.count}} Vacancies</h4>
 
                         <div class="table-responsive">
                             <table class="table table-centered datatable dt-responsive nowrap" data-page-length="10" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead class="thead-light">
                                     <tr>
-                                        {% comment %} <th style="width: 20px;">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="ordercheck">
-                                                <label class="custom-control-label" for="ordercheck">&nbsp;</label>
-                                            </div>
-                                        </th> {% endcomment %}
                                         <th>Job Position</th>
                                         <th>Job Title</th>
                                         <th>Career Type</th>
@@ -82,44 +76,12 @@
                                         <th>Salary Mid</th>
                                         <th>Salary Max</th>
                                         <th>Salary</th>
-                                        <th>Note</th>
                                         <th>Views</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    {% for vacancy in vacancies %}
-                                    <tr>
-                                        {% comment %} <td>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="ordercheck{{ vacancy.id }}">
-                                                <label class="custom-control-label" for="ordercheck{{ vacancy.id }}">&nbsp;</label>
-                                            </div>
-                                        </td> {% endcomment %}
-                                        
-                                        <td><a href="{% url 'job:vacancy' vacancy.slug %}" class="text-dark font-weight-bold" target='_blank'>{{ vacancy.position_title|title }}</a></td>
-                                        <td>{{ vacancy.job_title }}</td>
-                                        <td>{{ vacancy.career_type }}</td>
-                                        <td>{{ vacancy.career_level }}</td>
-                                        <td>{{ vacancy.salary_minimum }}</td>
-                                        <td>{{ vacancy.salary_midpoint }}</td>
-                                        <td>{{ vacancy.salary_maximum }}</td>
-                                        <td>{{ vacancy.salary}}</td>
-                                        <td>{% if vacancy.note %}{{ vacancy.note}}{% else %}-{% endif %}</td>
-                                        <td><i class="mdi mdi-eye"></i> {{ vacancy.views }}</td>
-                                        <td>
-                                            <div class="badge badge-soft-success font-size-12">Active</div>
-                                            {% comment %} <div class="badge badge-soft-warning font-size-12">Draft</div>
-                                            <div class="badge badge-soft-danger font-size-12">Deactivated</div> {% endcomment %}
-                                        </td>
-                                        <td>
-                                            <a href="{% url 'dashboard:edit-vacancy' vacancy.id %}" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="mdi mdi-pencil font-size-18"></i></a>
-                                            <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-trash-can font-size-18"></i></a>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
+                                <tbody></tbody>
                             </table>
                         </div>
                     </div>
@@ -151,21 +113,5 @@
     <script src="{% static 'dashboard/js/app.js' %}"></script>
 
     <!-- Custom JS -->
-    <script>
-        const columns = [
-            { orderable: false },
-            { orderable: false },
-            { orderable: false },
-            { orderable: false },
-            { orderable: true },
-            { orderable: true },
-            { orderable: true },
-            { orderable: true },
-            { orderable: true },
-            { orderable: true },
-            { orderable: true },
-            { orderable: false }
-        ];
-    </script>
-    <script src="{% static 'dashboard/js/datatable.js' %}"></script>
+    <script src="{% static 'dashboard/js/ajax/vacancies-table.js' %}"></script>
 {% endblock script %}
