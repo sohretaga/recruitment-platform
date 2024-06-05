@@ -500,36 +500,12 @@ def vacancy_load(request):
         if is_ajax(request) and request.POST:
             language = request.POST.get('language')
             offset = int(request.POST.get('offset', 0))
-            limit = int(request.POST.get('limit', 100))
+            limit = int(request.POST.get('limit', 1000))
             
             vacancies = Vacancy.objects.filter(language = language)\
                 .values('id', 'no', 'employer__company_name', 'career_type', 'career_level', 'location', 'fte', 'salary_minimum',
                         'salary_midpoint', 'salary_maximum', 'salary', 'position_title', 'job_title', 'employment_type',
                         'work_experience', 'definition', 'work_preference', 'department', 'created_date')[offset:offset+limit]
-            
-            json_data = json.dumps(list(vacancies), default=datetime_to_string)
-
-            return JsonResponse(json_data, safe=False)
-        else:
-            raise PermissionError
-    else:
-        raise Http404
-    
-def ajax_vacancy_load(request):
-    print('inn')
-    if request.user.is_superuser:
-        if is_ajax(request) and request.POST:
-            # language = request.POST.get('language')
-
-            offset = int(request.POST.get('offset', 0))
-            limit = int(request.POST.get('limit', 100))
-
-            print(offset, limit)
-            
-            vacancies = Vacancy.objects.all()\
-                .values('id', 'no', 'employer__company_name', 'career_type', 'career_level', 'location', 'fte', 'salary_minimum',
-                        'salary_midpoint', 'salary_maximum', 'salary', 'position_title', 'job_title', 'employment_type',
-                        'work_experience', 'definition', 'work_preference', 'department', 'created_date')[offset:offset + limit]
             
             json_data = json.dumps(list(vacancies), default=datetime_to_string)
 
