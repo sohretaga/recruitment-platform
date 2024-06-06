@@ -22,6 +22,22 @@ body[data-layout-mode="dark"] .sectors-btn {
   color: #f8f9fa !important;
 }
 
+@media (max-width: 767px) {
+
+  #job-list .row {
+      flex-direction: column-reverse;
+  }
+
+  .col-lg-6 {
+      order: -1;
+      margin-top: 1rem !important;
+  }
+
+  .col-lg-3 .mt-5 {
+      margin-top: 1rem !important;
+  }
+}
+
 @media only screen and (max-width: 600px) {
     .pagination .page-item .page-link {
       height: 30px;
