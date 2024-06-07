@@ -84,4 +84,5 @@ def fetch_vacancies(request) -> dict:
         'departments': departments,
         'work_preferences': work_preferences,
         'url':url,
+        'related_vacancies_title': job_title
     }

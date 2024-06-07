@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Vacancies{% endblock title %}
+{% block title %}{% if related_vacancies_title %}{{ related_vacancies_title }}{% else %}Vacancies{% endif %}{% endblock title %}
 
 {% block head %}
     <!-- Choise Css -->
@@ -30,7 +30,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="text-center text-white">
-                        <h3 class="mb-4">Vacancies</h3>
+                        <h3 class="mb-4">{% if related_vacancies_title %}All Related Jobs For "{{ related_vacancies_title }}"{% else %}Vacancies{% endif %}</h3>
                         <div class="page-next">
                             <nav class="d-inline-block" aria-label="breadcrumb text-center">
                                 <ol class="breadcrumb justify-content-center">
