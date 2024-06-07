@@ -64,7 +64,7 @@
                         <div>
                             <img src="{% static 'main/images/job-detail.jpg' %}" alt="" class="img-fluid">
                             <div class="job-details-compnay-profile">
-                                <img src="{% static 'main/images/featured-job/img-10.png' %}" alt="" class="img-fluid rounded-3 rounded-3">
+                                <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="" class="img-fluid rounded-3 rounded-3" style="width: 55px;">
                             </div>
                         </div>
                         <div class="card-body p-4">
@@ -206,7 +206,7 @@
                                 <div class="p-4">
                                     <div class="row">
                                         <div class="col-lg-1">
-                                            <a href="company-details.html"><img src="{% static 'main/images/featured-job/img-01.png' %}" alt="" class="img-fluid rounded-3"></a>
+                                            <a href="{% url 'user:company-details' %}"><img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="" class="img-fluid rounded-3"></a>
                                         </div><!--end col-->
                                         <div class="col-lg-10">
                                             <div class="mt-3 mt-lg-0">
@@ -348,7 +348,7 @@
                         <div class="card company-profile mt-4">
                             <div class="card-body p-4">
                                 <div class="text-center">
-                                    <img src="{% static 'main/images/featured-job/img-02.png' %}" alt="" class="img-fluid rounded-3">
+                                    <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="" class="img-fluid rounded-3">
 
                                     <div class="mt-4">
                                         <h6 class="fs-17 mb-1">{{ vacancy.author.employer.company_name }}</h6>
