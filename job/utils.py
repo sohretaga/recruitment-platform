@@ -14,6 +14,7 @@ def fetch_vacancies(request) -> dict:
     department:str|None = request.GET.get('department')
     work_preference:str|None = request.GET.get('work-preference')
     date:str|None = request.GET.get('date')
+    job_title:str|None = request.GET.get('job-title')
     params:dict = {}
     url:str = '' # Creating URL for Pagination
 
@@ -53,7 +54,10 @@ def fetch_vacancies(request) -> dict:
     if date:
         url += f'&date={date}'
         params.update({'created_date__gte': timezone.now() - timedelta(hours=int(date))})
-
+    
+    if job_title:
+        url += f'&job-title={job_title}'
+        params.update({'job_title': job_title})
 
     filtered_vacancies = Vacancy.objects.filter(**params)\
     .values('employer__company_name', 'location', 'salary_minimum', 'salary_maximum', 'position_title', 'job_title', 'work_experience', 'slug')

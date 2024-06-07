@@ -4,7 +4,7 @@ const url = new URL(window.location);
 
 // Salary Values
 const minValue = 0;
-const maxValue = 10000;
+const maxValue = 100000;
 
 var workExperiencesCheckboxes = '#experience input[type="checkbox"]';
 var employmentTypeCheckboxes = '#jobtype input[type="checkbox"]';

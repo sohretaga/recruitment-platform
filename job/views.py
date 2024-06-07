@@ -27,8 +27,12 @@ def vacancy(request, slug):
     vacancy.views += 1
     vacancy.save()
 
+    # get related vacancies
+    related_vacancies = Vacancy.objects.filter(job_title=vacancy.job_title).exclude(slug=slug)[:5]
+
     context = {
-        'vacancy': vacancy
+        'vacancy': vacancy,
+        'related_vacancies': related_vacancies
     }
 
     return render(request, 'job/vacancy.html', context)
