@@ -261,7 +261,7 @@
 
                     <div class="text-center mt-4">
                         {% if related_vacancies %}
-                            <a href="{% url 'job:vacancies' %}?job-title={{ vacancy.job_title }}" class="primary-link form-text">View More <i class="mdi mdi-arrow-right"></i></a>
+                            <a href="{% url 'job:vacancies' %}?job-title={{ vacancy.job_title }}#job-list" class="primary-link form-text">View More <i class="mdi mdi-arrow-right"></i></a>
                         {% endif %}
                     </div>
 
