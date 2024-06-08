@@ -214,6 +214,12 @@
                                 <h6 class="fs-17 fw-medium mb-4">Current Opening</h6>
                                 {% include 'job/partials/vacancy-box.html' %}
                             </div>
+
+                            <div class="text-center mt-4">
+                                {% if vacancies.count %}
+                                    <a href="{% url 'job:vacancies' %}?company={{ employer.company_name }}" class="primary-link form-text">View More <i class="mdi mdi-arrow-right"></i></a>
+                                {% endif %}
+                            </div>
                         </div><!-- card body end -->
                     </div><!--end card-->
                 </div><!--end col-->
