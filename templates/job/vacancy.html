@@ -201,66 +201,11 @@
 
                     <div class="mt-4">
                         <h5>Related Job</h5>
-                        {% for vacancy in related_vacancies %}
-                            <div class="job-box card mt-5">
-                                <div class="p-4">
-                                    <div class="row">
-                                        <div class="col-lg-1">
-                                            <a href="{% url 'user:company-details' %}"><img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="" class="img-fluid rounded-3"></a>
-                                        </div><!--end col-->
-                                        <div class="col-lg-10">
-                                            <div class="mt-3 mt-lg-0">
-                                                <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' vacancy.slug %}" class="text-dark">{{ vacancy.position_title|title }}</a> <small class="text-muted fw-normal">({{ vacancy.work_experience }})</small></h5>
-                                                <ul class="list-inline mb-0">
-                                                    <li class="list-inline-item">
-                                                        <p class="text-muted fs-14 mb-0">{{ vacancy.employer__company_name }}</p>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <p class="text-muted fs-14 mb-0"><i class="mdi mdi-map-marker"></i> {{ vacancy.location }}</p>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <p class="text-muted fs-14 mb-0"><i class="uil uil-wallet"></i> {{ vacancy.salary_minimum }} ₼ - {{ vacancy.salary_maximum }} ₼ / month</p>
-                                                    </li>
-                                                </ul>
-                                                <div class="mt-2">
-                                                    <span class="badge bg-soft-success mt-1">Full Time</span>
-                                                    <span class="badge bg-soft-warning mt-1">Urgent</span>
-                                                    <span class="badge bg-soft-info mt-1">Private</span>
-                                                </div>
-                                            </div>
-                                        </div><!--end col-->
-                                    </div><!--end row-->
-                                    <div class="favorite-icon">
-                                        <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a>
-                                    </div>
-                                </div>
-                                <div class="p-3 bg-light">
-                                    <div class="row justify-content-between">
-                                        <div class="col-md-8">
-                                            <div>
-                                                <ul class="list-inline mb-0">
-                                                    <li class="list-inline-item"><i class="uil uil-tag"></i> Keywords :</li>
-                                                    <li class="list-inline-item"><a href="javascript:void(0)" class="primary-link text-muted">Ui designer</a>,</li>
-                                                    <li class="list-inline-item"><a href="javascript:void(0)" class="primary-link text-muted">developer</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <!--end col-->
-                                        <div class="col-md-3">
-                                            <div class="text-md-end">
-                                                <a href="#applyNow" data-bs-toggle="modal" class="primary-link">Apply Now <i class="mdi mdi-chevron-double-right"></i></a>
-                                            </div>
-                                        </div>
-                                        <!--end col-->
-                                    </div>
-                                    <!--end row-->
-                                </div>
-                            </div>
-                        {% endfor %}
+                        {% include 'job/partials/vacancy-box.html' %}
                     </div>
 
                     <div class="text-center mt-4">
-                        {% if related_vacancies %}
+                        {% if vacancies.count > 5 %}
                             <a href="{% url 'job:vacancies' %}?job-title={{ vacancy.job_title }}" class="primary-link form-text">View More <i class="mdi mdi-arrow-right"></i></a>
                         {% endif %}
                     </div>
@@ -351,7 +296,7 @@
                                     <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="" class="img-fluid rounded-3">
 
                                     <div class="mt-4">
-                                        <h6 class="fs-17 mb-1">{{ vacancy.author.employer.company_name }}</h6>
+                                        <h6 class="fs-17 mb-1">{{ vacancy.employer.company_name }}</h6>
                                         <p class="text-muted">Since July 2017</p>
                                     </div>
                                 </div>
@@ -394,7 +339,7 @@
                                     </li>
                                 </ul>
                                 <div class="mt-4">
-                                    <a href="{% url 'user:company-details' %}" class="btn btn-primary btn-hover w-100 rounded"><i class="mdi mdi-eye"></i> View Profile</a>
+                                    <a href="{% url 'user:company' vacancy.employer.user %}" class="btn btn-primary btn-hover w-100 rounded"><i class="mdi mdi-eye"></i> View Profile</a>
                                 </div>
                             </div>
                         </div>

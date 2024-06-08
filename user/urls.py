@@ -15,5 +15,5 @@ urlpatterns = [
     path('candidate-details', views.candidate_details, name='candidate-details'),
 
     path('company-list', views.company_list, name='company-list'),
-    path('company-details', views.company_details, name='company-details')
+    path('company/<str:username>', views.company_details, name='company')
 ]

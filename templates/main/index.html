@@ -20,7 +20,7 @@
     <!-- App Css-->
     <link href="{% static 'main/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
     <!--Custom Css-->
-    <link href="{% static 'main/css/pagination.css' %}" id="app-style" rel="stylesheet" type="text/css" />
+    <link href="{% static 'main/css/filters.css' %}" id="app-style" rel="stylesheet" type="text/css" />
 
 {% endblock head %}
 
@@ -222,7 +222,7 @@
         <!-- END CATEGORY -->
 
         <!-- START JOB-LIST -->
-        {% include 'job/partials/vacancy.html' %}
+        {% include 'job/partials/vacancies-section.html' %}
         <!-- END JOB-LIST -->
 
         <!-- START PROCESS -->

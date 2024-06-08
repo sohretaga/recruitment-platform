@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from . import forms
 from .decorators import logout_required
+from user.models import CustomUser
 
 
 @logout_required
@@ -78,5 +79,13 @@ def company_list(request):
     return render(request, 'user/company-list.html')
 
 
-def company_details(request):
-    return render(request, 'user/company-details.html')
+def company_details(request, username):
+    user = get_object_or_404(CustomUser, username=username)
+    vacancies = user.employer.vacancies.all()[:5]
+
+    context = {
+        'employer': user.employer,
+        'vacancies': vacancies
+    }
+
+    return render(request, 'user/company-details.html', context)

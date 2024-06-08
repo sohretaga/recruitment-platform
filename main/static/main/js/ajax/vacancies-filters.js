@@ -183,7 +183,7 @@ const listVacancies = (vacanciesInfo) => {
             <div class="p-4">
                 <div class="row">
                     <div class="col-lg-1">
-                        <a href="company-details.html"><img src="/static/main/images/featured-job/default-company-img.jpeg" alt="" class="img-fluid rounded-3"></a>
+                        <a href="/company/${vacancy.employer__user__username}"><img src="/static/main/images/featured-job/default-company-img.jpeg" alt="" class="img-fluid rounded-3"></a>
                     </div><!--end col-->
                     <div class="col-lg-10">
                         <div class="mt-3 mt-lg-0">

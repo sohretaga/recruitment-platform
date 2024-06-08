@@ -32,7 +32,7 @@ def vacancy(request, slug):
 
     context = {
         'vacancy': vacancy,
-        'related_vacancies': related_vacancies
+        'vacancies': related_vacancies
     }
 
     return render(request, 'job/vacancy.html', context)
@@ -59,7 +59,7 @@ def ajax_filter_vacancies(request):
         work_preference:str|None = data.get('work_preference')
         date = data.get('date_posted')
         params = {}
-        value_params = 'employer__company_name', 'location', 'salary_minimum', 'salary_maximum', 'position_title', 'job_title', 'work_experience', 'slug', 'created_date'
+        value_params = 'employer__company_name', 'employer__user__username', 'location', 'salary_minimum', 'salary_maximum', 'position_title', 'job_title', 'work_experience', 'slug', 'created_date'
 
         if salary_range_lower:
             params.update({'salary__gte': salary_range_lower})

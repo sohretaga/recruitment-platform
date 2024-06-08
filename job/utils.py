@@ -59,8 +59,7 @@ def fetch_vacancies(request) -> dict:
         url += f'&job-title={job_title}'
         params.update({'job_title': job_title})
 
-    filtered_vacancies = Vacancy.objects.filter(**params)\
-    .values('employer__company_name', 'location', 'salary_minimum', 'salary_maximum', 'position_title', 'job_title', 'work_experience', 'slug')
+    filtered_vacancies = Vacancy.objects.filter(**params)
 
     # Set up Paginator
     paginator = Paginator(filtered_vacancies, 10)

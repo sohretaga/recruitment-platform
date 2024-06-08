@@ -42,3 +42,6 @@ class Vacancy(models.Model):
                 counter += 1
                 queryset = Vacancy.objects.filter(slug=self.slug)
         super(Vacancy, self).save(*args, **kwargs)
+
+    def __str__(self) -> str:
+        return self.employer.user.username
