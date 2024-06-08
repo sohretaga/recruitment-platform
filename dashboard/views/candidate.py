@@ -1,12 +1,10 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
 from django.http import Http404
 
 from dashboard.decorators import is_candidate
 from dashboard.forms import CompleteCandidateRegisterForm
 
 @is_candidate
-@login_required
 def complete_register(request):
     if not request.user.is_registration_complete:
         if request.POST:
@@ -27,6 +25,5 @@ def complete_register(request):
     raise Http404
 
 @is_candidate
-@login_required
 def your_applies(request):
     return render(request,  'dashboard/candidate/your-applies.html')

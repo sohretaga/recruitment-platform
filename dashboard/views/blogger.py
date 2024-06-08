@@ -1,7 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
 from django.urls import reverse
 from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 
 from recruitment import settings
@@ -13,7 +12,6 @@ from dashboard.forms import PostBlogForm
 import os
 
 @is_blogger
-@login_required
 def post_blog(request):
     if request.POST:
         form = PostBlogForm(request.POST, request.FILES)
@@ -31,7 +29,6 @@ def post_blog(request):
     return render(request, 'dashboard/blogger/post-blog.html', context)
 
 @is_blogger
-@login_required
 def all_blog(request):
     blogs = Blog.objects.all()
 
@@ -42,7 +39,6 @@ def all_blog(request):
     return render(request, 'dashboard/blogger/all-blog.html', context)
 
 @is_blogger
-@login_required
 def edit_blog(request, id):
     blog = get_object_or_404(Blog, id=id)
     categories = Category.objects.all()

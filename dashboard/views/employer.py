@@ -1,13 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
 from django.http import Http404, JsonResponse
 from django.core.paginator import Paginator
-
-from job.models import Vacancy
-from datetime import timedelta
-from django.utils import timezone
 
 from dashboard.decorators import is_employer
 from dashboard.forms import CompleteEmployerRegisterForm, PostVacancyForm
@@ -23,7 +18,6 @@ from recruitment_cp.models import (Language,
                                 )
 
 @is_employer
-@login_required
 def complete_register(request):
     if not request.user.is_registration_complete:
         if request.POST:
@@ -46,7 +40,6 @@ def complete_register(request):
 
 
 @is_employer
-@login_required
 def post_vacancy(request):
     if request.POST:
         form = PostVacancyForm(request.POST)
@@ -83,7 +76,6 @@ def post_vacancy(request):
 
 
 @is_employer
-@login_required
 def all_vacancy(request):
     return render(request, 'dashboard/employer/all-vacancies.html')
 
@@ -128,7 +120,6 @@ def ajax_all_vacancy(request):
 
 
 @is_employer
-@login_required
 def edit_vacancy(request, id):
     vacancy = get_object_or_404(request.user.employer.vacancies, id=id)
 
