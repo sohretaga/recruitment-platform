@@ -183,31 +183,15 @@
                                 <h6 class="fs-16 mb-3">Popular Post</h6>
                             </div>
                             <ul class="widget-popular-post list-unstyled my-4">
-                                <li class="d-flex mb-3 align-items-center pb-3 border-bottom">
-                                    <img src="{% static 'main/images/blog/img-01.jpg' %}" alt="" class="widget-popular-post-img rounded" />
-                                    <div class="flex-grow-1 text-truncate ms-3">
-                                        <a href="" class="text-dark">The evolution of landing page creativity</a>
-                                        <span class="d-block text-muted fs-14">Aug 10, 2021</span>
-                                    </div>
-                                </li>
-                                <li class="d-flex mb-3 align-items-center pb-3 border-bottom">
-                                    <img src="{% static 'main/images/blog/img-02.jpg' %}" alt="" class="widget-popular-post-img rounded" />
-                                    <div class="flex-grow-1 text-truncate ms-3"><a href="" class="text-dark">Beautiful day with friends in paris</a>
-                                        <span class="d-block text-muted fs-14">Jun 24, 2021</span>
-                                    </div>
-                                </li>
-                                <li class="d-flex mb-3 align-items-center pb-3 border-bottom">
-                                    <img src="{% static 'main/images/blog/img-03.jpg' %}" alt="" class="widget-popular-post-img rounded" />
-                                    <div class="flex-grow-1 text-truncate ms-3"><a href="" class="text-dark">Project discussion with team</a>
-                                        <span class="d-block text-muted fs-14">July 13, 2021</span>
-                                    </div>
-                                </li>
-                                <li class="d-flex mb-3 align-items-center">
-                                    <img src="{% static 'main/images/blog/img-10.jpg' %}" alt="" class="widget-popular-post-img rounded" />
-                                    <div class="flex-grow-1 text-truncate ms-3"><a href="" class="text-dark">Smartest Applications for Business</a>
-                                        <span class="d-block text-muted fs-14">Feb 01, 2021</span>
-                                    </div>
-                                </li>
+                                {% for blog in pobular_blogs %}
+                                    <li class="d-flex mb-3 align-items-center pb-3 border-bottom">
+                                        <img src="{% if blog.cover_photo %}{{ blog.cover_photo.url }}{% else %} {% static 'main/images/blog/img-05.jpg' %} {% endif %}" alt="{{ blog.title|title }}" class="widget-popular-post-img rounded" style="min-width: 85px; min-height: 60px;" />
+                                        <div class="flex-grow-1 text-truncate ms-3">
+                                            <a href="{% url 'blog:detail' blog.slug %}" class="text-dark">{{ blog.title|title }}</a>
+                                            <span class="d-block text-muted fs-14">{{ blog.created_date|date:"M d, Y" }}</span>
+                                        </div>
+                                    </li>
+                                {% endfor %}
                             </ul>
                         </div><!--end Polular Post-->
 
@@ -270,10 +254,10 @@
                                     <a href="javascript:void(0)"><i class="uil uil-whatsapp"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a href="javascript:void(0)"><i class="uil uil-twitter-alt"></i></a>
+                                    <a href="javascript:void(0)"><i class="uil uil-linkedin"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a href="javascript:void(0)"><i class="uil uil-dribbble"></i></a>
+                                    <a href="javascript:void(0)"><i class="uil uil-youtube"></i></a>
                                 </li>
                                 <li class="list-inline-item">
                                     <a href="javascript:void(0)"><i class="uil uil-envelope"></i></a>

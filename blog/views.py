@@ -30,8 +30,12 @@ def blog(request):
 
     categories = Category.objects.all()
 
+    # Popular Blogs
+    pobular_blogs = Blog.objects.filter(status='published').order_by('-views')[:4]
+
     context = {
         'blogs': blogs,
+        'pobular_blogs': pobular_blogs,
         'categories': categories,
         'url': url
     }
