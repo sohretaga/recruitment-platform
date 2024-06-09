@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load site_content %}
 
 {% block title %}Sign Out{% endblock title %}
 
@@ -14,6 +15,8 @@
 {% endblock head %}
 
 {% block content %}
+{% get_site_content 'signout' as signout %}
+
 <div class="page-content">
 
     <!-- START SIGN-OUT -->
@@ -30,7 +33,7 @@
                                         <img src="assets/images/logo-dark.png" alt="" class="logo-dark">
                                     </a> -->
                                     <div class="mt-5">
-                                        <img src="{% static 'main/images/auth/sign-in.png' %}" alt="" class="img-fluid">
+                                        {% if signout.image %}<img src="{{ signout.image.url }}" class="img-fluid">{% endif %}
                                     </div>
                                 </div>
                             </div><!--end col-->

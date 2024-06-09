@@ -2,6 +2,18 @@ from django.db import models
 
 # Create your models here.
 
+class SiteContent(models.Model):
+    PAGE_CHOICES = (
+        ('signup', 'Sign Up'),
+        ('signin', 'Sign In'),
+        ('signout', 'Sign Out'),
+        ('contact', 'Contact'),
+    )
+
+    page = models.CharField(max_length=10, choices=PAGE_CHOICES, unique=True)
+    content = models.TextField(blank=True, null=True)
+    image = models.ImageField(upload_to='site-content/', blank=True, null=True)
+
 class Language(models.Model):
     name = models.CharField(max_length=20)
     code = models.CharField(max_length=5)

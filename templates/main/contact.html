@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load site_content %}
 
 {% block title %}Contact{% endblock title %}
 
@@ -14,6 +15,8 @@
 {% endblock head %}
 
 {% block content %}
+{% get_site_content 'contact' as contact %}
+
     <div class="page-content">
 
         <!-- Start home -->
@@ -61,8 +64,7 @@
                     <div class="col-lg-6">
                         <div class="section-title mt-4 mt-lg-0">
                             <h3 class="title">Get in touch</h3>
-                            <p class="text-muted">Start working with Jobcy that can provide everything you need to generate
-                                awareness, drive traffic, connect.</p>
+                            <p class="text-muted">{{ contact.content }}</p>
                             <form method="post" onsubmit="return validateForm()" class="contact-form mt-4" name="myForm" id="myForm">
                                 <span id="error-msg"></span>
                                 <div class="row">
@@ -102,7 +104,7 @@
                     </div><!--end col-->
                     <div class="col-lg-5 ms-auto order-first order-lg-last">
                         <div class="text-center">
-                            <img src="{% static 'main/images/contact.png' %}" alt="" class="img-fluid">
+                            <img src="{% if contact.image %}{{ contact.image.url }}{% endif %}" class="img-fluid">
                         </div>
                         <div class="mt-4 pt-3">
                             <div class="d-flex text-muted align-items-center mt-2">
