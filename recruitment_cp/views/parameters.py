@@ -4,7 +4,7 @@ from django.http import JsonResponse, Http404
 from recruitment_cp import models as cp_models
 from blog.models import Category as BlogCategory
 from job.models import Vacancy
-from user.models import Candidate, Company
+from user.models import Candidate, Employer
 from recruitment_cp.utils import is_ajax, datetime_to_string
 
 import json
@@ -612,7 +612,7 @@ def company_load(request):
     if request.user.is_superuser:
         if is_ajax(request) and request.POST:
             
-            company = Company.objects.all().values()
+            company = Employer.objects.all().values()
             
             json_data = json.dumps(list(company), default=datetime_to_string)
 
@@ -630,17 +630,17 @@ def company_save(request):
 
             while index < len(hot):
                 pk = hot[index].pop('id', None)
-                name = hot[index].get('name', None)
+                name = hot[index].get('company_name', None)
 
                 if name:
                     if pk:
-                        company = Company.objects.filter(pk=pk)
+                        company = Employer.objects.filter(pk=pk)
                         company.update(**hot[index])
                     else:
-                        company = Company(**hot[index])
+                        company = Employer(**hot[index])
                         company.save()
                 else:
-                    company = Company.objects.filter(pk = pk)
+                    company = Employer.objects.filter(pk = pk)
                     company.delete()
                 
                 index += 1

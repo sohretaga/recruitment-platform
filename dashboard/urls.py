@@ -13,11 +13,12 @@ urlpatterns = [
     path('vacancy/all', employer.all_vacancy, name='all-vacancy'),
     path('api/vacancies', employer.ajax_all_vacancy, name='ajax-all-vacancy'),
     path('vacancy/edit/<int:id>', employer.edit_vacancy, name='edit-vacancy'),
-    
+    path('employer/edit-account', employer.edit_account, name='employer-edit-account'),
 
     # Candidate URL's
     path('candidate/complete-register', candidate.complete_register, name='candidate-complete-register'),
     path('your-applies', candidate.your_applies, name='your-applies'),
+    path('candidate/edit-account', candidate.edit_account, name='candidate-edit-account'),
 
     # Blog URL's
     path('blog/post', blogger.post_blog, name='post-blog'),

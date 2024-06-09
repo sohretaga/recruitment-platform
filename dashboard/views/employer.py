@@ -5,7 +5,7 @@ from django.http import Http404, JsonResponse
 from django.core.paginator import Paginator
 
 from dashboard.decorators import is_employer
-from dashboard.forms import CompleteEmployerRegisterForm, PostVacancyForm
+from dashboard.forms import CompleteEmployerRegisterForm, PostVacancyForm, EditEmployerAccountForm
 from recruitment_cp.models import (Language,
                                    ParameterCareerType,
                                    ParameterCareerLevel,
@@ -14,7 +14,11 @@ from recruitment_cp.models import (Language,
                                    ParameterFTE,
                                    ParameterJobCatalogue,
                                    ParameterWorkPreference,
-                                   ParameterDepartment
+                                   ParameterDepartment,
+                                   ParameterSector,
+                                   ParameterOrganizationType,
+                                   ParameterOrganizationOwnership,
+                                   ParameterNumberOfEmployee
                                 )
 
 @is_employer
@@ -135,7 +139,6 @@ def edit_vacancy(request, id):
 
     if request.POST:
         form = PostVacancyForm(request.POST, instance=vacancy)
-        print(form.errors)
 
         if form.is_valid():
             form.save()
@@ -155,3 +158,31 @@ def edit_vacancy(request, id):
     }
 
     return render(request, 'dashboard/employer/post-vacancy.html', context)
+
+@is_employer
+def edit_account(request):
+    if request.POST:
+        form = EditEmployerAccountForm(request.POST, instance=request.user.employer)
+
+        if form.is_valid():
+            email = form.cleaned_data.get('primary_email')
+            form.save()
+
+            request.user.email = email
+            request.user.save()
+
+            return redirect(reverse('dashboard:all-vacancy'))
+
+    sectors = ParameterSector.objects.all().values('name')
+    organization_types = ParameterOrganizationType.objects.all().values('name')
+    organization_ownerships = ParameterOrganizationOwnership.objects.all().values('name')
+    number_of_employees = ParameterNumberOfEmployee.objects.all().values('name')
+
+    context = {
+        'sectors': sectors,
+        'organization_types': organization_types,
+        'organization_ownerships': organization_ownerships,
+        'number_of_employees': number_of_employees
+    }
+
+    return render(request, 'dashboard/employer/edit-account.html', context)

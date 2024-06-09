@@ -2,6 +2,7 @@ from django import forms
 
 from job.models import Vacancy
 from blog.models import Blog
+from user.models import Employer, Candidate
 
 class CompleteEmployerRegisterForm(forms.Form):
     first_name = forms.CharField(max_length=30)
@@ -28,3 +29,11 @@ class PostBlogForm(forms.ModelForm):
     class Meta:
         model = Blog
         fields = ('title', 'category', 'cover_photo', 'content', 'status')
+
+
+class EditEmployerAccountForm(forms.ModelForm):
+    primary_email = forms.EmailField(required=True)
+    
+    class Meta:
+        model = Employer
+        exclude = ['id', 'no', 'user']

@@ -255,15 +255,22 @@
 
                                 <li>
                                     <a href="{% url 'dashboard:all-vacancy' %}" class="waves-effect">
-                                        <i class="ri-dashboard-line"></i>
+                                        <i class="ri-list-settings-fill"></i>
                                         <span>All Vacancy</span>
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="{% url 'dashboard:post-vacancy' %}" class="waves-effect">
-                                        <i class="ri-calendar-2-line"></i>
+                                        <i class="dripicons-suitcase"></i>
                                         <span>Post Vacancy</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="{% url 'dashboard:employer-edit-account' %}" class="waves-effect">
+                                        <i class="ri-settings-3-line"></i>
+                                        <span>Edit Profil (Employer)</span>
                                     </a>
                                 </li>
 
@@ -271,15 +278,15 @@
 
                                 <li>
                                     <a href="{% url 'dashboard:your-applies' %}" class="waves-effect">
-                                        <i class="ri-profile-line"></i>
+                                        <i class="ri-list-settings-fill"></i>
                                         <span>Your Applies</span>
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="#" class=" waves-effect">
-                                        <i class="ri-calendar-2-line"></i>
-                                        <span>Chart</span>
+                                    <a href="{% url 'dashboard:candidate-edit-account' %}" class="waves-effect">
+                                        <i class="ri-settings-3-line"></i>
+                                        <span>Edit Profil (Candidate)</span>
                                     </a>
                                 </li>
 
@@ -287,7 +294,7 @@
 
                                 <li>
                                     <a href="{% url 'dashboard:all-blog' %}" class=" waves-effect">
-                                        <i class="ri-calendar-2-line"></i>
+                                        <i class="ri-list-settings-fill"></i>
                                         <span>All Blog</span>
                                     </a>
                                 </li>
@@ -302,7 +309,7 @@
                             {% elif request.user.user_type == 'employer' %}
                                 <li>
                                     <a href="{% url 'dashboard:all-vacancy' %}" class="waves-effect">
-                                        <i class="ri-dashboard-line"></i>
+                                        <i class="ri-list-settings-fill"></i>
                                         <span>All Vacancy</span>
                                     </a>
                                 </li>
@@ -313,24 +320,31 @@
                                         <span>Post Vacancy</span>
                                     </a>
                                 </li>
+
+                                <li>
+                                    <a href="{% url 'dashboard:employer-edit-account' %}" class="waves-effect">
+                                        <i class="ri-settings-3-line"></i>
+                                        <span>Edit Account</span>
+                                    </a>
+                                </li>
                             {% elif request.user.user_type == 'candidate' %}
                                 <li>
                                     <a href="{% url 'dashboard:your-applies' %}" class="waves-effect">
-                                        <i class="ri-profile-line"></i>
+                                        <i class="ri-list-settings-fill"></i>
                                         <span>Your Applies</span>
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="#" class=" waves-effect">
-                                        <i class="ri-calendar-2-line"></i>
-                                        <span>Chart</span>
+                                    <a href="{% url 'dashboard:candidate-edit-account' %}" class="waves-effect">
+                                        <i class="ri-settings-3-line"></i>
+                                        <span>Edit Account</span>
                                     </a>
                                 </li>
                             {% elif request.user.user_type == 'blogger' %}
                                 <li>
                                     <a href="{% url 'dashboard:all-blog' %}" class=" waves-effect">
-                                        <i class="ri-calendar-2-line"></i>
+                                        <i class="ri-list-settings-fill"></i>
                                         <span>All Blog</span>
                                     </a>
                                 </li>

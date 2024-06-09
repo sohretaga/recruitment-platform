@@ -26,4 +26,8 @@ def complete_register(request):
 
 @is_candidate
 def your_applies(request):
-    return render(request,  'dashboard/candidate/your-applies.html')
+    return render(request, 'dashboard/candidate/your-applies.html')
+
+@is_candidate
+def edit_account(request):
+    return render(request, 'dashboard/candidate/edit-account.html')

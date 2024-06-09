@@ -1,0 +1,174 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block title %}Edit Account{% endblock title %}
+
+{% block head %}
+    <!-- Bootstrap Css -->
+    <link href="{% static 'dashboard/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="{% static 'dashboard/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="{% static 'dashboard/css/app.css' %}" rel="stylesheet" type="text/css" />
+{% endblock head %}
+
+{% block content %}
+<div class="page-content">
+    <div class="container-fluid">
+
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
+                    <h4 class="mb-0">Edit Accont</h4>
+
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Edit Account</li>
+                        </ol>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+        
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <form novalidate method="post">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="first-name">First name</label>
+                                        <input type="text" class="form-control" id="first-name" name="first_name" placeholder="First name" value="{{ user.first_name }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="last-name">Last name</label>
+                                        <input type="text" class="form-control" id="last-name" name="last_name" placeholder="Last name" value="{{ user.last_name }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="username">Username</label>
+                                        <input type="text" class="form-control" id="username" name="last_name" placeholder="Username" value="{{ user.username }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Organization Ownership</label>
+                                        <select class="form-control select2" name="organization_ownership">
+                                            {% for ownership in organization_ownerships %}
+                                                {% if ownership.name == user.employer.organization_ownership %}
+                                                    <option selected>{{ ownership.name }}</option>
+                                                {% else %}
+                                                    <option>{{ ownership.name }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="company-name">Company Name</label>
+                                        <input type="text" class="form-control" id="company-name" name="company_name" placeholder="Company Name" value="{{ user.employer.company_name }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Sector</label>
+                                        <select class="form-control select2" name="sector">
+                                            {% for sector in sectors %}
+                                                {% if sector.name == user.employer.sector %}
+                                                    <option selected>{{ sector.name }}</option>
+                                                {% else %}
+                                                    <option>{{ sector.name }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Number of Employees</label>
+                                        <select class="form-control select2" name="number_of_employees">
+                                            {% for number in number_of_employees %}
+                                                {% if number.name == user.employer.number_of_employees %}
+                                                    <option selected>{{ number.name }}</option>
+                                                {% else %}
+                                                    <option>{{ number.name }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Organization Type</label>
+                                        <select class="form-control select2" name="organization_type">
+                                            {% for type in organization_types %}
+                                                {% if type.name == user.employer.organization_type %}
+                                                    <option selected>{{ type.name }}</option>
+                                                {% else %}
+                                                    <option>{{ type.name }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="primary-email">Primary Email</label>
+                                        <input type="text" class="form-control" id="primary-email" name="primary_email" placeholder="example@email.com" value="{{ user.employer.user.email }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="second-email">Second Email</label>
+                                        <input type="text" class="form-control" id="second-email" name="second_email" placeholder="example@email.com" value="{% if user.employer.second_email %}{{ user.employer.second_email }}{% endif %}">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="other-email">Other Email</label>
+                                        <input type="text" class="form-control" id="other-email" name="other_email" placeholder="example@email.com" value="{% if user.employer.other_email %}{{ user.employer.other_email }}{% endif %}">
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" type="submit">Save</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- end card -->
+            </div> <!-- end col -->
+        </div>
+        <!-- end row -->
+
+    </div> <!-- container-fluid -->
+</div>
+<!-- End Page-content -->
+{% endblock content %}
+
+{% block script %}
+    <!-- JAVASCRIPT -->
+    <script src="{% static 'dashboard/libs/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'dashboard/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'dashboard/libs/metismenu/metisMenu.min.js' %}"></script>
+    <script src="{% static 'dashboard/libs/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'dashboard/libs/node-waves/waves.min.js' %}"></script>
+
+    <script src="{% static 'dashboard/libs/parsleyjs/parsley.min.js' %}"></script>
+
+    <script src="{% static 'dashboard/js/pages/form-validation.init.js' %}"></script>
+
+    <script src="{% static 'dashboard/js/app.js' %}"></script>
+{% endblock script %}
