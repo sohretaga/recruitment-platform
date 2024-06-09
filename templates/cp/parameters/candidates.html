@@ -1,0 +1,84 @@
+{% extends 'cp/base.html' %}
+{% load static %}
+{% load filters %}
+
+{% block title %}Candidates - Control Panel{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'cp/css/tables.css' %}">
+{% endblock %}
+
+{% block content %}
+
+{% include 'cp/container.html' %}
+
+<div class="table-container">
+    <div id="data-filter" style="display: none;">
+        <input type="checkbox" name="language" value="" checked="checked">
+        <!-- In the processes.js file, the "language" input should be entered here to avoid errors. -->
+    </div>
+
+    <div class="caption" id="caption">Candidates</div>
+    <div id="table"></div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'cp/js/command.js' %}"></script>
+<script src="{% static 'cp/js/processes.js' %}"></script>
+<script>
+    const saveUrl = "{% url 'cp:candidate_save' %}";
+    const loadUrl = "{% url 'cp:candidate_load' %}";
+    const bmtTable = document.getElementById('table');
+    const consoleText = 'Candidates';
+    var hot;
+
+    $(document).ready(function() {
+        hot = new Handsontable(bmtTable, {
+            rowHeaders: true,
+            colHeaders: true,
+            stretchH: 'all',
+            startRows: 1,
+            wordWrap: true,
+            filters: true,
+            data: [{id:''}],
+            dropdownMenu:  ['filter_by_value', 'filter_action_bar'],
+            licenseKey: 'non-commercial-and-evaluation',
+
+            hiddenColumns: {
+                columns: [0],
+                indicators: false
+            },
+
+            columns: [
+                {
+                    title: 'id',
+                    data: 'id',
+                    readOnly: true
+                },
+                {
+                    title: 'First Name',
+                    data: 'user__first_name'
+                },
+                {
+                    title: 'Last Name',
+                    data: 'user__last_name'
+                },
+                {
+                    title: 'Username',
+                    data: 'user__username'
+                },
+                {
+                    title: 'Email',
+                    data: 'user__email'
+                }
+            ],
+        });
+        
+
+        loadData();
+    })
+
+</script>
+
+{% endblock scripts %}

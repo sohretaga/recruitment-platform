@@ -71,6 +71,7 @@
                     <li {% if 'vacancy' in request.path %} class="active" {% endif %}><a href="{% url 'cp:vacancy' %}">Vacancy</a></li>
                     <li {% if 'blog-category' in request.path %} class="active" {% endif %}><a href="{% url 'cp:blog_category' %}">Blog Categories</a></li>
                     <li {% if 'company' in request.path %} class="active" {% endif %}><a href="{% url 'cp:company' %}">Companies</a></li>
+                    <li {% if 'candidate' in request.path %} class="active" {% endif %}><a href="{% url 'cp:candidate' %}">Candidates</a></li>
                     <li {% if 'sector' in request.path %} class="active" {% endif %}><a href="{% url 'cp:sector' %}">Sector</a></li>
                     <li {% if 'organization-type' in request.path %} class="active" {% endif %}><a href="{% url 'cp:organization_type' %}">Organization Type</a></li>
                     <li {% if 'organization-ownership' in request.path %} class="active" {% endif %}><a href="{% url 'cp:organization_ownership' %}">Organization Ownership</a></li>

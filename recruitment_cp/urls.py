@@ -58,6 +58,10 @@ urlpatterns = [
     path('parameters/company-load', parameters.company_load, name='company_load'),
     path('parameters/company-save', parameters.company_save, name='company_save'),
 
+    path('parameters/candidate', parameters.candidate_index, name='candidate'),
+    path('parameters/candidate-load', parameters.candidate_load, name='candidate_load'),
+    path('parameters/candidate-save', parameters.candidate_save, name='candidate_save'),
+
     path('parameters/sector', parameters.sector_index, name='sector'),
     path('parameters/sector-load', parameters.sector_load, name='sector_load'),
     path('parameters/sector-save', parameters.sector_save, name='sector_save'),
