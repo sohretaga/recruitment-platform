@@ -612,7 +612,10 @@ def company_load(request):
     if request.user.is_superuser:
         if is_ajax(request) and request.POST:
             
-            company = Employer.objects.all().values()
+            company = Employer.objects.all().values(
+                'id', 'user__email', 'no', 'company_name', 'sector', 'organization_type', 'organization_ownership',
+                'number_of_employees', 'second_email', 'other_email', 'note', 'slider'
+            ).order_by('company_name')
             
             json_data = json.dumps(list(company), default=datetime_to_string)
 

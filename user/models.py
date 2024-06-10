@@ -26,6 +26,7 @@ class Employer(models.Model):
     second_email = models.EmailField(blank=True, null=True)
     other_email = models.EmailField(blank=True, null=True)
     note = models.TextField(blank=True, null=True)
+    slider = models.BooleanField(default=False)
 
     def __str__(self) -> str:
         return self.company_name

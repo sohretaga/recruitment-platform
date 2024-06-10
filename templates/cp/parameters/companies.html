@@ -53,7 +53,7 @@
             height: $(document).height() - 350,
             data: [{id:''}],
             fixedColumnsLeft: 3,
-            colWidths: [0, 50, 450, 250, 250, 250, 250, 250, 250, 250, 250],
+            colWidths: [0, 50, 450, 250, 250, 250, 250, 250, 250, 250, 250, 100],
             dropdownMenu:  ['filter_by_value', 'filter_action_bar'],
             licenseKey: 'non-commercial-and-evaluation',
 
@@ -99,7 +99,7 @@
                 },
                 {
                     title: 'Primary Email',
-                    data: 'primary_email',
+                    data: 'user__email',
                 },
                 {
                     title: 'Second Email',
@@ -112,7 +112,14 @@
                 {
                     title: 'Note',
                     data: 'note',
-                }
+                },
+                {
+                    title: 'Slider',
+                    data: 'slider',
+                    type: 'checkbox',
+                    className: 'htCenter'
+                },
+                
             ],
         });
 

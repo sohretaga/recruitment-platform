@@ -164,16 +164,16 @@ def edit_account(request):
     if request.POST:
         user = request.user
         form = EditEmployerAccountForm(request.POST, request.FILES, instance=user.employer)
-        print(form.errors)
 
         if form.is_valid():
             email = form.cleaned_data.get('primary_email')
             profile_photo = form.cleaned_data.get('profile_photo')
             form.save()
 
-            user.email = email
-            user.profile_photo = profile_photo if profile_photo else ...
+            if profile_photo:
+                user.profile_photo = profile_photo
 
+            user.email = email
             user.save()
 
             return redirect(reverse('dashboard:all-vacancy'))
