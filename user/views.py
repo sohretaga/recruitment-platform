@@ -55,7 +55,7 @@ def sign_out(request):
         logout(request)
     return render(request, 'user/sign-out.html')
 
-@login_required
+@logout_required
 def reset_password(request):
     if request.POST:
         ...
