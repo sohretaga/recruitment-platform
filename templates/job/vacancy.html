@@ -203,12 +203,12 @@
                         <h5>Related Job</h5>
                         {% include 'job/partials/vacancy-box.html' %}
                     </div>
-
+                    
+                    {% if vacancies.count > 5 %}
                     <div class="text-center mt-4">
-                        {% if vacancies.count > 5 %}
                             <a href="{% url 'job:vacancies' %}?job-title={{ vacancy.job_title }}" class="primary-link form-text">View More <i class="mdi mdi-arrow-right"></i></a>
-                        {% endif %}
                     </div>
+                    {% endif %}
 
                 </div><!--end col-->
 
