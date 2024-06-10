@@ -33,7 +33,8 @@ class PostBlogForm(forms.ModelForm):
 
 class EditEmployerAccountForm(forms.ModelForm):
     primary_email = forms.EmailField(required=True)
-    
+    profile_photo = forms.ImageField(required=False)
+
     class Meta:
         model = Employer
         exclude = ['id', 'no', 'user']

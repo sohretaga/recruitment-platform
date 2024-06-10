@@ -9,6 +9,7 @@ class CustomUser(AbstractUser):
         ('blogger', 'Content'),
     )
 
+    profile_photo = models.ImageField(upload_to='profile-photos/', null=True, blank=True)
     email = models.EmailField(unique=True)
     user_type = models.CharField(max_length=10, choices=USER_TYPE_CHOICES)
     is_registration_complete = models.BooleanField(default=False, editable=False)
