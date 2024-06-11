@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 
-from user.models import Employer
+from user.models import Employer, CustomUser
 
 # Create your models here.
 
@@ -47,3 +47,8 @@ class Vacancy(models.Model):
 
     def __str__(self) -> str:
         return self.employer.user.username
+    
+
+class Bookmark(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='bookmarks')
+    vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE)

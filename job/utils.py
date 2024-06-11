@@ -3,7 +3,7 @@ from datetime import timedelta
 from django.utils import timezone
 
 from recruitment_cp import models
-from job.models import Vacancy
+from job.models import Vacancy, Bookmark
 
 def fetch_vacancies(request) -> dict:
     # URL parameters are taken for filtering and used for the same filtering on the following pages.
@@ -80,6 +80,8 @@ def fetch_vacancies(request) -> dict:
     departments = models.ParameterDepartment.objects.values('id', 'name')
     work_preferences = models.ParameterWorkPreference.objects.values('id', 'name')
 
+    bookmarks = Bookmark.objects.filter(user=request.user).values_list('vacancy__id', flat=True)
+
     return {
         'vacancies': vacancies,
         'countries': countries,
@@ -90,5 +92,6 @@ def fetch_vacancies(request) -> dict:
         'work_preferences': work_preferences,
         'url':url,
         'related_vacancies_title': job_title,
-        'company': company
+        'company': company,
+        'bookmarks': bookmarks
     }

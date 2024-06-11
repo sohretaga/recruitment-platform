@@ -83,16 +83,18 @@
                                     </div><!--end col-->
                                     <div class="col-lg-4">
                                         <ul class="list-inline mb-0 text-lg-end mt-3 mt-lg-0">
-                                            <li class="list-inline-item">
-                                                <div class="favorite-icon">
-                                                    <a href="javascript:void(0)"><i class="uil uil-heart-alt"></i></a>
+                                            <li id="vacancy-{{ vacancy.id }}" class="list-inline-item {% if vacancy.id in bookmarks %}bookmark-post{% endif %}">
+                                                <div class="favorite-icon" style="cursor: pointer;" onclick="addBookmark('{{ vacancy.id }}')">
+                                                    <a href="javascript:void(0);"><i class="uil uil-heart-alt fs-18"></i></a>
                                                 </div>
                                             </li>
+                                            {% if vacancy.employer == user.employer %}
                                             <li class="list-inline-item">
                                                 <div class="favorite-icon">
-                                                    <a href="javascript:void(0)"><i class="uil uil-setting"></i></a>
+                                                    <a href="{% url 'dashboard:edit-vacancy' vacancy.id %}" target="_blank"><i class="uil uil-setting"></i></a>
                                                 </div>
                                             </li>
+                                            {% endif %}
                                         </ul>
                                     </div><!--end col-->
                                 </div><!--end row-->    
@@ -395,6 +397,7 @@
 
 {% block script %}
 <!-- JAVASCRIPT -->
+<script src="{% static 'dashboard/libs/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'main/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 <script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
 
@@ -404,4 +407,8 @@
 
 <!-- App Js -->
 <script src="{% static 'main/js/app.js' %}"></script>
+
+<!-- Custom Js -->
+<script src="{% static 'main/js/ajax/bookmarks.js' %}"></script>
+
 {% endblock script %}

@@ -1,18 +1,4 @@
-const csrf_token = document.getElementById('csrf-token').value;
 const url = new URL(window.location);
-
-$.ajaxSetup({
-    beforeSend: function (xhr, settings) {
-        xhr.setRequestHeader('X-CSRFToken', csrf_token);
-        $('body').css('cursor', 'wait');
-    },
-    complete: function () {
-        $('body').css('cursor', 'default');
-    },
-    error: function () {
-        console.error('Failure when operation performed...');
-    }
-});
 
 class DataCollector {
 

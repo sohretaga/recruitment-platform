@@ -251,6 +251,15 @@
                             {% endif %}
 
                             {% if request.user.is_superuser %}
+                                <li class="menu-title">General</li>
+
+                                <li>
+                                    <a href="{% url 'dashboard:bookmarks' %}" class="waves-effect">
+                                        <i class="ri-heart-line"></i>
+                                        <span>Bookmarks</span>
+                                    </a>
+                                </li>
+
                                 <li class="menu-title">For Employer</li>
 
                                 <li>

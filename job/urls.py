@@ -12,4 +12,5 @@ urlpatterns = [
 
     # ajax
     path('ajax/filter-vacancies', views.ajax_filter_vacancies, name='ajax_filter_vacancies'),
+    path('ajax/add-bookmark', views.ajax_add_bookmark, name='ajax-add-bookmark'),
 ]

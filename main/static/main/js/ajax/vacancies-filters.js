@@ -1,4 +1,3 @@
-const csrf_token = document.getElementById('csrf-token').value;
 const slider = document.getElementById('slider1');
 const url = new URL(window.location);
 
@@ -12,19 +11,6 @@ var departmentCheckboxes = '#department input[type="checkbox"]';
 var datePostedRadios = '#dateposted input[type="radio"]';
 
 decodeURIComponent(url);
-
-$.ajaxSetup({
-    beforeSend: function (xhr, settings) {
-        xhr.setRequestHeader('X-CSRFToken', csrf_token);
-        $('body').css('cursor', 'wait');
-    },
-    complete: function () {
-        $('body').css('cursor', 'default');
-    },
-    error: function () {
-         console.error('Failure when operation performed...');
-    }
-});
 
 noUiSlider.create(slider, {
     start: [minValue, maxValue],
@@ -172,13 +158,13 @@ const generatePagination = (paginationInfo) => {
     };
 };
 
-const listVacancies = (vacanciesInfo) => {
+const listVacancies = (vacanciesInfo, bookmarks) => {
     const container = document.getElementById('job-list-container');
     container.innerHTML = ''; // Clear existing content
 
     for (const [key, vacancy] of Object.entries(vacanciesInfo)) {
         container.innerHTML += `
-        <div class="job-box bookmark-post card mt-5">
+        <div id="vacancy-${vacancy.id}" class="job-box card mt-5 ">
             <div class="p-4">
                 <div class="row">
                     <div class="col-lg-1">
@@ -206,8 +192,8 @@ const listVacancies = (vacanciesInfo) => {
                         </div>
                     </div><!--end col-->
                 </div><!--end row-->
-                <div class="favorite-icon">
-                    <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a>
+                <div class="favorite-icon" style="cursor: pointer;" onclick="addBookmark(${vacancy.id})">
+                    <a href="javascript:void(0);"><i class="uil uil-heart-alt fs-18"></i></a>
                 </div>
             </div>
             <div class="p-3 bg-light">
@@ -246,7 +232,7 @@ const filterRequest = () => {
         type: 'POST',
         data: JSON.stringify(collectded_data),
         success: (response) => {
-            listVacancies(response.vacancies);
+            listVacancies(response.vacancies, response.bookmarks);
             generatePagination(response.pagination);
         }
 

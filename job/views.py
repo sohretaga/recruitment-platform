@@ -5,7 +5,7 @@ from django.views.decorators.http import require_POST
 from django.utils import timezone
 from datetime import timedelta
 
-from job.models import Vacancy
+from job.models import Vacancy, Bookmark
 from recruitment_cp.utils import is_ajax
 from .utils import fetch_vacancies
 
@@ -23,16 +23,19 @@ def vacancies(request):
     return render(request, 'job/vacancies.html', context)
 
 def vacancy(request, slug):
-    vacancy = get_object_or_404(Vacancy, slug=slug)
+    vacancy = get_object_or_404(Vacancy, slug=slug, status=True)
     vacancy.views += 1
     vacancy.save()
 
     # get related vacancies
     related_vacancies = Vacancy.objects.filter(job_title=vacancy.job_title, status=True).exclude(slug=slug)[:5]
+    
+    bookmarks = Bookmark.objects.filter(user=request.user).values_list('vacancy__id', flat=True)
 
     context = {
         'vacancy': vacancy,
-        'vacancies': related_vacancies
+        'vacancies': related_vacancies,
+        'bookmarks': bookmarks
     }
 
     return render(request, 'job/vacancy.html', context)
@@ -95,6 +98,8 @@ def ajax_filter_vacancies(request):
         # Serialize the data
         vacancies_list = list(vacancies_page.object_list.values(*value_params))
 
+        bookmarks = list(Bookmark.objects.filter(user=request.user).values_list('vacancy__id', flat=True))
+
         pagination_info = {
             'has_next': vacancies_page.has_next(),
             'has_previous': vacancies_page.has_previous(),
@@ -104,9 +109,24 @@ def ajax_filter_vacancies(request):
 
         context = {
             'vacancies': vacancies_list,
-            'pagination': pagination_info
+            'pagination': pagination_info,
+            'bookmarks': bookmarks
         }
 
         return JsonResponse(context, safe=False)
 
     return JsonResponse({'error': 'Invalid request'}, status=400)
+
+
+@require_POST
+def ajax_add_bookmark(request):
+    vacancy = request.POST.get('vacancy')
+    vacancy = Vacancy.objects.get(id=vacancy)
+    bookmark_exists = Bookmark.objects.filter(user=request.user, vacancy=vacancy).exists()
+
+    if bookmark_exists:
+        Bookmark.objects.filter(user=request.user, vacancy=vacancy).delete()
+        return JsonResponse({'status': 'success', 'message': 'Bookmark removed'})
+    else:
+        Bookmark.objects.create(user=request.user, vacancy=vacancy)
+        return JsonResponse({'status': 'success', 'message': 'Bookmark added'})

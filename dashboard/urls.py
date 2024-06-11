@@ -6,6 +6,7 @@ app_name = 'dashboard'
 
 urlpatterns = [
     path('', main.index, name='index'),
+    path('bookmarks', main.bookmarks, name='bookmarks'),
 
     # Employer URL's
     path('employer/complete-register', employer.complete_register, name='employer-complete-register'),

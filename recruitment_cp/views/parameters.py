@@ -613,7 +613,7 @@ def company_load(request):
         if is_ajax(request) and request.POST:
             
             company = Employer.objects.all().values(
-                'id', 'user__email', 'no', 'company_name', 'sector', 'organization_type', 'organization_ownership',
+                'id', 'user__email', 'user__profile_photo', 'no', 'company_name', 'sector', 'organization_type', 'organization_ownership',
                 'number_of_employees', 'second_email', 'other_email', 'note', 'slider'
             ).order_by('company_name')
             

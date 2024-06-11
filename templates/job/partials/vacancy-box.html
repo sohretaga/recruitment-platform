@@ -1,7 +1,7 @@
 {% load static %}
 
 {% for vacancy in vacancies %}
-    <div class="job-box bookmark-post card mt-5">
+    <div id="vacancy-{{ vacancy.id }}" class="job-box card mt-5 {% if vacancy.id in bookmarks %}bookmark-post{% endif %} ">
         <div class="p-4">
             <div class="row">
                 <div class="col-lg-1">
@@ -29,8 +29,8 @@
                     </div>
                 </div><!--end col-->
             </div><!--end row-->
-            <div class="favorite-icon">
-                <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a>
+            <div class="favorite-icon" style="cursor: pointer;" onclick="addBookmark('{{ vacancy.id }}')">
+                <a href="javascript:void(0);"><i class="uil uil-heart-alt fs-18"></i></a>
             </div>
         </div>
         <div class="p-3 bg-light">

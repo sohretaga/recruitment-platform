@@ -43,3 +43,11 @@ function infoIconRenderer(instance, td, row, col, prop, value, cellProperties) {
   };
 
 }
+
+function logoRenderer (instance, td, row, col, prop, value, cellProperties) {
+  td.innerHTML = `<div style="display: flex; justify-content: space-around;">
+              <a href='#'><i class="fa fa-upload fa-lg" style="color: rgb(177, 160, 199); margin: 0;" title="Upload Logo"></i></a>
+              <a ${value ? `href='/media/${value}'`: ''} target="_blank"><i class="fa fa-image fa-lg" style="color: rgb(177, 160, 199); margin: 0;" title="View Logo"></i></a>
+          </div>`
+  return td;
+};
