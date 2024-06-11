@@ -505,7 +505,7 @@ def vacancy_load(request):
             vacancies = Vacancy.objects.filter(language = language)\
                 .values('id', 'no', 'employer__company_name', 'career_type', 'career_level', 'location', 'fte', 'salary_minimum',
                         'salary_midpoint', 'salary_maximum', 'salary', 'position_title', 'job_title', 'employment_type',
-                        'work_experience', 'definition', 'work_preference', 'department', 'created_date')[offset:offset+limit]
+                        'work_experience', 'definition', 'work_preference', 'department', 'created_date', 'keywords', 'status')[offset:offset+limit]
             
             json_data = json.dumps(list(vacancies), default=datetime_to_string)
 
@@ -1019,6 +1019,59 @@ def work_preference_save(request):
                 else:
                     work_preference = cp_models.ParameterWorkPreference.objects.filter(pk = pk)
                     work_preference.delete()
+                
+                index += 1
+
+            return JsonResponse({'status': 200})
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+    
+#======================================================================================================
+def keywords_index(request):
+    if request.user.is_superuser:
+        return render(request, 'cp/parameters/keywords.html')
+    
+    raise Http404
+
+def keywords_load(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            language = request.POST.get('language')
+            
+            keywords = cp_models.ParameterKeyword.objects.filter(language=language).values(
+                'id', 'no', 'name', 'definition', 'note'
+            )
+            json_data = json.dumps(list(keywords))
+
+            return JsonResponse(json_data, safe=False)
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+
+def keywords_save(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            hot = json.loads(request.POST.get('hot'))
+            language = request.POST.get('language')
+            index = 0
+
+            while index < len(hot):
+                pk = hot[index].pop('id', None)
+                name = hot[index].get('name', None)
+
+                if name:
+                    if pk:
+                        keywords = cp_models.ParameterKeyword.objects.filter(pk=pk)
+                        keywords.update(**hot[index])
+                    else:
+                        keywords = cp_models.ParameterKeyword(language=language, **hot[index])
+                        keywords.save()
+                else:
+                    keywords = cp_models.ParameterKeyword.objects.filter(pk = pk)
+                    keywords.delete()
                 
                 index += 1
 

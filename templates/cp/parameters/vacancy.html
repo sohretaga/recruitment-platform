@@ -83,7 +83,7 @@
             data: [{id:''}],
             height: $(document).height() - 350,
             fixedColumnsLeft: 3,
-            colWidths: [0, 50, 250, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200],
+            colWidths: [0, 50, 250, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 100],
             dropdownMenu:  ['filter_by_value', 'filter_action_bar'],
             licenseKey: 'non-commercial-and-evaluation',
 
@@ -91,16 +91,6 @@
                 columns: [0],
                 indicators: false
             },
-
-            {% comment %} afterScrollVertically: function() {
-                var scrollTop = this.view.wt.wtTable.holder.scrollTop;
-                var scrollHeight = this.view.wt.wtTable.holder.scrollHeight;
-                var clientHeight = this.view.wt.wtTable.holder.clientHeight;
-
-                if (scrollTop + clientHeight >= scrollHeight) {
-                    
-                };
-            }, {% endcomment %}
 
             columns: [
                 {
@@ -222,6 +212,17 @@
                     title: 'Created Date',
                     data: 'created_date',
                     className: 'htMiddle'
+                },
+                {
+                    title: 'Keywords',
+                    data: 'keywords',
+                    className: 'htMiddle'
+                },
+                {
+                    title: 'Status',
+                    data: 'status',
+                    type: 'checkbox',
+                    className: 'htCenter htMiddle'
                 }
 
             ],

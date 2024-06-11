@@ -16,7 +16,7 @@ def fetch_vacancies(request) -> dict:
     date:str|None = request.GET.get('date')
     job_title:str|None = request.GET.get('job-title')
     company:str|None = request.GET.get('company')
-    params:dict = {}
+    params = {'status': True}
     url:str = '' # Creating URL for Pagination
 
     if salary_range:

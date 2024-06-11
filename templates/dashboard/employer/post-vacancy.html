@@ -4,6 +4,8 @@
 {% block title %}Post Vacancy{% endblock title %}
 
 {% block head %}
+    <link href="{% static 'dashboard/libs/select2/css/select2.min.css' %}" rel="stylesheet" type="text/css" />
+    
     <!-- Froala css -->
     <link href="{% static 'dashboard/libs/froala/froala_editor.pkgd.min.css' %}" rel="stylesheet" type="text/css" />
     <!-- twitter-bootstrap-wizard css -->
@@ -14,6 +16,7 @@
     <link href="{% static 'dashboard/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
     <!-- App Css-->
     <link href="{% static 'dashboard/css/app.css' %}" rel="stylesheet" type="text/css" />
+
 {% endblock head %}
 
 {% block content %}
@@ -153,7 +156,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label>Work Preference</label>
                                                     <select class="custom-select" name="work_preference">
@@ -167,7 +170,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label>Department</label>
                                                     <select class="custom-select" name="department">
@@ -178,6 +181,31 @@
                                                                 <option value="{{ department.name }}">{{ department.name }}</option>
                                                             {% endif %}
                                                         {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group mb-0">
+                                                    <label class="control-label">Keywords</label>
+                                                    <input type="hidden" name="keywords" id="keywordsInput" value="{{ vacancy.keywords }}">
+                                                    <select id="keywordsSelect" class="select2 form-control select2-multiple" multiple="multiple" data-placeholder="Choose ...">
+                                                        {% for key in keywords %}
+                                                            <option value="{{ key.name }}">{{ key.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label>Status</label>
+                                                    <select class="custom-select" name="status">
+                                                        {% if vacancy %}
+                                                            <option value="1" {% if vacancy.status %}selected{% endif %}>Active</option>
+                                                            <option value="" {% if not vacancy.status %}selected{% endif %}>Deactivate</option>
+                                                        {% else %}
+                                                            <option value="1">Active</option>
+                                                            <option value="">Deactivate</option>
+                                                        {% endif %}
                                                     </select>
                                                 </div>
                                             </div>
@@ -323,8 +351,9 @@
 
     <!-- form wizard init -->
     <script src="{% static 'dashboard/js/pages/form-wizard.init.js' %}"></script>
-    <script src="{% static 'dashboard/libs/parsleyjs/parsley.min.js' %}"></script>
     <script src="{% static 'dashboard/js/app.js' %}"></script>
+
+    <script src="{% static 'dashboard/libs/select2/js/select2.min.js' %}"></script>
 
     <!-- custom javascript -->
     <script src="{% static 'dashboard/js/pages/post-vacancy.js' %}"></script>

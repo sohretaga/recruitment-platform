@@ -23,7 +23,7 @@ class PostVacancyForm(forms.ModelForm):
     class Meta:
         model = Vacancy
         fields = ('language', 'career_type', 'career_level', 'location', 'fte', 'salary', 'salary_minimum', 'salary_midpoint', 'salary_maximum',
-                  'position_title', 'job_title', 'employment_type', 'definition', 'work_preference', 'department')
+                  'position_title', 'job_title', 'employment_type', 'definition', 'work_preference', 'department', 'status', 'keywords')
 
 class PostBlogForm(forms.ModelForm):
     class Meta:

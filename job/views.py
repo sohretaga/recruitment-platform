@@ -28,7 +28,7 @@ def vacancy(request, slug):
     vacancy.save()
 
     # get related vacancies
-    related_vacancies = Vacancy.objects.filter(job_title=vacancy.job_title).exclude(slug=slug)[:5]
+    related_vacancies = Vacancy.objects.filter(job_title=vacancy.job_title, status=True).exclude(slug=slug)[:5]
 
     context = {
         'vacancy': vacancy,
@@ -58,7 +58,7 @@ def ajax_filter_vacancies(request):
         department:str|None = data.get('department')
         work_preference:str|None = data.get('work_preference')
         date = data.get('date_posted')
-        params = {}
+        params = {'status': True}
         value_params = 'employer__company_name', 'employer__user__username', 'location', 'salary_minimum', 'salary_maximum', 'position_title', 'job_title', 'work_experience', 'slug', 'created_date'
 
         if salary_range_lower:

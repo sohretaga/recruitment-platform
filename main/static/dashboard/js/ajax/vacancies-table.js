@@ -45,7 +45,13 @@ $(document).ready(function() {
             { "data": 7 },
             { "data": 8 },
             {   "data": null,
-                "defaultContent": `<div class="badge badge-soft-success font-size-12">Active</div>`
+                "render": function (data, type, row) {
+                    if (row[11]){
+                        return `<div class="badge badge-soft-success font-size-12">Active</div>`;
+                    };
+
+                    return `<div class="badge badge-soft-danger font-size-12">Deactivate</div>`;
+                },
             },
             {
                 "data": null,

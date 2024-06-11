@@ -18,7 +18,8 @@ from recruitment_cp.models import (Language,
                                    ParameterSector,
                                    ParameterOrganizationType,
                                    ParameterOrganizationOwnership,
-                                   ParameterNumberOfEmployee
+                                   ParameterNumberOfEmployee,
+                                   ParameterKeyword
                                 )
 
 @is_employer
@@ -47,8 +48,12 @@ def complete_register(request):
 def post_vacancy(request):
     if request.POST:
         form = PostVacancyForm(request.POST)
+        print(form.errors)
 
         if form.is_valid():
+            print(form.cleaned_data.get('status'))
+            print(form.cleaned_data.get('keywords'))
+
             instance = form.save(commit=False)
             instance.employer = request.user.employer
             instance.save()
@@ -63,6 +68,7 @@ def post_vacancy(request):
     ftes = ParameterFTE.objects.all().values('name')
     work_preferences = ParameterWorkPreference.objects.all().values('name')
     departments = ParameterDepartment.objects.all().values('name')
+    keywords = ParameterKeyword.objects.all().values('name')
 
     context = {
         'languages': languages,
@@ -73,7 +79,8 @@ def post_vacancy(request):
         'employment_types': employment_types,
         'ftes': ftes,
         'work_preferences': work_preferences,
-        'departments': departments
+        'departments': departments,
+        'keywords': keywords
     }
     
     return render(request, 'dashboard/employer/post-vacancy.html', context)
@@ -111,6 +118,7 @@ def ajax_all_vacancy(request):
             obj.views,
             obj.id,
             obj.slug,
+            obj.status,
         ])
 
     response = {
@@ -136,6 +144,7 @@ def edit_vacancy(request, id):
     ftes = ParameterFTE.objects.all().values('name')
     work_preferences = ParameterWorkPreference.objects.all().values('name')
     departments = ParameterDepartment.objects.all().values('name')
+    keywords = ParameterKeyword.objects.all().values('name')
 
     if request.POST:
         form = PostVacancyForm(request.POST, instance=vacancy)
@@ -154,7 +163,8 @@ def edit_vacancy(request, id):
         'employment_types': employment_types,
         'ftes': ftes,
         'work_preferences': work_preferences,
-        'departments': departments
+        'departments': departments,
+        'keywords': keywords
     }
 
     return render(request, 'dashboard/employer/post-vacancy.html', context)

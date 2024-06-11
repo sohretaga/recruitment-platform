@@ -103,3 +103,6 @@ class ParameterDepartment(ParameterCommonFields):
 
 class ParameterWorkPreference(ParameterCommonFields):
     ...
+
+class ParameterKeyword(ParameterCommonFields):
+    ...

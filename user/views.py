@@ -81,7 +81,7 @@ def company_list(request):
 
 def company_details(request, username):
     user = get_object_or_404(CustomUser, username=username)
-    vacancies = user.employer.vacancies.all()[:5]
+    vacancies = user.employer.vacancies.filter(status=True)[:5]
 
     context = {
         'employer': user.employer,

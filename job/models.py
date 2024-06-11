@@ -24,6 +24,8 @@ class Vacancy(models.Model):
     work_preference = models.CharField(max_length=100, blank=True, null=True)
     department = models.CharField(max_length=100, blank=True, null=True)
     definition = models.TextField(blank=True, null=True)
+    keywords = models.JSONField(blank=True, null=True)
+    status = models.BooleanField()
     views = models.IntegerField(default=0)
     slug = models.SlugField(null=True)
     created_date = models.DateTimeField(auto_now_add=True)

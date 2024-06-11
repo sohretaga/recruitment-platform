@@ -85,4 +85,8 @@ urlpatterns = [
     path('parameters/work-preference', parameters.work_preference_index, name='work_preference'),
     path('parameters/work-preference-load', parameters.work_preference_load, name='work_preference_load'),
     path('parameters/work-preference-save', parameters.work_preference_save, name='work_preference_save'),
+
+    path('parameters/keywords', parameters.keywords_index, name='keywords'),
+    path('parameters/keywords-load', parameters.keywords_load, name='keywords_load'),
+    path('parameters/keywords-save', parameters.keywords_save, name='keywords_save'),
 ]
