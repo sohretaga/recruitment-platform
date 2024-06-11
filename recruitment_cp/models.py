@@ -8,14 +8,24 @@ class SiteContent(models.Model):
         ('signin', 'Sign In'),
         ('signout', 'Sign Out'),
         ('contact', 'Contact'),
+        ('terms', 'Privacy & Policy'),
     )
 
     page = models.CharField(max_length=10, choices=PAGE_CHOICES, unique=True)
     content = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to='site-content/', blank=True, null=True)
 
+    def short_content(self) -> str:
+        return self.content[:75]+'...' if len(self.content) > 75 else self.content 
+    
+    short_content.short_description = 'Content'
+
     def __str__(self) -> str:
         return self.page
+    
+    class Meta:
+        verbose_name = 'Site Content'
+        verbose_name_plural = 'Site Contents'
 
 class Language(models.Model):
     name = models.CharField(max_length=20)

@@ -11,7 +11,7 @@ class LanguageAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
 class SiteContentAdmin(admin.ModelAdmin):
-    list_display = ['page', 'content', 'image']
+    list_display = ['page', 'short_content', 'image']
 
 admin.site.register(Language, LanguageAdmin)
 admin.site.register(SiteContent, SiteContentAdmin)
