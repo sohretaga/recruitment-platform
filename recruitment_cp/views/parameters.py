@@ -634,6 +634,10 @@ def company_save(request):
             while index < len(hot):
                 pk = hot[index].pop('id', None)
                 name = hot[index].get('company_name', None)
+                print(hot[index])
+
+                # If they are not deleted, ForeignKey gives an error
+                del hot[index]['user__email']
 
                 if name:
                     if pk:
