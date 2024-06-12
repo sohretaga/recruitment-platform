@@ -1,8 +1,11 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
+from django.http import JsonResponse
 
 from job.models import Bookmark
+
 
 @login_required
 def index(request):
@@ -27,3 +30,13 @@ def bookmarks(request):
     }
 
     return render(request, 'dashboard/bookmarks.html', context)
+
+@require_POST
+def ajax_delete_bookmark(request):
+    bookmark_id = request.POST.get('bookmark_id')
+    bookmark = Bookmark.objects.filter(id=bookmark_id)
+
+    if request.user == bookmark.first().user:
+        bookmark.delete()
+
+    return JsonResponse({'status':200})

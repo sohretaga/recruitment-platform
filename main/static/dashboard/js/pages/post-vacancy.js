@@ -16,14 +16,15 @@ var config = { attributes: true, attributeFilter: ['class'] };
         
         // Set seleceted values
         var selectedValues = i("#keywordsInput").val().replace(/'/g, '"');
-        i("#keywordsSelect").val(JSON.parse(selectedValues)).trigger('change');
-        i("#keywordsInput").val(JSON.stringify(selectedValues));
+        if (selectedValues){
+            i("#keywordsSelect").val(JSON.parse(selectedValues)).trigger('change');
+            i("#keywordsInput").val(JSON.stringify(selectedValues));
+        };
 
         // Update hidden input on change
         i("#keywordsSelect").on('change', function() {
             var selectedValues = i(this).val();
             i("#keywordsInput").val(JSON.stringify(selectedValues));
-            console.log(selectedValues)
         });
     };
 

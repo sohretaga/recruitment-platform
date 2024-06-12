@@ -3,9 +3,11 @@ from django.urls import reverse
 
 from django.http import Http404, JsonResponse
 from django.core.paginator import Paginator
+from django.views.decorators.http import require_POST
 
 from dashboard.decorators import is_employer
 from dashboard.forms import CompleteEmployerRegisterForm, PostVacancyForm, EditEmployerAccountForm
+from job.models import Vacancy
 from recruitment_cp.models import (Language,
                                    ParameterCareerType,
                                    ParameterCareerLevel,
@@ -201,3 +203,13 @@ def edit_account(request):
     }
 
     return render(request, 'dashboard/employer/edit-account.html', context)
+
+@require_POST
+def ajax_delete_vacancy(request):
+    vacnacy_id = request.POST.get('vacancy_id')
+    vacancy = Vacancy.objects.filter(id=vacnacy_id)
+
+    if request.user == vacancy.first().employer.user:
+        vacancy.delete()
+
+    return JsonResponse({'status': 200})

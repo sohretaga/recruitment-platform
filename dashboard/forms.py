@@ -19,6 +19,7 @@ class PostVacancyForm(forms.ModelForm):
     salary_minimum = forms.IntegerField(required=False)
     salary_midpoint = forms.IntegerField(required=False)
     salary_maximum = forms.IntegerField(required=False)
+    keywords = forms.JSONField(required=False)
     
     class Meta:
         model = Vacancy

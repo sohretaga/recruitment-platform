@@ -1,7 +1,7 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
 
-{% block title %}Your Applies{% endblock title %}
+{% block title %}Bookmarks{% endblock title %}
 
 {% block head %}
     <!-- DataTables -->
@@ -10,7 +10,10 @@
     <link href="{% static 'dashboard/libs/datatables.net-select-bs4/css/select.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
 
     <!-- Responsive datatable examples -->
-    <link href="{% static 'dashboard/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />     
+    <link href="{% static 'dashboard/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />   
+    
+    <!-- Sweet Alert-->
+    <link href="{% static 'dashboard/libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css" />
 
     <!-- Bootstrap Css -->
     <link href="{% static 'dashboard/css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
@@ -81,7 +84,7 @@
                                         <td>{{ bookmark.vacancy.employer.company_name }}</td>
                                         <td>{{ bookmark.vacancy.views }}</td>
                                         <td>
-                                            <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="mdi mdi-trash-can font-size-18"></i></a>
+                                            <a href="javascript:void(0);" data-id="{{ bookmark.id }}" class="text-danger delete-row" data-toggle="tooltip" data-placement="top"><i class="mdi mdi-trash-can font-size-18"></i></a>
                                         </td>
                                     </tr>
                                     {% endfor %}
@@ -101,7 +104,6 @@
 
 {% block script %}
     <!-- JAVASCRIPT -->
-    <script src="{% static 'dashboard/libs/jquery/jquery.min.js' %}"></script>
     <script src="{% static 'dashboard/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'dashboard/libs/metismenu/metisMenu.min.js' %}"></script>
     <script src="{% static 'dashboard/libs/node-waves/waves.min.js' %}"></script>
@@ -113,17 +115,15 @@
     <!-- Responsive examples -->
     <script src="{% static 'dashboard/libs/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
     <script src="{% static 'dashboard/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'dashboard/js/app.js' %}"></script>
+
+    <!-- Sweet Alerts js -->
+    <script src="{% static 'dashboard/libs/sweetalert2/sweetalert2.min.js' %}"></script>
+
+    <!-- Sweet alert init js-->
+    <script src="{% static 'dashboard/js/pages/sweet-alerts.init.js' %}"></script>
 
     <!-- Custom JS -->
-    <script>
-        const columns = [
-            { orderable: false },
-            { orderable: false },
-            { orderable: false },
-            { orderable: false }
-        ];
-    </script>
-    <script src="{% static 'dashboard/js/datatable.js' %}"></script>
-
-    <script src="{% static 'dashboard/js/app.js' %}"></script>
+    <script src="{% static 'dashboard/js/ajax/bookmarks-table.js' %}"></script>
+    
 {% endblock script %}

@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
 from django.urls import reverse
 from django.http import JsonResponse
 from django.core.files.storage import FileSystemStorage
+from django.views.decorators.http import require_POST
 
 from recruitment import settings
 from blog.models import Blog, Category
@@ -91,3 +92,12 @@ def delete_editor_image(request):
                 return JsonResponse({'error': 'The specified image was not found.'}, status=404)
 
     return HttpResponse()
+
+@require_POST
+def ajax_delete_blog(request):
+    blog_id = request.POST.get('blog_id')
+    blog = Blog.objects.filter(id=blog_id)
+    blog.delete()
+
+    return JsonResponse({'status':200})
+

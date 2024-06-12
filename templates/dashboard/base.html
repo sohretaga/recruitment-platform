@@ -18,6 +18,7 @@
     </head>
 
     <body data-sidebar="dark">
+        <input id="csrf-token" type="hidden" value="{{ csrf_token }}">
 
         <!-- Begin page -->
         <div id="layout-wrapper">
@@ -336,6 +337,13 @@
                                         <span>Edit Account</span>
                                     </a>
                                 </li>
+
+                                <li>
+                                    <a href="{% url 'dashboard:bookmarks' %}" class="waves-effect">
+                                        <i class="ri-heart-line"></i>
+                                        <span>Bookmarks</span>
+                                    </a>
+                                </li>
                             {% elif request.user.user_type == 'candidate' %}
                                 <li>
                                     <a href="{% url 'dashboard:your-applies' %}" class="waves-effect">
@@ -348,6 +356,13 @@
                                     <a href="{% url 'dashboard:candidate-edit-account' %}" class="waves-effect">
                                         <i class="ri-settings-3-line"></i>
                                         <span>Edit Account</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="{% url 'dashboard:bookmarks' %}" class="waves-effect">
+                                        <i class="ri-heart-line"></i>
+                                        <span>Bookmarks</span>
                                     </a>
                                 </li>
                             {% elif request.user.user_type == 'blogger' %}
@@ -396,6 +411,24 @@
 
         </div>
         <!-- END layout-wrapper -->
+
+        <script src="{% static 'dashboard/libs/jquery/jquery.min.js' %}"></script>
+        <script>
+            const csrf_token = document.getElementById('csrf-token').value;
+            $.ajaxSetup({
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader('X-CSRFToken', csrf_token);
+                    $('body').css('cursor', 'wait');
+                },
+                complete: function () {
+                    $('body').css('cursor', 'default');
+                },
+                error: function () {
+                    console.error('Failure when operation performed...');
+                }
+            });
+
+        </script>
 
         {% block script %}
 
