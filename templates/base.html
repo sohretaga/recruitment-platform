@@ -29,7 +29,8 @@
     </head>
 
     <body>
-        <input id="csrf-token" type="text" value="{{ csrf_token }}" style="visibility: hidden;">
+        <input id="csrf-token" type="hidden" value="{{ csrf_token }}">
+        <div id="user-info" data-is-authenticated="{{ user.is_authenticated|yesno:'yes,no' }}"></div>
         
          <!--start page Loader -->
          <div id="preloader">
@@ -318,8 +319,8 @@
             <!-- Navbar End -->
 
 
-            <!-- START SIGN-UP MODAL -->
-            <div class="modal fade" id="signupModal" tabindex="-1" aria-hidden="true">
+            <!-- START SIGN-IN MODAL -->
+            <div class="modal fade" id="signinModal" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-body p-5">
@@ -329,33 +330,25 @@
                             <div class="auth-content">
                                 <div class="w-100">
                                     <div class="text-center mb-4">
-                                        <h5>Sign Up</h5>
-                                        <p class="text-muted">Sign Up and get access to all the features of Jobcy</p>
+                                        <h5>Sign In</h5>
+                                        <p class="text-muted">Please log in to perform certain actions.</p>
                                     </div>
-                                    <form action="#" class="auth-form">
+                                    <form action="{% url 'user:sign-in' %}" method="post" class="auth-form">
+                                        {% csrf_token %}
                                         <div class="mb-3">
                                             <label for="usernameInput" class="form-label">Username</label>
-                                            <input type="text" class="form-control" id="usernameInput" placeholder="Enter your username">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="passwordInput" class="form-label">Email</label>
-                                            <input type="email" class="form-control" id="emailInput" placeholder="Enter your email">
+                                            <input type="text" name="username" class="form-control" id="usernameInput" placeholder="Enter your username">
                                         </div>
                                         <div class="mb-3">
                                             <label for="emailInput" class="form-label">Password</label>
-                                            <input type="password" class="form-control" id="passwordInput" placeholder="Password">
-                                        </div>
-                                        <div class="mb-4">
-                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="flexCheckDefault">
-                                                <label class="form-check-label" for="flexCheckDefault">I agree to the <a href="javascript:void(0)" class="text-primary form-text text-decoration-underline">Terms and conditions</a></label>
-                                            </div>
+                                            <input type="password" name="password" class="form-control" id="passwordInput" placeholder="Password">
                                         </div>
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+                                            <button type="submit" class="btn btn-primary w-100">Sign In</button>
                                         </div>
                                     </form>
                                     <div class="mt-3 text-center">
-                                        <p class="mb-0">Already a member ? <a href="{% url 'user:sign-in' %}" class="form-text text-primary text-decoration-underline"> Sign-in </a></p>
+                                        <p class="mb-0">Did you forget password ?<a href="{% url 'user:reset-password' %}" class="form-text text-primary text-decoration-underline"> Reset Password </a></p>
                                     </div>
                                 </div>
                             </div>
@@ -363,7 +356,7 @@
                     </div><!--end modal-content-->
                 </div><!--end modal-dialog-->
             </div>
-            <!-- END SIGN-UP MODAL -->
+            <!-- END SIGN-IN MODAL -->
 
             <div class="main-content">
 

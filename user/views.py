@@ -6,7 +6,6 @@ from django.contrib import messages
 from . import forms
 from .decorators import logout_required
 from user.models import CustomUser
-from job.models import Bookmark
 
 
 @logout_required
@@ -83,12 +82,10 @@ def company_list(request):
 def company_details(request, username):
     user = get_object_or_404(CustomUser, username=username)
     vacancies = user.employer.vacancies.filter(status=True)[:5]
-    bookmarks = Bookmark.objects.filter(user=request.user).values_list('vacancy__id', flat=True)
 
     context = {
         'employer': user.employer,
         'vacancies': vacancies,
-        'bookmarks': bookmarks
     }
 
     return render(request, 'user/company-details.html', context)

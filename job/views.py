@@ -4,6 +4,7 @@ from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
 from django.utils import timezone
 from datetime import timedelta
+from django.contrib.auth.decorators import login_required
 
 from job.models import Vacancy, Bookmark
 from recruitment_cp.utils import is_ajax
@@ -30,12 +31,9 @@ def vacancy(request, slug):
     # get related vacancies
     related_vacancies = Vacancy.objects.filter(job_title=vacancy.job_title, status=True).exclude(slug=slug)[:5]
     
-    bookmarks = Bookmark.objects.filter(user=request.user).values_list('vacancy__id', flat=True)
-
     context = {
         'vacancy': vacancy,
         'vacancies': related_vacancies,
-        'bookmarks': bookmarks
     }
 
     return render(request, 'job/vacancy.html', context)
@@ -117,7 +115,7 @@ def ajax_filter_vacancies(request):
 
     return JsonResponse({'error': 'Invalid request'}, status=400)
 
-
+@login_required
 @require_POST
 def ajax_add_bookmark(request):
     vacancy = request.POST.get('vacancy')

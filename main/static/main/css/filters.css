@@ -24,7 +24,7 @@ body[data-layout-mode="dark"] .sectors-btn {
 
 @media (max-width: 767px) {
 
-  #job-list .row {
+  #job-list #row-container {
       flex-direction: column-reverse;
   }
 

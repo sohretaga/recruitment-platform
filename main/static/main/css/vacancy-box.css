@@ -1,0 +1,6 @@
+@media only screen and (max-width: 600px) {
+    .job-box img {
+      max-width: 55px;
+      height: auto;
+    }
+}
