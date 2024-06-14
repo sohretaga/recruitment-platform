@@ -29,9 +29,12 @@
 
 .swiper .title {
     margin-left: 15px;
-    margin-bottom: 20px;
 }
 
+.featured-setion {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
 
 
   @media screen and (max-width:768px) {
@@ -71,7 +74,6 @@
 
     .swiper .title {
         margin-left: 0;
-        margin-bottom: 20px;
     }
 
   }

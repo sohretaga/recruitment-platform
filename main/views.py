@@ -29,7 +29,7 @@ def index(request):
     context = {
         **vacancies,
         'company_slider': company_slider,
-        'highlight_slider': get_objects_in_sublists()
+        'featured_slider': get_objects_in_sublists()
     }
 
     return render(request, 'main/index.html', context)

@@ -84,17 +84,17 @@
         {% include 'job/partials/vacancies-section.html' %}
         <!-- END JOB-LIST -->
 
-        <!--START HIGHLIGHTS-->
-        <section class="section bg-light">
+        <!--START FEATURED-->
+        <section class="section bg-light featured-setion">
             <div class="container">
                 <div class="row justify-content-center">
                     <!-- Swiper -->
                     <div class="swiper mySwiper">
                         <h4 class="title">FEATURED VACANCIES</h4>
                         <div class="swiper-wrapper">
-                            {% for highlight in highlight_slider %}
+                            {% for featured in featured_slider %}
                                 <div class="swiper-slide">
-                                    {% for vacancy in highlight %}
+                                    {% for vacancy in featured %}
                                         <div class="card">
                                             <div class="slide-img-box">
                                                 {% if vacancy.employer.user.profile_photo %}
@@ -120,7 +120,7 @@
                 </div><!--end row-->
             </div><!--end container-->
         </section>
-        <!--END HIGHLIGHTS-->
+        <!--END FEATURED-->
 
         <!-- START PROCESS -->
         <section class="section">
