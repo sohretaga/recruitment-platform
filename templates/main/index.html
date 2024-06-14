@@ -21,6 +21,7 @@
     <link href="{% static 'main/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
     <!--Custom Css-->
     <link href="{% static 'main/css/filters.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'main/css/highlights.css' %}" rel="stylesheet" type="text/css" />
 
 {% endblock head %}
 
@@ -82,6 +83,127 @@
         <!-- START JOB-LIST -->
         {% include 'job/partials/vacancies-section.html' %}
         <!-- END JOB-LIST -->
+
+        <!--START HIGHLIGHTS-->
+        <section class="section bg-light">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <!-- Swiper -->
+                    <div class="swiper mySwiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="card">
+                                    <div class="slide-img-box">
+                                        <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="" class="img-fluid rounded-3">
+                                    </div>
+                                    <div class="card-content">
+                                        <h5 class="text-title">Text 1</h5>
+                                        <p class="">Company Name</p>
+                                        <p class="text-muted">Location</p>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="slide-img-box">
+                                        <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="" class="img-fluid rounded-3">
+                                    </div>
+                                    <div class="card-content">
+                                        <h5 class="text-title">Text 2</h5>
+                                    <p class="">Company Name</p>
+                                    <p class="text-muted">Location</p>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="slide-img-box">
+                                        <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="" class="img-fluid rounded-3">
+                                    </div>
+                                    <div class="card-content">
+                                        <h5 class="text-title">Text 3</h5>
+                                    <p class="">Company Name</p>
+                                    <p class="text-muted">Location</p>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="slide-img-box">
+                                        <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="" class="img-fluid rounded-3">
+                                    </div>
+                                    <div class="card-content">
+                                        <h5 class="text-title">Text 4</h5>
+                                    <p class="">Company Name</p>
+                                    <p class="text-muted">Location</p>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="slide-img-box">
+                                        <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="" class="img-fluid rounded-3">
+                                    </div>
+                                    <div class="card-content">
+                                        <h5 class="text-title">Text 5</h5>
+                                    <p class="">Company Name</p>
+                                    <p class="text-muted">Location</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="card">
+                                    <div class="slide-img-box">
+                                        <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="" class="img-fluid rounded-3">
+                                    </div>
+                                    <div class="card-content">
+                                        <h5 class="text-title">Text 6</h5>
+                                    <p class="">Company Name</p>
+                                    <p class="text-muted">Location</p>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="slide-img-box">
+                                        <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="" class="img-fluid rounded-3">
+                                    </div>
+                                    <div class="card-content">
+                                        <h5 class="text-title">Text 7</h5>
+                                    <p class="">Company Name</p>
+                                    <p class="text-muted">Location</p>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="slide-img-box">
+                                        <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="" class="img-fluid rounded-3">
+                                    </div>
+                                    <div class="card-content">
+                                        <h5 class="text-title">Text 8</h5>
+                                    <p class="">Company Name</p>
+                                    <p class="text-muted">Location</p>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="slide-img-box">
+                                        <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="" class="img-fluid rounded-3">
+                                    </div>
+                                    <div class="card-content">
+                                        <h5 class="text-title">Text 9</h5>
+                                    <p class="">Company Name</p>
+                                    <p class="text-muted">Location</p>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="slide-img-box">
+                                        <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="" class="img-fluid rounded-3">
+                                    </div>
+                                    <div class="card-content">
+                                        <h5 class="text-title">Text 10</h5>
+                                    <p class="">Company Name</p>
+                                    <p class="text-muted">Location</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div><!--end row-->
+            </div><!--end container-->
+        </section>
+        <!--END HIGHLIGHTS-->
 
         <!-- START PROCESS -->
         <section class="section">
@@ -438,5 +560,6 @@
 <!-- Custom JS -->
 <script src="{% static 'main/js/ajax/vacancies-filters.js' %}"></script>
 <script src="{% static 'main/js/ajax/bookmarks.js' %}"></script>
+<script src="{% static 'main/js/pages/highlights.js' %}"></script>
 
 {% endblock script %}
