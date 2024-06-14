@@ -91,110 +91,26 @@
                     <!-- Swiper -->
                     <div class="swiper mySwiper">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <div class="card">
-                                    <div class="slide-img-box">
-                                        <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="" class="img-fluid rounded-3">
-                                    </div>
-                                    <div class="card-content">
-                                        <h5 class="text-title">Text 1</h5>
-                                        <p class="">Company Name</p>
-                                        <p class="text-muted">Location</p>
-                                    </div>
+                            {% for highlight in highlight_slider %}
+                                <div class="swiper-slide">
+                                    {% for vacancy in highlight %}
+                                        <div class="card">
+                                            <div class="slide-img-box">
+                                                {% if vacancy.employer.user.profile_photo %}
+                                                    <img src="{{ vacancy.employer.user.profile_photo.url }}" alt="{{ vacancy.employer.company_name }}" class="img-fluid rounded-3">
+                                                {% else %}
+                                                    <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" class="img-fluid rounded-3">
+                                                {% endif %}
+                                            </div>
+                                            <div class="card-content">
+                                                <h5 class="text-title">{{ vacancy.position_title }}</h5>
+                                                <p>{{ vacancy.employer.company_name }}</p>
+                                                <p class="text-muted">{{ vacancy.location }}</p>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
                                 </div>
-                                <div class="card">
-                                    <div class="slide-img-box">
-                                        <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="" class="img-fluid rounded-3">
-                                    </div>
-                                    <div class="card-content">
-                                        <h5 class="text-title">Text 2</h5>
-                                    <p class="">Company Name</p>
-                                    <p class="text-muted">Location</p>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="slide-img-box">
-                                        <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="" class="img-fluid rounded-3">
-                                    </div>
-                                    <div class="card-content">
-                                        <h5 class="text-title">Text 3</h5>
-                                    <p class="">Company Name</p>
-                                    <p class="text-muted">Location</p>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="slide-img-box">
-                                        <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="" class="img-fluid rounded-3">
-                                    </div>
-                                    <div class="card-content">
-                                        <h5 class="text-title">Text 4</h5>
-                                    <p class="">Company Name</p>
-                                    <p class="text-muted">Location</p>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="slide-img-box">
-                                        <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="" class="img-fluid rounded-3">
-                                    </div>
-                                    <div class="card-content">
-                                        <h5 class="text-title">Text 5</h5>
-                                    <p class="">Company Name</p>
-                                    <p class="text-muted">Location</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="card">
-                                    <div class="slide-img-box">
-                                        <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="" class="img-fluid rounded-3">
-                                    </div>
-                                    <div class="card-content">
-                                        <h5 class="text-title">Text 6</h5>
-                                    <p class="">Company Name</p>
-                                    <p class="text-muted">Location</p>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="slide-img-box">
-                                        <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="" class="img-fluid rounded-3">
-                                    </div>
-                                    <div class="card-content">
-                                        <h5 class="text-title">Text 7</h5>
-                                    <p class="">Company Name</p>
-                                    <p class="text-muted">Location</p>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="slide-img-box">
-                                        <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="" class="img-fluid rounded-3">
-                                    </div>
-                                    <div class="card-content">
-                                        <h5 class="text-title">Text 8</h5>
-                                    <p class="">Company Name</p>
-                                    <p class="text-muted">Location</p>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="slide-img-box">
-                                        <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="" class="img-fluid rounded-3">
-                                    </div>
-                                    <div class="card-content">
-                                        <h5 class="text-title">Text 9</h5>
-                                    <p class="">Company Name</p>
-                                    <p class="text-muted">Location</p>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="slide-img-box">
-                                        <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="" class="img-fluid rounded-3">
-                                    </div>
-                                    <div class="card-content">
-                                        <h5 class="text-title">Text 10</h5>
-                                    <p class="">Company Name</p>
-                                    <p class="text-muted">Location</p>
-                                    </div>
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
                         <div class="swiper-button-next"></div>
                         <div class="swiper-button-prev"></div>
@@ -476,11 +392,11 @@
         <!-- END BLOG -->
 
         <!-- START CLIENT -->
-        {% if sliders %}
+        {% if company_slider %}
         <div class="py-4">
             <div class="container">
                 <div class="row">
-                    {% for slider in sliders %}
+                    {% for slider in company_slider %}
                         <div class="col-lg-2">
                             <div class="text-center p-3">
                                 <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="{{ slider.company_name }}">
