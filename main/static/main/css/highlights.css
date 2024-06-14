@@ -28,7 +28,7 @@
 }
 
 .swiper .title {
-    margin-left: 15px;
+    text-align: center;
 }
 
 .featured-setion {
@@ -70,10 +70,6 @@
 
     .card-content h5 {
         margin-top: .5rem;
-    }
-
-    .swiper .title {
-        margin-left: 0;
     }
 
   }
