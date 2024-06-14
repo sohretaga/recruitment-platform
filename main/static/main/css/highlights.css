@@ -27,6 +27,11 @@
     margin-bottom: .5rem;
 }
 
+.swiper .title {
+    margin-left: 15px;
+    margin-bottom: 20px;
+}
+
 
 
   @media screen and (max-width:768px) {
@@ -62,6 +67,11 @@
 
     .card-content h5 {
         margin-top: .5rem;
+    }
+
+    .swiper .title {
+        margin-left: 0;
+        margin-bottom: 20px;
     }
 
   }
