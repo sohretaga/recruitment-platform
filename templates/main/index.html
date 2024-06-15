@@ -104,9 +104,9 @@
                                                 {% endif %}
                                             </div>
                                             <div class="card-content">
-                                                <h5 class="text-title">{{ vacancy.position_title }}</h5>
-                                                <p>{{ vacancy.employer.company_name }}</p>
-                                                <p class="text-muted">{{ vacancy.location }}</p>
+                                                <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' vacancy.slug %}" class="text-dark">{{ vacancy.position_title }}</a> <small class="text-muted fw-normal">({{ vacancy.work_experience }})</small></h5>
+                                                <p class="fs-14 mb-0">{{ vacancy.employer.company_name }}</p>
+                                                <p class="text-muted fs-14 mb-0">{{ vacancy.location }}</p>
                                             </div>
                                         </div>
                                     {% endfor %}
@@ -134,9 +134,9 @@
                                     {% endif %}
                                 </div>
                                 <div class="card-content">
-                                    <h5 class="text-title">{{ vacancy.position_title }}</h5>
-                                    <p>{{ vacancy.employer.company_name }}</p>
-                                    <p class="text-muted">{{ vacancy.location }} - {{ vacancy.career_type }}</p>
+                                    <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' vacancy.slug %}" class="text-dark">{{ vacancy.position_title }}</a> <small class="text-muted fw-normal">({{ vacancy.work_experience }})</small></h5>
+                                    <p class="fs-14 mb-0">{{ vacancy.employer.company_name }}</p>
+                                    <p class="text-muted fs-14 mb-0">{{ vacancy.location }} - {{ vacancy.career_type }}</p>
                                 </div>
                             </div>
                             <div class="card-bottom">
