@@ -1,10 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load filters %}
+{% load bookmarks %}
 
 {% block title %}Job Title{% endblock title %}
 
+{% block meta %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="{{ vacancy.definition|safe }}">
+<meta name="keywords" content="{% for key in vacancy.keywords %}{{ key }}, {% endfor %}">
+{% endblock meta %}
+
 {% block head %}
+
 <!-- Bootstrap Css -->
 <link href="{% static 'main/css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
 <!-- Icons Css -->
@@ -83,7 +92,7 @@
                                     </div><!--end col-->
                                     <div class="col-lg-4">
                                         <ul class="list-inline mb-0 text-lg-end mt-3 mt-lg-0">
-                                            <li id="vacancy-{{ vacancy.id }}" class="list-inline-item {% if vacancy.id in bookmarks %}bookmark-post{% endif %}">
+                                            <li id="vacancy-{{ vacancy.id }}" class="list-inline-item {% bookmarks request vacancy.id %}">
                                                 <div class="favorite-icon" style="cursor: pointer;" onclick="addBookmark('{{ vacancy.id }}')">
                                                     <a href="javascript:void(0);"><i class="uil uil-heart-alt fs-18"></i></a>
                                                 </div>
@@ -397,7 +406,6 @@
 
 {% block script %}
 <!-- JAVASCRIPT -->
-<script src="{% static 'dashboard/libs/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'main/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 <script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
 
