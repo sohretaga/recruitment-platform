@@ -1,0 +1,29 @@
+.profile-user {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-user .profile-img {
+    width: 150px;
+    height: 150px;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+
+.profile-user .profile-img-file-input {
+    display: none;
+}
+
+.profile-user label {
+    cursor: pointer;
+}
+
+.profile-user .icon-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 40px;
+    color: #83B4FF;
+    pointer-events: none;
+}

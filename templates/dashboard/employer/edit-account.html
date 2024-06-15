@@ -10,6 +10,10 @@
     <link href="{% static 'dashboard/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
     <!-- App Css-->
     <link href="{% static 'dashboard/css/app.css' %}" rel="stylesheet" type="text/css" />
+
+    <!-- Custom Css-->
+    <link href="{% static 'dashboard/css/edit-account.css' %}" rel="stylesheet" type="text/css" />
+
 {% endblock head %}
 
 {% block content %}
@@ -33,39 +37,6 @@
             </div>
         </div>
         <!-- end page title -->
-
-        <style>
-            .profile-user {
-                position: relative;
-                display: inline-block;
-            }
-            
-            .profile-user .profile-img {
-                width: 150px;
-                height: 150px;
-                -o-object-fit: cover;
-                object-fit: cover;
-            }
-            
-            .profile-user .profile-img-file-input {
-                display: none;
-            }
-
-            .profile-user label {
-                cursor: pointer;
-            }
-
-            .profile-user .icon-center {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                font-size: 40px;
-                color: #83B4FF;
-                pointer-events: none;
-            }
-
-        </style>
         
         <div class="row">
             <div class="col">
@@ -214,16 +185,6 @@
 
     <script src="{% static 'dashboard/js/app.js' %}"></script>
 
-    <script>
-        const profileImg = document.getElementById('profile-img');
-        const previewImg = (input) => {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('profile-img').src = e.target.result;
-                };
-                reader.readAsDataURL(input.files[0]);
-            };
-        };
-    </script>
+    <!-- Custom JS -->
+    <script src="{% static 'dashboard/js/pages/edit-account.js' %}"></script>
 {% endblock script %}
