@@ -24,10 +24,10 @@
 
 .swiper-slide {
     text-align: center;
-    font-size: 18px;
     background: none;
     display: flex;
     justify-content: space-around;
+    margin-bottom: 30px;
 }
 
 .swiper-slide .card {
@@ -95,7 +95,7 @@
 /* TODAY RELEASES */
 
 .today {
-    margin-top: 50px;
+    margin-top: 10px;
     justify-content: center;
 }
 
