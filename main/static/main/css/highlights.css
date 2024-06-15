@@ -1,25 +1,35 @@
+/* COMMON STYLE */
+.card-img img {
+    width: 55px;
+    height: auto;
+}
+
+.card-img {
+    width: auto;
+}
+
+
+/* FEATURED VACANCIES */
 .swiper {
     width: 100%;
     height: 100%;
-  }
+}
 
 .swiper-slide {
     text-align: center;
     font-size: 18px;
     background: none;
     display: flex;
-    justify-content: space-around;    
+    justify-content: space-around;
 }
 
 .swiper-slide .card {
     width: 100%;
     height: 250px;
-    margin:0 10px;
+    margin: 0 10px;
 }
 
-.slide-img-box img{
-    width: 55px;
-    height: auto;
+.swiper-slide .card-img img {
     margin: 10px auto;
 }
 
@@ -37,7 +47,8 @@
 }
 
 
-  @media screen and (max-width:768px) {
+@media screen and (max-width:768px) {
+
     .swiper-button-next,
     .swiper-button-prev {
         display: none;
@@ -56,10 +67,10 @@
         margin: 10px 0
     }
 
-    .slide-img-box{
+    .swiper-slide .card-img {
         display: flex;
         align-items: center;
-        justify-content: start; 
+        justify-content: start;
         margin-left: 10px;
         margin-right: 20px;
     }
@@ -72,4 +83,96 @@
         margin-top: .5rem;
     }
 
-  }
+}
+
+/* TODAY RELEASES */
+
+.today {
+    margin-top: 50px;
+    justify-content: center;
+}
+
+.today .row {
+    gap: 20px
+}
+
+.today .title {
+    text-align: center;
+}
+
+.today .card {
+    width: calc(50% - 20px);
+}
+
+.today .card-top {
+    display: flex;
+    margin: 10px
+}
+
+.today .card-bottom {
+    display: flex;
+    margin: 0 10px;
+    justify-content: space-between;
+}
+
+.today .card-content {
+    margin-left: 20px;
+}
+
+.today .card-content p,
+h5 {
+    margin: 0;
+}
+
+.today .card-img {
+    align-content: center;
+}
+
+.today .card-img img {
+    width: 65px;
+    height: auto;
+}
+
+@media screen and (max-width: 768px) {
+    .today .row{
+        order: 1;
+        flex-wrap: nowrap;
+        overflow: auto;
+        justify-content: space-between !important;
+    }
+
+    .today .card:first-child {
+        margin-left: 10px;
+    }
+
+    .today .card:last-child {
+        margin-right: 10px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .today .card-bottom {
+        display: none;
+    }
+
+    .today .card-top .card-img {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .today .card-top .card-content {
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .today .card-top .card-img img {
+        width: 55px;
+        height: auto;
+    }
+
+    .today .card-top {
+        display: block;
+
+    }
+}

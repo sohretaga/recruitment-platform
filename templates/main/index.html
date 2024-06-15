@@ -96,7 +96,7 @@
                                 <div class="swiper-slide">
                                     {% for vacancy in featured %}
                                         <div class="card">
-                                            <div class="slide-img-box">
+                                            <div class="card-img">
                                                 {% if vacancy.employer.user.profile_photo %}
                                                     <img src="{{ vacancy.employer.user.profile_photo.url }}" alt="{{ vacancy.employer.company_name }}" class="img-fluid rounded-3">
                                                 {% else %}
@@ -117,6 +117,34 @@
                         <div class="swiper-button-prev"></div>
                         <div class="swiper-pagination"></div>
                     </div>
+                </div><!--end row-->
+            </div><!--end container-->
+
+            <div class="container today">
+                <h4 class="title">TODAY RELEASES</h4>
+                <div class="row justify-content-center">
+                    {% for vacancy in today_releases %}
+                        <div class="card">
+                            <div class="card-top">
+                                <div class="card-img">
+                                    {% if vacancy.employer.user.profile_photo %}
+                                        <img src="{{ vacancy.employer.user.profile_photo.url }}" alt="{{ vacancy.employer.company_name }}" class="img-fluid rounded-3">
+                                    {% else %}
+                                        <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" class="img-fluid rounded-3">
+                                    {% endif %}
+                                </div>
+                                <div class="card-content">
+                                    <h5 class="text-title">{{ vacancy.position_title }}</h5>
+                                    <p>{{ vacancy.employer.company_name }}</p>
+                                    <p class="text-muted">{{ vacancy.location }} - {{ vacancy.career_type }}</p>
+                                </div>
+                            </div>
+                            <div class="card-bottom">
+                                <p>{{ vacancy.fte }}</p>
+                                <p>Today</p>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div><!--end row-->
             </div><!--end container-->
         </section>
