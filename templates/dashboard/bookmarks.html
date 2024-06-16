@@ -81,7 +81,7 @@
                                     {% for bookmark in bookmarks %}
                                     <tr>
                                         <td><a href="{% url 'job:vacancy' bookmark.vacancy.slug %}" class="text-dark font-weight-bold" target='_blank'>{{ bookmark.vacancy.position_title }}</a></td>
-                                        <td>{{ bookmark.vacancy.employer.company_name }}</td>
+                                        <td>{{ bookmark.vacancy.employer.user.first_name }}</td>
                                         <td>{{ bookmark.vacancy.views }}</td>
                                         <td>
                                             <a href="javascript:void(0);" data-id="{{ bookmark.id }}" class="text-danger delete-row" data-toggle="tooltip" data-placement="top"><i class="mdi mdi-trash-can font-size-18"></i></a>

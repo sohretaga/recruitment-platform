@@ -15,7 +15,7 @@
                         <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' vacancy.slug %}" class="text-dark">{{ vacancy.position_title }}</a> <small class="text-muted fw-normal">({{ vacancy.work_experience }})</small></h5>
                         <ul class="list-inline mb-0">
                             <li class="list-inline-item">
-                                <p class="text-muted fs-14 mb-0">{{ vacancy.employer.company_name }}</p>
+                                <p class="text-muted fs-14 mb-0">{{ vacancy.employer.user.first_name }}</p>
                             </li>
                             <li class="list-inline-item">
                                 <p class="text-muted fs-14 mb-0"><i class="mdi mdi-map-marker"></i> {{ vacancy.location }}</p>
@@ -39,13 +39,16 @@
         <div class="p-3 bg-light">
             <div class="row justify-content-between">
                 <div class="col-md-8">
+                    {% if vacancy.keywords %}
                     <div>
                         <ul class="list-inline mb-0">
                             <li class="list-inline-item"><i class="uil uil-tag"></i> Keywords :</li>
-                            <li class="list-inline-item"><a href="javascript:void(0)" class="primary-link text-muted">Ui designer</a>,</li>
-                            <li class="list-inline-item"><a href="javascript:void(0)" class="primary-link text-muted">developer</a></li>
+                            {% for keyword in vacancy.keywords %}
+                            <li class="list-inline-item"><a href="javascript:void(0)" class="primary-link text-muted">{{ keyword }}</a>{% if not forloop.last %},{% endif %}</li>
+                            {% endfor %}
                         </ul>
                     </div>
+                    {% endif %}
                 </div>
                 <!--end col-->
                 <div class="col-md-3">

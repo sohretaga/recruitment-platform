@@ -35,6 +35,8 @@ class PostBlogForm(forms.ModelForm):
 class EditEmployerAccountForm(forms.ModelForm):
     primary_email = forms.EmailField(required=True)
     profile_photo = forms.ImageField(required=False)
+    first_name = forms.CharField(max_length=150, required=True)
+    last_name = forms.CharField(max_length=150, required=False)
 
     class Meta:
         model = Employer

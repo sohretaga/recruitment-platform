@@ -503,7 +503,7 @@ def vacancy_load(request):
             limit = int(request.POST.get('limit', 1000))
             
             vacancies = Vacancy.objects.filter(language = language)\
-                .values('id', 'no', 'employer__company_name', 'career_type', 'career_level', 'location', 'fte', 'salary_minimum',
+                .values('id', 'no', 'employer__user__first_name', 'career_type', 'career_level', 'location', 'fte', 'salary_minimum',
                         'salary_midpoint', 'salary_maximum', 'salary', 'position_title', 'job_title', 'employment_type',
                         'work_experience', 'definition', 'work_preference', 'department', 'created_date', 'keywords', 'status')[offset:offset+limit]
             
@@ -527,8 +527,8 @@ def vacancy_save(request):
                 position_title = hot[index].get('position_title', None)
 
                 # If they are not deleted, ForeignKey gives an error
-                if hot[index]['employer__company_name']:
-                    del hot[index]['employer__company_name']
+                if hot[index]['employer__user__first_name']:
+                    del hot[index]['employer__user__first_name']
 
                 if position_title:
                     if pk:
@@ -613,9 +613,9 @@ def company_load(request):
         if is_ajax(request) and request.POST:
             
             company = Employer.objects.all().values(
-                'id', 'user__email', 'user__profile_photo', 'no', 'company_name', 'sector', 'organization_type', 'organization_ownership',
+                'id', 'user__email', 'user__profile_photo', 'no', 'user__first_name', 'sector', 'organization_type', 'organization_ownership',
                 'number_of_employees', 'second_email', 'other_email', 'note', 'slider'
-            ).order_by('company_name')
+            ).order_by('user__first_name')
             
             json_data = json.dumps(list(company), default=datetime_to_string)
 
@@ -633,22 +633,23 @@ def company_save(request):
 
             while index < len(hot):
                 pk = hot[index].pop('id', None)
-                name = hot[index].get('company_name', None)
-                print(hot[index])
+                name = hot[index].get('user__first_name', None)
 
                 # If they are not deleted, ForeignKey gives an error
                 del hot[index]['user__email']
+                del hot[index]['user__profile_photo']
+                del hot[index]['user__first_name']
 
-                if name:
-                    if pk:
-                        company = Employer.objects.filter(pk=pk)
-                        company.update(**hot[index])
-                    else:
-                        company = Employer(**hot[index])
-                        company.save()
+                # if name:
+                if pk:
+                    company = Employer.objects.filter(pk=pk)
+                    company.update(**hot[index])
                 else:
-                    company = Employer.objects.filter(pk = pk)
-                    company.delete()
+                    company = Employer(**hot[index])
+                    company.save()
+                # else:
+                #     company = Employer.objects.filter(pk = pk)
+                #     company.delete()
                 
                 index += 1
 

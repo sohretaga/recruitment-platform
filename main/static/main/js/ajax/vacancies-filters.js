@@ -175,7 +175,7 @@ const listVacancies = (vacanciesInfo, bookmarks) => {
                             <h5 class="fs-17 mb-1"><a href="/vacancy/${vacancy.slug}" class="text-dark">${vacancy.position_title}</a> <small class="text-muted fw-normal">(${vacancy.work_experience})</small></h5>
                             <ul class="list-inline mb-0">
                                 <li class="list-inline-item">
-                                    <p class="text-muted fs-14 mb-0">${vacancy.employer__company_name}</p>
+                                    <p class="text-muted fs-14 mb-0">${vacancy.employer__user__first_name}</p>
                                 </li>
                                 <li class="list-inline-item">
                                     <p class="text-muted fs-14 mb-0"><i class="mdi mdi-map-marker"></i> ${vacancy.location}</p>

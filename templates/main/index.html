@@ -98,14 +98,14 @@
                                         <div class="card">
                                             <div class="card-img">
                                                 {% if vacancy.employer.user.profile_photo %}
-                                                    <img src="{{ vacancy.employer.user.profile_photo.url }}" alt="{{ vacancy.employer.company_name }}" class="img-fluid rounded-3">
+                                                <a href="{% url 'user:company' vacancy.employer.user %}"><img src="{{ vacancy.employer.user.profile_photo.url }}" alt="{{ vacancy.employer.user.first_name }}" class="img-fluid rounded-3"></a>
                                                 {% else %}
                                                     <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" class="img-fluid rounded-3">
                                                 {% endif %}
                                             </div>
                                             <div class="card-content">
                                                 <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' vacancy.slug %}" class="text-dark">{{ vacancy.position_title }}</a> <small class="text-muted fw-normal">({{ vacancy.work_experience }})</small></h5>
-                                                <p class="fs-14 mb-0">{{ vacancy.employer.company_name }}</p>
+                                                <p class="fs-14 mb-0">{{ vacancy.employer.user.first_name }}</p>
                                                 <p class="text-muted fs-14 mb-0">{{ vacancy.location }}</p>
                                             </div>
                                         </div>
@@ -128,14 +128,14 @@
                             <div class="card-top">
                                 <div class="card-img">
                                     {% if vacancy.employer.user.profile_photo %}
-                                        <img src="{{ vacancy.employer.user.profile_photo.url }}" alt="{{ vacancy.employer.company_name }}" class="img-fluid rounded-3">
+                                    <a href="{% url 'user:company' vacancy.employer.user %}"><img src="{{ vacancy.employer.user.profile_photo.url }}" alt="{{ vacancy.employer.user.first_name }}" class="img-fluid rounded-3"></a>
                                     {% else %}
                                         <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" class="img-fluid rounded-3">
                                     {% endif %}
                                 </div>
                                 <div class="card-content">
                                     <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' vacancy.slug %}" class="text-dark">{{ vacancy.position_title }}</a> <small class="text-muted fw-normal">({{ vacancy.work_experience }})</small></h5>
-                                    <p class="fs-14 mb-0">{{ vacancy.employer.company_name }}</p>
+                                    <p class="fs-14 mb-0">{{ vacancy.employer.user.first_name }}</p>
                                     <p class="text-muted fs-14 mb-0">{{ vacancy.location }} - {{ vacancy.career_type }}</p>
                                 </div>
                             </div>
@@ -428,8 +428,8 @@
                     {% for slider in company_slider %}
                         <div class="col-lg-2">
                             <div class="text-center p-3">
-                                <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="{{ slider.company_name }}">
-                                    <img src="{{ slider.user.profile_photo.url }}" alt="{{ slider.company_name }}" class="img-fluid">
+                                <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ slider.user.first_name }}" data-bs-original-title="{{ slider.user.first_name }}">
+                                    <img src="{{ slider.user.profile_photo.url }}" alt="{{ slider.user.first_name }}" class="img-fluid">
                                 </a>
                             </div>
                         </div>

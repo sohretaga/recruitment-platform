@@ -16,9 +16,13 @@ class CustomUser(AbstractUser):
     terms = models.BooleanField()
 
 class Employer(models.Model):
+    """
+    The company name is recorded in the "first_name" field.
+    The legal company name is recorded in the "last_name" field.
+    The "first_name" and "last_name" fields are taken from the "user" field.
+    """
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='employer', blank=True, null=True) # blank=True, null=True will delete
     no = models.IntegerField(blank=True, null=True)
-    company_name = models.CharField(max_length=255)
     sector = models.CharField(max_length=200, blank=True, null=True)
     organization_type = models.CharField(max_length=200, blank=True, null=True)
     organization_ownership = models.CharField(max_length=200, blank=True, null=True)
@@ -26,10 +30,7 @@ class Employer(models.Model):
     second_email = models.EmailField(blank=True, null=True)
     other_email = models.EmailField(blank=True, null=True)
     note = models.TextField(blank=True, null=True)
-    slider = models.BooleanField(default=False)
-
-    def __str__(self) -> str:
-        return self.company_name
+    slider = models.BooleanField(default=False, null=True)
 
 class Candidate(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='candidate')
