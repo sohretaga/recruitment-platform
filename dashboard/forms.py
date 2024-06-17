@@ -2,7 +2,7 @@ from django import forms
 
 from job.models import Vacancy
 from blog.models import Blog
-from user.models import Employer, Candidate
+from user.models import Employer
 
 class CompleteEmployerRegisterForm(forms.Form):
     first_name = forms.CharField(max_length=30)

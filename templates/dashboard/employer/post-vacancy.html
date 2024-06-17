@@ -96,10 +96,10 @@
                                                     <label>Job Title</label>
                                                     <select class="custom-select" name="job_title">
                                                         {% for catalogue in job_catalogues %}
-                                                            {% if catalogue.name == vacancy.job_title %}
-                                                                <option value="{{ catalogue.name }}" selected>{{ catalogue.name }}</option>
+                                                            {% if catalogue.id == vacancy.job_title.id %}
+                                                                <option value="{{ catalogue.id }}" selected>{{ catalogue.name }}</option>
                                                             {% else %}
-                                                                <option value="{{ catalogue.name }}">{{ catalogue.name }}</option>
+                                                                <option value="{{ catalogue.id }}">{{ catalogue.name }}</option>
                                                             {% endif %}
                                                         {% endfor %}
                                                     </select>
@@ -109,7 +109,7 @@
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label for="input-currency">Salary</label>
-                                                    <input id="input-currency" name="salary" class="form-control input-mask text-left" value="{{ vacancy.salary }}" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
+                                                    <input id="input-currency" name="salary" class="form-control input-mask text-left" value="{{ vacancy.salary }}" data-inputmask="'alias': 'numeric', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
                                                 </div>
                                             </div>
                                         </div>
@@ -133,10 +133,10 @@
                                                     <label>Career Type</label>
                                                     <select class="custom-select" name="career_type">
                                                         {% for type in career_types %}
-                                                            {% if type.name == vacancy.career_type %}
-                                                                <option value="{{ type.name }}" selected>{{ type.name }}</option>
+                                                            {% if type.id == vacancy.career_type.id %}
+                                                                <option value="{{ type.id }}" selected>{{ type.name }}</option>
                                                             {% else %}
-                                                                <option value="{{ type.name }}">{{ type.name }}</option>
+                                                                <option value="{{ type.id }}">{{ type.name }}</option>
                                                             {% endif %}
                                                         {% endfor %}
                                                     </select>
@@ -147,10 +147,10 @@
                                                     <label>Career Level</label>
                                                     <select class="custom-select" name="career_level">
                                                         {% for level in career_levels %}
-                                                            {% if level.name == vacancy.career_level %}
-                                                                <option value="{{ level.name }}" selected>{{ level.name }}</option>
+                                                            {% if level.id == vacancy.career_level.id %}
+                                                                <option value="{{ level.id }}" selected>{{ level.name }}</option>
                                                             {% else %}
-                                                                <option value="{{ level.name }}">{{ level.name }}</option>
+                                                                <option value="{{ level.id }}">{{ level.name }}</option>
                                                             {% endif %}
                                                         {% endfor %}
                                                     </select>
@@ -161,10 +161,10 @@
                                                     <label>Work Preference</label>
                                                     <select class="custom-select" name="work_preference">
                                                         {% for preference in work_preferences %}
-                                                            {% if preference.name == vacancy.work_preference %}
-                                                                <option value="{{ preference.name }}" selected>{{ preference.name }}</option>
+                                                            {% if preference.id == vacancy.work_preference.id %}
+                                                                <option value="{{ preference.id }}" selected>{{ preference.name }}</option>
                                                             {% else %}
-                                                                <option value="{{ preference.name }}">{{ preference.name }}</option>
+                                                                <option value="{{ preference.id }}">{{ preference.name }}</option>
                                                             {% endif %}
                                                         {% endfor %}
                                                     </select>
@@ -175,10 +175,10 @@
                                                     <label>Department</label>
                                                     <select class="custom-select" name="department">
                                                         {% for department in departments %}
-                                                            {% if department.name == vacancy.department %}
-                                                                <option value="{{ department.name }}" selected>{{ department.name }}</option>
+                                                            {% if department.id == vacancy.department.id %}
+                                                                <option value="{{ department.id }}" selected>{{ department.name }}</option>
                                                             {% else %}
-                                                                <option value="{{ department.name }}">{{ department.name }}</option>
+                                                                <option value="{{ department.id }}">{{ department.name }}</option>
                                                             {% endif %}
                                                         {% endfor %}
                                                     </select>
@@ -219,10 +219,10 @@
                                                         <label>Location</label>
                                                         <select class="custom-select" name="location">
                                                             {% for location in locations %}
-                                                                {% if location.name == vacancy.location %}
-                                                                    <option value="{{ location.name }}" selected>{{ location.name }}</option>
+                                                                {% if location.id == vacancy.location.id %}
+                                                                    <option value="{{ location.id }}" selected>{{ location.name }}</option>
                                                                 {% else %}
-                                                                    <option value="{{ location.name }}">{{ location.name }}</option>
+                                                                    <option value="{{ location.id }}">{{ location.name }}</option>
                                                                 {% endif %}
                                                             {% endfor %}
                                                         </select>
@@ -232,7 +232,7 @@
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <label for="input-currency">Salary Minimum</label>
-                                                        <input id="input-currency" name="salary_minimum" class="form-control input-mask text-left" value="{{ vacancy.salary_minimum }}" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
+                                                        <input id="input-currency" name="salary_minimum" class="form-control input-mask text-left" value="{{ vacancy.salary_minimum }}" data-inputmask="'alias': 'numeric', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
                                                     </div>
                                                 </div>
                                             </div>
@@ -242,10 +242,10 @@
                                                         <label>Employment Type</label>
                                                         <select class="custom-select" name="employment_type">
                                                             {% for type in employment_types %}
-                                                                {% if type.name == vacancy.employment_type %}
-                                                                    <option value="{{ type.name }}" selected>{{ type.name }}</option>
+                                                                {% if type.id == vacancy.employment_type.id %}
+                                                                    <option value="{{ type.id }}" selected>{{ type.name }}</option>
                                                                 {% else %}
-                                                                    <option value="{{ type.name }}">{{ type.name }}</option>
+                                                                    <option value="{{ type.id }}">{{ type.name }}</option>
                                                                 {% endif %}
                                                             {% endfor %}
                                                         </select>
@@ -255,7 +255,7 @@
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <label for="input-currency">Salary Midpoint</label>
-                                                        <input id="input-currency" name="salary_midpoint" class="form-control input-mask text-left" value="{{ vacancy.salary_midpoint }}" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
+                                                        <input id="input-currency" name="salary_midpoint" class="form-control input-mask text-left" value="{{ vacancy.salary_midpoint }}" data-inputmask="'alias': 'numeric', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
                                                     </div>
                                                 </div>
                                             </div>
@@ -265,10 +265,10 @@
                                                         <label>FTE</label>
                                                         <select class="custom-select" name="fte">
                                                             {% for fte in ftes %}
-                                                                {% if fte.name == vacancy.fte %}
-                                                                    <option value="{{ fte.name }}" selected>{{ fte.name }}</option>
+                                                                {% if fte.id == vacancy.fte.id %}
+                                                                    <option value="{{ fte.id }}" selected>{{ fte.name }}</option>
                                                                 {% else %}
-                                                                    <option value="{{ fte.name }}" selected>{{ fte.name }}</option>
+                                                                    <option value="{{ fte.id }}" selected>{{ fte.name }}</option>
                                                                 {% endif %}
                                                             {% endfor %}
                                                         </select>
@@ -278,7 +278,7 @@
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <label for="input-currency">Salary Maximum</label>
-                                                        <input id="input-currency" name="salary_maximum" class="form-control input-mask text-left" value="{{ vacancy.salary_maximum }}" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
+                                                        <input id="input-currency" name="salary_maximum" class="form-control input-mask text-left" value="{{ vacancy.salary_maximum }}" data-inputmask="'alias': 'numeric', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
                                                     </div>
                                                 </div>
                                             </div>

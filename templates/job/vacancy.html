@@ -38,7 +38,7 @@
                                 <ol class="breadcrumb justify-content-center">
                                     <li class="breadcrumb-item"><a href="{% url 'main:main-index' %}">Home</a></li>
                                     <!-- <li class="breadcrumb-item"><a href="javascript:void(0)">Pages</a></li> -->
-                                    <li class="breadcrumb-item active" aria-current="page"> Job Details </li>
+                                    <li class="breadcrumb-item active" aria-current="page"> Vacancy Details </li>
                                 </ol>
                             </nav>
                         </div>
@@ -80,7 +80,7 @@
                             <div>
                                 <div class="row">
                                     <div class="col-md-8">
-                                        <h5 class="mb-1">{{ vacancy.position_title|title }}</h5>
+                                        <h5 class="mb-1">{{ vacancy.position_title }}</h5>
                                         <ul class="list-inline text-muted mb-0">
                                             <li class="list-inline-item">
                                                 <i class="mdi mdi-account"></i> {{ vacancy.employer.vacancies.count }} Vacancy
@@ -114,19 +114,19 @@
                                     <div class="col-lg-3">
                                         <div class="border rounded-start p-3">
                                             <p class="text-muted mb-0 fs-13">Experience</p>
-                                            <p class="fw-medium fs-15 mb-0">{{ vacancy.work_experience }}</p>
+                                            <p class="fw-medium fs-15 mb-0">{{ vacancy.work_experience_name }}</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="border p-3">
                                             <p class="text-muted fs-13 mb-0">Employee type</p>
-                                            <p class="fw-medium mb-0">{{ vacancy.employment_type }}</p>
+                                            <p class="fw-medium mb-0">{{ vacancy.employment_type_name }}</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="border p-3">
                                             <p class="text-muted fs-13 mb-0">Position</p>
-                                            <p class="fw-medium mb-0">{{ vacancy.career_type }}</p>
+                                            <p class="fw-medium mb-0">{{ vacancy.career_type_name }}</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
@@ -217,7 +217,7 @@
 
                     {% if vacancies.count == 5 %}
                     <div class="text-center mt-4">
-                            <a href="{% url 'job:vacancies' %}?job-title={{ vacancy.job_title }}" class="primary-link form-text">View More <i class="mdi mdi-arrow-right"></i></a>
+                            <a href="{% url 'job:vacancies' %}?job-title={{ vacancy.job_title_name }}" class="primary-link form-text">View More <i class="mdi mdi-arrow-right"></i></a>
                     </div>
                     {% endif %}
 
@@ -235,7 +235,7 @@
                                             <i class="uil uil-user icon bg-soft-primary"></i>
                                             <div class="ms-3">
                                                 <h6 class="fs-14 mb-2">Job Title</h6>
-                                                <p class="text-muted mb-0">{{ vacancy.job_title }}</p> 
+                                                <p class="text-muted mb-0">{{ vacancy.job_title_name }}</p> 
                                             </div>
                                         </div>
                                     </li>
@@ -244,7 +244,7 @@
                                             <i class="uil uil-star-half-alt icon bg-soft-primary"></i>
                                             <div class="ms-3">
                                                 <h6 class="fs-14 mb-2">Experience</h6>
-                                                <p class="text-muted mb-0">{{ vacancy.work_experience }}</p> 
+                                                <p class="text-muted mb-0">{{ vacancy.work_experience_name }}</p> 
                                             </div>
                                         </div>
                                     </li>
@@ -253,7 +253,7 @@
                                             <i class="uil uil-location-point icon bg-soft-primary"></i>
                                             <div class="ms-3">
                                                 <h6 class="fs-14 mb-2">Location</h6>
-                                                <p class="text-muted mb-0">{{ vacancy.location }}</p> 
+                                                <p class="text-muted mb-0">{{ vacancy.location_name }}</p> 
                                             </div>
                                         </div>
                                     </li>
@@ -307,7 +307,7 @@
                                     <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="" class="img-fluid rounded-3">
 
                                     <div class="mt-4">
-                                        <h6 class="fs-17 mb-1">{{ vacancy.employer.company_name }}</h6>
+                                        <h6 class="fs-17 mb-1">{{ vacancy.company_name }}</h6>
                                         <p class="text-muted">Since July 2017</p>
                                     </div>
                                 </div>
@@ -326,7 +326,7 @@
                                             <i class="uil uil-envelope text-primary fs-4"></i>
                                             <div class="ms-3">
                                                 <h6 class="fs-14 mb-2">Email</h6>
-                                                <p class="text-muted fs-14 mb-0">{{ vacancy.author.email }}</p>
+                                                <p class="text-muted fs-14 mb-0">{{ vacancy.employer.user.email }}</p>
                                             </div>
                                         </div>
                                     </li>
@@ -350,7 +350,7 @@
                                     </li>
                                 </ul>
                                 <div class="mt-4">
-                                    <a href="{% url 'user:company' vacancy.employer.user %}" class="btn btn-primary btn-hover w-100 rounded"><i class="mdi mdi-eye"></i> View Profile</a>
+                                    <a href="{% url 'user:company' vacancy.employer_username %}" class="btn btn-primary btn-hover w-100 rounded"><i class="mdi mdi-eye"></i> View Profile</a>
                                 </div>
                             </div>
                         </div>

@@ -1,9 +1,29 @@
 from django.core.paginator import Paginator
-from datetime import timedelta
 from django.utils import timezone
+from django.db.models import F
+from datetime import timedelta
 
 from recruitment_cp import models
-from job.models import Vacancy, Bookmark
+from job.models import Vacancy
+
+def vacancy_with_related_info(objects):
+    return objects.select_related(
+        'employer', 'career_type', 'career_level', 'location', 'fte', 'job_title',
+        'employment_type', 'work_experience', 'work_preference', 'department'
+    ).annotate(
+        employer_username = F('employer__user__username'),
+        company_name = F('employer__user__first_name'),
+        career_type_name = F('career_type__name'),
+        career_level_name = F('career_level__name'),
+        location_name = F('location__name'),
+        fte_name = F('fte__name'),
+        job_title_name = F('job_title__name'),
+        employment_type_name = F('employment_type__name'),
+        work_experience_name = F('work_experience__name'),
+        work_preference_name = F('work_preference__name'),
+        department_name = F('department__name')
+    )
+
 
 def fetch_vacancies(request) -> dict:
     # URL parameters are taken for filtering and used for the same filtering on the following pages.
@@ -34,23 +54,23 @@ def fetch_vacancies(request) -> dict:
 
     if work_experience:
         url += f'&work-experience={work_experience}'
-        params.update({'work_experience__in': work_experience.split(',')})
+        params.update({'work_experience__name__in': work_experience.split(',')})
     
     if employment_type:
         url += f'&employment-type={employment_type}'
-        params.update({'employment_type__in': employment_type.split(',')})
+        params.update({'employment_type__name__in': employment_type.split(',')})
     
     if sector:
         url += f'&sector={sector}'
-        params.update({'employer__company__sector': sector})
+        params.update({'employer__sector': sector})
 
     if department:
         url += f'&department={department}'
-        params.update({'department__in': department.split(',')})
+        params.update({'department__name__in': department.split(',')})
 
     if work_preference:
         url += f'&work-preference={work_preference}'
-        params.update({'work_preference__in': work_preference.split(',')})
+        params.update({'work_preference__name__in': work_preference.split(',')})
 
     if date:
         url += f'&date={date}'
@@ -59,13 +79,13 @@ def fetch_vacancies(request) -> dict:
     # filter settings for view more
     if job_title:
         url += f'&job-title={job_title}'
-        params.update({'job_title': job_title})
+        params.update({'job_title__name': job_title})
     
     if company:
         url += f'&company={company}'
-        params.update({'employer__company_name': company})
+        params.update({'employer__user__first_name': company})
 
-    filtered_vacancies = Vacancy.objects.filter(**params)
+    filtered_vacancies = vacancy_with_related_info(Vacancy.objects.filter(**params))
 
     # Set up Paginator
     paginator = Paginator(filtered_vacancies, 10)

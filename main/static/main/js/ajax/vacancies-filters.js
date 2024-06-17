@@ -168,17 +168,17 @@ const listVacancies = (vacanciesInfo, bookmarks) => {
             <div class="p-4">
                 <div class="row">
                     <div class="col-lg-1">
-                        <a href="/company/${vacancy.employer__user__username}"><img src="/static/main/images/featured-job/default-company-img.jpeg" alt="" class="img-fluid rounded-3"></a>
+                        <a href="/company/${vacancy.employer__username}"><img src="/static/main/images/featured-job/default-company-img.jpeg" alt="" class="img-fluid rounded-3"></a>
                     </div><!--end col-->
                     <div class="col-lg-10">
                         <div class="mt-3 mt-lg-0">
-                            <h5 class="fs-17 mb-1"><a href="/vacancy/${vacancy.slug}" class="text-dark">${vacancy.position_title}</a> <small class="text-muted fw-normal">(${vacancy.work_experience})</small></h5>
+                            <h5 class="fs-17 mb-1"><a href="/vacancy/${vacancy.slug}" class="text-dark">${vacancy.position_title}</a> <small class="text-muted fw-normal">(${vacancy.work_experience_name})</small></h5>
                             <ul class="list-inline mb-0">
                                 <li class="list-inline-item">
-                                    <p class="text-muted fs-14 mb-0">${vacancy.employer__user__first_name}</p>
+                                    <p class="text-muted fs-14 mb-0">${vacancy.company_name}</p>
                                 </li>
                                 <li class="list-inline-item">
-                                    <p class="text-muted fs-14 mb-0"><i class="mdi mdi-map-marker"></i> ${vacancy.location}</p>
+                                    <p class="text-muted fs-14 mb-0"><i class="mdi mdi-map-marker"></i> ${vacancy.location_name}</p>
                                 </li>
                                 <li class="list-inline-item">
                                     <p class="text-muted fs-14 mb-0"><i class="uil uil-wallet"></i> ${vacancy.salary_minimum} ₼ - ${vacancy.salary_maximum} ₼ / month</p>
@@ -199,13 +199,21 @@ const listVacancies = (vacanciesInfo, bookmarks) => {
             <div class="p-3 bg-light">
                 <div class="row justify-content-between">
                     <div class="col-md-8">
+                    ${vacancy.keywords ? `
                         <div>
                             <ul class="list-inline mb-0">
                                 <li class="list-inline-item"><i class="uil uil-tag"></i> Keywords :</li>
-                                <li class="list-inline-item"><a href="javascript:void(0)" class="primary-link text-muted">Ui designer</a>,</li>
-                                <li class="list-inline-item"><a href="javascript:void(0)" class="primary-link text-muted">developer</a></li>
+                                 ${(() => {
+                                    let itemsHtml = '';
+                                    let lastIndex = vacancy.keywords.length - 1;
+                                    vacancy.keywords.forEach((key, index) => {
+                                        itemsHtml += `<li class="list-inline-item"><a href="javascript:void(0)" class="primary-link text-muted">${key}${index==lastIndex ? '':','}</a></li>`;
+                                    });
+                                    return itemsHtml;
+                                })()}
                             </ul>
                         </div>
+                    `:''}
                     </div>
                     <!--end col-->
                     <div class="col-md-3">

@@ -50,11 +50,8 @@ def complete_register(request):
 def post_vacancy(request):
     if request.POST:
         form = PostVacancyForm(request.POST)
-        print(form.errors)
 
         if form.is_valid():
-            print(form.cleaned_data.get('status'))
-            print(form.cleaned_data.get('keywords'))
 
             instance = form.save(commit=False)
             instance.employer = request.user.employer
@@ -62,15 +59,15 @@ def post_vacancy(request):
             return redirect(reverse('dashboard:all-vacancy'))
 
     languages = Language.objects.all().values('code', 'name')
-    job_catalogue = ParameterJobCatalogue.objects.all().values('name')
-    career_types = ParameterCareerType.objects.all().values('name')
-    career_levels = ParameterCareerLevel.objects.all().values('name')
-    locations = ParameterLocation.objects.all().values('name')
-    employment_types = ParameterEmployeeType.objects.all().values('name')
-    ftes = ParameterFTE.objects.all().values('name')
-    work_preferences = ParameterWorkPreference.objects.all().values('name')
-    departments = ParameterDepartment.objects.all().values('name')
-    keywords = ParameterKeyword.objects.all().values('name')
+    job_catalogue = ParameterJobCatalogue.objects.all().values('id', 'name')
+    career_types = ParameterCareerType.objects.all().values('id', 'name')
+    career_levels = ParameterCareerLevel.objects.all().values('id', 'name')
+    locations = ParameterLocation.objects.all().values('id', 'name')
+    employment_types = ParameterEmployeeType.objects.all().values('id', 'name')
+    ftes = ParameterFTE.objects.all().values('id', 'name')
+    work_preferences = ParameterWorkPreference.objects.all().values('id', 'name')
+    departments = ParameterDepartment.objects.all().values('id', 'name')
+    keywords = ParameterKeyword.objects.all().values('id', 'name')
 
     context = {
         'languages': languages,
@@ -110,9 +107,9 @@ def ajax_all_vacancy(request):
     for obj in page_vacancies:
         data.append([
             obj.position_title,
-            obj.job_title,
-            obj.career_type,
-            obj.career_level,
+            obj.job_title.name,
+            obj.career_type.name,
+            obj.career_level.name,
             obj.salary_minimum,
             obj.salary_midpoint,
             obj.salary_maximum,
@@ -137,23 +134,23 @@ def ajax_all_vacancy(request):
 def edit_vacancy(request, id):
     vacancy = get_object_or_404(request.user.employer.vacancies, id=id)
 
-    languages = Language.objects.all().values('code', 'name')
-    job_catalogue = ParameterJobCatalogue.objects.all().values('name')
-    career_types = ParameterCareerType.objects.all().values('name')
-    career_levels = ParameterCareerLevel.objects.all().values('name')
-    locations = ParameterLocation.objects.all().values('name')
-    employment_types = ParameterEmployeeType.objects.all().values('name')
-    ftes = ParameterFTE.objects.all().values('name')
-    work_preferences = ParameterWorkPreference.objects.all().values('name')
-    departments = ParameterDepartment.objects.all().values('name')
-    keywords = ParameterKeyword.objects.all().values('name')
-
     if request.POST:
         form = PostVacancyForm(request.POST, instance=vacancy)
 
         if form.is_valid():
             form.save()
             return redirect(reverse('dashboard:all-vacancy'))
+        
+    languages = Language.objects.all().values('code', 'name')
+    job_catalogue = ParameterJobCatalogue.objects.all().values('id', 'name')
+    career_types = ParameterCareerType.objects.all().values('id', 'name')
+    career_levels = ParameterCareerLevel.objects.all().values('id', 'name')
+    locations = ParameterLocation.objects.all().values('id', 'name')
+    employment_types = ParameterEmployeeType.objects.all().values('id', 'name')
+    ftes = ParameterFTE.objects.all().values('id', 'name')
+    work_preferences = ParameterWorkPreference.objects.all().values('id', 'name')
+    departments = ParameterDepartment.objects.all().values('id', 'name')
+    keywords = ParameterKeyword.objects.all().values('id', 'name')
 
     context = {
         'vacancy': vacancy,
@@ -176,7 +173,6 @@ def edit_account(request):
     if request.POST:
         user = request.user
         form = EditEmployerAccountForm(request.POST, request.FILES, instance=user.employer)
-        print(form.errors)
 
         if form.is_valid():
             email = form.cleaned_data.get('primary_email')

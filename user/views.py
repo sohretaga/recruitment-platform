@@ -6,6 +6,7 @@ from django.contrib import messages
 from . import forms
 from .decorators import logout_required
 from user.models import CustomUser
+from job.utils import vacancy_with_related_info
 
 
 @logout_required
@@ -81,7 +82,7 @@ def company_list(request):
 
 def company_details(request, username):
     user = get_object_or_404(CustomUser, username=username)
-    vacancies = user.employer.vacancies.filter(status=True)[:5]
+    vacancies = vacancy_with_related_info(user.employer.vacancies.filter(status=True)[:5])
 
     context = {
         'employer': user.employer,
