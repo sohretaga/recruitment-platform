@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator
 from django.utils import timezone
-from django.db.models import F
+from django.db.models import F, Count
 from datetime import timedelta
 
 from recruitment_cp import models
@@ -100,6 +100,8 @@ def fetch_vacancies(request) -> dict:
     departments = models.ParameterDepartment.objects.values('id', 'name')
     work_preferences = models.ParameterWorkPreference.objects.values('id', 'name')
 
+    popular_job_titles = Vacancy.objects.values('job_title__name').annotate(count=Count('job_title__name')).order_by('-count')[:5]
+
     return {
         'vacancies': vacancies,
         'countries': countries,
@@ -111,4 +113,5 @@ def fetch_vacancies(request) -> dict:
         'url':url,
         'related_vacancies_title': job_title,
         'company': company,
+        'popular_job_titles': popular_job_titles
     }

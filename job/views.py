@@ -4,7 +4,6 @@ from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count, F
 from datetime import timedelta
 
 from job.models import Vacancy, Bookmark
@@ -18,11 +17,9 @@ import json
 
 def vacancies(request):
     vacancies = fetch_vacancies(request)
-    popular_job_titles = Vacancy.objects.values('job_title__name').annotate(count=Count('job_title__name')).order_by('-count')[:5]
-
+    
     context = {
         **vacancies,
-        'popular_job_titles': popular_job_titles
     }
 
     return render(request, 'job/vacancies.html', context)
