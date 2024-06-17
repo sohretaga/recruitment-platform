@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse, Http404
+from django.db.models import F
 
 from recruitment_cp import models as cp_models
 from blog.models import Category as BlogCategory
@@ -502,10 +503,19 @@ def vacancy_load(request):
             offset = int(request.POST.get('offset', 0))
             limit = int(request.POST.get('limit', 1000))
             
-            vacancies = Vacancy.objects.filter(language = language)\
-                .values('id', 'no', 'employer__user__first_name', 'career_type', 'career_level', 'location', 'fte', 'salary_minimum',
-                        'salary_midpoint', 'salary_maximum', 'salary', 'position_title', 'job_title', 'employment_type',
-                        'work_experience', 'definition', 'work_preference', 'department', 'created_date', 'keywords', 'status')[offset:offset+limit]
+            vacancies = Vacancy.objects.filter(language = language).select_related(
+                'employer', 'career_type', 'career_level', 'location', 'fte', 'job_title', 'employment_type', 'work_experience', 'work_preference', 'department'
+                ).annotate(company_name=F('employer__user__first_name'),
+                           career_type_name=F('career_type__name'),
+                           career_level_name=F('career_level__name'),
+                           location_name=F('location__name'),
+                           fte_name=F('fte__name'),
+                           job_title_name=F('job_title__name'),
+                           employment_type_name=F('employment_type'),
+                           work_experience_name=F('work_experience__name'),
+                           work_preference_name=F('work_preference__name'),
+                           department_name=F('department__name')
+                ).values()[offset:offset+limit]
             
             json_data = json.dumps(list(vacancies), default=datetime_to_string)
 
