@@ -100,7 +100,7 @@ def fetch_vacancies(request) -> dict:
     departments = models.ParameterDepartment.objects.values('id', 'name')
     work_preferences = models.ParameterWorkPreference.objects.values('id', 'name')
 
-    popular_job_titles = Vacancy.objects.values('job_title__name').annotate(count=Count('job_title__name')).order_by('-count')[:5]
+    popular_job_titles = Vacancy.objects.values('job_title__name').annotate(count=Count('job_title__name')).order_by('-count')[:6]
 
     return {
         'vacancies': vacancies,

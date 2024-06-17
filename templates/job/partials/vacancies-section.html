@@ -119,8 +119,8 @@
                             <!-- <h6>Popular</h6> -->
                             <ul class="list-inline">
                                 {% for popular in popular_job_titles %}
-                                <li class="list-inline-item">
-                                    <div class="popular-box d-flex align-items-center">
+                                <li class="list-inline-item" style="width: calc(50% - 1rem);">
+                                    <div class="popular-box d-flex align-items-center"  style="height: 50px;">
                                         <div class="number flex-shrink-0 me-2">{{ popular.count }}</div>
                                         <a href="javascript:void(0)" class="primary-link stretched-link"><h6 class="fs-14 mb-0">{{ popular.job_title__name }}</h6></a>
                                     </div>
