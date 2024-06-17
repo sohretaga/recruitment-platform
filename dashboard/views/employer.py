@@ -8,6 +8,7 @@ from django.views.decorators.http import require_POST
 from dashboard.decorators import is_employer
 from dashboard.forms import CompleteEmployerRegisterForm, PostVacancyForm, EditEmployerAccountForm
 from job.models import Vacancy
+from job.utils import vacancy_with_related_info
 from recruitment_cp.models import (Language,
                                    ParameterCareerType,
                                    ParameterCareerLevel,
@@ -94,7 +95,7 @@ def ajax_all_vacancy(request):
     length:str = int(request.GET.get('length', 10))
     search_value:str = request.GET.get('search[value]', '')
 
-    vacancies = request.user.employer.vacancies.all()
+    vacancies = vacancy_with_related_info(request.user.employer.vacancies.all())
 
     if search_value:
         vacancies = vacancies.filter(position_title__icontains=search_value)
@@ -107,9 +108,9 @@ def ajax_all_vacancy(request):
     for obj in page_vacancies:
         data.append([
             obj.position_title,
-            obj.job_title.name,
-            obj.career_type.name,
-            obj.career_level.name,
+            obj.job_title_name,
+            obj.career_type_name,
+            obj.career_level_name,
             obj.salary_minimum,
             obj.salary_midpoint,
             obj.salary_maximum,

@@ -94,91 +94,92 @@
 
 /* TODAY RELEASES */
 
-.today {
-    margin-top: 10px;
-    justify-content: center;
+.today-section {
+    margin-top: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
-.today .row {
+.today-section .row {
     gap: 20px
 }
 
-.today .title {
+.today-section .title {
     text-align: center;
 }
 
-.today .card {
+.today-section .card {
     width: calc(50% - 20px);
 }
 
-.today .card-top {
+.today-section .card-top {
     display: flex;
     margin: 10px
 }
 
-.today .card-bottom {
+.today-section .card-bottom {
     display: flex;
     margin: 0 10px;
     justify-content: space-between;
 }
 
-.today .card-content {
+.today-section .card-content {
     margin-left: 20px;
 }
 
-.today .card-content p,
+.today-section .card-content p,
 h5 {
     margin: 0;
 }
 
-.today .card-img {
+.today-section .card-img {
     align-content: center;
 }
 
-.today .card-img img {
+.today-section .card-img img {
     width: 65px;
     height: auto;
 }
 
 @media screen and (max-width: 768px) {
-    .today .row {
+    .today-section .row {
         order: 1;
         flex-wrap: nowrap;
         overflow: auto;
         justify-content: space-between !important;
     }
 
-    .today .card:first-child {
+    .today-section .card:first-child {
         margin-left: 10px;
     }
 
-    .today .card:last-child {
+    .today-section .card:last-child {
         margin-right: 10px;
     }
 }
 
 @media screen and (max-width: 768px) {
-    .today .card-bottom {
+    .today-section .card-bottom {
         display: none;
     }
 
-    .today .card-top .card-img {
+    .today-section .card-top .card-img {
         display: flex;
         align-items: center;
         justify-content: center;
     }
 
-    .today .card-top .card-content {
+    .today-section .card-top .card-content {
         margin-left: 0;
         text-align: center;
     }
 
-    .today .card-top .card-img img {
+    .today-section .card-top .card-img img {
         width: 55px;
         height: auto;
     }
 
-    .today .card-top {
+    .today-section .card-top {
         display: block;
 
     }
