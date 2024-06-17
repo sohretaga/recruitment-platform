@@ -136,8 +136,8 @@ keywords = models.ParameterKeyword.objects.all().values_list('name', flat=True)
 random_step =  [1,2,3,4,5]
 superuser = CustomUser.objects.get(is_superuser=True)
 
-def run():
-    for i in range(1, 20001):
+def run(limit):
+    for i in range(1, limit+1):
         Vacancy.objects.create(
             no = i,
             language = 'en',
