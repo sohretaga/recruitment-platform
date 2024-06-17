@@ -511,7 +511,7 @@ def vacancy_load(request):
                            location_name=F('location__name'),
                            fte_name=F('fte__name'),
                            job_title_name=F('job_title__name'),
-                           employment_type_name=F('employment_type'),
+                           employment_type_name=F('employment_type__name'),
                            work_experience_name=F('work_experience__name'),
                            work_preference_name=F('work_preference__name'),
                            department_name=F('department__name')
