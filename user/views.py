@@ -69,17 +69,17 @@ def profile(request):
 
 
 def candidate_list(request):
-    return render(request, 'user/candidate-list.html')
-
-
-def candidate_details(request):
     candidates = Candidate.objects.all()
 
     context = {
         'candidates': candidates
     }
 
-    return render(request, 'user/candidate-details.html', context)
+    return render(request, 'user/candidate-list.html', context)
+
+
+def candidate_details(request):
+    return render(request, 'user/candidate-details.html')
 
 
 def company_list(request):
