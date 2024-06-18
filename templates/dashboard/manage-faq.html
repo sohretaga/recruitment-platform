@@ -1,0 +1,120 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block title %}
+    {% if blog %}
+        Edit - {{ faq.title|title }}
+    {% else %}
+        Publish FAQ
+    {% endif %}
+{% endblock title %}
+
+{% block head %}
+    <!-- Bootstrap Css -->
+    <link href="{% static 'dashboard/css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="{% static 'dashboard/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="{% static 'dashboard/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
+{% endblock head %}
+
+{% block content %}
+<div class="page-content">
+    <div class="container-fluid">
+
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-flex align-items-center justify-content-between">                        
+                        {% if faq %}
+                            <div>
+                                <a href="{% url 'dashboard:add-faq' %}"><label class="btn btn-info" type="button"><i class="mdi mdi-plus"></i>Add FAQ</label></a>
+                                <label class="btn btn-success" for='save' type="submit"><i class="mdi mdi-content-save"></i> Save</label>
+                            </div>
+                        {% else %}
+                            <label class="btn btn-primary" for='post' type="submit"><i class="mdi mdi-send"></i> Publish</label>
+                        {% endif %}
+
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">FAQ</a></li>
+                            {% if faq %}
+                                <li class="breadcrumb-item active">Edit FAQ</li>
+                            {% else %}
+                                <li class="breadcrumb-item active">Add FAQ</li>
+                            {% endif %}
+                        </ol>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label">Select Category</label>
+                                <div class="col-md-10">
+                                    <select class="form-control" name="category">
+                                        {% for category in categories %}
+                                            {% if category.id == faq.category.id %}
+                                                <option value='{{ category.id }}' selected>{{ category.name }}</option>
+                                            {% else %}
+                                                <option value='{{ category.id }}'>{{ category.name }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-md-2 col-form-label">Question</label>
+                                <div class="col-md-10">
+                                    <input class="form-control" name="question" type="text" placeholder="Example Question" id="example-text-input" value="{{ faq.question }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-md-2 col-form-label">Answer</label>
+                                <div class="col-md-10">
+                                    <textarea class="form-control" rows="10" placeholder="Example Answer" name="answer">{{ faq.answer }}</textarea>
+                                </div>
+                            </div>
+                            
+                            {% if faq %}
+                                <button style='display: none;' class="btn btn-success" id='save' type="submit"></button>
+                            {% else %}
+                                <button style='display: none;' class="btn btn-primary" id='post' type="submit"></button>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div> <!-- end col -->
+        </div> <!-- end row -->
+
+    </div> <!-- container-fluid -->
+</div>
+<!-- End Page-content -->
+{% endblock content %}
+
+{% block script %}
+    <!-- JAVASCRIPT -->
+    <script src="{% static 'dashboard/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'dashboard/libs/metismenu/metisMenu.min.js' %}"></script>
+    <script src="{% static 'dashboard/libs/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'dashboard/libs/node-waves/waves.min.js' %}"></script>
+
+    <!-- bs custom file input plugin -->
+    <script src="{% static 'dashboard/libs/bs-custom-file-input/bs-custom-file-input.min.js' %}"></script>
+
+    <script src="{% static 'dashboard/js/pages/form-element.init.js' %}"></script>
+
+    <!-- init js -->
+    <script src="{% static 'dashboard/js/app.js' %}"></script>
+
+{% endblock script %}

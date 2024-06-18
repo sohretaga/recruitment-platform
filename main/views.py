@@ -1,9 +1,13 @@
 from django.shortcuts import render
+
 from job.utils import fetch_vacancies
 from user.models import Employer
 from job.models import Vacancy
+from recruitment_cp.models import ParameterFAQ
+from main.models import FAQ
 
 import math
+
 # Create your views here.
 
 def index(request):
@@ -59,7 +63,15 @@ def privacy_policy(request):
     return render(request, 'main/privacy-policy.html')
 
 def faqs(request):
-    return render(request, 'main/faqs.html')
+    categories = ParameterFAQ.objects.all()
+    faqs = FAQ.objects.all()
+
+    context = {
+        'categories': categories,
+        'faqs': faqs
+    }
+
+    return render(request, 'main/faqs.html', context)
 
 def coming_soon(request):
     return render(request, 'main/coming-soon.html')

@@ -9,6 +9,11 @@ urlpatterns = [
     path('bookmarks', main.bookmarks, name='bookmarks'),
     path('ajax/delete-bookmark', main.ajax_delete_bookmark, name='ajax-delete-bookmark'),
 
+    path('faqs', main.faqs, name='faqs'),
+    path('faqs/add', main.add_faq, name='add-faq'),
+    path('faqs/edit/<int:id>', main.edit_faq, name='edit-faq'),
+    path('ajax/delete-faq', main.ajax_delete_faq, name='ajax-delete-faq'),
+
     # Employer URL's
     path('employer/complete-register', employer.complete_register, name='employer-complete-register'),
     path('vacnacy/post', employer.post_vacancy, name='post-vacancy'),

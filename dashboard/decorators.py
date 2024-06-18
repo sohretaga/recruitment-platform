@@ -31,3 +31,13 @@ def is_blogger(function):
             raise Http404
     
     return wrap
+
+def is_superuser(function):
+    @login_required
+    def wrap(request, *args, **kwargs):
+        if request.user.is_superuser:
+            return function(request, *args, **kwargs)
+        else:
+            raise Http404
+    
+    return wrap

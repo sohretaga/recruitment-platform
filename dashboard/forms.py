@@ -3,6 +3,7 @@ from django import forms
 from job.models import Vacancy
 from blog.models import Blog
 from user.models import Employer
+from main.models import FAQ
 
 class CompleteEmployerRegisterForm(forms.Form):
     first_name = forms.CharField(max_length=30)
@@ -41,3 +42,9 @@ class EditEmployerAccountForm(forms.ModelForm):
     class Meta:
         model = Employer
         exclude = ['id', 'no', 'user']
+
+class ManageFaqForm(forms.ModelForm):
+
+    class Meta:
+        model = FAQ
+        fields = "__all__"
