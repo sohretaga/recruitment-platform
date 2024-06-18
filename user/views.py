@@ -5,7 +5,7 @@ from django.contrib import messages
 
 from . import forms
 from .decorators import logout_required
-from user.models import CustomUser
+from user.models import CustomUser, Candidate
 from job.utils import vacancy_with_related_info
 
 
@@ -73,7 +73,13 @@ def candidate_list(request):
 
 
 def candidate_details(request):
-    return render(request, 'user/candidate-details.html')
+    candidates = Candidate.objects.all()
+
+    context = {
+        'candidates': candidates
+    }
+
+    return render(request, 'user/candidate-details.html', context)
 
 
 def company_list(request):
