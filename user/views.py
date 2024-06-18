@@ -2,10 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 from . import forms
 from .decorators import logout_required
-from user.models import CustomUser, Candidate
+from user.models import CustomUser, Candidate, Employer
 from job.utils import vacancy_with_related_info
 
 
@@ -83,7 +84,17 @@ def candidate_details(request):
 
 
 def company_list(request):
-    return render(request, 'user/company-list.html')
+    companies = Employer.objects.all().order_by('user__first_name')
+
+    paginator = Paginator(companies, 30)
+    current_page = request.GET.get('page')
+    companies = paginator.get_page(current_page)
+
+    context = {
+        'companies': companies
+    }
+
+    return render(request, 'user/company-list.html', context)
 
 
 def company_details(request, username):
