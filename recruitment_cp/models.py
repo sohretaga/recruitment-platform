@@ -106,3 +106,6 @@ class ParameterWorkPreference(ParameterCommonFields):
 
 class ParameterKeyword(ParameterCommonFields):
     ...
+
+class ParameterFAQ(ParameterCommonFields):
+    ...

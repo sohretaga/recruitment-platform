@@ -1091,3 +1091,56 @@ def keywords_save(request):
             raise PermissionError
     else:
         raise Http404
+    
+#======================================================================================================
+def faq_index(request):
+    if request.user.is_superuser:
+        return render(request, 'cp/parameters/faq.html')
+    
+    raise Http404
+
+def faq_load(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            language = request.POST.get('language')
+            
+            faq = cp_models.ParameterFAQ.objects.filter(language=language).values(
+                'id', 'no', 'name', 'definition', 'note'
+            )
+            json_data = json.dumps(list(faq))
+
+            return JsonResponse(json_data, safe=False)
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+
+def faq_save(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            hot = json.loads(request.POST.get('hot'))
+            language = request.POST.get('language')
+            index = 0
+
+            while index < len(hot):
+                pk = hot[index].pop('id', None)
+                name = hot[index].get('name', None)
+
+                if name:
+                    if pk:
+                        faq = cp_models.ParameterFAQ.objects.filter(pk=pk)
+                        faq.update(**hot[index])
+                    else:
+                        faq = cp_models.ParameterFAQ(language=language, **hot[index])
+                        faq.save()
+                else:
+                    faq = cp_models.ParameterFAQ.objects.filter(pk = pk)
+                    faq.delete()
+                
+                index += 1
+
+            return JsonResponse({'status': 200})
+        else:
+            raise PermissionError
+    else:
+        raise Http404

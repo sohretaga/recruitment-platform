@@ -89,4 +89,8 @@ urlpatterns = [
     path('parameters/keywords', parameters.keywords_index, name='keywords'),
     path('parameters/keywords-load', parameters.keywords_load, name='keywords_load'),
     path('parameters/keywords-save', parameters.keywords_save, name='keywords_save'),
+
+    path('parameters/faq-categories', parameters.faq_index, name='faq_categories'),
+    path('parameters/faq-categories-load', parameters.faq_load, name='faq_categories_load'),
+    path('parameters/faq-categories-save', parameters.faq_save, name='faq_categories_save'),
 ]

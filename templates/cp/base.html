@@ -79,6 +79,7 @@
                     <li {% if 'department' in request.path %} class="active" {% endif %}><a href="{% url 'cp:department' %}">Department</a></li>
                     <li {% if 'work-preference' in request.path %} class="active" {% endif %}><a href="{% url 'cp:work_preference' %}">Work Preference</a></li>
                     <li {% if 'keywords' in request.path %} class="active" {% endif %}><a href="{% url 'cp:keywords' %}">Keywords</a></li>
+                    <li {% if 'faq-categories' in request.path %} class="active" {% endif %}><a href="{% url 'cp:faq_categories' %}">FAQ Categories</a></li>
                 {% endif %}
             </ul>
         </div>
