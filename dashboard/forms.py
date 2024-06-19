@@ -2,17 +2,8 @@ from django import forms
 
 from job.models import Vacancy
 from blog.models import Blog
-from user.models import Employer
+from user.models import Employer, Candidate
 from main.models import FAQ
-
-class CompleteEmployerRegisterForm(forms.Form):
-    first_name = forms.CharField(max_length=30)
-    last_name = forms.CharField(max_length=30)
-    company_name = forms.CharField(max_length=100)
-
-class CompleteCandidateRegisterForm(forms.Form):
-    first_name = forms.CharField(max_length=30)
-    last_name = forms.CharField(max_length=30)
 
 class PostVacancyForm(forms.ModelForm):
     definition = forms.CharField(widget=forms.Textarea, required=False)
@@ -33,7 +24,7 @@ class PostBlogForm(forms.ModelForm):
         fields = ('title', 'category', 'cover_photo', 'content', 'status')
 
 
-class EditEmployerAccountForm(forms.ModelForm):
+class ManageEmployerAccountForm(forms.ModelForm):
     primary_email = forms.EmailField(required=True)
     profile_photo = forms.ImageField(required=False)
     first_name = forms.CharField(max_length=150, required=True)
@@ -42,6 +33,16 @@ class EditEmployerAccountForm(forms.ModelForm):
     class Meta:
         model = Employer
         exclude = ['id', 'no', 'user']
+
+class ManageCandidateAccountForm(forms.ModelForm):
+    email = forms.EmailField(required=True)
+    profile_photo = forms.ImageField(required=False)
+    first_name = forms.CharField(max_length=150, required=True)
+    last_name = forms.CharField(max_length=150, required=True)
+
+    class Meta:
+        model = Candidate
+        exclude = ['id', 'user']
 
 class ManageFaqForm(forms.ModelForm):
 

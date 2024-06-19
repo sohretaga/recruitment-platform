@@ -15,18 +15,18 @@ urlpatterns = [
     path('ajax/delete-faq', main.ajax_delete_faq, name='ajax-delete-faq'),
 
     # Employer URL's
-    path('employer/complete-register', employer.complete_register, name='employer-complete-register'),
+    path('employer/complete-register', employer.manage_account, name='employer-complete-register'),
     path('vacnacy/post', employer.post_vacancy, name='post-vacancy'),
     path('vacancy/all', employer.all_vacancy, name='all-vacancy'),
     path('vacancy/edit/<int:id>', employer.edit_vacancy, name='edit-vacancy'),
-    path('employer/edit-account', employer.edit_account, name='employer-edit-account'),
+    path('employer/edit-account', employer.manage_account, name='employer-edit-account'),
     path('ajax/vacancies', employer.ajax_all_vacancy, name='ajax-all-vacancy'),
     path('ajax/delete-vacancy', employer.ajax_delete_vacancy, name='ajax-delete-vacancy'),
 
     # Candidate URL's
-    path('candidate/complete-register', candidate.complete_register, name='candidate-complete-register'),
+    path('candidate/complete-register', candidate.manage_account, name='candidate-complete-register'),
     path('your-applies', candidate.your_applies, name='your-applies'),
-    path('candidate/edit-account', candidate.edit_account, name='candidate-edit-account'),
+    path('candidate/edit-account', candidate.manage_account, name='candidate-edit-account'),
 
     # Blog URL's
     path('blog/post', blogger.post_blog, name='post-blog'),

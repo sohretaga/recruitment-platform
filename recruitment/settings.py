@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     
     'froala_editor',
     'fontawesomefree',
+    'phonenumber_field',
 
     'recruitment_cp',
     'dashboard',

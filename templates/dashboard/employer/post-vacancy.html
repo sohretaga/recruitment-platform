@@ -94,7 +94,7 @@
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label>Job Title</label>
-                                                    <select class="custom-select" name="job_title">
+                                                    <select class="custom-select select2" name="job_title">
                                                         {% for catalogue in job_catalogues %}
                                                             {% if catalogue.id == vacancy.job_title.id %}
                                                                 <option value="{{ catalogue.id }}" selected>{{ catalogue.name }}</option>
@@ -117,7 +117,7 @@
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label>Language</label>
-                                                    <select class="custom-select" name="language">
+                                                    <select class="custom-select select2" name="language">
                                                         {% for language in languages %}
                                                             {% if language.code == vacancy.language %}
                                                                 <option value="{{ language.code }}" selected>{{ language.name }}</option>
@@ -131,7 +131,7 @@
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label>Career Type</label>
-                                                    <select class="custom-select" name="career_type">
+                                                    <select class="custom-select select2" name="career_type">
                                                         {% for type in career_types %}
                                                             {% if type.id == vacancy.career_type.id %}
                                                                 <option value="{{ type.id }}" selected>{{ type.name }}</option>
@@ -145,7 +145,7 @@
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label>Career Level</label>
-                                                    <select class="custom-select" name="career_level">
+                                                    <select class="custom-select select2" name="career_level">
                                                         {% for level in career_levels %}
                                                             {% if level.id == vacancy.career_level.id %}
                                                                 <option value="{{ level.id }}" selected>{{ level.name }}</option>
@@ -159,7 +159,7 @@
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label>Work Preference</label>
-                                                    <select class="custom-select" name="work_preference">
+                                                    <select class="custom-select select2" name="work_preference">
                                                         {% for preference in work_preferences %}
                                                             {% if preference.id == vacancy.work_preference.id %}
                                                                 <option value="{{ preference.id }}" selected>{{ preference.name }}</option>
@@ -173,7 +173,7 @@
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label>Department</label>
-                                                    <select class="custom-select" name="department">
+                                                    <select class="custom-select select2" name="department">
                                                         {% for department in departments %}
                                                             {% if department.id == vacancy.department.id %}
                                                                 <option value="{{ department.id }}" selected>{{ department.name }}</option>
@@ -198,7 +198,7 @@
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label>Status</label>
-                                                    <select class="custom-select" name="status">
+                                                    <select class="custom-select select2" name="status">
                                                         {% if vacancy %}
                                                             <option value="1" {% if vacancy.status %}selected{% endif %}>Active</option>
                                                             <option value="" {% if not vacancy.status %}selected{% endif %}>Deactivate</option>
@@ -217,7 +217,7 @@
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <label>Location</label>
-                                                        <select class="custom-select" name="location">
+                                                        <select class="custom-select select2" name="location">
                                                             {% for location in locations %}
                                                                 {% if location.id == vacancy.location.id %}
                                                                     <option value="{{ location.id }}" selected>{{ location.name }}</option>
@@ -240,7 +240,7 @@
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <label>Employment Type</label>
-                                                        <select class="custom-select" name="employment_type">
+                                                        <select class="custom-select select2" name="employment_type">
                                                             {% for type in employment_types %}
                                                                 {% if type.id == vacancy.employment_type.id %}
                                                                     <option value="{{ type.id }}" selected>{{ type.name }}</option>
@@ -263,7 +263,7 @@
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <label>FTE</label>
-                                                        <select class="custom-select" name="fte">
+                                                        <select class="custom-select select2" name="fte">
                                                             {% for fte in ftes %}
                                                                 {% if fte.id == vacancy.fte.id %}
                                                                     <option value="{{ fte.id }}" selected>{{ fte.name }}</option>

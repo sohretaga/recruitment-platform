@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+from phonenumber_field.modelfields import PhoneNumberField
 
 class CustomUser(AbstractUser):
     USER_TYPE_CHOICES = (
@@ -33,7 +34,17 @@ class Employer(models.Model):
     slider = models.BooleanField(default=False, null=True)
 
 class Candidate(models.Model):
+    GENDER_CHOICES = [
+        ('male', 'Male'),
+        ('female', 'Female')
+    ]
+
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='candidate')
+    id_card_number = models.CharField(max_length=20, null=True)
+    phone_number = PhoneNumberField(null=True, unique=True)
+    birthday = models.DateField(null=True)
+    citizenship = models.CharField(max_length=100, null=True)
+    gender = models.CharField(max_length=6, choices=GENDER_CHOICES, null=True)
 
     def __str__(self) -> str:
-        return self.user.username
+        return self.user.get_full_name()

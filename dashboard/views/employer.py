@@ -1,14 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
-from django.http import Http404, JsonResponse
+from django.http import JsonResponse
 from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
 
-import json
-
 from dashboard.decorators import is_employer
-from dashboard.forms import CompleteEmployerRegisterForm, PostVacancyForm, EditEmployerAccountForm
+from dashboard.forms import PostVacancyForm, ManageEmployerAccountForm
 from job.models import Vacancy
 from job.utils import vacancy_with_related_info
 from recruitment_cp.models import (Language,
@@ -26,27 +24,6 @@ from recruitment_cp.models import (Language,
                                    ParameterNumberOfEmployee,
                                    ParameterKeyword
                                 )
-
-@is_employer
-def complete_register(request):
-    if not request.user.is_registration_complete:
-        if request.POST:
-            form = CompleteEmployerRegisterForm(request.POST)
-
-            if form.is_valid():
-                user = request.user
-
-                user.first_name = form.cleaned_data.get('first_name')
-                user.last_name = form.cleaned_data.get('last_name')
-                user.is_registration_complete = True
-                user.employer.company_name = form.cleaned_data.get('company_name')
-                user.save()
-            
-            return redirect('main:main-index')
-
-        return render(request, 'dashboard/complete-register.html')
-    
-    raise Http404
 
 
 @is_employer
@@ -174,10 +151,10 @@ def edit_vacancy(request, id):
     return render(request, 'dashboard/employer/post-vacancy.html', context)
 
 @is_employer
-def edit_account(request):
+def manage_account(request):
     if request.POST:
         user = request.user
-        form = EditEmployerAccountForm(request.POST, request.FILES, instance=user.employer)
+        form = ManageEmployerAccountForm(request.POST, request.FILES, instance=user.employer)
 
         if form.is_valid():
             email = form.cleaned_data.get('primary_email')
@@ -192,6 +169,7 @@ def edit_account(request):
             user.email = email
             user.first_name = first_name
             user.last_name = last_name
+            user.is_registration_complete = True
             user.save()
 
             return redirect(reverse('dashboard:all-vacancy'))
@@ -208,7 +186,7 @@ def edit_account(request):
         'number_of_employees': number_of_employees
     }
 
-    return render(request, 'dashboard/employer/edit-account.html', context)
+    return render(request, 'dashboard/employer/manage-account.html', context)
 
 @require_POST
 def ajax_delete_vacancy(request):

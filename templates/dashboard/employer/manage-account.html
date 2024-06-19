@@ -4,6 +4,8 @@
 {% block title %}Edit Account{% endblock title %}
 
 {% block head %}
+    <link href="{% static 'dashboard/libs/select2/css/select2.min.css' %}" rel="stylesheet" type="text/css" />
+
     <!-- Bootstrap Css -->
     <link href="{% static 'dashboard/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->
@@ -24,12 +26,20 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-flex align-items-center justify-content-between">
+                    {% if 'complete' in request.path %}
+                    <h4 class="mb-0">Complete Your Register</h4>
+                    {% else %}
                     <h4 class="mb-0">Edit Accont</h4>
+                    {% endif %}
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
+                            {% if 'complete' in request.path %}
+                            <li class="breadcrumb-item active">Register</li>
+                            {% else %}
                             <li class="breadcrumb-item active">Edit Account</li>
+                            {% endif %}
                         </ol>
                     </div>
 
@@ -152,7 +162,11 @@
                                     </div>
                                 </div>
                             </div>
+                            {% if 'complete' in request.path %}
+                            <button class="btn btn-primary" type="submit">Complete!</button>
+                            {% else %}
                             <button class="btn btn-primary" type="submit">Save</button>
+                            {% endif %}
                         </form>
                     </div>
                 </div>
@@ -178,6 +192,8 @@
     <script src="{% static 'dashboard/js/pages/form-validation.init.js' %}"></script>
 
     <script src="{% static 'dashboard/js/app.js' %}"></script>
+
+    <script src="{% static 'dashboard/libs/select2/js/select2.min.js' %}"></script>
 
     <!-- Custom JS -->
     <script src="{% static 'dashboard/js/pages/edit-account.js' %}"></script>
