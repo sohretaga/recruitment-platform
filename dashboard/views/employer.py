@@ -5,6 +5,8 @@ from django.http import Http404, JsonResponse
 from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
 
+import json
+
 from dashboard.decorators import is_employer
 from dashboard.forms import CompleteEmployerRegisterForm, PostVacancyForm, EditEmployerAccountForm
 from job.models import Vacancy
@@ -134,12 +136,14 @@ def ajax_all_vacancy(request):
 @is_employer
 def edit_vacancy(request, id):
     vacancy = get_object_or_404(request.user.employer.vacancies, id=id)
-
     if request.POST:
         form = PostVacancyForm(request.POST, instance=vacancy)
 
         if form.is_valid():
-            form.save()
+            keywords = form.cleaned_data.get('keywords')
+            instance = form.save(commit=False)
+            instance.keywords = keywords
+            instance.save()
             return redirect(reverse('dashboard:all-vacancy'))
         
     languages = Language.objects.all().values('code', 'name')

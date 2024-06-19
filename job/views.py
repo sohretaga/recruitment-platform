@@ -10,6 +10,7 @@ from job.models import Vacancy, Bookmark
 from job.utils import vacancy_with_related_info
 from recruitment_cp.utils import is_ajax
 from .utils import fetch_vacancies
+from recruitment_cp.models import ParameterKeyword
 
 import json
 
@@ -33,10 +34,13 @@ def vacancy(request, slug):
     related_vacancies = vacancy_with_related_info(
         Vacancy.objects.filter(job_title=vacancy.job_title, status=True).exclude(slug=slug)[:5]
     )
+
+    keywords = ParameterKeyword.objects.all()
     
     context = {
         'vacancy': vacancy,
         'vacancies': related_vacancies,
+        'keywords': keywords
     }
 
     return render(request, 'job/vacancy.html', context)
@@ -63,7 +67,6 @@ def ajax_filter_vacancies(request):
         work_preference:str|None = data.get('work_preference')
         date = data.get('date_posted')
         params = {'status': True}
-        value_params = 'employer__user__first_name', 'employer__user__username', 'location', 'salary_minimum', 'salary_maximum', 'position_title', 'job_title', 'work_experience', 'slug', 'created_date'
 
         if salary_range_lower:
             params.update({'salary__gte': salary_range_lower})
@@ -97,8 +100,8 @@ def ajax_filter_vacancies(request):
 
         # Serialize the data
         vacancies_list = list(vacancies_page.object_list.values())
-
         bookmarks = list(Bookmark.objects.filter(user=request.user).values_list('vacancy__id', flat=True))
+        keywords = list(ParameterKeyword.objects.all().values('id', 'name'))
 
         pagination_info = {
             'has_next': vacancies_page.has_next(),
@@ -110,7 +113,8 @@ def ajax_filter_vacancies(request):
         context = {
             'vacancies': vacancies_list,
             'pagination': pagination_info,
-            'bookmarks': bookmarks
+            'bookmarks': bookmarks,
+            'keywords': keywords
         }
 
         return JsonResponse(context, safe=False)

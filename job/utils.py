@@ -101,6 +101,7 @@ def fetch_vacancies(request) -> dict:
     work_preferences = models.ParameterWorkPreference.objects.values('id', 'name')
 
     popular_job_titles = Vacancy.objects.values('job_title__name').annotate(count=Count('job_title__name')).order_by('-count')[:6]
+    keywords = models.ParameterKeyword.objects.all()
 
     return {
         'vacancies': vacancies,
@@ -113,5 +114,6 @@ def fetch_vacancies(request) -> dict:
         'url':url,
         'related_vacancies_title': job_title,
         'company': company,
-        'popular_job_titles': popular_job_titles
+        'popular_job_titles': popular_job_titles,
+        'keywords': keywords
     }

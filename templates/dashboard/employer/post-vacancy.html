@@ -190,7 +190,7 @@
                                                     <input type="hidden" name="keywords" id="keywordsInput" value="{% if vacancy.keywords %}{{ vacancy.keywords }}{% endif %}">
                                                     <select id="keywordsSelect" class="select2 form-control select2-multiple" multiple="multiple" data-placeholder="Choose ...">
                                                         {% for key in keywords %}
-                                                            <option value="{{ key.name }}">{{ key.name }}</option>
+                                                            <option value="{{ key.id }}">{{ key.name }}</option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>

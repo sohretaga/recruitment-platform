@@ -8,6 +8,7 @@ from . import forms
 from .decorators import logout_required
 from user.models import CustomUser, Candidate, Employer
 from job.utils import vacancy_with_related_info
+from recruitment_cp.models import ParameterKeyword
 
 
 @logout_required
@@ -100,10 +101,12 @@ def company_list(request):
 def company_details(request, username):
     user = get_object_or_404(CustomUser, username=username)
     vacancies = vacancy_with_related_info(user.employer.vacancies.filter(status=True)[:5])
+    keywords = ParameterKeyword.objects.all()
 
     context = {
         'employer': user.employer,
         'vacancies': vacancies,
+        'keywords': keywords
     }
 
     return render(request, 'user/company-details.html', context)

@@ -158,13 +158,13 @@ const generatePagination = (paginationInfo) => {
     };
 };
 
-const listVacancies = (vacanciesInfo, bookmarks) => {
+const listVacancies = (vacanciesInfo, bookmarks, keywords) => {
     const container = document.getElementById('job-list-container');
     container.innerHTML = ''; // Clear existing content
 
     for (const [key, vacancy] of Object.entries(vacanciesInfo)) {
         container.innerHTML += `
-        <div id="vacancy-${vacancy.id}" class="job-box card mt-5 ">
+        <div id="vacancy-${vacancy.id}" class="job-box card mt-5 ${bookmarks.includes(vacancy.id) ? 'bookmark-post':''}">
             <div class="p-4">
                 <div class="row">
                     <div class="col-lg-1">
@@ -205,9 +205,11 @@ const listVacancies = (vacanciesInfo, bookmarks) => {
                                 <li class="list-inline-item"><i class="uil uil-tag"></i> Keywords :</li>
                                  ${(() => {
                                     let itemsHtml = '';
-                                    let lastIndex = vacancy.keywords.length - 1;
-                                    vacancy.keywords.forEach((key, index) => {
-                                        itemsHtml += `<li class="list-inline-item"><a href="javascript:void(0)" class="primary-link text-muted">${key}${index==lastIndex ? '':','}</a></li>`;
+                                    let lastItem = vacancy.keywords.slice(-1)[0];
+                                    keywords.forEach(key => {
+                                        if (vacancy.keywords.includes(String(key.id))){
+                                            itemsHtml += `<li class="list-inline-item"><a href="javascript:void(0)" class="primary-link text-muted">${key.name}${key.id!=lastItem ? ',':''}</a></li>`;
+                                        };
                                     });
                                     return itemsHtml;
                                 })()}
@@ -240,7 +242,7 @@ const filterRequest = () => {
         type: 'POST',
         data: JSON.stringify(collectded_data),
         success: (response) => {
-            listVacancies(response.vacancies, response.bookmarks);
+            listVacancies(response.vacancies, response.bookmarks, response.keywords);
             generatePagination(response.pagination);
         }
 

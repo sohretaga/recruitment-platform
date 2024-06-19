@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="{{ vacancy.definition|safe }}">
-<meta name="keywords" content="{% for key in vacancy.keywords %}{{ key }}, {% endfor %}">
+<meta name="keywords" content="{% for keyword in keywords %}{% if keyword.id|slugify in vacancy.keywords %}{{keyword.name}}{% if not keyword.id|slugify == vacancy.keywords|last %},{% endif %}{% endif %}{% endfor %}">
 {% endblock meta %}
 
 {% block head %}
