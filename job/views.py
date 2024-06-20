@@ -12,6 +12,7 @@ from job.utils import vacancy_with_related_info
 from recruitment_cp.utils import is_ajax
 from .utils import fetch_vacancies
 from recruitment_cp.models import ParameterKeyword
+from dashboard.decorators import is_candidate, is_employer
 
 import json
 
@@ -49,8 +50,25 @@ def vacancy(request, slug):
 def categories(request):
     return render(request, 'job/categories.html')
 
-def manage_jobs(request):
-    return render(request, 'job/manage-jobs.html')
+@is_candidate
+def my_applies(request):
+    return render(request, 'job/my-applies.html')
+
+@is_employer
+def job_postings(request):
+    vacancies = vacancy_with_related_info(request.user.employer.vacancies.all())
+    vacancy_count = request.user.employer.vacancies.count()
+
+    paginator = Paginator(vacancies, 30)
+    current_page = request.GET.get('page')
+    vacancies = paginator.get_page(current_page)
+
+    context = {
+        'vacancies': vacancies,
+        'vacancy_count': vacancy_count
+    }
+
+    return render(request, 'job/job-postings.html', context)
 
 def bookmarks(request):
     bookmarks = Bookmark.objects.filter(user=request.user).select_related('user', 'vacancy').annotate(

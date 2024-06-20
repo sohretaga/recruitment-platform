@@ -7,7 +7,8 @@ urlpatterns = [
     path('vacancies/', views.vacancies, name='vacancies'),
     path('vacancy/<slug:slug>', views.vacancy, name='vacancy'),
     path('categories', views.categories, name='categories'),
-    path('manage-jobs', views.manage_jobs, name='manage-jobs'),
+    path('my-applies', views.my_applies, name='my-applies'),
+    path('job-postings', views.job_postings, name='job-postings'),
     path('bookmarks', views.bookmarks, name='bookmarks'),
 
     # ajax
