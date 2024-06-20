@@ -68,7 +68,11 @@
                     <div class="card side-bar">
                         <div class="card-body p-4">
                             <div class="candidate-profile text-center">
-                                <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="" class="avatar-lg rounded-circle">
+                                {% if employer.user.profile_photo %}
+                                <img src="{{ employer.user.profile_photo.url }}" alt="{{ employer.user.first_name }}" class="avatar-lg rounded-circle">
+                                {% else %}
+                                <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="{{ employer.user.first_name }}" class="avatar-lg rounded-circle">
+                                {% endif %}
                                 <h6 class="fs-18 mb-1 mt-4">{{ employer.user.first_name }}</h6>
                                 <p class="text-muted mb-4">Since July 2017</p>
                                 <ul class="candidate-detail-social-menu list-inline mb-0">
@@ -223,7 +227,7 @@
 
                             <div class="text-center mt-4">
                                 {% if vacancies.count %}
-                                    <a href="{% url 'job:vacancies' %}?company={{ employer.company_name }}" class="primary-link form-text">View More <i class="mdi mdi-arrow-right"></i></a>
+                                    <a href="{% url 'job:vacancies' %}?company={{ employer.user.first_name }}" class="primary-link form-text">View More <i class="mdi mdi-arrow-right"></i></a>
                                 {% endif %}
                             </div>
                         </div><!-- card body end -->

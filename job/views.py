@@ -4,6 +4,7 @@ from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from django.db.models import F
 from datetime import timedelta
 
 from job.models import Vacancy, Bookmark
@@ -52,7 +53,30 @@ def manage_jobs(request):
     return render(request, 'job/manage-jobs.html')
 
 def bookmarks(request):
-    return render(request, 'job/bookmarks.html')
+    bookmarks = Bookmark.objects.filter(user=request.user).select_related('user', 'vacancy').annotate(
+        username=F('vacancy__employer__user__username'),
+        profile_photo=F('vacancy__employer__user__profile_photo'),
+        company_name=F('vacancy__employer__user__first_name'),
+        position_title=F('vacancy__position_title'),
+        work_experience=F('vacancy__work_experience__name'),
+        location=F('vacancy__location__name'),
+        salary_minimum=F('vacancy__salary_minimum'),
+        salary_maximum=F('vacancy__salary_maximum'),
+        slug=F('vacancy__slug')
+    )
+
+    bookmark_count = bookmarks.count()
+
+    paginator = Paginator(bookmarks, 30)
+    current_page = request.GET.get('page')
+    bookmarks = paginator.get_page(current_page)
+
+    context = {
+        'bookmarks': bookmarks,
+        'bookmark_count': bookmark_count
+    }
+
+    return render(request, 'job/bookmarks.html', context)
 
 @require_POST
 def ajax_filter_vacancies(request):
