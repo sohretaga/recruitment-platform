@@ -104,7 +104,7 @@
                                     {% if vacancy.employer.user.profile_photo %}
                                     <a href="{% url 'user:company' vacancy.employer_username %}"><img src="{{ vacancy.employer.user.profile_photo.url }}" alt="{{ vacancy.company_name }}" class="img-fluid rounded-3"></a>
                                     {% else %}
-                                    <a href="{% url 'user:company' vacancy.employer_username %}"><img src="{% static 'main/images/featured-job/img-01.png' %}" alt="{{ vacancy.company_name }}" class="img-fluid rounded-3"></a>
+                                    <a href="{% url 'user:company' vacancy.employer_username %}"><img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="{{ vacancy.company_name }}" class="img-fluid rounded-3"></a>
                                     {% endif %}
                                 </div><!--end col-->
                                 <div class="col-lg-9">
