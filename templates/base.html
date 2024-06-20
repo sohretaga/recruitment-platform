@@ -287,9 +287,10 @@
                                     <img src="{% if user.profile_photo %}{{ user.profile_photo.url }}{% else %}{% static 'main/images/featured-job/default-company-img.jpeg' %}{% endif %}" alt="{{ user.get_full_name }}" width="35" height="35" class="rounded-circle me-1"> <span class="d-none d-md-inline-block fw-medium">{{ user.first_name }}</span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown">
-                                    {% if user.user_type == 'employer' %}
+                                    {% if user.user_type == 'employer' or user.is_superuser %}
                                     <li><a class="dropdown-item" href="{% url 'job:job-postings' %}">Job Postings</a></li>
-                                    {% elif user.user_type == 'candidate' %}
+                                    {% endif %}
+                                    {% if user.user_type == 'candidate' or user.is_superuser %}
                                     <li><a class="dropdown-item" href="{% url 'job:my-applies' %}">My Applies</a></li>
                                     {% endif %}
                                     <li><a class="dropdown-item" href="{% url 'job:bookmarks' %}">Bookmarks</a></li>
