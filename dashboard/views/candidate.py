@@ -14,7 +14,6 @@ def manage_account(request):
     if request.POST:
         user = request.user
         form = ManageCandidateAccountForm(request.POST, request.FILES, instance=user.candidate)
-        print(form.errors)
 
         if form.is_valid():
             email = form.cleaned_data.get('email')

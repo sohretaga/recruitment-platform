@@ -1,6 +1,7 @@
 const userInfoElement = document.getElementById('user-info');
 const isAuthenticated = userInfoElement.getAttribute('data-is-authenticated');
 const signInModal = new bootstrap.Modal(document.getElementById('signinModal'));
+const modalDeleteYesBtn = document.getElementById('delete-yes');
 
 const addBookmark = (id) => {
 
@@ -24,4 +25,16 @@ const addBookmark = (id) => {
     }else {
         signInModal.show()
     }
+};
+
+const addBookmarkWithPopup = (id) => {
+    const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+    const vacancyBox = document.getElementById(`vacancy-${id}`);
+
+    if (vacancyBox.classList.contains('bookmark-post')){
+        deleteModal.show()
+        modalDeleteYesBtn.setAttribute("onclick", `addBookmark(${id})`);
+    }else {
+        addBookmark(id);
+    };
 };

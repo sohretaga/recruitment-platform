@@ -81,7 +81,7 @@ def bookmarks(request):
         salary_minimum=F('vacancy__salary_minimum'),
         salary_maximum=F('vacancy__salary_maximum'),
         slug=F('vacancy__slug')
-    )
+    ).order_by('id')
 
     bookmark_count = bookmarks.count()
 
