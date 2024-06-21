@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-from phonenumber_field.modelfields import PhoneNumberField
-
 class CustomUser(AbstractUser):
     USER_TYPE_CHOICES = (
         ('employer', 'Employer'),
@@ -41,7 +39,7 @@ class Candidate(models.Model):
 
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='candidate')
     id_card_number = models.CharField(max_length=20, null=True)
-    phone_number = PhoneNumberField(null=True, unique=True)
+    phone_number = models.CharField(max_length=15, null=True, unique=True)
     birthday = models.DateField(null=True)
     citizenship = models.CharField(max_length=100, null=True)
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES, null=True)

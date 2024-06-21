@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from django.http import JsonResponse, Http404
-from django.db.models import F
+from django.db.models import F, Case, When, Value, CharField
 
 from recruitment_cp import models as cp_models
 from blog.models import Category as BlogCategory
 from job.models import Vacancy
 from user.models import Candidate, Employer
-from recruitment_cp.utils import is_ajax, datetime_to_string
+from recruitment_cp.utils import is_ajax, datetime_to_string, date_to_string
 
 import json
                         
@@ -679,12 +679,23 @@ def candidate_index(request):
 def candidate_load(request):
     if request.user.is_superuser:
         if is_ajax(request) and request.POST:
-            
-            candidate = Candidate.objects.all().values(
-                'user__first_name', 'user__last_name', 'user__email', 'user__username'
+
+            gender_case = Case(
+                When(gender='male', then=Value('Male')),
+                When(gender='female', then=Value('Female')),
+                output_field=CharField()
             )
             
-            json_data = json.dumps(list(candidate))
+            candidate = Candidate.objects.select_related('user').annotate(
+                first_name=F('user__first_name'),
+                last_name=F('user__last_name'),
+                username=F('user__username'),
+                email=F('user__email'),
+                gender_name=gender_case
+
+            ).values()
+            
+            json_data = json.dumps(list(candidate), default=date_to_string)
 
             return JsonResponse(json_data, safe=False)
         else:
