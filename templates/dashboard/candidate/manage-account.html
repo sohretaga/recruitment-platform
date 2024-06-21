@@ -112,18 +112,21 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="citizenship">Citizenship</label>
-                                        <input type="text" class="form-control" id="citizenship" name="citizenship" placeholder="Citizenship" value="{% if user.candidate.citizenship %}{{ user.candidate.citizenship }}{% endif %}" required>
+                                        <select class="form-control select2" name="citizenship">
+                                            {% for citizenship in citizenships %}
+                                                {% if citizenship.id == user.candidate.citizenship.id %}
+                                                    <option value="{{ citizenship.id }}" selected>{{ citizenship.name }}</option>
+                                                {% else %}
+                                                    <option value="{{ citizenship.id }}">{{ citizenship.name }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="birthday">Birthday</label>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" data-provide="datepicker" data-date-format="dd M, yyyy" id="birthday" name="birthday" placeholder="Your Birthday" value="{% if user.candidate.birthday %}{{ user.candidate.birthday }}{% endif %}">
-                                            <div class="input-group-append">
-                                                <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                            </div>
-                                        </div>
+                                        <input type="text" class="form-control" data-provide="datepicker" data-date-format="dd M, yyyy" id="birthday" name="birthday" placeholder="Your Birthday" value="{% if user.candidate.birthday %}{{ user.candidate.birthday }}{% endif %}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
