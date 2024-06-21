@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+from recruitment_cp.models import ParameterCountry
+
 class CustomUser(AbstractUser):
     USER_TYPE_CHOICES = (
         ('employer', 'Employer'),
@@ -41,7 +43,7 @@ class Candidate(models.Model):
     id_card_number = models.CharField(max_length=20, null=True)
     phone_number = models.CharField(max_length=15, null=True, unique=True)
     birthday = models.DateField(null=True)
-    citizenship = models.CharField(max_length=100, null=True)
+    # citizenship = models.ForeignKey(ParameterCountry, on_delete=models.SET_NULL, null=True)
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES, null=True)
 
     def __str__(self) -> str:

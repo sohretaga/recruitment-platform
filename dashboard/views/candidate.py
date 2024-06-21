@@ -3,6 +3,7 @@ from django.urls import reverse
 
 from dashboard.decorators import is_candidate
 from dashboard.forms import ManageCandidateAccountForm
+from recruitment_cp.models import ParameterCountry
 
 @is_candidate
 def your_applies(request):
@@ -31,5 +32,11 @@ def manage_account(request):
             user.save()
 
             return redirect(reverse('dashboard:your-applies'))
+    
+    citizenship = ParameterCountry.objects.all()
 
-    return render(request, 'dashboard/candidate/manage-account.html')
+    context = {
+        'citizenship': citizenship
+    }
+
+    return render(request, 'dashboard/candidate/manage-account.html', context)
