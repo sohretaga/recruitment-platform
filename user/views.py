@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -8,7 +9,8 @@ from . import forms
 from .decorators import logout_required
 from user.models import CustomUser, Candidate, Employer
 from job.utils import vacancy_with_related_info
-from recruitment_cp.models import ParameterKeyword
+from recruitment_cp.models import ParameterKeyword, ParameterSector, ParameterOrganizationType, ParameterOrganizationOwnership, ParameterNumberOfEmployee
+from dashboard.forms import ManageEmployerAccountForm
 
 
 @logout_required
@@ -102,11 +104,39 @@ def company_details(request, username):
     user = get_object_or_404(CustomUser, username=username)
     vacancies = vacancy_with_related_info(user.employer.vacancies.filter(status=True)[:5])
     keywords = ParameterKeyword.objects.all()
+    sectors = ParameterSector.objects.all().values('id', 'name')
+    organization_types = ParameterOrganizationType.objects.all().values('id', 'name')
+    organization_ownerships = ParameterOrganizationOwnership.objects.all().values('id', 'name')
+    number_of_employees = ParameterNumberOfEmployee.objects.all().values('id', 'name')
 
+    if request.POST:
+        user = request.user
+        form = ManageEmployerAccountForm(request.POST, request.FILES, instance=user.employer)
+
+        if form.is_valid():
+            email = form.cleaned_data.get('primary_email')
+            profile_photo = form.cleaned_data.get('profile_photo')
+            first_name = form.cleaned_data.get('first_name')
+            last_name = form.cleaned_data.get('last_name')
+            form.save()
+
+            if profile_photo:
+                user.profile_photo = profile_photo
+
+            user.email = email
+            user.first_name = first_name
+            user.last_name = last_name
+            user.save()
+
+            return redirect(reverse('user:company', args=[user.username]))
     context = {
         'employer': user.employer,
         'vacancies': vacancies,
-        'keywords': keywords
+        'keywords': keywords,
+        'sectors': sectors,
+        'organization_types': organization_types,
+        'organization_ownerships': organization_ownerships,
+        'number_of_employees': number_of_employees
     }
 
     return render(request, 'user/company-details.html', context)

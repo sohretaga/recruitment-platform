@@ -70,6 +70,7 @@ def job_postings(request):
 
     return render(request, 'job/job-postings.html', context)
 
+@login_required
 def bookmarks(request):
     bookmarks = Bookmark.objects.filter(user=request.user).select_related('user', 'vacancy').annotate(
         username=F('vacancy__employer__user__username'),

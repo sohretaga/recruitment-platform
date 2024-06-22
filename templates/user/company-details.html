@@ -4,11 +4,11 @@
 {% block title %}Company Details{% endblock title %}
 
 {% block head %}
-    <!-- Choise Css -->
-    <link rel="stylesheet" href="{% static 'main/libs/choices.js/public/assets/styles/choices.min.css' %}">
-
     <!-- Light Box Css -->
     <link rel="stylesheet" href="{% static 'main/libs/glightbox/css/glightbox.min.css' %}">
+
+    <!-- Choise Css -->
+    <link rel="stylesheet" href="{% static 'main/libs/choices.js/public/assets/styles/choices.min.css' %}">
 
     <!-- Bootstrap Css -->
     <link href="{% static 'main/css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
@@ -170,64 +170,308 @@
                 </div><!--end col-->
                 
                 <div class="col-lg-8">
-                    <div class="card ms-lg-4 mt-4 mt-lg-0">
+                    <div class="card profile-content-page mt-4 mt-lg-0">
+                        {% if employer.user == request.user %}
+                        <ul class="profile-content-nav nav nav-pills border-bottom mb-4" id="pills-tab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="overview-tab" data-bs-toggle="pill"
+                                    data-bs-target="#overview" type="button" role="tab" aria-controls="overview"
+                                    aria-selected="true">
+                                    Overview
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="settings-tab" data-bs-toggle="pill"
+                                    data-bs-target="#settings" type="button" role="tab" aria-controls="settings"
+                                    aria-selected="false">
+                                    Settings
+                                </button>
+                            </li>
+                        </ul>
+                        <!--end profile-content-nav-->
+                        {% endif %}
                         <div class="card-body p-4">
-
-                            <div class="mb-5">
-                                <h6 class="fs-17 fw-medium mb-4">About Company</h6>
-                                <p class="text-muted"> Objectively pursue diverse catalysts for change for interoperable meta-services. Distinctively re-engineer 
-                                    revolutionary meta-services and premium architectures. Intrinsically incubate intuitive opportunities and 
-                                    real-time potentialities. Appropriately communicate one-to-one technology.</p>
-
-                                <p class="text-muted">Intrinsically incubate intuitive opportunities and real-time potentialities Appropriately communicate 
-                                    one-to-one technology.</p>
-
-                                <p class="text-muted"> Exercitation photo booth stumptown tote bag Banksy, elit small batch freegan sed. Craft beer elit 
-                                    seitan exercitation, photo booth et 8-bit kale chips proident chillwave deep v laborum. Aliquip veniam delectus, Marfa 
-                                    eiusmod Pinterest in do umami readymade swag.</p>
-                            </div>
-                        
-                            <div class="candidate-portfolio mb-5">
-                                <h6 class="fs-17 fw-medium mb-4">Gallery</h6>
-                                <div class="row g-3">
-                                    <div class="col-lg-6">
-                                        <div class="candidate-portfolio-box card border-0">
-                                            <img src="{% static 'main/images/blog/img-01.jpg' %}" alt="" class="img-fluid">
-                                            <div class="bg-overlay"></div>
-                                            <div class="zoom-icon">
-                                                <a href="{% static 'main/images/blog/img-01.jpg' %}" class="image-popup text-white" data-title="Project Leader" data-description="There are many variations of passages of available, but the majority alteration in some form."><i class="uil uil-search-alt"></i></a>
+                            <div class="tab-content" id="pills-tabContent">
+                                <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+                                    <div class="mb-5">
+                                        <h6 class="fs-17 fw-medium mb-4">About Company</h6>
+                                        <p class="text-muted"> Objectively pursue diverse catalysts for change for interoperable meta-services. Distinctively re-engineer 
+                                            revolutionary meta-services and premium architectures. Intrinsically incubate intuitive opportunities and 
+                                            real-time potentialities. Appropriately communicate one-to-one technology.</p>
+    
+                                        <p class="text-muted">Intrinsically incubate intuitive opportunities and real-time potentialities Appropriately communicate 
+                                            one-to-one technology.</p>
+    
+                                        <p class="text-muted"> Exercitation photo booth stumptown tote bag Banksy, elit small batch freegan sed. Craft beer elit 
+                                            seitan exercitation, photo booth et 8-bit kale chips proident chillwave deep v laborum. Aliquip veniam delectus, Marfa 
+                                            eiusmod Pinterest in do umami readymade swag.</p>
+                                    </div>
+                                
+                                    <div class="candidate-portfolio mb-5">
+                                        <h6 class="fs-17 fw-medium mb-4">Gallery</h6>
+                                        <div class="row g-3">
+                                            <div class="col-lg-6">
+                                                <div class="candidate-portfolio-box card border-0">
+                                                    <img src="{% static 'main/images/blog/img-01.jpg' %}" alt="" class="img-fluid">
+                                                    <div class="bg-overlay"></div>
+                                                    <div class="zoom-icon">
+                                                        <a href="{% static 'main/images/blog/img-01.jpg' %}" class="image-popup text-white" data-title="Project Leader" data-description="There are many variations of passages of available, but the majority alteration in some form."><i class="uil uil-search-alt"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div><!-- end col -->
+                                            <div class="col-lg-6">
+                                                <div class="candidate-portfolio-box card border-0">
+                                                    <img src="{% static 'main/images/blog/img-03.jpg' %}" alt="" class="img-fluid">
+                                                    <div class="bg-overlay"></div>
+                                                    <div class="zoom-icon">
+                                                        <a href="{% static 'main/images/blog/img-03.jpg' %}" class="image-popup text-white" data-title="Project Leader" data-description="There are many variations of passages of available, but the majority alteration in some form."><i class="uil uil-search-alt"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div><!-- end col -->
+                                            <div class="col-lg-12">
+                                                <div class="candidate-portfolio-box card border-0">
+                                                    <img src="{% static 'main/images/blog/img-12.jpg' %}" alt="" class="img-fluid">
+                                                    <div class="bg-overlay"></div>
+                                                    <div class="zoom-icon">
+                                                        <a href="{% static 'main/images/blog/img-12.jpg' %}" class="image-popup text-white" data-title="Project Leader" data-description="There are many variations of passages of available, but the majority alteration in some form."><i class="uil uil-search-alt"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div><!-- end col -->
+                                        </div><!-- end row -->
+                                    </div><!-- end portfolio -->  
+                                    
+                                    <div>
+                                        <h6 class="fs-17 fw-medium mb-4">Current Opening</h6>
+                                        {% include 'job/partials/vacancy-box.html' %}
+                                    </div>
+    
+                                    <div class="text-center mt-4">
+                                        {% if vacancies.count %}
+                                            <a href="{% url 'job:vacancies' %}?company={{ employer.user.first_name }}" class="primary-link form-text">View More <i class="mdi mdi-arrow-right"></i></a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% if employer.user == request.user %}
+                                <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+                                    <form method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div>
+                                            <h5 class="fs-17 fw-semibold mb-3 mb-0">My Account</h5>
+                                            <div class="text-center">
+                                                <div class="mb-4 profile-user">
+                                                    {% if employer.user.profile_photo %}
+                                                    <img src="{{ employer.user.profile_photo.url }}" class="rounded-circle img-thumbnail profile-img" id="profile-img" alt="{{ employer.user.first_name }}">
+                                                    {% else %}
+                                                    <img src="{% static 'main/images/user/img-02.jpg' %}" class="rounded-circle img-thumbnail profile-img" id="profile-img" alt="{{ employer.user.first_name }}">
+                                                    {% endif %}
+                                                    <div class="p-0 rounded-circle profile-photo-edit">
+                                                        <input id="profile-img-file-input" type="file" class="profile-img-file-input" accept="image/*" onchange="previewImg(this)" >
+                                                        <label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
+                                                            <i class="uil uil-edit"></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div><!-- end col -->
-                                    <div class="col-lg-6">
-                                        <div class="candidate-portfolio-box card border-0">
-                                            <img src="{% static 'main/images/blog/img-03.jpg' %}" alt="" class="img-fluid">
-                                            <div class="bg-overlay"></div>
-                                            <div class="zoom-icon">
-                                                <a href="{% static 'main/images/blog/img-03.jpg' %}" class="image-popup text-white" data-title="Project Leader" data-description="There are many variations of passages of available, but the majority alteration in some form."><i class="uil uil-search-alt"></i></a>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label for="company-name" class="form-label">Company Name</label>
+                                                        <input type="text" class="form-control" name="first_name" id="company-name" value="{{ employer.user.first_name }}" />
+                                                    </div>
+                                                </div>
+                                                <!--end col-->
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label for="last-name" class="form-label">Company Name (Legal)</label>
+                                                        <input type="text" class="form-control" name="last_name" id="last-name" value="{{ employer.user.last_name }}" />
+                                                    </div>
+                                                </div>
+                                                <!--end col-->
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label for="organization_ownership" class="form-label">Organization Ownership</label>
+                                                        <select class="form-select" data-trigger name="organization_ownership" id="organization_ownership" aria-label="Default select example">
+                                                            {% for ownership in organization_ownerships %}
+                                                            {% if ownership.name == employer.organization_ownership %}
+                                                                <option value="{{ ownership.name }}" selected>{{ ownership.name }}</option>
+                                                            {% else %}
+                                                                <option value="{{ ownership.name }}">{{ ownership.name }}</option>
+                                                            {% endif %}
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label for="sector" class="form-label">Sector</label>
+                                                        <select class="form-select" data-trigger name="sector" id="sector" aria-label="Default select example">
+                                                            {% for sector in sectors %}
+                                                            {% if sector.name == employer.sector %}
+                                                                <option value="{{ sector.name }}" selected>{{ sector.name }}</option>
+                                                            {% else %}
+                                                                <option value="{{ sector.name }}">{{ sector.name }}</option>
+                                                            {% endif %}
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <!--end col-->
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label for="number_of_employees" class="form-label">Number of Employees</label>
+                                                        <select class="form-select" data-trigger name="number_of_employees" id="number_of_employees" aria-label="Default select example">
+                                                            {% for number in number_of_employees %}
+                                                            {% if number.name == employer.number_of_employees %}
+                                                                <option value="{{ number.name }}" selected>{{ number.name }}</option>
+                                                            {% else %}
+                                                                <option value="{{ number.name }}">{{ number.name }}</option>
+                                                            {% endif %}
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <!--end col-->
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label for="organization_type" class="form-label">Organization Type</label>
+                                                        <select class="form-select" data-trigger name="organization_type" id="organization_type" aria-label="Default select example">
+                                                            {% for type in organization_types %}
+                                                            {% if type.name == employer.organization_type %}
+                                                                <option value="{{ type.name }}" selected>{{ type.name }}</option>
+                                                            {% else %}
+                                                                <option value="{{ type.name }}">{{ type.name }}</option>
+                                                            {% endif %}
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <!--end col-->
                                             </div>
+                                            <!--end row-->
                                         </div>
-                                    </div><!-- end col -->
-                                    <div class="col-lg-12">
-                                        <div class="candidate-portfolio-box card border-0">
-                                            <img src="{% static 'main/images/blog/img-12.jpg' %}" alt="" class="img-fluid">
-                                            <div class="bg-overlay"></div>
-                                            <div class="zoom-icon">
-                                                <a href="{% static 'main/images/blog/img-12.jpg' %}" class="image-popup text-white" data-title="Project Leader" data-description="There are many variations of passages of available, but the majority alteration in some form."><i class="uil uil-search-alt"></i></a>
+                                        <!--end account-->
+                                        <div class="mt-4">
+                                            <h5 class="fs-17 fw-semibold mb-3">Email</h5>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label for="primary_email" class="form-label">Primary Email</label>
+                                                        <input type="emial" name="primary_email" class="form-control" id="primary_email" value="{{ employer.user.email }}" />
+                                                    </div>
+                                                </div>
+                                                <!--end col-->
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label for="second_email" class="form-label">Second Email</label>
+                                                        <input type="emial" name="second_email" class="form-control" id="second_email" value="{{ employer.second_email }}" />
+                                                    </div>
+                                                </div>
+                                                <!--end col-->
+                                                <div class="col-lg-12">
+                                                    <div class="mb-3">
+                                                        <label for="other_email" class="form-label">Other Email</label>
+                                                        <input type="emial" name="other_email" class="form-control" id="other_email" value="{{ employer.other_email }}" />
+                                                    </div>
+                                                </div>
+                                                <!--end col-->
                                             </div>
+                                            <!--end row-->
                                         </div>
-                                    </div><!-- end col -->
-                                </div><!-- end row -->
-                            </div><!-- end portfolio -->  
-                            
-                            <div>
-                                <h6 class="fs-17 fw-medium mb-4">Current Opening</h6>
-                                {% include 'job/partials/vacancy-box.html' %}
-                            </div>
-
-                            <div class="text-center mt-4">
-                                {% if vacancies.count %}
-                                    <a href="{% url 'job:vacancies' %}?company={{ employer.user.first_name }}" class="primary-link form-text">View More <i class="mdi mdi-arrow-right"></i></a>
+                                        <!--end profile-->
+                                        <div class="mt-4">
+                                            <h5 class="fs-17 fw-semibold mb-3">Social Media</h5>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label for="facebook" class="form-label">Facebook</label>
+                                                        <input type="text" class="form-control" id="facebook"
+                                                            value="https://www.facebook.com" />
+                                                    </div>
+                                                </div>
+                                                <!--end col-->
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label for="twitter" class="form-label">Twitter</label>
+                                                        <input type="text" class="form-control" id="twitter"
+                                                            value="https://www.twitter.com" />
+                                                    </div>
+                                                </div>
+                                                <!--end col-->
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label for="linkedin" class="form-label">Linkedin</label>
+                                                        <input type="text" class="form-control" id="linkedin"
+                                                            value="https://www.linkedin.com" />
+                                                    </div>
+                                                </div>
+                                                <!--end col-->
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label for="whatsapp" class="form-label">Whatsapp</label>
+                                                        <input type="text" class="form-control" id="whatsapp"
+                                                            value="https://www.whatsapp.com" />
+                                                    </div>
+                                                </div>
+                                                <!--end col-->
+                                            </div>
+                                            <!--end row-->
+                                        </div>
+                                        <!--end socia-media-->
+                                        <div class="mt-4">
+                                            <h5 class="fs-17 fw-semibold mb-3 mb-3">
+                                                Change Password
+                                            </h5>
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="mb-3">
+                                                        <label for="current-password-input" class="form-label">Current
+                                                            password</label>
+                                                        <input type="password" class="form-control"
+                                                            placeholder="Enter Current password"
+                                                            id="current-password-input" />
+                                                    </div>
+                                                </div>
+                                                <!--end col-->
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label for="new-password-input" class="form-label">New
+                                                            password</label>
+                                                        <input type="password" class="form-control"
+                                                            placeholder="Enter new password"
+                                                            id="new-password-input" />
+                                                    </div>
+                                                </div>
+                                                <!--end col-->
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label for="confirm-password-input" class="form-label">Confirm Password</label>
+                                                        <input type="password" class="form-control"
+                                                            placeholder="Confirm Password"
+                                                            id="confirm-password-input" />
+                                                    </div>
+                                                </div>
+                                                <!--end col-->
+                                                <div class="col-lg-12">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="verification" />
+                                                        <label class="form-check-label" for="verification">
+                                                            Enable Two-Step Verification via email
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <!--end col-->
+                                            </div>
+                                            <!--end row-->
+                                        </div>
+                                        <!--end Change-password-->
+                                        <div class="mt-4 text-end">
+                                            <button type="submit" class="btn btn-primary">Update</button>
+                                        </div>
+                                    </form>
+                                    <!--end form-->
+                                </div>
+                                <!--end tab-pane-->
                                 {% endif %}
                             </div>
                         </div><!-- card body end -->
@@ -300,5 +544,6 @@
 
 <!-- Custom Js -->
 <script src="{% static 'main/js/ajax/bookmarks.js' %}"></script>
+<script src="{% static 'main/js/ajax/edit-account.js' %}"></script>
 
 {% endblock script %}
