@@ -9,8 +9,8 @@ from . import forms
 from .decorators import logout_required
 from user.models import CustomUser, Candidate, Employer
 from job.utils import vacancy_with_related_info
-from recruitment_cp.models import ParameterKeyword, ParameterSector, ParameterOrganizationType, ParameterOrganizationOwnership, ParameterNumberOfEmployee
-from dashboard.forms import ManageEmployerAccountForm
+from recruitment_cp.models import ParameterKeyword, ParameterSector, ParameterOrganizationType, ParameterOrganizationOwnership, ParameterNumberOfEmployee, ParameterCountry
+from dashboard.forms import ManageEmployerAccountForm, ManageCandidateAccountForm
 
 
 @logout_required
@@ -82,8 +82,40 @@ def candidate_list(request):
     return render(request, 'user/candidate-list.html', context)
 
 
-def candidate_details(request):
-    return render(request, 'user/candidate-details.html')
+def candidate_details(request, username):
+    user = get_object_or_404(CustomUser, username=username,  user_type='candidate')
+
+    if request.POST:
+        user = request.user
+        form = ManageCandidateAccountForm(request.POST, request.FILES, instance=user.candidate)
+        print(form.errors)
+
+        if form.is_valid():
+            email = form.cleaned_data.get('email')
+            profile_photo = form.cleaned_data.get('profile_photo')
+            first_name = form.cleaned_data.get('first_name')
+            last_name = form.cleaned_data.get('last_name')
+            form.save()
+
+            if profile_photo:
+                user.profile_photo = profile_photo
+
+            user.email = email
+            user.first_name = first_name
+            user.last_name = last_name
+            user.is_registration_complete = True
+            user.save()
+
+            return redirect(reverse('user:candidate', args=[user.username]))
+    
+    citizenships = ParameterCountry.objects.values('id', 'name')
+
+    context = {
+        'candidate': user.candidate,
+        'citizenships': citizenships
+    }
+
+    return render(request, 'user/candidate-details.html', context)
 
 
 def company_list(request):
@@ -101,7 +133,7 @@ def company_list(request):
 
 
 def company_details(request, username):
-    user = get_object_or_404(CustomUser, username=username)
+    user = get_object_or_404(CustomUser, username=username, user_type='employer')
     vacancies = vacancy_with_related_info(user.employer.vacancies.filter(status=True)[:5])
     keywords = ParameterKeyword.objects.all()
     sectors = ParameterSector.objects.all().values('id', 'name')

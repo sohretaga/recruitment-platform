@@ -12,7 +12,7 @@ urlpatterns = [
     path('profile', views.profile, name='profile'),
 
     path('candidate-list', views.candidate_list, name='candidate-list'),
-    path('candidate-details', views.candidate_details, name='candidate-details'),
+    path('candidate/<str:username>', views.candidate_details, name='candidate'),
 
     path('company-list', views.company_list, name='company-list'),
     path('company/<str:username>', views.company_details, name='company')

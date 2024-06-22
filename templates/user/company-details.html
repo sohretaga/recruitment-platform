@@ -265,7 +265,7 @@
                                                     <img src="{% static 'main/images/user/img-02.jpg' %}" class="rounded-circle img-thumbnail profile-img" id="profile-img" alt="{{ employer.user.first_name }}">
                                                     {% endif %}
                                                     <div class="p-0 rounded-circle profile-photo-edit">
-                                                        <input id="profile-img-file-input" type="file" class="profile-img-file-input" accept="image/*" onchange="previewImg(this)" >
+                                                        <input id="profile-img-file-input" type="file" class="profile-img-file-input" accept="image/*" onchange="previewImg(this)">
                                                         <label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
                                                             <i class="uil uil-edit"></i>
                                                         </label>
@@ -471,8 +471,8 @@
                                     </form>
                                     <!--end form-->
                                 </div>
-                                <!--end tab-pane-->
                                 {% endif %}
+                                <!--end tab-pane-->
                             </div>
                         </div><!-- card body end -->
                     </div><!--end card-->

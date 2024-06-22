@@ -168,7 +168,6 @@
                                             <span class="dropdown-header">Candidates / Companies</span>
                                             <div>
                                                 <a class="dropdown-item" href="{% url 'user:candidate-list' %}">Candidate List</a>
-                                                <a class="dropdown-item" href="{% url 'user:candidate-details' %}">Candidate Details</a>
                                                 <a class="dropdown-item" href="{% url 'user:company-list' %}">Company List</a>
                                             </div>
                                         </div><!--end col-->
@@ -291,13 +290,13 @@
                                         <li><a class="dropdown-item" href="{% url 'job:job-postings' %}">Job Postings</a></li>
                                         <li><a class="dropdown-item" href="{% url 'job:my-applies' %}">My Applies</a></li>
                                         <li><a class="dropdown-item" href="{% url 'user:company' user.username %}">Employer</a></li>
-                                        <li><a class="dropdown-item" href="#">Candidate</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'user:candidate' user.username %}">Candidate</a></li>
                                     {% elif user.user_type == 'employer' %}
                                         <li><a class="dropdown-item" href="{% url 'job:job-postings' %}">Job Postings</a></li>
                                         <li><a class="dropdown-item" href="{% url 'user:company' user.username %}">Employer</a></li>
                                     {% elif user.user_type == 'candidate' %}
                                         <li><a class="dropdown-item" href="{% url 'job:my-applies' %}">My Applies</a></li>
-                                        <li><a class="dropdown-item" href="#">Candidate</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'user:candidate' user.username %}">Candidate</a></li>
                                     {% endif %}
                                         <li><a class="dropdown-item" href="{% url 'job:bookmarks' %}">Bookmarks</a></li>
                                         <li><a class="dropdown-item" href="{% url 'user:profile' %}">My Profile</a></li>
