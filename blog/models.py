@@ -24,6 +24,7 @@ class Blog(models.Model):
     content = FroalaField()
     views = models.IntegerField(default=0)
     status = models.CharField(max_length=12, choices=STATUS_CHOICES)
+    quick_career_tip = models.BooleanField(default=False)
     slug = models.SlugField(unique=True)
     created_date = models.DateTimeField(auto_now_add=True)
 

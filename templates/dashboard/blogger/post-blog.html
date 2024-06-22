@@ -99,6 +99,11 @@
                                 </div>
                             </div>
 
+                            <div class="custom-control custom-checkbox mb-3">
+                                <input type="checkbox" class="custom-control-input" name="quick_career_tip" id="quick-career-tip" {% if blog.quick_career_tip %}checked{% endif %}>
+                                <label class="custom-control-label" for="quick-career-tip">Quick Career Tip</label>
+                            </div>
+
                             <textarea id="froala-editor" name="content">{{ blog.content }}</textarea>
 
                             {% if blog %}

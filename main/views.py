@@ -5,6 +5,7 @@ from user.models import Employer
 from job.models import Vacancy
 from recruitment_cp.models import ParameterFAQ
 from main.models import FAQ
+from blog.models import Blog
 
 import math
 
@@ -13,8 +14,8 @@ import math
 def index(request):
     vacancies = fetch_vacancies(request)
     company_slider = Employer.objects.filter(slider=True, user__profile_photo__isnull=False).exclude(user__profile_photo='')
-
     today_releases = Vacancy.objects.all().order_by('?')[:6]
+    quick_career_tips = Blog.objects.filter(status='published', quick_career_tip=True)
 
     def get_objects_in_sublists(objects_per_list=5):
         objects = list(Vacancy.objects.all().order_by('?')[:10])
@@ -35,7 +36,8 @@ def index(request):
         **vacancies,
         'company_slider': company_slider,
         'today_releases': today_releases,
-        'featured_slider': get_objects_in_sublists()
+        'featured_slider': get_objects_in_sublists(),
+        'quick_career_tips': quick_career_tips
     }
 
     return render(request, 'main/index.html', context)
