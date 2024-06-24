@@ -1,5 +1,5 @@
 {% load static %}
-{% load bookmarks %}
+{% load actions %}
 
 <link href="{% static 'main/css/vacancy-box.css' %}" rel="stylesheet" type="text/css" />
 
@@ -55,7 +55,12 @@
                 <!--end col-->
                 <div class="col-md-3">
                     <div class="text-md-end">
+                        {% applications request vacancy.id as apply %}
+                        {% if not apply %}
                         <a href="#applyNow" data-bs-toggle="modal" class="primary-link" onclick="apply('{{ vacancy.id }}')">Apply Now <i class="mdi mdi-chevron-double-right"></i></a>
+                        {% else %}
+                        <a href="#deleteApply" data-bs-toggle="modal" class="primary-link" onclick="apply('{{ vacancy.id }}')">Delete Apply <i class="mdi mdi-chevron-double-right"></i></a>
+                        {% endif %}
                     </div>
                 </div>
                 <!--end col-->

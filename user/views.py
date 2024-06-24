@@ -83,7 +83,22 @@ def candidate_list(request):
 
 
 def candidate_details(request, username):
-    user = get_object_or_404(CustomUser, username=username,  user_type='candidate')
+   # If the logged-in user is a superuser
+    if request.user.is_superuser:
+        # Superusers can act as both "employer" and "candidate"
+        # Therefore, only the username information is sufficient
+        params = {
+            'username': username,
+        }
+    else:
+        # Non-superuser users can only act as "candidate"
+        # Therefore, both username and user_type information are required
+        params = {
+            'username': username,
+            'user_type': 'candidate'
+        }
+
+    user = get_object_or_404(CustomUser, **params)
 
     if request.POST:
         user = request.user
@@ -132,7 +147,22 @@ def company_list(request):
 
 
 def company_details(request, username):
-    user = get_object_or_404(CustomUser, username=username, user_type='employer')
+    # If the logged-in user is a superuser
+    if request.user.is_superuser:
+        # Superusers can act as both "employer" and "candidate"
+        # Therefore, only the username information is sufficient
+        params = {
+            'username': username,
+        }
+    else:
+        # Non-superuser users can only act as "candidate"
+        # Therefore, both username and user_type information are required
+        params = {
+            'username': username,
+            'user_type': 'candidate'
+        }
+
+    user = get_object_or_404(CustomUser, **params)
     vacancies = vacancy_with_related_info(user.employer.vacancies.filter(status=True)[:5])
     keywords = ParameterKeyword.objects.all()
     sectors = ParameterSector.objects.all().values('id', 'name')

@@ -44,6 +44,7 @@ const applyNow = new bootstrap.Modal(document.getElementById('applyNow'));
 const sendApplicationBtn = document.getElementById('send-application');
 
 const sendApplication = (id) => {
+    const applyNowBtn = document.getElementById('applyNow');
     const message = document.getElementById('apply-message');
     const cv = document.getElementById('apply-cv');
     const formData = new FormData();
@@ -54,7 +55,7 @@ const sendApplication = (id) => {
     };
     
     $.ajax({
-        url: 'ajax/apply',
+        url: '/ajax/apply',
         type: 'POST',
         data: formData,
         processData: false,
@@ -63,6 +64,8 @@ const sendApplication = (id) => {
             applyNow.hide();
             message.value = '';
             cv.value = '';
+            applyNowBtn.id = 'deleteApply';
+            applyNowBtn.innerText = 'Delete Apply';
         }
     });
 
