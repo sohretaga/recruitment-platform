@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import F
 from datetime import timedelta
 
-from job.models import Vacancy, Bookmark
+from job.models import Vacancy, Bookmark, Apply
 from job.utils import vacancy_with_related_info
 from recruitment_cp.utils import is_ajax
 from .utils import fetch_vacancies
@@ -51,8 +51,44 @@ def categories(request):
     return render(request, 'job/categories.html')
 
 @is_candidate
-def my_applies(request):
-    return render(request, 'job/my-applies.html')
+def applications(request):
+    applications = request.user.candidate.applications.select_related('vacancy', 'candidate').annotate(
+        username=F('candidate__user__username'),
+        company_name=F('vacancy__employer__user__first_name'),
+        position_title=F('vacancy__position_title'),
+        location=F('vacancy__location__name'),
+        salary_minimum=F('vacancy__salary_minimum'),
+        salary_maximum=F('vacancy__salary_maximum'),
+        slug=F('vacancy__slug'),
+    ).values('username', 'company_name', 'position_title', 'location', 'salary_minimum', 'salary_maximum', 'slug').order_by('created_date')
+
+    paginator = Paginator(applications, 30)
+    current_page = request.GET.get('page')
+    applications = paginator.get_page(current_page)
+    
+    context = {
+        'applications': applications
+    }
+
+    return render(request, 'job/applications.html', context)
+
+@require_POST
+@is_candidate
+def ajax_apply(request):
+    vacancy = request.POST.get('vacancy')
+    message = request.POST.get('message')
+    cv = request.FILES.get('cv')
+    vacancy = Vacancy.objects.get(id=vacancy)
+
+    apply_exists = Apply.objects.filter(candidate=request.user.candidate, vacancy=vacancy).exists()
+
+    if apply_exists:
+        Apply.objects.filter(candidate=request.user.candidate, vacancy=vacancy).delete()
+        return JsonResponse({'status': 'success', 'message': 'Apply removed'})
+    else:
+        Apply.objects.create(candidate=request.user.candidate, vacancy=vacancy, message=message, cv=cv)
+        return JsonResponse({'status': 'success', 'message': 'Bookmark removed'})
+
 
 @is_employer
 def job_postings(request):

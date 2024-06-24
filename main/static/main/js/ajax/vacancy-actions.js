@@ -38,3 +38,38 @@ const addBookmarkWithPopup = (id) => {
         addBookmark(id);
     };
 };
+
+
+const applyNow = new bootstrap.Modal(document.getElementById('applyNow'));
+const sendApplicationBtn = document.getElementById('send-application');
+
+const sendApplication = (id) => {
+    const message = document.getElementById('apply-message');
+    const cv = document.getElementById('apply-cv');
+    const formData = new FormData();
+    formData.append('vacancy', id);
+    formData.append('message', message.value);
+    if (cv.files.length > 0) {
+        formData.append('cv', cv.files[0]);
+    };
+    
+    $.ajax({
+        url: 'ajax/apply',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function() {
+            applyNow.hide();
+            message.value = '';
+            cv.value = '';
+        }
+    });
+
+};
+
+const apply = (id) => {
+    const vacancyBox = document.getElementById(`vacancy-${id}`);
+
+    sendApplicationBtn.setAttribute("onclick", `sendApplication(${id})`);
+};

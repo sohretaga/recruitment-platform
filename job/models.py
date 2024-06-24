@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 
-from user.models import Employer, CustomUser
+from user.models import Employer, Candidate, CustomUser
 from recruitment_cp import models as cp_models
 
 # Create your models here.
@@ -57,3 +57,10 @@ class Vacancy(models.Model):
 class Bookmark(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='bookmarks')
     vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE)
+
+class Apply(models.Model):
+    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, related_name='applications')
+    vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE, related_name='applications')
+    message = models.TextField()
+    cv = models.FileField(upload_to='cvs/', null=True)
+    created_date = models.DateTimeField(auto_now_add=True)

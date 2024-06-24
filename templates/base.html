@@ -288,14 +288,14 @@
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown">
                                     {% if user.is_superuser %}
                                         <li><a class="dropdown-item" href="{% url 'job:job-postings' %}">Job Postings</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'job:my-applies' %}">My Applies</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'job:applications' %}">My Applies</a></li>
                                         <li><a class="dropdown-item" href="{% url 'user:company' user.username %}">Employer</a></li>
                                         <li><a class="dropdown-item" href="{% url 'user:candidate' user.username %}">Candidate</a></li>
                                     {% elif user.user_type == 'employer' %}
                                         <li><a class="dropdown-item" href="{% url 'job:job-postings' %}">Job Postings</a></li>
                                         <li><a class="dropdown-item" href="{% url 'user:company' user.username %}">Employer</a></li>
                                     {% elif user.user_type == 'candidate' %}
-                                        <li><a class="dropdown-item" href="{% url 'job:my-applies' %}">My Applies</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'job:applications' %}">My Applies</a></li>
                                         <li><a class="dropdown-item" href="{% url 'user:candidate' user.username %}">Candidate</a></li>
                                     {% endif %}
                                         <li><a class="dropdown-item" href="{% url 'job:bookmarks' %}">Bookmarks</a></li>
