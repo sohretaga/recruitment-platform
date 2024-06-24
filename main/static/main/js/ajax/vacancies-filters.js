@@ -156,9 +156,10 @@ const generatePagination = (paginationInfo) => {
         nextItem.innerHTML = `<a class="page-link" href="${url}${separator}page=${currentPage + 1}#job-list"><i class="mdi mdi-chevron-double-right fs-15"></i></a>`;
         container.appendChild(nextItem);
     };
+
 };
 
-const listVacancies = (vacanciesInfo, bookmarks, keywords) => {
+const listVacancies = (vacanciesInfo, bookmarks, applications, keywords) => {
     const container = document.getElementById('job-list-container');
     container.innerHTML = ''; // Clear existing content
 
@@ -203,7 +204,7 @@ const listVacancies = (vacanciesInfo, bookmarks, keywords) => {
                         <div>
                             <ul class="list-inline mb-0">
                                 <li class="list-inline-item"><i class="uil uil-tag"></i> Keywords :</li>
-                                 ${(() => {
+                                ${(() => {
                                     let itemsHtml = '';
                                     let lastItem = vacancy.keywords.slice(-1)[0];
                                     keywords.forEach(key => {
@@ -220,7 +221,18 @@ const listVacancies = (vacanciesInfo, bookmarks, keywords) => {
                     <!--end col-->
                     <div class="col-md-3">
                         <div class="text-md-end">
-                            <a href="#applyNow" data-bs-toggle="modal" class="primary-link">Apply Now <i class="mdi mdi-chevron-double-right"></i></a>
+                        ${(() => {
+                            let applyId = `apply-now-${vacancy.id}`;
+                            let applyText = 'Apply Now';
+
+                            if (applications.includes(vacancy.id)) {
+                                applyId = `delete-apply-${vacancy.id}`;
+                                applyText = 'Delete Apply';
+                            };
+
+                            const apply = `<a href="javascript:void(0);" id="${applyId}" class="primary-link" onclick="apply(${vacancy.id})">${applyText} <i class="mdi mdi-chevron-double-right"></i></a>`;
+                            return apply;
+                        })()}
                         </div>
                     </div>
                     <!--end col-->
@@ -229,7 +241,6 @@ const listVacancies = (vacanciesInfo, bookmarks, keywords) => {
             </div>
         </div>`
     };
-
 };
 
 // Filter Request
@@ -242,8 +253,16 @@ const filterRequest = () => {
         type: 'POST',
         data: JSON.stringify(collectded_data),
         success: (response) => {
-            listVacancies(response.vacancies, response.bookmarks, response.keywords);
-            generatePagination(response.pagination);
+            generatePagination(
+                response.pagination
+            );
+
+            listVacancies(
+                response.vacancies,
+                response.bookmarks,
+                response.applications,
+                response.keywords
+            );
         }
 
     });

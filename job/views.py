@@ -60,7 +60,7 @@ def applications(request):
         salary_minimum=F('vacancy__salary_minimum'),
         salary_maximum=F('vacancy__salary_maximum'),
         slug=F('vacancy__slug'),
-    ).values('username', 'company_name', 'position_title', 'location', 'salary_minimum', 'salary_maximum', 'slug').order_by('created_date')
+    ).values('username', 'company_name', 'position_title', 'location', 'salary_minimum', 'salary_maximum', 'slug').order_by('-created_date')
 
     paginator = Paginator(applications, 30)
     current_page = request.GET.get('page')
@@ -179,8 +179,14 @@ def ajax_filter_vacancies(request):
 
         # Serialize the data
         vacancies_list = list(vacancies_page.object_list.values())
-        bookmarks = list(Bookmark.objects.filter(user=request.user).values_list('vacancy__id', flat=True))
         keywords = list(ParameterKeyword.objects.all().values('id', 'name'))
+        bookmarks, applications = list(), list()
+
+        if request.user.is_authenticated:
+            bookmarks = list(request.user.bookmarks.values_list('vacancy__id', flat=True))
+
+        if request.user.is_authenticated and request.user.user_type == 'candidate':
+            applications = list(request.user.candidate.applications.values_list('vacancy__id', flat=True))
 
         pagination_info = {
             'has_next': vacancies_page.has_next(),
@@ -193,6 +199,7 @@ def ajax_filter_vacancies(request):
             'vacancies': vacancies_list,
             'pagination': pagination_info,
             'bookmarks': bookmarks,
+            'applications': applications,
             'keywords': keywords
         }
 

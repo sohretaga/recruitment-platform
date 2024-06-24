@@ -15,7 +15,6 @@ def bookmarks(request, vacancy_id) -> str:
 @register.simple_tag
 def applications(request, vacancy_id) -> bool:
     if request.user.is_authenticated:
-        print(Apply.objects.filter(candidate=request.user.candidate, vacancy__id=vacancy_id).exists())
         return Apply.objects.filter(candidate=request.user.candidate, vacancy__id=vacancy_id).exists()
     
     return False
