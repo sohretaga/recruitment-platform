@@ -120,3 +120,8 @@ $('#applyNow').on('hidden.bs.modal', function(e) {
     document.getElementById('apply-message').style.borderColor = '';
     document.getElementById('message-warning').style.display ='none';
 });
+
+document.getElementById('apply-message').addEventListener('input', function() {
+    document.getElementById('apply-message').style.borderColor = '';
+    document.getElementById('message-warning').style.display ='none';
+});
