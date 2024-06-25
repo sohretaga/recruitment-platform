@@ -72,7 +72,7 @@ const sendApplication = (id) => {
                 cv.value = '';
 
                 applyNowBtn.id = `delete-apply-${id}`;
-                applyNowBtn.innerText = 'Delete Apply';
+                applyNowBtn.innerHTML = 'Delete Apply  <i class="mdi mdi-chevron-double-right">';
 
                 messageWarning.style.display = 'none';
                 message.style.borderColor = '';
@@ -94,7 +94,7 @@ const deleteApplication = (id) => {
         success: function() {
             deleteApply.hide();
             deleteApplyBtn.id = `apply-now-${id}`;
-            deleteApplyBtn.innerText = 'Apply Now';
+            deleteApplyBtn.innerHTML = 'Apply Now  <i class="mdi mdi-chevron-double-right">';
         }
     });
 };
@@ -119,6 +119,11 @@ const apply = (id) => {
 $('#applyNow').on('hidden.bs.modal', function(e) {
     document.getElementById('apply-message').style.borderColor = '';
     document.getElementById('message-warning').style.display ='none';
+    sendApplicationBtn.removeAttribute('onclick');
+});
+
+$('#deleteApply').on('hidden.bs.modal', function(e) {
+    deleteApplicationBtn.removeAttribute('onclick');
 });
 
 document.getElementById('apply-message').addEventListener('input', function() {
