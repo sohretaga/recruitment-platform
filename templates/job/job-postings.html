@@ -130,7 +130,7 @@
                                 <div class="col-lg-4 align-self-center">
                                     <ul class="list-inline mt-3 mb-0">
                                         <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top">
-                                            <a href="{% url 'job:applicants' vacancy.slug %}" class="btn btn-primary {% if not vacancy.applications.count %}disabled{% endif %}">Applications ({{ vacancy.applications.count }}) <i class="uil uil-folder-open"></i></a>
+                                            <a href="{% url 'job:applicants' vacancy.slug %}" class="btn btn-primary {% if not vacancy.applications.count %}disabled{% endif %}">Applicants ({{ vacancy.applications.count }}) <i class="uil uil-folder-open"></i></a>
                                         </li>
                                         <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
                                             <a href="{% url 'dashboard:edit-vacancy' vacancy.id %}" class="avatar-sm bg-soft-success d-inline-block text-center rounded-circle fs-18">
