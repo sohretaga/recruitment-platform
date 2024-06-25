@@ -1,13 +1,29 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.views.decorators.http import require_POST
+from django.db.models import F
+from django.http import JsonResponse
 
 from dashboard.decorators import is_candidate
 from dashboard.forms import ManageCandidateAccountForm
 from recruitment_cp.models import ParameterCountry
+from job.models import Apply
 
 @is_candidate
 def your_applies(request):
-    return render(request, 'dashboard/candidate/your-applies.html')
+    applications = request.user.candidate.applications.select_related('vacancy', 'candidate').annotate(
+        company_name=F('candidate__user__first_name'),
+        position_title=F('vacancy__position_title'),
+        job_title=F('vacancy__job_title__name'),
+        career_level=F('vacancy__career_level__name'),
+        slug=F('vacancy__slug'),
+    ).values('id', 'company_name', 'position_title', 'job_title', 'career_level', 'slug').order_by('-created_date')
+
+    context = {
+        'applications': applications
+    }
+
+    return render(request, 'dashboard/candidate/your-applies.html', context)
 
 @is_candidate
 def manage_account(request):
@@ -40,3 +56,13 @@ def manage_account(request):
     }
 
     return render(request, 'dashboard/candidate/manage-account.html', context)
+
+@require_POST
+def ajax_delete_apply(request):
+    apply_id = request.POST.get('apply_id')
+    apply = Apply.objects.filter(id=apply_id)
+
+    if request.user == apply.first().candidate.user:
+        apply.delete()
+
+    return JsonResponse({'status': 200})

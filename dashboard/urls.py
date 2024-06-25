@@ -25,8 +25,9 @@ urlpatterns = [
 
     # Candidate URL's
     path('candidate/complete-register', candidate.manage_account, name='candidate-complete-register'),
-    path('your-applies', candidate.your_applies, name='your-applies'),
+    path('applications', candidate.your_applies, name='applications'),
     path('candidate/edit-account', candidate.manage_account, name='candidate-edit-account'),
+    path('ajax/delete-apply', candidate.ajax_delete_apply, name='ajax-delete-apply'),
 
     # Blog URL's
     path('blog/post', blogger.post_blog, name='post-blog'),

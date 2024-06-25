@@ -294,7 +294,7 @@
                                 <li class="menu-title">For Candidate</li>
 
                                 <li>
-                                    <a href="{% url 'dashboard:your-applies' %}" class="waves-effect">
+                                    <a href="{% url 'dashboard:applications' %}" class="waves-effect">
                                         <i class="ri-list-settings-fill"></i>
                                         <span>Your Applies</span>
                                     </a>
@@ -353,7 +353,7 @@
                                 </li>
                             {% elif request.user.user_type == 'candidate' %}
                                 <li>
-                                    <a href="{% url 'dashboard:your-applies' %}" class="waves-effect">
+                                    <a href="{% url 'dashboard:applications' %}" class="waves-effect">
                                         <i class="ri-list-settings-fill"></i>
                                         <span>Your Applies</span>
                                     </a>
