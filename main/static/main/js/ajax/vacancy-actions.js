@@ -51,28 +51,37 @@ const sendApplication = (id) => {
     const applyNowBtn = document.getElementById(`apply-now-${id}`);
     const message = document.getElementById('apply-message');
     const cv = document.getElementById('apply-cv');
+    const messageWarning = document.getElementById('message-warning');
     const formData = new FormData();
     formData.append('vacancy', id);
     formData.append('message', message.value);
     if (cv.files.length > 0) {
         formData.append('cv', cv.files[0]);
     };
-    
-    $.ajax({
-        url: '/ajax/apply',
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function() {
-            applyNow.hide();
-            message.value = '';
-            cv.value = '';
-            applyNowBtn.id = `delete-apply-${id}`;
-            applyNowBtn.innerText = 'Delete Apply';
-        }
-    });
 
+    if (message.value) {
+        $.ajax({
+            url: '/ajax/apply',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function() {
+                applyNow.hide();
+                message.value = '';
+                cv.value = '';
+
+                applyNowBtn.id = `delete-apply-${id}`;
+                applyNowBtn.innerText = 'Delete Apply';
+
+                messageWarning.style.display = 'none';
+                message.style.borderColor = '';
+            }
+        });
+    } else {
+        messageWarning.style.display = 'inline';
+        message.style.borderColor = 'red';
+    };
 };
 
 const deleteApplication = (id) => {
@@ -106,3 +115,8 @@ const apply = (id) => {
         signInModal.show();
     };
 };
+
+$('#applyNow').on('hidden.bs.modal', function(e) {
+    document.getElementById('apply-message').style.borderColor = '';
+    document.getElementById('message-warning').style.display ='none';
+});
