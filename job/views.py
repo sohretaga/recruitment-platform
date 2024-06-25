@@ -4,7 +4,8 @@ from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from django.db.models import F
+from django.db.models import F, Value
+from django.db.models.functions import Concat
 from datetime import timedelta
 
 from job.models import Vacancy, Bookmark, Apply
@@ -49,6 +50,28 @@ def vacancy(request, slug):
 
 def categories(request):
     return render(request, 'job/categories.html')
+
+@is_employer
+def vacancy_applications(request, slug):
+    vacancy = get_object_or_404(Vacancy, slug=slug)
+    applicants = vacancy.applications.select_related('candidate__user').annotate(
+        full_name=Concat(
+            F('candidate__user__first_name'),
+            Value(' '),
+            F('candidate__user__last_name')
+        ),
+        username=F('candidate__user__username')
+    ).order_by('-created_date')
+
+    paginator = Paginator(applicants, 30)
+    current_page = request.GET.get('page')
+    applicants = paginator.get_page(current_page)
+
+    context = {
+        'applicants': applicants
+    }
+
+    return render(request, 'job/applicants.html', context)
 
 @is_candidate
 def applications(request):

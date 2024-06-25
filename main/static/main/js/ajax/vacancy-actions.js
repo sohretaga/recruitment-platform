@@ -44,9 +44,6 @@ const addBookmarkWithPopup = (id) => {
 const applyNow = new bootstrap.Modal(document.getElementById('applyNow'));
 const deleteApply = new bootstrap.Modal(document.getElementById('deleteApply'));
 
-const sendApplicationBtn = document.getElementById('send-application');
-const deleteApplicationBtn = document.getElementById('delete-application');
-
 const sendApplication = (id) => {
     const applyNowBtn = document.getElementById(`apply-now-${id}`);
     const message = document.getElementById('apply-message');
@@ -105,10 +102,16 @@ const apply = (id) => {
         const apply = document.getElementById(`apply-now-${id}`);
 
         if (apply) {
-            sendApplicationBtn.setAttribute("onclick", `sendApplication(${id})`);
+            document.getElementById('send-application').setAttribute("onclick", `sendApplication(${id})`);
+            
+            document.getElementById('apply-message').addEventListener('input', function() {
+                document.getElementById('apply-message').style.borderColor = '';
+                document.getElementById('message-warning').style.display ='none';
+            });
+
             applyNow.show();
         } else {
-            deleteApplicationBtn.setAttribute("onclick", `deleteApplication(${id})`);
+            document.getElementById('delete-application').setAttribute("onclick", `deleteApplication(${id})`);
             deleteApply.show();
         };
     } else {
@@ -119,14 +122,9 @@ const apply = (id) => {
 $('#applyNow').on('hidden.bs.modal', function(e) {
     document.getElementById('apply-message').style.borderColor = '';
     document.getElementById('message-warning').style.display ='none';
-    sendApplicationBtn.removeAttribute('onclick');
+    document.getElementById('send-application').removeAttribute('onclick');
 });
 
 $('#deleteApply').on('hidden.bs.modal', function(e) {
-    deleteApplicationBtn.removeAttribute('onclick');
-});
-
-document.getElementById('apply-message').addEventListener('input', function() {
-    document.getElementById('apply-message').style.borderColor = '';
-    document.getElementById('message-warning').style.display ='none';
+    document.getElementById('delete-application').removeAttribute('onclick');
 });

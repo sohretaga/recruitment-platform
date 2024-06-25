@@ -6,6 +6,7 @@ app_name = 'job'
 urlpatterns = [
     path('vacancies/', views.vacancies, name='vacancies'),
     path('vacancy/<slug:slug>', views.vacancy, name='vacancy'),
+    path('vacancy/applicants/<slug:slug>', views.vacancy_applications, name='applicants'),
     path('categories', views.categories, name='categories'),
     path('applications', views.applications, name='applications'),
     path('job-postings', views.job_postings, name='job-postings'),
