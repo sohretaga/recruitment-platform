@@ -79,8 +79,8 @@ const sendApplication = (id) => {
             }
         });
     } else {
+        message.style.borderColor = '#DA3746';
         messageWarning.style.display = 'inline';
-        message.style.borderColor = 'red';
     };
 };
 
