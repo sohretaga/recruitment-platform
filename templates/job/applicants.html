@@ -421,12 +421,10 @@
                                                     <i class="uil uil-envelope-download"></i>
                                                 </a>
                                             </li>
-                                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top" title="CV">
-                                                {% if applicant.cv %}
-                                                <a href="{{ applicant.cv.url }}" target="_blank" class="avatar-sm bg-soft-success d-inline-block text-center rounded-circle fs-18"> <i class="uil uil-file-download-alt"></i></a>
-                                                {% else %}
-                                                <a class="avatar-sm bg-soft-success d-inline-block text-center rounded-circle fs-18 disabled" style="background-color: #EEEDEB !important;"> <i class="uil uil-file-download-alt" style="color: #999595;"></i></a>
-                                                {% endif %}
+                                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top" title="{% if applicant.cv %}CV{% else %}No CV{% endif %}">
+                                                <a {% if applicant.cv %}href="{{ applicant.cv.url }}" target="_blank" {% else %}href="javascript:void(0)"{% endif %} class="avatar-sm bg-soft-success d-inline-block text-center rounded-circle fs-18">
+                                                    <i class="uil uil-file-download-alt"></i>
+                                                </a>
                                             </li>
                                         </div>
                                     </div><!--end col-->
