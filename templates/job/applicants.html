@@ -410,19 +410,23 @@
                                                 </li>
                                             </ul>
                                         </div>
+                                        <input type="hidden" value="{{ applicant.message }}" id="message-{{ applicant.id }}">
+                                        <input type="hidden" value="{{ applicant.full_name }}" id="full-name-{{ applicant.id }}">
                                     </div><!--end col-->
 
                                     <div class="col-lg-2">
                                         <div class="mt-2 mt-lg-0">
                                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Message">
-                                                <a href="javascript:void(0)" class="avatar-sm bg-soft-success d-inline-block text-center rounded-circle fs-18" onclick="message('{{ applicant.message }}', '{{ applicant.full_name }}')">
+                                                <a href="javascript:void(0)" class="avatar-sm bg-soft-success d-inline-block text-center rounded-circle fs-18" onclick="message('{{ applicant.id }}')">
                                                     <i class="uil uil-envelope-download"></i>
                                                 </a>
                                             </li>
                                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top" title="CV">
-                                                <a {% if applicant.cv %}href="{{ applicant.cv.url }}" target="_blank" {% else %}href="javascript:void(0)"{% endif %} class="avatar-sm bg-soft-success d-inline-block text-center rounded-circle fs-18">
-                                                    <i class="uil uil-file-download-alt"></i>
-                                                </a>
+                                                {% if applicant.cv %}
+                                                <a href="{{ applicant.cv.url }}" target="_blank" class="avatar-sm bg-soft-success d-inline-block text-center rounded-circle fs-18"> <i class="uil uil-file-download-alt"></i></a>
+                                                {% else %}
+                                                <a class="avatar-sm bg-soft-success d-inline-block text-center rounded-circle fs-18 disabled" style="background-color: #EEEDEB !important;"> <i class="uil uil-file-download-alt" style="color: #999595;"></i></a>
+                                                {% endif %}
                                             </li>
                                         </div>
                                     </div><!--end col-->
@@ -501,7 +505,7 @@
     <!-- END JOB-LIST -->
 
     <!-- START APPLICANT MESSAGE -->
-    <div class="modal fade" id="applicantMessage" tabindex="-1" aria-labelledby="applicantMessage" aria-hidden="true" aria-hidden="true">
+    <div class="modal fade" id="applicantMessage" tabindex="-1" aria-labelledby="applicantMessage" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
             <div class="modal-header">
