@@ -22,7 +22,8 @@ const actionChoices = new Choices('#action', {
 flatpickr(inviteDateInput, {
     enableTime: true,
     dateFormat: "d-m-Y H:i",
-    time_24hr: true
+    time_24hr: true,
+    disableMobile: true
 });
 
 
