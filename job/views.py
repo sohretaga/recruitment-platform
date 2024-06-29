@@ -8,7 +8,7 @@ from django.db.models import F, Value
 from django.db.models.functions import Concat
 from datetime import timedelta
 
-from job.models import Vacancy, Bookmark, Apply, EmployerAction
+from job.models import Vacancy, Bookmark, Apply, EmployerAction, CandidateAction
 from job.utils import vacancy_with_related_info
 from recruitment_cp.utils import is_ajax
 from .utils import fetch_vacancies
@@ -67,8 +67,11 @@ def vacancy_applications(request, slug):
     current_page = request.GET.get('page')
     applicants = paginator.get_page(current_page)
 
+    applicants_count = vacancy.applications.count()
+
     context = {
-        'applicants': applicants
+        'applicants': applicants,
+        'applicants_count': applicants_count
     }
 
     return render(request, 'job/applicants.html', context)
@@ -83,7 +86,7 @@ def applications(request):
         salary_minimum=F('vacancy__salary_minimum'),
         salary_maximum=F('vacancy__salary_maximum'),
         slug=F('vacancy__slug'),
-    ).values('username', 'company_name', 'position_title', 'location', 'salary_minimum', 'salary_maximum', 'slug').order_by('-created_date')
+    ).order_by('-created_date')
 
     paginator = Paginator(applications, 30)
     current_page = request.GET.get('page')
@@ -268,6 +271,34 @@ def ajax_send_employer_action(request):
                 apply=apply,
                 action=action,
                 invite_date=invite_date
+            )
+
+    return JsonResponse({'status': 'success'})
+
+
+@is_candidate
+@require_POST
+def ajax_send_candidate_action(request):
+    applicant_id = request.POST.get('applicant_id')
+    action = request.POST.get('action_value')
+    request_other_date = request.POST.get('request_other_date')
+
+    apply_exists = Apply.objects.filter(id=applicant_id).exists()
+
+    if apply_exists:
+        candidate_action_exists = CandidateAction.objects.filter(employer_action__apply=applicant_id).exists()
+
+        if candidate_action_exists:
+            CandidateAction.objects.filter(employer_action__apply=applicant_id).update(
+                action=action,
+                request_other_date=request_other_date
+            )
+        else:
+            employer_action = Apply.objects.get(id=applicant_id).employer_action
+            CandidateAction.objects.create(
+                employer_action=employer_action,
+                action=action,
+                request_other_date=request_other_date
             )
 
     return JsonResponse({'status': 'success'})

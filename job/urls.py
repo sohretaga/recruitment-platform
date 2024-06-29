@@ -17,4 +17,5 @@ urlpatterns = [
     path('ajax/add-bookmark', views.ajax_add_bookmark, name='ajax-add-bookmark'),
     path('ajax/apply', views.ajax_apply, name='ajax-apply'),
     path('ajax/send-employer-action', views.ajax_send_employer_action, name='ajax-send-employer-action'),
+    path('ajax/send-candidate-action', views.ajax_send_candidate_action, name='ajax-send-candidate-action'),
 ]

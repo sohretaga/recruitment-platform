@@ -89,9 +89,9 @@ const action = (id) => {
 
 const sendAction = (id) => {
     const selectedActionValue = document.getElementById('action').value;
-    const selectedInviteDateVale = document.getElementById('invite-date').value;
+    const selectedInviteDateValue = document.getElementById('invite-date').value;
 
-    if (selectedActionValue == 'INVITE' && selectedInviteDateVale == '') {
+    if (selectedActionValue == 'INVITE' && selectedInviteDateValue == '') {
         inviteDateInput.style.borderColor = '#DA3746';
         return;
     };
@@ -102,13 +102,13 @@ const sendAction = (id) => {
         data: {
             applicant_id: id,
             action_value: selectedActionValue,
-            invite_date: selectedInviteDateVale
+            invite_date: selectedInviteDateValue
         },
         success: function() {
             employerActionModal.hide();
             const asctionStatus = document.getElementById(`action-status-${id}`);
             document.getElementById(`has-value-action-${id}`).value = selectedActionValue;
-            document.getElementById(`has-value-invite-date-${id}`).value = selectedInviteDateVale;
+            document.getElementById(`has-value-invite-date-${id}`).value = selectedInviteDateValue;
             
             if (selectedActionValue == 'SHORTLIST') {
                 asctionStatus.innerHTML = 'Shortlisted <i class="uil uil-user-check">';

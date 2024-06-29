@@ -7,6 +7,10 @@
      <!-- Choise Css -->
      <link rel="stylesheet" href="{% static 'main/libs/choices.js/public/assets/styles/choices.min.css' %}">
 
+     <!-- Flatpickr Css -->
+     <link rel="stylesheet" href="{% static 'main/libs/flatpickr/flatpickr.min.css' %}">
+     <link rel="stylesheet" href="{% static 'main/libs/flatpickr/dark.css' %}" id="flatpickr-dark">
+
      <!-- Bootstrap Css -->
      <link href="{% static 'main/css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
      <!-- Icons Css -->
@@ -14,10 +18,6 @@
      <!-- App Css-->
      <link href="{% static 'main/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
      <!--Custom Css-->
-
-
-     <link rel="stylesheet" href="{% static 'main/libs/flatpickr/flatpickr.min.css' %}">
-     <link rel="stylesheet" href="{% static 'main/libs/flatpickr/dark.css' %}" id="flatpickr-dark">
 {% endblock head %}
 
 {% block content %}
@@ -336,7 +336,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-8">
                     <div class="mb-3 mb-lg-0">
-                        <h6 class="fs-16 mb-0"> Showing 1 – 8 of 11 results </h6>
+                        <h6 class="fs-16 mb-0"> {{ applicants_count }} Applicants </h6>
                     </div>
                 </div><!--end col-->
 
@@ -522,7 +522,7 @@
                     <div class="auth-content">
                         <div class="w-100">
                             <div class="text-center mb-4">
-                                <h5 id="modal-title">Candidate Name</h5>
+                                <h5 id="modal-title"></h5>
                                 <p class="text-muted">Select your actions for this applicant.</p>
                             </div>
                             <div class="mb-3">
@@ -542,7 +542,7 @@
                                 </div>
                             </div>
                             <div class="text-center">
-                                <button type="button" id="send-action-btn" class="btn btn-primary w-100">Send Action</button>
+                                <button type="button" id="send-action-btn" class="btn btn-primary w-100">Select Action</button>
                             </div>
                         </div>
                     </div>
