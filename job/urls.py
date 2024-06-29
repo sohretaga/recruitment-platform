@@ -16,4 +16,5 @@ urlpatterns = [
     path('ajax/filter-vacancies', views.ajax_filter_vacancies, name='ajax_filter_vacancies'),
     path('ajax/add-bookmark', views.ajax_add_bookmark, name='ajax-add-bookmark'),
     path('ajax/apply', views.ajax_apply, name='ajax-apply'),
+    path('ajax/send-employer-action', views.ajax_send_employer_action, name='ajax-send-employer-action'),
 ]

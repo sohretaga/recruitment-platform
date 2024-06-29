@@ -14,6 +14,10 @@
      <!-- App Css-->
      <link href="{% static 'main/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
      <!--Custom Css-->
+
+
+     <link rel="stylesheet" href="{% static 'main/libs/flatpickr/flatpickr.min.css' %}">
+     <link rel="stylesheet" href="{% static 'main/libs/flatpickr/dark.css' %}" id="flatpickr-dark">
 {% endblock head %}
 
 {% block content %}
@@ -64,12 +68,6 @@
                     <div class="candidate-list-widgets mb-4">
                         <form action="#">
                             <div class="row g-2">
-                                <div class="col-lg-3">
-                                    <div class="filler-job-form">
-                                        <i class="uil uil-briefcase-alt"></i>
-                                        <input type="search" class="form-control filter-job-input-box" id="exampleFormControlInput1" placeholder="Job, Company name... ">
-                                    </div>
-                                </div><!--end col-->
                                 <div class="col-lg-3">
                                     <div class="filler-job-form">
                                         <i class="uil uil-location-point"></i>
@@ -323,18 +321,7 @@
                                         </select>
                                     </div>
                                 </div><!--end col-->
-                                <div class="col-lg-3">
-                                    <div class="filler-job-form">
-                                        <i class="uil uil-clipboard-notes"></i>
-                                        <select class="form-select " data-trigger name="choices-single-categories" id="choices-single-categories" aria-label="Default select example">
-                                            <option value="4">Accounting</option>
-                                            <option value="1">IT & Software</option>
-                                            <option value="3">Marketing</option>
-                                            <option value="5">Banking</option>
-                                        </select>
-                                    </div>
-                                </div><!--end col-->
-                                <div class="col-lg-3">
+                                <div class="col-lg-9 d-flex justify-content-end">
                                     <div>
                                         <a href="javascript:void(0)" class="btn btn-primary"><i class="uil uil-filter"></i> Filter</a>
                                         <a href="javascript:void(0)" class="btn btn-success ms-2"><i class="uil uil-cog"></i> Advance</a>
@@ -356,22 +343,13 @@
                 <div class="col-lg-4">
                     <div class="candidate-list-widgets">
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 <div class="selection-widget">
                                     <select class="form-select" data-trigger name="choices-single-filter-orderby" id="choices-single-filter-orderby" aria-label="Default select example">
                                         <option value="df">Default</option>
                                         <option value="ne">Newest</option>
                                         <option value="od">Oldest</option>
                                         <option value="rd">Random</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="selection-widget mt-2 mt-lg-0">
-                                    <select class="form-select" data-trigger name="choices-candidate-page" id="choices-candidate-page" aria-label="Default select example">
-                                        <option value="df">All</option>
-                                        <option value="ne">8 per Page</option>
-                                        <option value="ne">12 per Page</option>
                                     </select>
                                 </div>
                             </div>
@@ -384,7 +362,7 @@
                 <div class="col-lg-12">
                     <div class="candidate-list">
                         {% for applicant in applicants %}
-                        <div class="candidate-list-box bookmark-post card mt-4">
+                        <div id="applicant-{{ applicant.id }}" class="candidate-list-box card mt-4">
                             <div class="card-body p-4">
                                 <div class="row align-items-center">
                                     <div class="col-auto">
@@ -397,9 +375,9 @@
                                         </div>
                                     </div><!--end col-->
                                     
-                                    <div class="col-lg-9">
+                                    <div class="col-lg-7">
                                         <div class="candidate-list-content mt-3 mt-lg-0">
-                                            <h5 class="fs-19 mb-0"><a href="{% url 'user:candidate' applicant.username %}" class="primary-link">{{ applicant.full_name }}</a> <span class="badge bg-success ms-1"><i class="mdi mdi-star align-middle"></i> 4.8</span></h5>
+                                            <h5 class="fs-19 mb-0"><a href="{% url 'user:candidate' applicant.username %}" id="applicant-name-{{ applicant.id }}" class="primary-link">{{ applicant.full_name }}</a> <span class="badge bg-success ms-1"><i class="mdi mdi-star align-middle"></i> 4.8</span></h5>
                                             <p class="text-muted mb-2"> Project Manager</p>
                                             <ul class="list-inline mb-0 text-muted">
                                                 <li class="list-inline-item">
@@ -414,8 +392,19 @@
                                         <input type="hidden" value="{{ applicant.full_name }}" id="full-name-{{ applicant.id }}">
                                     </div><!--end col-->
 
-                                    <div class="col-lg-2">
+                                    <div class="col-lg-4">
                                         <div class="mt-2 mt-lg-0">
+                                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top">
+                                                {% if applicant.employer_action.action == 'SHORTLIST' %}
+                                                    <button id="action-status-{{ applicant.id }}" class="btn btn-primary" onclick="action('{{ applicant.id }}')">Shortlisted <i class="uil uil-user-check"></i></button>
+                                                {% elif applicant.employer_action.action == 'DELIST' %}
+                                                    <button id="action-status-{{ applicant.id }}" class="btn btn-primary" onclick="action('{{ applicant.id }}')">Delisted <i class="uil uil-user-check"></i></button>
+                                                {% elif applicant.employer_action.action == 'INVITE' %}
+                                                    <button id="action-status-{{ applicant.id }}" class="btn btn-primary" onclick="action('{{ applicant.id }}')">Invited <i class="uil uil-user-check"></i></button>
+                                                {% else %}
+                                                    <button id="action-status-{{ applicant.id }}" class="btn btn-primary" onclick="action('{{ applicant.id }}')">Actions <i class="uil uil-user-check"></i></button>
+                                                {% endif %}
+                                            </li>
                                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Message">
                                                 <a href="javascript:void(0)" class="avatar-sm bg-soft-success d-inline-block text-center rounded-circle fs-18" onclick="message('{{ applicant.id }}')">
                                                     <i class="uil uil-envelope-download"></i>
@@ -433,6 +422,9 @@
                         </div> <!--end card-->
                         
                     </div><!--end candidate-list-->
+
+                    <input type="hidden" id="has-value-action-{{ applicant.id }}" value="{{ applicant.employer_action.action }}">
+                    <input type="hidden" id="has-value-invite-date-{{ applicant.id }}" value="{{ applicant.employer_action.invite_date }}">
                     {% endfor %}
                 </div><!--end col-->
             </div><!--end row-->
@@ -519,6 +511,47 @@
     </div>
     <!-- END APPLICANT MESSAGE -->
 
+    <!-- START EMPLOYER ACTION MODAL -->
+    <div class="modal fade" id="employerAction" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body p-5">
+                    <div class="position-absolute end-0 top-0 p-3">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="auth-content">
+                        <div class="w-100">
+                            <div class="text-center mb-4">
+                                <h5 id="modal-title">Candidate Name</h5>
+                                <p class="text-muted">Select your actions for this applicant.</p>
+                            </div>
+                            <div class="mb-3">
+                                <label for="usernameInput" class="form-label">Action</label>
+                                <div class="selection-widget mt-2 mt-lg-0">
+                                    <select class="form-select" data-trigger id="action">
+                                        <option value="SHORTLIST">Shortlist</option>
+                                        <option value="DELIST">Delist</option>
+                                        <option value="INVITE">Invite</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div style="display: none;">
+                                    <label for="invite-date" class="form-label">Invite Date</label>
+                                    <input type="text" class="form-control" id="invite-date" placeholder="Enter the Invitation Date">
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="button" id="send-action-btn" class="btn btn-primary w-100">Send Action</button>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end modal-body-->
+            </div><!--end modal-content-->
+        </div><!--end modal-dialog-->
+    </div>
+    <!-- END EMPLOYER ACTION MODAL -->
+
 </div>
 <!-- End Page-content -->
 {% endblock content %}
@@ -528,18 +561,14 @@
 <script src="{% static 'main/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 <script src="https://unicons.iconscout.com/release/v4.0.0/script/monochrome/bundle.js"></script>
 
-
 <!-- Choice Js -->
 <script src="{% static 'main/libs/choices.js/public/assets/scripts/choices.min.js' %}"></script>
 
-<!-- Candidate Init Js -->
-<script src="{% static 'main/js/pages/candidate.init.js' %}"></script>
-
-<!-- Job-list Init Js -->
-<script src="{% static 'main/js/pages/job-list.init.js' %}"></script>
-
 <!-- Switcher Js -->
 <script src="{% static 'main/js/pages/switcher.init.js' %}"></script>
+
+<!-- Flatpickr Js -->
+<script src="{% static 'main/libs/flatpickr/flatpickr.min.js' %}"></script>
 
 <!-- App Js -->
 <script src="{% static 'main/js/app.js' %}"></script>

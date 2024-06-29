@@ -8,7 +8,7 @@ from django.db.models import F, Value
 from django.db.models.functions import Concat
 from datetime import timedelta
 
-from job.models import Vacancy, Bookmark, Apply
+from job.models import Vacancy, Bookmark, Apply, EmployerAction
 from job.utils import vacancy_with_related_info
 from recruitment_cp.utils import is_ajax
 from .utils import fetch_vacancies
@@ -243,3 +243,31 @@ def ajax_add_bookmark(request):
     else:
         Bookmark.objects.create(user=request.user, vacancy=vacancy)
         return JsonResponse({'status': 'success', 'message': 'Bookmark added'})
+
+
+@is_employer
+@require_POST
+def ajax_send_employer_action(request):
+    applicant_id = request.POST.get('applicant_id')
+    action = request.POST.get('action_value')
+    invite_date = request.POST.get('invite_date')
+
+    apply_exists = Apply.objects.filter(id=applicant_id).exists()
+
+    if apply_exists:
+        employer_action_exists = EmployerAction.objects.filter(apply=applicant_id).exists()
+
+        if employer_action_exists:
+            EmployerAction.objects.filter(apply=applicant_id).update(
+                action=action,
+                invite_date=invite_date
+            )
+        else:
+            apply = Apply.objects.get(id=applicant_id)
+            EmployerAction.objects.create(
+                apply=apply,
+                action=action,
+                invite_date=invite_date
+            )
+
+    return JsonResponse({'status': 'success'})

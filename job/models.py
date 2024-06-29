@@ -64,3 +64,31 @@ class Apply(models.Model):
     message = models.TextField()
     cv = models.FileField(upload_to='cvs/', null=True)
     created_date = models.DateTimeField(auto_now_add=True)
+
+
+class EmployerAction(models.Model):
+    ACTION_CHOICES = [
+        ('INVITE', 'Invite'),
+        ('SHORTLIST', 'Shortlist'),
+        ('DELIST', 'Delist'),
+    ]
+    apply = models.OneToOneField(Apply, on_delete=models.CASCADE, related_name='employer_action')
+    action = models.CharField(max_length=10, choices=ACTION_CHOICES)
+    invite_date = models.CharField(max_length=20, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.action} on {self.apply}"
+
+
+class CandidateAction(models.Model):
+    ACTION_CHOICES = [
+        ('ACCEPT', 'Accept'),
+        ('REJECT', 'Reject'),
+        ('REQUEST_OTHER_DATE', 'Request Other Date'),
+    ]
+    employer_action = models.OneToOneField(EmployerAction, on_delete=models.CASCADE, related_name='candidate_action')
+    action = models.CharField(max_length=20, choices=ACTION_CHOICES)
+    # request_other_date = models.DateTimeField()
+
+    def __str__(self):
+        return f"{self.action} for {self.employer_action}"
