@@ -53,35 +53,48 @@
                                         </div>
                                         <div class="wedget-popular-title mt-4">
                                             <div class="row justify-content-center">
-                                                <ul class="job-list-menu nav nav-pills nav-justified flex-sm-row mb-4" id="pills-tab"
-                                                    role="tablist">
-                                                    <li class="nav-item" role="presentation">
-                                                        <button class="nav-link active" data-bs-toggle="pill" type="button" role="tab" onclick="changeUserType(this)" value="employer">Employer</button>
-                                                    </li>
-                                                    <li class="nav-item" role="presentation">
-                                                        <button class="nav-link" data-bs-toggle="pill" type="button" role="tab" onclick="changeUserType(this)" value="candidate">Candidate</button>
-                                                    </li>
+                                                <ul class="job-list-menu nav nav-pills nav-justified flex-sm-row mb-4" id="pills-tab" role="tablist">
+                                                    {% if user_type %}
+                                                        <li class="nav-item" role="presentation">
+                                                            <button class="nav-link {% if user_type == 'employer' %}active{% endif %}" data-bs-toggle="pill" type="button" role="tab" onclick="changeUserType(this)" value="employer">Employer</button>
+                                                        </li>
+                                                        <li class="nav-item" role="presentation">
+                                                            <button class="nav-link {% if user_type == 'candidate' %}active{% endif %}" data-bs-toggle="pill" type="button" role="tab" onclick="changeUserType(this)" value="candidate">Candidate</button>
+                                                        </li>
+                                                    {% else %}
+                                                        <li class="nav-item" role="presentation">
+                                                            <button class="nav-link active" data-bs-toggle="pill" type="button" role="tab" onclick="changeUserType(this)" value="employer">Employer</button>
+                                                        </li>
+                                                        <li class="nav-item" role="presentation">
+                                                            <button class="nav-link" data-bs-toggle="pill" type="button" role="tab" onclick="changeUserType(this)" value="candidate">Candidate</button>
+                                                        </li>
+                                                    {% endif %}
                                                 </ul>
                                             </div>
                                         </div>
                                         <form class="auth-form" method="post">
                                             {% csrf_token %}
-                                            <input type="hidden" name="user_type" class="form-control" required id="userTypeInput" value="employer">
+                                            <input type="hidden" name="user_type" class="form-control" required id="userTypeInput"
+                                                value="{% if user_type %}{{ user_type }}{% else %}employer{% endif %}">
 
                                             <div class="mb-3">
                                                 <label for="usernameInput" class="form-label">Username</label>
-                                                <input type="text" name="username" class="form-control" required id="usernameInput" placeholder="Enter your username">
+                                                <input type="text" name="username" class="form-control" required id="usernameInput" placeholder="Enter your username"
+                                                    value="{% if username %}{{ username }}{% endif %}">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="passwordInput" class="form-label">Email</label>
-                                                <input type="email" name="email" class="form-control" required id="emailInput" placeholder="Enter your email">
+                                                <input type="email" name="email" class="form-control" required id="emailInput" placeholder="Enter your email"
+                                                    value="{% if email %}{{ email }}{% endif %}">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="emailInput" class="form-label">Password</label>
                                                 <input type="password" name="password" class="form-control" id="passwordInput" placeholder="Enter your password">
                                             </div>
                                             <div class="mb-4">
-                                                <div class="form-check"><input class="form-check-input" type="checkbox" name="terms" id="flexCheckDefault">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="terms" id="flexCheckDefault"
+                                                        {% if terms %}checked{% endif %}>
                                                     <label class="form-check-label" for="flexCheckDefault">I agree to the <a href="{% url 'main:privacy-policy' %}" class="text-white text-decoration-underline">Terms and conditions</a></label>
                                                 </div>
                                             </div>

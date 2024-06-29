@@ -47,7 +47,7 @@ def manage_account(request):
             user.is_registration_complete = True
             user.save()
 
-            return redirect(reverse('dashboard:your-applies'))
+            return redirect(reverse('dashboard:applications'))
     
     citizenships = ParameterCountry.objects.all()
 

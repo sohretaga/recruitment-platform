@@ -49,9 +49,23 @@ def sign_up(request):
                 return redirect('main:main-index')
 
         else:
+            user_type = form.cleaned_data.get('user_type')
+            username = form.cleaned_data.get('username')
+            email = form.cleaned_data.get('email')
+            terms = form.cleaned_data.get('terms')
+
+            context = {
+                'user_type': user_type,
+                'username': username,
+                'email': email,
+                'terms': terms
+            }
+
             for field, errors in form.errors.items():
                 for error in errors:
                     messages.error(request, error)
+
+            return render(request, 'user/sign-up.html', context)
 
     return render(request, 'user/sign-up.html')
 
