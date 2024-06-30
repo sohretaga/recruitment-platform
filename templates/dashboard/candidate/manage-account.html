@@ -1,5 +1,6 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
+{% load site_content %}
 
 {% block title %}Edit Account{% endblock title %}
 
@@ -20,6 +21,8 @@
 {% endblock head %}
 
 {% block content %}
+{% get_site_content 'CANDIDATE_COMPLETE_REGISTER' as complete_register %}
+
 <div class="page-content">
     <div class="container-fluid">
 
@@ -30,7 +33,7 @@
                     {% if 'complete' in request.path %}
                     <h4 class="mb-0">Complete Your Register</h4>
                     {% else %}
-                    <h4 class="mb-0">Edit Accont</h4>
+                    <h4 class="mb-0">Edit Account</h4>
                     {% endif %}
 
                     <div class="page-title-right">
@@ -53,6 +56,9 @@
             <div class="col">
                 <div class="card">
                     <div class="card-body">
+                        {% if complete_register and 'complete' in request.path %}
+                            <p class="card-title-desc">{{ complete_register.content }}</p>
+                        {% endif %}
                         <form novalidate method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="text-center">

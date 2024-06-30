@@ -159,6 +159,7 @@ def manage_account(request):
         if form.is_valid():
             email = form.cleaned_data.get('primary_email')
             profile_photo = form.cleaned_data.get('profile_photo')
+            phone_number = form.cleaned_data.get('phone_number')
             first_name = form.cleaned_data.get('first_name')
             last_name = form.cleaned_data.get('last_name')
             form.save()
@@ -168,6 +169,7 @@ def manage_account(request):
 
             user.email = email
             user.first_name = first_name
+            user.phone_number = phone_number
             user.last_name = last_name
             user.is_registration_complete = True
             user.save()

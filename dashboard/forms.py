@@ -27,6 +27,7 @@ class PostBlogForm(forms.ModelForm):
 class ManageEmployerAccountForm(forms.ModelForm):
     primary_email = forms.EmailField(required=True)
     profile_photo = forms.ImageField(required=False)
+    phone_number = forms.CharField(max_length=15 ,required=True)
     first_name = forms.CharField(max_length=150, required=True)
     last_name = forms.CharField(max_length=150, required=False)
 
@@ -37,6 +38,7 @@ class ManageEmployerAccountForm(forms.ModelForm):
 class ManageCandidateAccountForm(forms.ModelForm):
     email = forms.EmailField(required=True)
     profile_photo = forms.ImageField(required=False)
+    phone_number = forms.CharField(max_length=15 ,required=True)
     first_name = forms.CharField(max_length=150, required=True)
     last_name = forms.CharField(max_length=150, required=True)
 

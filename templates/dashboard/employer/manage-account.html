@@ -1,5 +1,6 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
+{% load site_content %}
 
 {% block title %}Edit Account{% endblock title %}
 
@@ -19,6 +20,8 @@
 {% endblock head %}
 
 {% block content %}
+{% get_site_content 'EMPLOYER_COMPLETE_REGISTER' as complete_register %}
+
 <div class="page-content">
     <div class="container-fluid">
 
@@ -52,7 +55,10 @@
             <div class="col">
                 <div class="card">
                     <div class="card-body">
-                        <form novalidate method="post" enctype="multipart/form-data">
+                        {% if complete_register and 'complete' in request.path %}
+                            <p class="card-title-desc">{{ complete_register.content }}</p>
+                        {% endif %}
+                        <form novalidate method="post" enctype="multipart/form-data" class="needs-validation">
                             {% csrf_token %}
                             <div class="text-center">
                                 <div class="mb-2 profile-user">
@@ -60,7 +66,7 @@
                                     <img src="{% if user.profile_photo %}{{ user.profile_photo.url }}{% else %}{% static 'main/images/user/img-02.jpg' %}{% endif %}" class="rounded-circle img-thumbnail profile-img" id="profile-img" alt="">
                                     <input id="profile-img-file-input" type="file" class="profile-img-file-input" name="profile_photo" accept="image/*" onchange="previewImg(this)">     
                                     <span class="icon-center"><i class="ri-edit-line"></i></span>
-                                    <span class="profile-photo-text">Profile Photo</span>
+                                    <span class="profile-photo-text">Company Logo</span>
                                 </label>
                                 </div>
                             </div>
@@ -69,24 +75,28 @@
                                     <div class="form-group">
                                         <label for="first-name">Company Name</label>
                                         <input type="text" class="form-control" id="first-name" name="first_name" placeholder="Company name" value="{{ user.first_name }}" required>
+                                        <div class="invalid-feedback">This field is required!</div>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="last-name">Company Name (Legal)</label>
                                         <input type="text" class="form-control" id="last-name" name="last_name" placeholder="Legal name" value="{{ user.last_name }}" required>
+                                        <div class="invalid-feedback">This field is required!</div>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="phone-number">Phone Number</label>
                                         <input type="text" class="form-control" id="phone-number" name="phone_number" placeholder="Ex: +994 XX-XXX-XX-XX" value="{% if user.phone_number %}{{ user.phone_number }}{% endif %}" required>
+                                        <div class="invalid-feedback">This field is required!</div>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="username">Username</label>
                                         <input type="text" class="form-control" id="username" name="username" placeholder="Username" value="{{ user.username }}" required>
+                                        <div class="invalid-feedback">This field is required!</div>
                                     </div>
                                 </div>
                             </div>
@@ -149,22 +159,32 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="primary-email">Primary Email</label>
                                         <input type="text" class="form-control" id="primary-email" name="primary_email" placeholder="example@email.com" value="{{ user.employer.user.email }}" required>
+                                        <div class="invalid-feedback">This field is required!</div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="second-email">Second Email</label>
                                         <input type="text" class="form-control" id="second-email" name="second_email" placeholder="example@email.com" value="{% if user.employer.second_email %}{{ user.employer.second_email }}{% endif %}">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="other-email">Other Email</label>
                                         <input type="text" class="form-control" id="other-email" name="other_email" placeholder="example@email.com" value="{% if user.employer.other_email %}{{ user.employer.other_email }}{% endif %}">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="certificate-of-registration">Certificate of Registration</label>
+                                        <div class="custom-file text-truncate">
+                                            <input type="file" class="custom-file-input" id="certificate-of-registration" name="certificate_of_registration">
+                                            <label class="custom-file-label " for="certificate-of-registration">{% if user.employer.certificate_of_registration %}{{ user.employer.certificate_of_registration }}{% else %}Choose file{% endif %}</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
