@@ -59,12 +59,12 @@
                                 <label for="profile-img-file-input">
                                     <img src="{% if user.profile_photo %}{{ user.profile_photo.url }}{% else %}{% static 'main/images/user/img-02.jpg' %}{% endif %}" class="rounded-circle img-thumbnail profile-img" id="profile-img" alt="">
                                     <input id="profile-img-file-input" type="file" class="profile-img-file-input" name="profile_photo" accept="image/*" onchange="previewImg(this)">     
-                                    <span class="icon-center"><i class="ri-edit-line"></i></span>                                   
+                                    <span class="icon-center"><i class="ri-edit-line"></i></span>
+                                    <span class="profile-photo-text">Profile Photo</span>
                                 </label>
                                 </div>
                             </div>
                             <div class="row">
-                                
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="first-name">Company Name</label>
@@ -79,8 +79,44 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
+                                        <label for="phone-number">Phone Number</label>
+                                        <input type="text" class="form-control" id="phone-number" name="phone_number" placeholder="Ex: +994 XX-XXX-XX-XX" value="{% if user.phone_number %}{{ user.phone_number }}{% endif %}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
                                         <label for="username">Username</label>
                                         <input type="text" class="form-control" id="username" name="username" placeholder="Username" value="{{ user.username }}" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Sector</label>
+                                        <select class="form-control select2" name="sector">
+                                            {% for sector in sectors %}
+                                                {% if sector.name == user.employer.sector %}
+                                                    <option selected>{{ sector.name }}</option>
+                                                {% else %}
+                                                    <option>{{ sector.name }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Number of Employees</label>
+                                        <select class="form-control select2" name="number_of_employees">
+                                            {% for number in number_of_employees %}
+                                                {% if number.name == user.employer.number_of_employees %}
+                                                    <option selected>{{ number.name }}</option>
+                                                {% else %}
+                                                    <option>{{ number.name }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -97,37 +133,7 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label class="control-label">Sector</label>
-                                        <select class="form-control select2" name="sector">
-                                            {% for sector in sectors %}
-                                                {% if sector.name == user.employer.sector %}
-                                                    <option selected>{{ sector.name }}</option>
-                                                {% else %}
-                                                    <option>{{ sector.name }}</option>
-                                                {% endif %}
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label class="control-label">Number of Employees</label>
-                                        <select class="form-control select2" name="number_of_employees">
-                                            {% for number in number_of_employees %}
-                                                {% if number.name == user.employer.number_of_employees %}
-                                                    <option selected>{{ number.name }}</option>
-                                                {% else %}
-                                                    <option>{{ number.name }}</option>
-                                                {% endif %}
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">Organization Type</label>
                                         <select class="form-control select2" name="organization_type">

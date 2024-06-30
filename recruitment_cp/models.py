@@ -4,14 +4,16 @@ from django.db import models
 
 class SiteContent(models.Model):
     PAGE_CHOICES = (
-        ('signup', 'Sign Up'),
-        ('signin', 'Sign In'),
-        ('signout', 'Sign Out'),
-        ('contact', 'Contact'),
-        ('terms', 'Privacy & Policy'),
+        ('SIGN_UP', 'Sign Up'),
+        ('SIGN_IN', 'Sign In'),
+        ('SIGN_OUT', 'Sign Out'),
+        ('CONTCAT', 'Contact'),
+        ('TERMS', 'Privacy & Policy'),
+        ('EMPLOYER_COMPLETE_REGISTER', 'Employer - Complete Register'),
+        ('CANDIDATE_COMPLETE_REGISTER', 'Candidate - Complete Register'),
     )
 
-    page = models.CharField(max_length=10, choices=PAGE_CHOICES, unique=True)
+    page = models.CharField(max_length=30, choices=PAGE_CHOICES, unique=True)
     content = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to='site-content/', blank=True, null=True)
 

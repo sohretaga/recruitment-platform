@@ -34,6 +34,7 @@ def manage_account(request):
         if form.is_valid():
             email = form.cleaned_data.get('email')
             profile_photo = form.cleaned_data.get('profile_photo')
+            phone_number = form.cleaned_data.get('phone_number')
             first_name = form.cleaned_data.get('first_name')
             last_name = form.cleaned_data.get('last_name')
             form.save()
@@ -42,6 +43,7 @@ def manage_account(request):
                 user.profile_photo = profile_photo
 
             user.email = email
+            user.phone_number = phone_number
             user.first_name = first_name
             user.last_name = last_name
             user.is_registration_complete = True

@@ -6,6 +6,7 @@
 .profile-user .profile-img {
     width: 150px;
     height: 150px;
+    margin-top: 10px;
     -o-object-fit: cover;
     object-fit: cover;
 }
@@ -25,5 +26,14 @@
     transform: translate(-50%, -50%);
     font-size: 40px;
     color: #83B4FF;
+    pointer-events: none;
+}
+
+.profile-user .profile-photo-text {
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%);
     pointer-events: none;
 }
