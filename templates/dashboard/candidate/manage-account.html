@@ -57,7 +57,7 @@
                 <div class="card">
                     <div class="card-body">
                         {% if complete_register and 'complete' in request.path %}
-                            <p class="card-title-desc">{{ complete_register.content }}</p>
+                            <p class="card-title-desc alert alert-danger">{{ complete_register.content }}</p>
                         {% endif %}
                         <form novalidate method="post" enctype="multipart/form-data" class="needs-validation">
                             {% csrf_token %}
