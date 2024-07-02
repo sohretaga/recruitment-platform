@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.db.models import F, Value
 from django.db.models.functions import Concat
+from django.core.exceptions import ObjectDoesNotExist
 from datetime import timedelta
 
 from job.models import Vacancy, Bookmark, Apply, EmployerAction, CandidateAction
@@ -260,6 +261,13 @@ def ajax_send_employer_action(request):
     if apply_exists:
         employer_action_exists = EmployerAction.objects.filter(apply=applicant_id).exists()
 
+        if action != 'ACCEPT_REQUEST_OTHER_DATE':
+            try:
+                # delete related candidate action
+                CandidateAction.objects.get(apply=applicant_id).delete()
+
+            except ObjectDoesNotExist: ...
+
         if employer_action_exists:
             EmployerAction.objects.filter(apply=applicant_id).update(
                 action=action,
@@ -286,17 +294,17 @@ def ajax_send_candidate_action(request):
     apply_exists = Apply.objects.filter(id=applicant_id).exists()
 
     if apply_exists:
-        candidate_action_exists = CandidateAction.objects.filter(employer_action__apply=applicant_id).exists()
+        candidate_action_exists = CandidateAction.objects.filter(apply=applicant_id).exists()
 
         if candidate_action_exists:
-            CandidateAction.objects.filter(employer_action__apply=applicant_id).update(
+            CandidateAction.objects.filter(apply=applicant_id).update(
                 action=action,
                 request_other_date=request_other_date
             )
         else:
-            employer_action = Apply.objects.get(id=applicant_id).employer_action
+            apply = Apply.objects.get(id=applicant_id)
             CandidateAction.objects.create(
-                employer_action=employer_action,
+                apply=apply,
                 action=action,
                 request_other_date=request_other_date
             )

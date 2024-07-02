@@ -19,6 +19,20 @@ const actionChoices = new Choices('#action', {
     searchEnabled: false
 });
 
+const acceptRequestOtherDateOption = document.querySelector(`.choices__list div[data-value="ACCEPT_REQUEST_OTHER_DATE"]`);
+
+const hideAcceptRequestOtherDateOption = () => {
+    let option = document.querySelector(`.choices__list div[data-value="ACCEPT_REQUEST_OTHER_DATE"]`);
+    option.classList.add('d-none');
+};
+
+const showAcceptRequestOtherDateOption = () => {
+    let option = document.querySelector(`.choices__list div[data-value="ACCEPT_REQUEST_OTHER_DATE"]`);
+    option.classList.remove('d-none');
+};
+
+setTimeout(hideAcceptRequestOtherDateOption, 1);
+
 flatpickr(inviteDateInput, {
     enableTime: true,
     dateFormat: "d-m-Y H:i",
@@ -71,6 +85,13 @@ const message = (id) => {
 const action = (id) => {
     const hasValueAction = document.getElementById(`has-value-action-${id}`).value;
     const hasValueInviteDate = document.getElementById(`has-value-invite-date-${id}`).value;
+    const hasValueAcceptRequestOtherDate =  document.getElementById(`has-value-request-other-date-${id}`).value;
+
+    if (hasValueAcceptRequestOtherDate) {
+        setTimeout(showAcceptRequestOtherDateOption, 1);
+    } else {
+        setTimeout(hideAcceptRequestOtherDateOption, 1);
+    };
 
     if (hasValueAction) {
         actionChoices.setChoiceByValue(hasValueAction);
@@ -107,18 +128,31 @@ const sendAction = (id) => {
         success: function() {
             employerActionModal.hide();
             const asctionStatus = document.getElementById(`action-status-${id}`);
+            const hasValueAcceptRequestOtherDate =  document.getElementById(`has-value-request-other-date-${id}`);
+
             document.getElementById(`has-value-action-${id}`).value = selectedActionValue;
             document.getElementById(`has-value-invite-date-${id}`).value = selectedInviteDateValue;
+
             
             if (selectedActionValue == 'SHORTLIST') {
                 asctionStatus.innerHTML = 'Shortlisted <i class="uil uil-user-check">';
+                asctionStatus.classList = 'btn btn-primary';
+                hasValueAcceptRequestOtherDate.value = '';
 
             } else if (selectedActionValue == 'DELIST') {
-                asctionStatus.innerHTML = 'Delisted <i class="uil uil-user-check">';
+                asctionStatus.innerHTML = 'Delisted <i class="uil uil-times-circle">';
+                asctionStatus.classList = 'btn btn-danger';
+                hasValueAcceptRequestOtherDate.value = '';
 
             } else if (selectedActionValue == 'INVITE') {
-                asctionStatus.innerHTML = 'Invited <i class="uil uil-user-check">';
-            };
+                asctionStatus.innerHTML = `<span>Invited Date<br>${selectedInviteDateValue}</span> <i class="uil uil-clock-eight"></i>`;
+                asctionStatus.classList = 'btn btn-success';
+                hasValueAcceptRequestOtherDate.value = '';
+
+            } else if (selectedActionValue == 'ACCEPT_REQUEST_OTHER_DATE') {
+                asctionStatus.innerHTML = `<span>You Accepted<br>${hasValueAcceptRequestOtherDate.value}</span> <i class="uil uil-clock-eight"></i>`;
+                asctionStatus.classList = 'btn btn-success';
+            }
         }
     });
 };

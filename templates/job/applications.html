@@ -129,20 +129,24 @@
                                 </div><!--end col-->
                                 <div class="col-lg-4">
                                     <ul class="list-inline mt-3 mb-0 d-flex justify-content-end">
-                                        {% if apply.employer_action.candidate_action %}
-                                            {% if apply.employer_action.candidate_action.action == 'ACCEPT' %}
+                                        {% if apply.candidate_action and apply.employer_action.action == 'INVITE' %}
+                                            {% if apply.candidate_action.action == 'ACCEPT' %}
                                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                <button id="action-status-{{ apply.id }}" class="btn btn-primary" onclick="action('{{ apply.id }}')">Accepted <i class="uil uil-check-circle"></i></button>
+                                                <button id="action-status-{{ apply.id }}" class="btn btn-primary" onclick="action('{{ apply.id }}')"><span>Accepted<br>{{ apply.employer_action.invite_date }}</span> <i class="uil uil-check-circle"></i></button>
                                             </li>
-                                            {% elif apply.employer_action.candidate_action.action == 'REJECT' %}
+                                            {% elif apply.candidate_action.action == 'REJECT' %}
                                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top">
                                                 <button id="action-status-{{ apply.id }}" class="btn btn-danger" onclick="action('{{ apply.id }}')">Rejected <i class="uil uil-times-circle"></i></button>
                                             </li>
-                                            {% elif apply.employer_action.candidate_action.action == 'REQUEST_OTHER_DATE' %}
+                                            {% elif apply.candidate_action.action == 'REQUEST_OTHER_DATE' %}
                                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                <button id="action-status-{{ apply.id }}" class="btn btn-success" onclick="action('{{ apply.id }}')"><span>Requested Date<br>{{ apply.employer_action.candidate_action.request_other_date }}</span> <i class="uil uil-clock-eight"></i></button>
+                                                <button id="action-status-{{ apply.id }}" class="btn btn-success" onclick="action('{{ apply.id }}')"><span>Requested Date<br>{{ apply.candidate_action.request_other_date }}</span> <i class="uil uil-clock-eight"></i></button>
                                             </li>
                                             {% endif %}
+                                        {% elif apply.employer_action.action == 'ACCEPT_REQUEST_OTHER_DATE' %}
+                                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Employer Accepted your Requested Date">
+                                                <button class="btn btn-success"><span>Accepted Date<br>{{ apply.candidate_action.request_other_date }}</span> <i class="uil uil-clock-eight"></i></button>
+                                            </li>
                                         {% else %}
                                             {% if apply.employer_action.action == 'SHORTLIST' %}
                                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Employer Shortlisted your Application">
@@ -154,11 +158,11 @@
                                             </li>
                                             {% elif apply.employer_action.action == 'INVITE' %}
                                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Click for actions">
-                                                <button id="action-status-{{ apply.id }}" class="btn btn-success" onclick="action('{{ apply.id }}')"><span>Invitation Date<br>{{ apply.employer_action.invite_date }}</span></button>
+                                                <button id="action-status-{{ apply.id }}" class="btn btn-success" onclick="action('{{ apply.id }}')"><span>Invitation Date<br>{{ apply.employer_action.invite_date }}</span> <i class="uil uil-clock-eight"></i></button>
                                             </li>
                                             {% else %}
                                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                <button class="btn btn-warning">Waiting <i class="uil uil-clock-eight"></i></button>
+                                                <button class="btn btn-primary">Applied <i class="uil uil-clock-eight"></i></button>
                                             </li>
                                             {% endif %}
                                         {% endif %}
@@ -173,8 +177,9 @@
                         </div>
                     </div><!--end job-box-->
 
-                    <input type="hidden" id="has-value-action-{{ apply.id }}" value="{{ apply.employer_action.candidate_action.action }}">
-                    <input type="hidden" id="has-value-request-other-date-{{ apply.id }}" value="{{ apply.employer_action.candidate_action.request_other_date }}">
+                    <input type="hidden" id="has-value-action-{{ apply.id }}" value="{{ apply.candidate_action.action }}">
+                    <input type="hidden" id="has-value-request-other-date-{{ apply.id }}" value="{{ apply.candidate_action.request_other_date }}">
+                    <input type="hidden" id="has-value-accept-invite-date-{{ apply.id }}" value="{{ apply.employer_action.invite_date }}">
                     {% endfor %}
                 </div><!--end col-->    
             </div><!--end row-->

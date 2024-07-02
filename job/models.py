@@ -71,9 +71,10 @@ class EmployerAction(models.Model):
         ('INVITE', 'Invite'),
         ('SHORTLIST', 'Shortlist'),
         ('DELIST', 'Delist'),
+        ('ACCEPT_REQUEST_OTHER_DATE', 'Accept'),
     ]
     apply = models.OneToOneField(Apply, on_delete=models.CASCADE, related_name='employer_action')
-    action = models.CharField(max_length=10, choices=ACTION_CHOICES)
+    action = models.CharField(max_length=25, choices=ACTION_CHOICES)
     invite_date = models.CharField(max_length=20, null=True, blank=True)
 
     def __str__(self):
@@ -86,7 +87,7 @@ class CandidateAction(models.Model):
         ('REJECT', 'Reject'),
         ('REQUEST_OTHER_DATE', 'Request Other Date'),
     ]
-    employer_action = models.OneToOneField(EmployerAction, on_delete=models.CASCADE, related_name='candidate_action')
+    apply = models.OneToOneField(Apply, on_delete=models.CASCADE, related_name='candidate_action')
     action = models.CharField(max_length=20, choices=ACTION_CHOICES)
     request_other_date = models.CharField(max_length=20, null=True, blank=True)
 

@@ -95,11 +95,12 @@ const sendAction = (id) => {
         success: function() {
             candidateActionModal.hide();
             const asctionStatus = document.getElementById(`action-status-${id}`);
+            const hasValueAcceptInviteDate = document.getElementById(`has-value-accept-invite-date-${id}`);
             document.getElementById(`has-value-action-${id}`).value = selectedActionValue;
-            document.getElementById(`has-value-request-other-date-${id}`).value = selectedRequestOtherDate;
+            document.getElementById(`has-value-request-other-date-${id}`).value = selectedRequestOtherDate;            
             
             if (selectedActionValue == 'ACCEPT') {
-                asctionStatus.innerHTML = 'Accepted <i class="uil uil-check-circle">';
+                asctionStatus.innerHTML = `<span>Accepted<br>${hasValueAcceptInviteDate.value}</span> <i class="uil uil-check-circle">`;
                 asctionStatus.classList = 'btn btn-primary';
 
             } else if (selectedActionValue == 'REJECT') {
