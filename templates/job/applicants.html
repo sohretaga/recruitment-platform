@@ -401,7 +401,7 @@
                                                     {% elif applicant.candidate_action.action == 'REJECT' %}
                                                         <button class="btn btn-danger"><span>Invitation Rejected<br>{{ applicant.employer_action.invite_date }}</span> <i class="uil uil-times-circle"></i></button>
                                                     {% elif applicant.candidate_action.action == 'REQUEST_OTHER_DATE' %}
-                                                        <button id="action-status-{{ applicant.id }}" class="btn btn-success" onclick="action('{{ applicant.id }}')"><span>Requested Date<br>{{ applicant.candidate_action.request_other_date }}</span> <i class="uil uil-clock-eight"></i></button>
+                                                        <button id="action-status-{{ applicant.id }}" class="btn btn-success" onclick="action('{{ applicant.id }}')"><span>Requested Another Date<br>{{ applicant.candidate_action.request_other_date }}</span> <i class="uil uil-clock-eight"></i></button>
                                                     {% endif %}
                                                 {% else %}
                                                     {% if applicant.employer_action.action == 'SHORTLIST' %}

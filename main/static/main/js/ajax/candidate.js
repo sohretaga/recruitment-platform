@@ -109,7 +109,7 @@ const sendAction = (id) => {
                 asctionStatus.classList = 'btn btn-danger';
 
             } else if (selectedActionValue == 'REQUEST_OTHER_DATE') {
-                asctionStatus.innerHTML = `<span>Requested Date<br>${selectedRequestOtherDate}</span> <i class="uil uil-clock-eight"></i>`;
+                asctionStatus.innerHTML = `<span>Requested Another Date<br>${selectedRequestOtherDate}</span> <i class="uil uil-clock-eight"></i>`;
                 asctionStatus.classList = 'btn btn-success';
             };
         }

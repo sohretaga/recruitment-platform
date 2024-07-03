@@ -140,7 +140,7 @@
                                             </li>
                                             {% elif apply.candidate_action.action == 'REQUEST_OTHER_DATE' %}
                                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                <button id="action-status-{{ apply.id }}" class="btn btn-success" onclick="action('{{ apply.id }}')"><span>Requested Date<br>{{ apply.candidate_action.request_other_date }}</span> <i class="uil uil-clock-eight"></i></button>
+                                                <button id="action-status-{{ apply.id }}" class="btn btn-success" onclick="action('{{ apply.id }}')"><span>Requested Another Date<br>{{ apply.candidate_action.request_other_date }}</span> <i class="uil uil-clock-eight"></i></button>
                                             </li>
                                             {% endif %}
                                         {% elif apply.employer_action.action == 'ACCEPT_REQUEST_OTHER_DATE' %}
