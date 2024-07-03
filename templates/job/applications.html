@@ -136,7 +136,7 @@
                                             </li>
                                             {% elif apply.candidate_action.action == 'REJECT' %}
                                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                <button id="action-status-{{ apply.id }}" class="btn btn-danger" onclick="action('{{ apply.id }}')">Rejected <i class="uil uil-times-circle"></i></button>
+                                                <button id="action-status-{{ apply.id }}" class="btn btn-danger" onclick="action('{{ apply.id }}')"><span>Rejected Invitation<br>{{ apply.employer_action.invite_date }}</span> <i class="uil uil-times-circle"></i></button>
                                             </li>
                                             {% elif apply.candidate_action.action == 'REQUEST_OTHER_DATE' %}
                                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top">
@@ -179,7 +179,7 @@
 
                     <input type="hidden" id="has-value-action-{{ apply.id }}" value="{{ apply.candidate_action.action }}">
                     <input type="hidden" id="has-value-request-other-date-{{ apply.id }}" value="{{ apply.candidate_action.request_other_date }}">
-                    <input type="hidden" id="has-value-accept-invite-date-{{ apply.id }}" value="{{ apply.employer_action.invite_date }}">
+                    <input type="hidden" id="has-value-invite-date-{{ apply.id }}" value="{{ apply.employer_action.invite_date }}">
                     {% endfor %}
                 </div><!--end col-->    
             </div><!--end row-->

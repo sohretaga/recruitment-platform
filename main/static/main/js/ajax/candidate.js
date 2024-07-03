@@ -96,16 +96,16 @@ const sendAction = (id) => {
         success: function() {
             candidateActionModal.hide();
             const asctionStatus = document.getElementById(`action-status-${id}`);
-            const hasValueAcceptInviteDate = document.getElementById(`has-value-accept-invite-date-${id}`);
+            const hasValueInviteDate = document.getElementById(`has-value-invite-date-${id}`);
             document.getElementById(`has-value-action-${id}`).value = selectedActionValue;
             document.getElementById(`has-value-request-other-date-${id}`).value = selectedRequestOtherDate;            
             
             if (selectedActionValue == 'ACCEPT') {
-                asctionStatus.innerHTML = `<span>Accepted<br>${hasValueAcceptInviteDate.value}</span> <i class="uil uil-check-circle">`;
+                asctionStatus.innerHTML = `<span>Accepted<br>${hasValueInviteDate.value}</span> <i class="uil uil-check-circle">`;
                 asctionStatus.classList = 'btn btn-primary';
 
             } else if (selectedActionValue == 'REJECT') {
-                asctionStatus.innerHTML = 'Rejected <i class="uil uil-times-circle">';
+                asctionStatus.innerHTML = `<span>Rejected Invitation<br>${hasValueInviteDate.value}</span> <i class="uil uil-times-circle"></i>`;
                 asctionStatus.classList = 'btn btn-danger';
 
             } else if (selectedActionValue == 'REQUEST_OTHER_DATE') {
