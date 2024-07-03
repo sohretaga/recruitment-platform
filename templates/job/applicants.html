@@ -375,7 +375,7 @@
                                         </div>
                                     </div><!--end col-->
                                     
-                                    <div class="col-lg-7">
+                                    <div class="col-lg-6">
                                         <div class="candidate-list-content mt-3 mt-lg-0">
                                             <h5 class="fs-19 mb-0"><a href="{% url 'user:candidate' applicant.username %}" id="applicant-name-{{ applicant.id }}" class="primary-link">{{ applicant.full_name }}</a> <span class="badge bg-success ms-1"><i class="mdi mdi-star align-middle"></i> 4.8</span></h5>
                                             <p class="text-muted mb-2"> Project Manager</p>
@@ -392,7 +392,7 @@
                                         <input type="hidden" value="{{ applicant.full_name }}" id="full-name-{{ applicant.id }}">
                                     </div><!--end col-->
 
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-5">
                                         <div class="mt-2 mt-lg-0">
                                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top">
                                                 {% if applicant.employer_action.action != 'ACCEPT_REQUEST_OTHER_DATE' and applicant.candidate_action %}
@@ -411,7 +411,7 @@
                                                     {% elif applicant.employer_action.action == 'INVITE' %}
                                                         <button id="action-status-{{ applicant.id }}" class="btn btn-success" onclick="action('{{ applicant.id }}')"><span>Invited Date<br>{{ applicant.employer_action.invite_date }}</span> <i class="uil uil-clock-eight"></i></button>
                                                     {% elif applicant.candidate_action and applicant.employer_action.action == 'ACCEPT_REQUEST_OTHER_DATE' %}
-                                                        <button id="action-status-{{ applicant.id }}" class="btn btn-success" onclick="action('{{ applicant.id }}')"><span>You Accepted<br>{{ applicant.candidate_action.request_other_date }}</span> <i class="uil uil-clock-eight"></i></button>
+                                                        <button id="action-status-{{ applicant.id }}" class="btn btn-success" onclick="action('{{ applicant.id }}')"><span>Requested Date Accepted<br>{{ applicant.candidate_action.request_other_date }}</span> <i class="uil uil-clock-eight"></i></button>
                                                     {% else %}
                                                         <button id="action-status-{{ applicant.id }}" class="btn btn-primary" onclick="action('{{ applicant.id }}')">Actions <i class="uil uil-user-check"></i></button>
                                                     {% endif %}

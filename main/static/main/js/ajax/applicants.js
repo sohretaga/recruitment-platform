@@ -150,7 +150,7 @@ const sendAction = (id) => {
                 hasValueAcceptRequestOtherDate.value = '';
 
             } else if (selectedActionValue == 'ACCEPT_REQUEST_OTHER_DATE') {
-                asctionStatus.innerHTML = `<span>You Accepted<br>${hasValueAcceptRequestOtherDate.value}</span> <i class="uil uil-clock-eight"></i>`;
+                asctionStatus.innerHTML = `<span>Requested Date Accepted<br>${hasValueAcceptRequestOtherDate.value}</span> <i class="uil uil-clock-eight"></i>`;
                 asctionStatus.classList = 'btn btn-success';
             }
         }

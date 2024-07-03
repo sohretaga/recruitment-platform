@@ -145,7 +145,7 @@
                                             {% endif %}
                                         {% elif apply.employer_action.action == 'ACCEPT_REQUEST_OTHER_DATE' %}
                                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Employer Accepted your Requested Date">
-                                                <button class="btn btn-success"><span>Accepted Date<br>{{ apply.candidate_action.request_other_date }}</span> <i class="uil uil-clock-eight"></i></button>
+                                                <button class="btn btn-success"><span>Requested Date Accepted<br>{{ apply.candidate_action.request_other_date }}</span> <i class="uil uil-clock-eight"></i></button>
                                             </li>
                                         {% else %}
                                             {% if apply.employer_action.action == 'SHORTLIST' %}
