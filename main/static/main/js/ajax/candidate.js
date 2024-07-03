@@ -1,7 +1,8 @@
 const candidateActionModal = new bootstrap.Modal(document.getElementById('candidateAction'));
+const deleteApplicationModal = new bootstrap.Modal(document.getElementById('deleteApplicationModal'));
 
+const deleteApplicationBtn = document.getElementById('delete-application-btn');
 const applicantMessage = document.getElementById('applicant-message');
-
 const actions = document.getElementById("action");
 const requestOtherDateInput = document.getElementById('request-other-date');
 const theme = localStorage.getItem('theme');
@@ -111,6 +112,27 @@ const sendAction = (id) => {
                 asctionStatus.innerHTML = `<span>Requested Date<br>${selectedRequestOtherDate}</span> <i class="uil uil-clock-eight"></i>`;
                 asctionStatus.classList = 'btn btn-success';
             };
+        }
+    });
+};
+
+$('#deleteApplicationModal').on('hidden.bs.modal', function(e) {
+    deleteApplicationBtn.removeAttribute('onclick');
+});
+
+const deleteRequest = (id) => {
+    deleteApplicationBtn.setAttribute('onclick', `deleteApplication(${id})`);
+    deleteApplicationModal.show();
+};
+
+const deleteApplication = (id) => {
+    $.ajax({
+        url:'/dashboard/ajax/delete-apply',
+        type: 'POST',
+        data: {apply_id: id},
+        success: function(response) {
+            document.getElementById(`application-${id}`).remove();
+            deleteApplicationModal.hide();
         }
     });
 };
