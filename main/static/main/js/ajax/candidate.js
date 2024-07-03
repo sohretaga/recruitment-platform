@@ -101,7 +101,7 @@ const sendAction = (id) => {
             document.getElementById(`has-value-request-other-date-${id}`).value = selectedRequestOtherDate;            
             
             if (selectedActionValue == 'ACCEPT') {
-                asctionStatus.innerHTML = `<span>Accepted<br>${hasValueInviteDate.value}</span> <i class="uil uil-check-circle">`;
+                asctionStatus.innerHTML = `<span>Invitation Accepted<br>${hasValueInviteDate.value}</span> <i class="uil uil-check-circle">`;
                 asctionStatus.classList = 'btn btn-primary';
 
             } else if (selectedActionValue == 'REJECT') {

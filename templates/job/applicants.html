@@ -397,7 +397,7 @@
                                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top">
                                                 {% if applicant.employer_action.action != 'ACCEPT_REQUEST_OTHER_DATE' and applicant.candidate_action %}
                                                     {% if applicant.candidate_action.action == 'ACCEPT' %}
-                                                        <button class="btn btn-primary"><span>Accepted<br>{{ applicant.employer_action.invite_date }}</span> <i class="uil uil-clock-eight"></i></button>
+                                                        <button class="btn btn-primary"><span>Invitation Accepted<br>{{ applicant.employer_action.invite_date }}</span> <i class="uil uil-check-circle"></i></button>
                                                     {% elif applicant.candidate_action.action == 'REJECT' %}
                                                         <button class="btn btn-danger"><span>Invitation Rejected<br>{{ applicant.employer_action.invite_date }}</span> <i class="uil uil-times-circle"></i></button>
                                                     {% elif applicant.candidate_action.action == 'REQUEST_OTHER_DATE' %}

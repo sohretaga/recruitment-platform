@@ -132,7 +132,7 @@
                                         {% if apply.candidate_action and apply.employer_action.action == 'INVITE' %}
                                             {% if apply.candidate_action.action == 'ACCEPT' %}
                                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                <button id="action-status-{{ apply.id }}" class="btn btn-primary" onclick="action('{{ apply.id }}')"><span>Accepted<br>{{ apply.employer_action.invite_date }}</span> <i class="uil uil-check-circle"></i></button>
+                                                <button id="action-status-{{ apply.id }}" class="btn btn-primary" onclick="action('{{ apply.id }}')"><span>Invitation Accepted<br>{{ apply.employer_action.invite_date }}</span> <i class="uil uil-check-circle"></i></button>
                                             </li>
                                             {% elif apply.candidate_action.action == 'REJECT' %}
                                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top">
