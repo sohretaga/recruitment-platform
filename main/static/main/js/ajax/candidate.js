@@ -60,9 +60,12 @@ $('#candidateAction').on('hidden.bs.modal', function (e) {
 const action = (id) => {
     const hasValueAction = document.getElementById(`has-value-action-${id}`).value;
     const hasValueRequestOtherDate = document.getElementById(`has-value-request-other-date-${id}`).value;
+    const hasValueEmployerAction = document.getElementById(`has-value-employer-action-${id}`);
 
-    if (hasValueAction) {
+    if (hasValueAction && hasValueEmployerAction != 'SUGGEST_OTHER_DATE') {
         actionChoices.setChoiceByValue(hasValueAction);
+    }else {
+        actionChoices.setChoiceByValue('ACCEPT');
     };
 
     if (hasValueAction == 'REQUEST_OTHER_DATE') {

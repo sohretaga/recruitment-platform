@@ -16,22 +16,54 @@ const singleFilterChoices = new Choices('#choices-single-filter-orderby');
 const actionChoices = new Choices('#action', {
     shouldSort: false,
     shouldSortItems: false,
-    searchEnabled: false
+    searchEnabled: false,
 });
 
-const acceptRequestOtherDateOption = document.querySelector(`.choices__list div[data-value="ACCEPT_REQUEST_OTHER_DATE"]`);
+document.querySelector('#action').addEventListener('showDropdown', () => {
+    const applicantId = document.getElementById('employerAction').getAttribute('data-applicant-id');
+    const hasValueAcceptRequestOtherDate =  document.getElementById(`has-value-request-other-date-${applicantId}`).value;
 
-const hideAcceptRequestOtherDateOption = () => {
-    let option = document.querySelector(`.choices__list div[data-value="ACCEPT_REQUEST_OTHER_DATE"]`);
-    option.classList.add('d-none');
+    if (hasValueAcceptRequestOtherDate) {
+        showSuggestAndAcceptOption();
+        hideInviteOption();
+
+    } else {
+        hideSuggestAndAcceptOption();
+        showInviteOption();
+    };
+});
+
+const hideSuggestAndAcceptOption = () => {
+    setTimeout(() => {
+        let acceptRequestOtherDate = document.querySelector(`.choices__list--dropdown div[data-value="ACCEPT_REQUEST_OTHER_DATE"]`);
+        let suggestOtherDate = document.querySelector(`.choices__list--dropdown div[data-value="SUGGEST_OTHER_DATE"]`);
+        acceptRequestOtherDate.classList.add('d-none');
+        suggestOtherDate.classList.add('d-none');
+    }, 1);
 };
 
-const showAcceptRequestOtherDateOption = () => {
-    let option = document.querySelector(`.choices__list div[data-value="ACCEPT_REQUEST_OTHER_DATE"]`);
-    option.classList.remove('d-none');
+const showSuggestAndAcceptOption = () => {
+    setTimeout(() => {
+        let acceptRequestOtherDate = document.querySelector(`.choices__list--dropdown div[data-value="ACCEPT_REQUEST_OTHER_DATE"]`);
+        let suggestOtherDate = document.querySelector(`.choices__list--dropdown div[data-value="SUGGEST_OTHER_DATE"]`);
+        acceptRequestOtherDate.classList.remove('d-none');
+        suggestOtherDate.classList.remove('d-none');
+    }, 1);
 };
 
-setTimeout(hideAcceptRequestOtherDateOption, 1);
+const hideInviteOption = () => {
+    setTimeout(() => {
+        let invite = document.querySelector(`.choices__list--dropdown div[data-value="INVITE"]`);
+        invite.classList.add('d-none');
+    }, 1);
+};
+
+const showInviteOption = () => {
+    setTimeout(() => {
+        let invite = document.querySelector(`.choices__list--dropdown div[data-value="INVITE"]`);
+        invite.classList.remove('d-none');
+    }, 1);
+};
 
 flatpickr(inviteDateInput, {
     enableTime: true,
@@ -48,7 +80,7 @@ if (theme == 'dark') {
 };
 
 actions.addEventListener('change', function() {
-    if (actions.value == 'INVITE') {
+    if (actions.value == 'INVITE' || actions.value == 'SUGGEST_OTHER_DATE') {
         inviteDateInput.closest('div').style.display = 'inline';
     } else {
         inviteDateInput.closest('div').style.display = 'none';
@@ -79,29 +111,31 @@ const message = (id) => {
 
     applicantMessage.innerText = message;
     applicantModalTitle.innerText = full_name;
-    applicantMessageModal.show()
+    applicantMessageModal.show();
 };
 
 const action = (id) => {
     const hasValueAction = document.getElementById(`has-value-action-${id}`).value;
-    const hasValueInviteDate = document.getElementById(`has-value-invite-date-${id}`).value;
     const hasValueAcceptRequestOtherDate =  document.getElementById(`has-value-request-other-date-${id}`).value;
+    const hasValueInviteDate = document.getElementById(`has-value-invite-date-${id}`).value;
 
-    if (hasValueAcceptRequestOtherDate) {
-        setTimeout(showAcceptRequestOtherDateOption, 1);
-    } else {
-        setTimeout(hideAcceptRequestOtherDateOption, 1);
-    };
-
-    if (hasValueAction) {
-        actionChoices.setChoiceByValue(hasValueAction);
-    };
-
-    if (hasValueAction == 'INVITE') {
+    if (hasValueAction == 'INVITE' || hasValueAction == 'SUGGEST_OTHER_DATE') {
         inviteDateInput.closest('div').style.display = 'inline';
         inviteDateInput.value = hasValueInviteDate;
+    }else {
+        inviteDateInput.closest('div').style.display = 'none';
+        inviteDateInput.value = '';
     };
 
+    if (hasValueAction && !hasValueAcceptRequestOtherDate) {
+        actionChoices.setChoiceByValue(hasValueAction);
+    }else {
+        actionChoices.setChoiceByValue('SHORTLIST');
+        inviteDateInput.closest('div').style.display = 'none';
+        inviteDateInput.value = '';
+    }
+
+    document.getElementById('employerAction').setAttribute('data-applicant-id', id);
     const applicantName = document.getElementById(`applicant-name-${id}`).innerText;
     modalTitle.innerText = applicantName;
     sendActionBtn.setAttribute('onclick', `sendAction(${id})`);
@@ -112,9 +146,11 @@ const sendAction = (id) => {
     const selectedActionValue = document.getElementById('action').value;
     const selectedInviteDateValue = document.getElementById('invite-date').value;
 
-    if (selectedActionValue == 'INVITE' && selectedInviteDateValue == '') {
-        inviteDateInput.style.borderColor = '#DA3746';
-        return;
+    if (selectedActionValue == 'INVITE' || selectedActionValue == 'SUGGEST_OTHER_DATE') {
+        if (selectedInviteDateValue == '') {
+            inviteDateInput.style.borderColor = '#DA3746';
+            return;
+        };
     };
 
     $.ajax({
@@ -146,6 +182,11 @@ const sendAction = (id) => {
 
             } else if (selectedActionValue == 'INVITE') {
                 asctionStatus.innerHTML = `<span>Invited Date<br>${selectedInviteDateValue}</span> <i class="uil uil-clock-eight"></i>`;
+                asctionStatus.classList = 'btn btn-success';
+                hasValueAcceptRequestOtherDate.value = '';
+
+            } else if (selectedActionValue == 'SUGGEST_OTHER_DATE') {
+                asctionStatus.innerHTML = `<span>Another Date Suggested<br>${selectedInviteDateValue}</span> <i class="uil uil-clock-eight"></i>`;
                 asctionStatus.classList = 'btn btn-success';
                 hasValueAcceptRequestOtherDate.value = '';
 

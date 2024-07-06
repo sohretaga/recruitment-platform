@@ -143,10 +143,6 @@
                                                 <button id="action-status-{{ apply.id }}" class="btn btn-success" onclick="action('{{ apply.id }}')"><span>Requested Another Date<br>{{ apply.candidate_action.request_other_date }}</span> <i class="uil uil-clock-eight"></i></button>
                                             </li>
                                             {% endif %}
-                                        {% elif apply.employer_action.action == 'ACCEPT_REQUEST_OTHER_DATE' %}
-                                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Employer Accepted your Requested Date">
-                                                <button class="btn btn-success"><span>Requested Date Accepted<br>{{ apply.candidate_action.request_other_date }}</span> <i class="uil uil-clock-eight"></i></button>
-                                            </li>
                                         {% else %}
                                             {% if apply.employer_action.action == 'SHORTLIST' %}
                                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Employer Shortlisted your Application">
@@ -154,11 +150,19 @@
                                             </li>
                                             {% elif apply.employer_action.action == 'DELIST' %}
                                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Employer Delisted your Application">
-                                                <button class="btn btn-danger">Delisted <i class="uil uil-user-check"></i></button>
+                                                <button class="btn btn-danger">Delisted <i class="uil uil-times-circle"></i></button>
                                             </li>
                                             {% elif apply.employer_action.action == 'INVITE' %}
                                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Click for actions">
                                                 <button id="action-status-{{ apply.id }}" class="btn btn-success" onclick="action('{{ apply.id }}')"><span>Invitation Date<br>{{ apply.employer_action.invite_date }}</span> <i class="uil uil-clock-eight"></i></button>
+                                            </li>
+                                            {% elif apply.employer_action.action == 'ACCEPT_REQUEST_OTHER_DATE' %}
+                                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Employer Accepted your Requested Date">
+                                                <button class="btn btn-success"><span>Requested Date Accepted<br>{{ apply.candidate_action.request_other_date }}</span> <i class="uil uil-clock-eight"></i></button>
+                                            </li>
+                                            {% elif apply.employer_action.action == 'SUGGEST_OTHER_DATE' %}
+                                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Employer Accepted your Requested Date">
+                                                <button id="action-status-{{ apply.id }}" class="btn btn-success" onclick="action('{{ apply.id }}')"><span>Another Date Suggested<br>{{ apply.employer_action.invite_date }}</span> <i class="uil uil-clock-eight"></i></button>
                                             </li>
                                             {% else %}
                                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top">
@@ -178,6 +182,7 @@
                     </div><!--end job-box-->
 
                     <input type="hidden" id="has-value-action-{{ apply.id }}" value="{{ apply.candidate_action.action }}">
+                    <input type="hidden" id="has-value-employer-action-{{ apply.id }}" value="{{ apply.employer_action.action }}">
                     <input type="hidden" id="has-value-request-other-date-{{ apply.id }}" value="{{ apply.candidate_action.request_other_date }}">
                     <input type="hidden" id="has-value-invite-date-{{ apply.id }}" value="{{ apply.employer_action.invite_date }}">
                     {% endfor %}

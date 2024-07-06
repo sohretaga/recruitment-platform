@@ -410,6 +410,8 @@
                                                         <button id="action-status-{{ applicant.id }}" class="btn btn-danger" onclick="action('{{ applicant.id }}')">Delisted <i class="uil uil-times-circle"></i></button>
                                                     {% elif applicant.employer_action.action == 'INVITE' %}
                                                         <button id="action-status-{{ applicant.id }}" class="btn btn-success" onclick="action('{{ applicant.id }}')"><span>Invited Date<br>{{ applicant.employer_action.invite_date }}</span> <i class="uil uil-clock-eight"></i></button>
+                                                    {% elif applicant.employer_action.action == 'SUGGEST_OTHER_DATE' %}
+                                                        <button id="action-status-{{ applicant.id }}" class="btn btn-success" onclick="action('{{ applicant.id }}')"><span>Another Date Suggested<br>{{ applicant.employer_action.invite_date }}</span> <i class="uil uil-clock-eight"></i></button>
                                                     {% elif applicant.candidate_action and applicant.employer_action.action == 'ACCEPT_REQUEST_OTHER_DATE' %}
                                                         <button id="action-status-{{ applicant.id }}" class="btn btn-success" onclick="action('{{ applicant.id }}')"><span>Requested Date Accepted<br>{{ applicant.candidate_action.request_other_date }}</span> <i class="uil uil-clock-eight"></i></button>
                                                     {% else %}
@@ -545,6 +547,7 @@
                                         <option value="SHORTLIST">Shortlist</option>
                                         <option value="DELIST">Delist</option>
                                         <option value="INVITE">Invite</option>
+                                        <option value="SUGGEST_OTHER_DATE">Success Another Date</option>
                                         <option value="ACCEPT_REQUEST_OTHER_DATE">Accept</option>
                                     </select>
                                 </div>

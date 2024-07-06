@@ -71,6 +71,7 @@ class EmployerAction(models.Model):
         ('INVITE', 'Invite'),
         ('SHORTLIST', 'Shortlist'),
         ('DELIST', 'Delist'),
+        ('SUGGEST_OTHER_DATE', 'Suggest Another Date'),
         ('ACCEPT_REQUEST_OTHER_DATE', 'Accept'),
     ]
     apply = models.OneToOneField(Apply, on_delete=models.CASCADE, related_name='employer_action')
