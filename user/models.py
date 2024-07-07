@@ -13,6 +13,7 @@ class CustomUser(AbstractUser):
     profile_photo = models.ImageField(upload_to='profile-photos/', null=True, blank=True)
     email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=15, null=True, unique=True)
+    about = models.TextField(null=True, blank=True)
     user_type = models.CharField(max_length=10, choices=USER_TYPE_CHOICES)
     is_registration_complete = models.BooleanField(default=False, editable=False)
     terms = models.BooleanField()
@@ -46,6 +47,9 @@ class Candidate(models.Model):
     birthday = models.DateField(null=True)
     citizenship = models.ForeignKey(ParameterCountry, on_delete=models.SET_NULL, null=True)
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES, null=True)
+
+    linkedin_url = models.URLField(blank=True, null=True)
+    whatsapp = models.CharField(max_length=15, null=True, unique=True)
 
     def __str__(self) -> str:
         return self.user.get_full_name()

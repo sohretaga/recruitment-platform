@@ -118,9 +118,13 @@ def candidate_details(request, username):
         user = request.user
         form = ManageCandidateAccountForm(request.POST, request.FILES, instance=user.candidate)
 
+        print(form.errors)
+
         if form.is_valid():
             email = form.cleaned_data.get('email')
             profile_photo = form.cleaned_data.get('profile_photo')
+            phone_number = form.cleaned_data.get('phone_number')
+            about = form.cleaned_data.get('about')
             first_name = form.cleaned_data.get('first_name')
             last_name = form.cleaned_data.get('last_name')
             form.save()
@@ -129,9 +133,10 @@ def candidate_details(request, username):
                 user.profile_photo = profile_photo
 
             user.email = email
+            user.phone_number = phone_number
+            user.about = about
             user.first_name = first_name
             user.last_name = last_name
-            user.is_registration_complete = True
             user.save()
 
             return redirect(reverse('user:candidate', args=[user.username]))
