@@ -20,7 +20,7 @@ def index(request):
         return redirect(reverse('dashboard:all-vacancy'))
 
     elif request.user.user_type == 'candidate':
-        return redirect(reverse('dashboard:your-applies'))
+        return redirect(reverse('dashboard:applications'))
 
     elif request.user.user_type == 'blogger':
         return redirect(reverse('dashboard:all-blog'))
