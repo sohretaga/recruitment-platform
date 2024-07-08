@@ -29,6 +29,8 @@ class ManageEmployerAccountForm(forms.ModelForm):
     about = forms.CharField(required=False, widget=forms.Textarea)
     phone_number = forms.CharField(max_length=15, required=True)
     address = forms.CharField(max_length=255, required=False)
+    establishment_date = forms.DateField(required=False)
+    website = forms.URLField(required=False)
     whatsapp = forms.CharField(max_length=15 ,required=False)
     linkedin_url = forms.URLField(required=False)
     facebook_url = forms.URLField(required=False)

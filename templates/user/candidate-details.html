@@ -484,7 +484,8 @@
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label for="birthday" class="form-label">Birthday</label>
-                                                        <input type="text" class="form-control" data-provide="datepicker" data-date-format="dd M, yyyy" id="birthday" name="birthday" placeholder="Your Birthday" value="{% if user.candidate.birthday %}{{ user.candidate.birthday|date:'d M, Y' }}{% endif %}">
+                                                        <input type="text" class="form-control" data-provide="datepicker" data-date-format="dd M, yyyy" id="birthday"
+                                                            name="birthday" placeholder="Your Birthday" value="{% if user.candidate.birthday %}{{ user.candidate.birthday|date:'d M, Y' }}{% endif %}">
                                                     </div>
                                                 </div>
                                                 <!--end col-->

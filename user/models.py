@@ -36,7 +36,8 @@ class Employer(models.Model):
     certificate_of_registration = models.FileField(upload_to='certificates/', blank=True, null=True) 
     note = models.TextField(blank=True, null=True)
     slider = models.BooleanField(default=False, null=True)
-
+    establishment_date = models.DateField(blank=True, null=True)
+    website = models.URLField(blank=True, null=True)
     whatsapp = models.CharField(max_length=15, null=True, unique=True)
     facebook_url = models.URLField(blank=True, null=True)
     linkedin_url = models.URLField(blank=True, null=True)
@@ -52,7 +53,6 @@ class Candidate(models.Model):
     birthday = models.DateField(null=True)
     citizenship = models.ForeignKey(ParameterCountry, on_delete=models.SET_NULL, null=True)
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES, null=True)
-
     whatsapp = models.CharField(max_length=15, null=True, unique=True)
     linkedin_url = models.URLField(blank=True, null=True)
 
