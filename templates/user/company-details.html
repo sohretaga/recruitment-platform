@@ -106,7 +106,7 @@
                             <ul class="list-unstyled mb-0">
                                 <li>
                                     <div class="d-flex">
-                                        <label class="text-dark">Owner Name</label>
+                                        <label class="text-dark">Ownership</label>
                                         <div>
                                             <p class="text-muted mb-0">{{ employer.organization_ownership }}</p>
                                         </div>
@@ -419,7 +419,7 @@
                                                     <div class="mb-3">
                                                         <label for="facebook" class="form-label">Facebook</label>
                                                         <input type="text" class="form-control" id="facebook" name="facebook_url"
-                                                            placeholder="https://www.facebook.com/example/"
+                                                            placeholder="https://www.facebook.com/example/" pattern="https://.*"
                                                             value="{% if employer.facebook_url %}{{ employer.facebook_url }}{% endif %}" />
                                                     </div>
                                                 </div>
@@ -428,7 +428,7 @@
                                                     <div class="mb-3">
                                                         <label for="linkedin" class="form-label">Linkedin</label>
                                                         <input type="text" class="form-control" id="linkedin" name="linkedin_url"
-                                                            placeholder="https://www.linkedin.com/in/example/"
+                                                            placeholder="https://www.linkedin.com/in/example/" pattern="https://.*"
                                                             value="{% if employer.linkedin_url %}{{ employer.linkedin_url }}{% endif %}" />
                                                     </div>
                                                 </div>

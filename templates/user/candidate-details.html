@@ -536,7 +536,7 @@
                                                     <div class="mb-3">
                                                         <label for="linkedin" class="form-label">Linkedin</label>
                                                         <input type="text" class="form-control" id="linkedin" name="linkedin_url"
-                                                            placeholder="https://www.linkedin.com/in/example/"
+                                                            placeholder="https://www.linkedin.com/in/example/" pattern="https://.*"
                                                             value="{% if candidate.linkedin_url %}{{ candidate.linkedin_url }}{% endif %}" />
                                                     </div>
                                                 </div>
