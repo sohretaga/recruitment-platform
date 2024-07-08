@@ -4,6 +4,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
+from django.db.models import F
 
 from . import forms
 from .decorators import logout_required
@@ -97,23 +98,6 @@ def candidate_list(request):
 
 
 def candidate_details(request, username):
-   # If the logged-in user is a superuser
-    if request.user.is_superuser:
-        # Superusers can act as both "employer" and "candidate"
-        # Therefore, only the username information is sufficient
-        params = {
-            'username': username,
-        }
-    else:
-        # Non-superuser users can only act as "candidate"
-        # Therefore, both username and user_type information are required
-        params = {
-            'username': username,
-            'user_type': 'candidate'
-        }
-
-    user = get_object_or_404(CustomUser, **params)
-
     if request.POST:
         user = request.user
         form = ManageCandidateAccountForm(request.POST, request.FILES, instance=user.candidate)
@@ -140,7 +124,23 @@ def candidate_details(request, username):
             user.save()
 
             return redirect(reverse('user:candidate', args=[user.username]))
-    
+        
+       # If the logged-in user is a superuser
+    if request.user.is_superuser:
+        # Superusers can act as both "employer" and "candidate"
+        # Therefore, only the username information is sufficient
+        params = {
+            'username': username,
+        }
+    else:
+        # Non-superuser users can only act as "candidate"
+        # Therefore, both username and user_type information are required
+        params = {
+            'username': username,
+            'user_type': 'candidate'
+        }
+
+    user = get_object_or_404(CustomUser, **params)
     citizenships = ParameterCountry.objects.values('id', 'name')
 
     context = {
@@ -166,6 +166,33 @@ def company_list(request):
 
 
 def company_details(request, username):
+    if request.POST:
+        user = request.user
+        form = ManageEmployerAccountForm(request.POST, request.FILES, instance=user.employer)
+
+        if form.is_valid():
+            email = form.cleaned_data.get('primary_email')
+            profile_photo = form.cleaned_data.get('profile_photo')
+            phone_number = form.cleaned_data.get('phone_number')
+            about = form.cleaned_data.get('about')
+            address = form.cleaned_data.get('address')
+            first_name = form.cleaned_data.get('first_name')
+            last_name = form.cleaned_data.get('last_name')
+            form.save()
+
+            if profile_photo:
+                user.profile_photo = profile_photo
+
+            user.email = email
+            user.phone_number = phone_number
+            user.about = about
+            user.address = address
+            user.first_name = first_name
+            user.last_name = last_name
+            user.save()
+
+            return redirect(reverse('user:company', args=[user.username]))
+        
     # If the logged-in user is a superuser
     if request.user.is_superuser:
         # Superusers can act as both "employer" and "candidate"
@@ -189,26 +216,6 @@ def company_details(request, username):
     organization_ownerships = ParameterOrganizationOwnership.objects.all().values('id', 'name')
     number_of_employees = ParameterNumberOfEmployee.objects.all().values('id', 'name')
 
-    if request.POST:
-        user = request.user
-        form = ManageEmployerAccountForm(request.POST, request.FILES, instance=user.employer)
-
-        if form.is_valid():
-            email = form.cleaned_data.get('primary_email')
-            profile_photo = form.cleaned_data.get('profile_photo')
-            first_name = form.cleaned_data.get('first_name')
-            last_name = form.cleaned_data.get('last_name')
-            form.save()
-
-            if profile_photo:
-                user.profile_photo = profile_photo
-
-            user.email = email
-            user.first_name = first_name
-            user.last_name = last_name
-            user.save()
-
-            return redirect(reverse('user:company', args=[user.username]))
     context = {
         'employer': user.employer,
         'vacancies': vacancies,

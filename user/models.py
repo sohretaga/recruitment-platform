@@ -37,6 +37,10 @@ class Employer(models.Model):
     note = models.TextField(blank=True, null=True)
     slider = models.BooleanField(default=False, null=True)
 
+    whatsapp = models.CharField(max_length=15, null=True, unique=True)
+    facebook_url = models.URLField(blank=True, null=True)
+    linkedin_url = models.URLField(blank=True, null=True)
+
 class Candidate(models.Model):
     GENDER_CHOICES = [
         ('male', 'Male'),
@@ -49,8 +53,8 @@ class Candidate(models.Model):
     citizenship = models.ForeignKey(ParameterCountry, on_delete=models.SET_NULL, null=True)
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES, null=True)
 
-    linkedin_url = models.URLField(blank=True, null=True)
     whatsapp = models.CharField(max_length=15, null=True, unique=True)
+    linkedin_url = models.URLField(blank=True, null=True)
 
     def __str__(self) -> str:
         return self.user.get_full_name()

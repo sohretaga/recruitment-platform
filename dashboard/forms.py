@@ -23,11 +23,15 @@ class PostBlogForm(forms.ModelForm):
         model = Blog
         fields = ('title', 'category', 'cover_photo', 'content', 'quick_career_tip', 'status')
 
-
 class ManageEmployerAccountForm(forms.ModelForm):
     primary_email = forms.EmailField(required=True)
     profile_photo = forms.ImageField(required=False)
-    phone_number = forms.CharField(max_length=15 ,required=True)
+    about = forms.CharField(required=False, widget=forms.Textarea)
+    phone_number = forms.CharField(max_length=15, required=True)
+    address = forms.CharField(max_length=255, required=False)
+    whatsapp = forms.CharField(max_length=15 ,required=False)
+    linkedin_url = forms.URLField(required=False)
+    facebook_url = forms.URLField(required=False)
     first_name = forms.CharField(max_length=150, required=True)
     last_name = forms.CharField(max_length=150, required=False)
 
@@ -40,9 +44,9 @@ class ManageCandidateAccountForm(forms.ModelForm):
     profile_photo = forms.ImageField(required=False)
     about = forms.CharField(required=False, widget=forms.Textarea)
     phone_number = forms.CharField(max_length=15 ,required=True)
-    whatsapp = forms.CharField(max_length=15 ,required=False)
-    linkedin_url = forms.URLField(required=False)
     address = forms.CharField(max_length=255, required=False)
+    whatsapp = forms.CharField(max_length=15, required=False)
+    linkedin_url = forms.URLField(required=False)
     first_name = forms.CharField(max_length=150, required=True)
     last_name = forms.CharField(max_length=150, required=True)
 
