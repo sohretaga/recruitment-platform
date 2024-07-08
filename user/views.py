@@ -118,8 +118,6 @@ def candidate_details(request, username):
         user = request.user
         form = ManageCandidateAccountForm(request.POST, request.FILES, instance=user.candidate)
 
-        print(form.errors)
-
         if form.is_valid():
             email = form.cleaned_data.get('email')
             profile_photo = form.cleaned_data.get('profile_photo')
@@ -180,7 +178,7 @@ def company_details(request, username):
         # Therefore, both username and user_type information are required
         params = {
             'username': username,
-            'user_type': 'candidate'
+            'user_type': 'employer'
         }
 
     user = get_object_or_404(CustomUser, **params)
