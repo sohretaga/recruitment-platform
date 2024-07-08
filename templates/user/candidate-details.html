@@ -193,6 +193,7 @@
                                         </div>
                                     </div>
                                 </li>
+                                {% if candidate.user.address %}
                                 <li>
                                     <div class="d-flex align-items-center mt-4">
                                         <div class="icon bg-soft-primary flex-shrink-0">
@@ -200,10 +201,11 @@
                                         </div>
                                         <div class="ms-3">
                                             <h6 class="fs-14 mb-1">Address</h6>
-                                            <p class="text-muted mb-0">Dodge City, Louisiana</p> 
+                                            <p class="text-muted mb-0">{{ candidate.user.address }}</p> 
                                         </div>
                                     </div>
                                 </li>
+                                {% endif %}
                                 {% if candidate.user.phone_number %}
                                 <li>
                                     <div class="d-flex align-items-center mt-4">
@@ -503,9 +505,15 @@
                                                 <!--end col-->
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
-                                                        <label for="attachmentscv" class="form-label">Attachments
-                                                            CV</label>
+                                                        <label for="attachmentscv" class="form-label">Attachments CV</label>
                                                         <input class="form-control" type="file" id="attachmentscv" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="mb-3">
+                                                        <label for="address" class="form-label">Address</label>
+                                                        <input class="form-control" type="text" placeholder="Write your address" name="address" id="address" 
+                                                            value="{% if candidate.user.address %}{{ candidate.user.address }}{% endif %}"/>
                                                     </div>
                                                 </div>
                                                 <!--end col-->

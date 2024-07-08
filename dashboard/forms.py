@@ -42,6 +42,7 @@ class ManageCandidateAccountForm(forms.ModelForm):
     phone_number = forms.CharField(max_length=15 ,required=True)
     whatsapp = forms.CharField(max_length=15 ,required=False)
     linkedin_url = forms.URLField(required=False)
+    address = forms.CharField(max_length=255, required=False)
     first_name = forms.CharField(max_length=150, required=True)
     last_name = forms.CharField(max_length=150, required=True)
 

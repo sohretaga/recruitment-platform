@@ -125,6 +125,7 @@ def candidate_details(request, username):
             profile_photo = form.cleaned_data.get('profile_photo')
             phone_number = form.cleaned_data.get('phone_number')
             about = form.cleaned_data.get('about')
+            address = form.cleaned_data.get('address')
             first_name = form.cleaned_data.get('first_name')
             last_name = form.cleaned_data.get('last_name')
             form.save()
@@ -135,6 +136,7 @@ def candidate_details(request, username):
             user.email = email
             user.phone_number = phone_number
             user.about = about
+            user.address = address
             user.first_name = first_name
             user.last_name = last_name
             user.save()

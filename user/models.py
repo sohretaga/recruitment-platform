@@ -14,6 +14,7 @@ class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=15, null=True, unique=True)
     about = models.TextField(null=True, blank=True)
+    address = models.CharField(max_length=255, null=True, blank=True)
     user_type = models.CharField(max_length=10, choices=USER_TYPE_CHOICES)
     is_registration_complete = models.BooleanField(default=False, editable=False)
     terms = models.BooleanField()
