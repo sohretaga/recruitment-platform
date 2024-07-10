@@ -38,7 +38,7 @@ class Employer(models.Model):
     slider = models.BooleanField(default=False, null=True)
     establishment_date = models.DateField(blank=True, null=True)
     website = models.URLField(blank=True, null=True)
-    whatsapp = models.CharField(max_length=15, null=True, unique=True)
+    whatsapp = models.CharField(max_length=15, null=True)
     facebook_url = models.URLField(blank=True, null=True)
     linkedin_url = models.URLField(blank=True, null=True)
 
@@ -53,7 +53,7 @@ class Candidate(models.Model):
     birthday = models.DateField(null=True)
     citizenship = models.ForeignKey(ParameterCountry, on_delete=models.SET_NULL, null=True)
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES, null=True)
-    whatsapp = models.CharField(max_length=15, null=True, unique=True)
+    whatsapp = models.CharField(max_length=15, null=True)
     linkedin_url = models.URLField(blank=True, null=True)
 
     def __str__(self) -> str:
