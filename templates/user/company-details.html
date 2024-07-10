@@ -207,7 +207,7 @@
                                     {% if employer.user.about %}
                                     <div class="mb-5">
                                         <h6 class="fs-17 fw-medium mb-4">About Company</h6>
-                                        <p class="text-muted">{{ employer.user.about }}</p>
+                                        <p class="text-muted" style="white-space: pre-wrap;">{{ employer.user.about }}</p>
                                     </div>
                                     {% endif %}
                                 
@@ -584,7 +584,6 @@
 <script src="{% static 'main/js/app.js' %}"></script>
 
 <!-- Custom Js -->
-<script src="{% static 'main/js/ajax/bookmarks.js' %}"></script>
 <script src="{% static 'main/js/ajax/edit-account.js' %}"></script>
 
 {% endblock script %}
