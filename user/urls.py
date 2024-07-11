@@ -10,6 +10,7 @@ urlpatterns = [
     path('reset-password', views.reset_password, name='reset-password'),
 
     path('profile', views.profile, name='profile'),
+    path('gallery-upload', views.gallery_upload, name='gallery-upload'),
 
     path('candidate-list', views.candidate_list, name='candidate-list'),
     path('candidate/<str:username>', views.candidate_details, name='candidate'),

@@ -200,6 +200,13 @@
                                     Settings
                                 </button>
                             </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="gallery-tab" data-bs-toggle="pill"
+                                    data-bs-target="#gallery" type="button" role="tab" aria-controls="gallery"
+                                    aria-selected="false">
+                                    Gallery
+                                </button>
+                            </li>
                         </ul>
                         <!--end profile-content-nav-->
                         {% endif %}
@@ -528,6 +535,67 @@
                                         </div>
                                     </form>
                                     <!--end form-->
+                                </div>
+
+                                <style>
+                                    .image-upload-wrapper {
+                                        position: relative;
+                                        width: 100px;
+                                        height: 100px;
+                                        border: 1px solid #dbdfe2;
+                                        border-radius: 5px;
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                        cursor: pointer;
+                                    }
+                                    .image-upload-wrapper img {
+                                        max-width: 100%;
+                                        max-height: 100%;
+                                    }
+                                    .image-upload-wrapper::before {
+                                        content: '+';
+                                        font-size: 2rem;
+                                        color: #ddd;
+                                    }
+                                    .image-upload-wrapper img {
+                                        display: none;
+                                    }
+                                    .image-upload-wrapper.has-image::before {
+                                        display: none;
+                                    }
+                                    .image-upload-wrapper.has-image img {
+                                        display: block;
+                                    }
+                                </style>
+
+                                <div class="tab-pane fade" id="gallery" role="tabpanel" aria-labelledby="gallery-tab">
+                                    <form action="{% url 'user:gallery-upload' %}" method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="alert alert-warning" role="alert" id="limit-alert" style="display: none;">
+                                            You can add 5 images to the gallery!
+                                        </div>
+                                        <div id="gallery-images">
+                                            <div class="d-flex justify-content-between mb-5" id="image-0">
+                                                <div class="image-upload-wrapper" id="image-upload-wrapper-0" onclick="document.getElementById('imageUpload-0').click();">
+                                                    <img id="uploadedImage-0" src="" alt="Uploaded Image">
+                                                    <input name="image" type="file" id="imageUpload-0" accept="image/*" style="display: none;" onchange="previewGalleryImage(event, 0)">
+                                                </div>
+                                                <div class="ms-3 w-100">
+                                                    <div class="d-flex">
+                                                        <input name="title" type="text" class="form-control mb-2" placeholder="Title">
+                                                        <button class="btn btn-danger fs-17 mb-2 ms-3" onclick="deleteImage(this)"><i class="uil uil-trash-alt"></i></button>
+                                                    </div>
+                                                    <textarea name="description" class="form-control" rows="3" placeholder="Description"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+    
+                                        <div class="w-100 d-flex justify-content-between">
+                                            <button class="btn btn-success" type="submit">Save <i class="uil uil-image-v"></i></button>
+                                            <button class="btn btn-primary" type="button" onclick="addImage()">Add Image <i class="uil uil-plus-circle"></i></button>
+                                        </div>
+                                    </form>
                                 </div>
                                 {% endif %}
                                 <!--end tab-pane-->

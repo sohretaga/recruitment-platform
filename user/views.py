@@ -4,9 +4,10 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
-from django.db.models import F
+from django.http import JsonResponse
 
 from . import forms
+from .models import Gallery, GalleryImage
 from .decorators import logout_required
 from user.models import CustomUser, Candidate, Employer
 from job.utils import vacancy_with_related_info
@@ -229,3 +230,25 @@ def company_details(request, username):
     }
 
     return render(request, 'user/company-details.html', context)
+
+def gallery_upload(request):
+    if request.method == 'POST':
+        form = forms.GalleryImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            # print(form.cleaned_data)
+            # gallery, created = Gallery.objects.get_or_create(user=request.user)
+            # for form in form.cleaned_data:
+            #     if form:
+            #         image = form['image']
+            #         title = form.get('title')
+            #         description = form.get('description')
+            #         print(image, title, description)
+                    # GalleryImage.objects.create(
+                    #     gallery=gallery,
+                    #     image=image,
+                    #     title=title,
+                    #     description=description
+                    # )
+            return redirect(reverse('user:company', args=[request.user]))
+
+    return redirect(reverse('user:company', args=[request.user]))

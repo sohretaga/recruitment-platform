@@ -1,7 +1,7 @@
 from django.core.paginator import Paginator
 from django.utils import timezone
 from django.db.models import F, Count, When, Case, Value, CharField
-from django.db.models.functions import Concat, Cast
+from django.db.models.functions import Concat
 from django.conf import settings
 from datetime import timedelta
 

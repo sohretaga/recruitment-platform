@@ -1,6 +1,7 @@
 from django import forms
+from django.forms import modelformset_factory
 
-from .models import CustomUser
+from .models import CustomUser, GalleryImage
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=65)
@@ -23,3 +24,8 @@ class CustomUserCreationForm(forms.ModelForm):
             user.save()
         
         return user
+    
+class GalleryImageForm(forms.ModelForm):
+    class Meta:
+        model = GalleryImage
+        fields = ['image', 'title', 'description']

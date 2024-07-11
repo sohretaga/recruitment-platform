@@ -59,3 +59,12 @@ class Candidate(models.Model):
 
     def __str__(self) -> str:
         return self.user.get_full_name()
+
+class Gallery(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='gallery')
+
+class GalleryImage(models.Model):
+    gallery = models.ForeignKey(Gallery, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='gallery/')
+    title = models.CharField(max_length=300, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
