@@ -73,7 +73,11 @@
                         <div>
                             <img src="{% static 'main/images/job-detail.jpg' %}" alt="" class="img-fluid">
                             <div class="job-details-compnay-profile">
-                                <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="" class="img-fluid rounded-3 rounded-3" style="width: 55px;">
+                                {% if vacancy.profile_photo_url %}
+                                <img src="{{ vacancy.profile_photo_url }}" alt="{{ vacancy.company_name }}" class="img-fluid rounded-3 rounded-3" style="width: 55px;">
+                                {% else %}
+                                <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="{{ vacancy.company_name }}" class="img-fluid rounded-3 rounded-3" style="width: 55px;">
+                                {% endif %}
                             </div>
                         </div>
                         <div class="card-body p-4">

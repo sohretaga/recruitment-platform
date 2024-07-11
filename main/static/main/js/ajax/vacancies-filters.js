@@ -169,7 +169,7 @@ const listVacancies = (vacanciesInfo, bookmarks, applications, keywords) => {
             <div class="p-4">
                 <div class="row">
                     <div class="col-lg-1">
-                        <a href="/company/${vacancy.employer__username}"><img src="/static/main/images/featured-job/default-company-img.jpeg" alt="" class="img-fluid rounded-3"></a>
+                        <a href="/company/${vacancy.employer__username}"><img src="${vacancy.profile_photo_url ? `${vacancy.profile_photo_url}`:'/static/main/images/featured-job/default-company-img.jpeg'}" alt="${vacancy.company_name}" class="img-fluid rounded-3"></a>
                     </div><!--end col-->
                     <div class="col-lg-10">
                         <div class="mt-3 mt-lg-0">
