@@ -369,6 +369,21 @@
                                                 <!--end col-->
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
+                                                        <label for="location" class="form-label">Location</label>
+                                                        <select class="form-select" data-trigger name="location" id="location" aria-label="Default select example">
+                                                            {% for location in locations %}
+                                                            {% if location.id == user.candidate.location.id %}
+                                                            <option value="{{ location.id }}" selected>{{ location.name }}</option>
+                                                            {% else %}
+                                                            <option value="{{ location.id }}">{{ location.name }}</option>
+                                                            {% endif %}
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <!--end col-->
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
                                                         <label for="establishment-date" class="form-label">Establishment Date</label>
                                                         <input type="text" class="form-control" data-provide="datepicker" data-date-format="dd M, yyyy" id="establishment-date"
                                                             name="establishment_date" placeholder="Company Establishment Date" value="{% if employer.establishment_date %}{{ employer.establishment_date|date:'d M, Y' }}{% endif %}">
@@ -383,7 +398,7 @@
                                                     </div>
                                                 </div>
                                                 <!--end col-->
-                                                <div class="col-lg-12">
+                                                <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label for="address" class="form-label">Address</label>
                                                         <input class="form-control" type="text" placeholder="Write company address" name="address" id="address" 

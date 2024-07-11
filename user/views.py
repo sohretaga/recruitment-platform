@@ -215,6 +215,7 @@ def company_details(request, username):
     organization_types = ParameterOrganizationType.objects.all().values('id', 'name')
     organization_ownerships = ParameterOrganizationOwnership.objects.all().values('id', 'name')
     number_of_employees = ParameterNumberOfEmployee.objects.all().values('id', 'name')
+    locations = ParameterCountry.objects.values('id', 'name')
 
     context = {
         'employer': user.employer,
@@ -223,7 +224,8 @@ def company_details(request, username):
         'sectors': sectors,
         'organization_types': organization_types,
         'organization_ownerships': organization_ownerships,
-        'number_of_employees': number_of_employees
+        'number_of_employees': number_of_employees,
+        'locations': locations
     }
 
     return render(request, 'user/company-details.html', context)
