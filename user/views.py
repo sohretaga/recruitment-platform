@@ -170,8 +170,6 @@ def company_details(request, username):
         user = request.user
         form = ManageEmployerAccountForm(request.POST, request.FILES, instance=user.employer)
 
-        print(form.errors)
-
         if form.is_valid():
             email = form.cleaned_data.get('primary_email')
             profile_photo = form.cleaned_data.get('profile_photo')
