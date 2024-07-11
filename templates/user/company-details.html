@@ -121,14 +121,16 @@
                                         </div>
                                     </div>
                                 </li>
+                                {% if employer.location %}
                                 <li>
                                     <div class="d-flex">
                                         <label class="text-dark">Location</label>
                                         <div>
-                                            <p class="text-muted mb-0">New York</p>
+                                            <p class="text-muted mb-0">{{ employer.location.name }}</p>
                                         </div>
                                     </div>
                                 </li>
+                                {% endif %}
                                 {% if employer.website %}
                                 <li>
                                     <div class="d-flex">
@@ -372,7 +374,7 @@
                                                         <label for="location" class="form-label">Location</label>
                                                         <select class="form-select" data-trigger name="location" id="location" aria-label="Default select example">
                                                             {% for location in locations %}
-                                                            {% if location.id == user.candidate.location.id %}
+                                                            {% if location.id == employer.location.id %}
                                                             <option value="{{ location.id }}" selected>{{ location.name }}</option>
                                                             {% else %}
                                                             <option value="{{ location.id }}">{{ location.name }}</option>
