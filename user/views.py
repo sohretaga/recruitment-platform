@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
-from itertools import zip_longest
+from django.core.exceptions import ObjectDoesNotExist
 
 from . import forms
 from .models import Gallery, GalleryImage
@@ -219,7 +219,9 @@ def company_details(request, username):
     organization_ownerships = ParameterOrganizationOwnership.objects.all().values('id', 'name')
     number_of_employees = ParameterNumberOfEmployee.objects.all().values('id', 'name')
     locations = ParameterCountry.objects.values('id', 'name')
-    gallery = user.gallery.images.all()
+
+    try: gallery = user.gallery.images.all()
+    except ObjectDoesNotExist: gallery = False
 
     context = {
         'employer': user.employer,
@@ -246,7 +248,7 @@ def gallery_upload(request):
     titles = request.POST.getlist('title', [])
     descriptions = request.POST.getlist('description', [])
 
-    for image_id, title, description in zip_longest(image_ids, titles, descriptions):
+    for image_id, title, description in zip(image_ids, titles, descriptions):
 
         try: image_exists = GalleryImage.objects.filter(id=image_id).exists()
         except ValueError: image_exists = False
