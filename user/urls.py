@@ -11,6 +11,7 @@ urlpatterns = [
 
     path('profile', views.profile, name='profile'),
     path('gallery-upload', views.gallery_upload, name='gallery-upload'),
+    path('ajax-delete-gallery-image', views.delete_gallery_image, name='ajax-delete-gallery-image'),
 
     path('candidate-list', views.candidate_list, name='candidate-list'),
     path('candidate/<str:username>', views.candidate_details, name='candidate'),

@@ -4,7 +4,9 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
+from django.views.decorators.http import require_POST
 from django.http import JsonResponse
+from itertools import zip_longest
 
 from . import forms
 from .models import Gallery, GalleryImage
@@ -217,6 +219,7 @@ def company_details(request, username):
     organization_ownerships = ParameterOrganizationOwnership.objects.all().values('id', 'name')
     number_of_employees = ParameterNumberOfEmployee.objects.all().values('id', 'name')
     locations = ParameterCountry.objects.values('id', 'name')
+    gallery = user.gallery.images.all()
 
     context = {
         'employer': user.employer,
@@ -226,29 +229,54 @@ def company_details(request, username):
         'organization_types': organization_types,
         'organization_ownerships': organization_ownerships,
         'number_of_employees': number_of_employees,
-        'locations': locations
+        'locations': locations,
+        'gallery': gallery
     }
 
     return render(request, 'user/company-details.html', context)
 
+from django.views.decorators.csrf import csrf_exempt
+
+@login_required
+@require_POST
 def gallery_upload(request):
-    if request.method == 'POST':
-        form = forms.GalleryImageForm(request.POST, request.FILES)
-        if form.is_valid():
-            # print(form.cleaned_data)
-            # gallery, created = Gallery.objects.get_or_create(user=request.user)
-            # for form in form.cleaned_data:
-            #     if form:
-            #         image = form['image']
-            #         title = form.get('title')
-            #         description = form.get('description')
-            #         print(image, title, description)
-                    # GalleryImage.objects.create(
-                    #     gallery=gallery,
-                    #     image=image,
-                    #     title=title,
-                    #     description=description
-                    # )
-            return redirect(reverse('user:company', args=[request.user]))
+    gallery = Gallery.objects.get_or_create(user=request.user)[0]
+
+    image_ids = request.POST.getlist('image-id', [])
+    titles = request.POST.getlist('title', [])
+    descriptions = request.POST.getlist('description', [])
+
+    for image_id, title, description in zip_longest(image_ids, titles, descriptions):
+
+        try: image_exists = GalleryImage.objects.filter(id=image_id).exists()
+        except ValueError: image_exists = False
+
+        if image_exists:
+            GalleryImage.objects.filter(id=image_id).update(
+                title=title,
+                description=description
+            )
+
+        else:
+            image = request.FILES.get(f'image-{image_id}')
+
+            if image:
+                GalleryImage.objects.create(
+                    gallery=gallery,
+                    image=image,
+                    title=title,
+                    description=description
+                )
 
     return redirect(reverse('user:company', args=[request.user]))
+
+@login_required
+@require_POST
+def delete_gallery_image(request):
+    image_id = request.POST.get('image_id', 0)
+    image_exists = GalleryImage.objects.filter(id=image_id, gallery__user=request.user).exists()
+
+    if image_exists:
+        GalleryImage.objects.filter(id=image_id, gallery__user=request.user).delete()
+
+    return JsonResponse({'status': 200})

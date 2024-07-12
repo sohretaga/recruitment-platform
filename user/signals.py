@@ -1,7 +1,9 @@
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 
-from .models import CustomUser, Employer, Candidate
+from .models import CustomUser, Employer, Candidate, GalleryImage
+
+import os
 
 
 @receiver(post_save, sender=CustomUser)
@@ -12,3 +14,10 @@ def create_user_profile(sender, instance, created, **kwargs):
 
         elif instance.user_type == 'candidate':
             Candidate.objects.create(user=instance)
+
+
+@receiver(post_delete, sender=GalleryImage)
+def delete_gallery_image(sender, instance, **kwargs):
+    if instance.image:
+        if os.path.isfile(instance.image.path):
+            os.remove(instance.image.path)

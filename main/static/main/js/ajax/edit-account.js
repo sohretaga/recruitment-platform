@@ -18,7 +18,7 @@ const previewImg = (input) => {
 };
 
 const genHexString = () => {
-    const hex = '0123456789ABCDEF';
+    const hex = '456789ABCDEF';
     let output = '';
     for (let i = 0; i < 3; ++i) {
         output += hex.charAt(Math.floor(Math.random() * hex.length));
@@ -40,9 +40,18 @@ const previewGalleryImage = (event, id) => {
 };
 
 const deleteImage = (button) => {
-    let parentDiv = button.closest('.d-flex.justify-content-between');
+    const parentDiv = button.closest('.d-flex.justify-content-between');
+    const image_id = parentDiv.id;
     parentDiv.remove();
     limitAlert.style.display = 'none';
+
+    if (image_id) {
+        $.ajax({
+            url: '/ajax-delete-gallery-image',
+            type: 'POST',
+            data: {image_id: image_id},
+        });
+    };
 };
 
 const addImage = () => {
@@ -50,11 +59,12 @@ const addImage = () => {
     const galleryLength = galleryImages.children.length;
 
     if (galleryLength < 5) {
-        galleryImages.innerHTML += `
-        <div class="d-flex justify-content-between mb-5" id="image-${randomId}">
+        galleryImages.insertAdjacentHTML('beforeend', `
+        <div class="d-flex justify-content-between mb-5">
+            <input type="hidden" name="image-id" value="${randomId}">
             <div class="image-upload-wrapper" id="image-upload-wrapper-${randomId}" onclick="document.getElementById('imageUpload-${randomId}').click();">
                 <img id="uploadedImage-${randomId}" src="" alt="Uploaded Image">
-                <input name="image" type="file" id="imageUpload-${randomId}" accept="image/*" style="display: none;" onchange="previewGalleryImage(event, '${randomId}')">
+                <input name="image-${randomId}" type="file" id="imageUpload-${randomId}" accept="image/*" style="display: none;" onchange="previewGalleryImage(event, '${randomId}')">
             </div>
             <div class="ms-3 w-100">
                 <div class="d-flex">
@@ -63,7 +73,7 @@ const addImage = () => {
                 </div>
                 <textarea name="description" class="form-control" rows="3" placeholder="Description"></textarea>
             </div>
-        </div>`;
+        </div>`);
     } else {
         const a = document.createElement('a');
         a.href = '#pills-tab';

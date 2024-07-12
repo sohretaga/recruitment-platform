@@ -581,10 +581,32 @@
                                             You can add 5 images to the gallery!
                                         </div>
                                         <div id="gallery-images">
-                                            <div class="d-flex justify-content-between mb-5" id="image-0">
+                                            {% if gallery %}
+                                            {% for image in gallery %}
+                                            <div class="d-flex justify-content-between mb-5" id="{{ image.id }}">
+                                                <input type="hidden" name="image-id" value="{{ image.id }}">
+                                                <div class="image-upload-wrapper has-image">
+                                                    {% if image.image %}
+                                                    <img src="{{ image.image.url }}" alt="{{ image.title }}">
+                                                    {% else %}
+                                                    <img src="" alt="{{ image.title }}">
+                                                    {% endif %}
+                                                </div>
+                                                <div class="ms-3 w-100">
+                                                    <div class="d-flex">
+                                                        <input name="title" type="text" class="form-control mb-2" value="{{ image.title }}" placeholder="Title">
+                                                        <button class="btn btn-danger fs-17 mb-2 ms-3" onclick="deleteImage(this)"><i class="uil uil-trash-alt"></i></button>
+                                                    </div>
+                                                    <textarea name="description" class="form-control" rows="3" placeholder="Description">{{ image.description }}</textarea>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                            {% else %}
+                                            <div class="d-flex justify-content-between mb-5">
+                                                <input type="hidden" name="image-id" value="0">
                                                 <div class="image-upload-wrapper" id="image-upload-wrapper-0" onclick="document.getElementById('imageUpload-0').click();">
                                                     <img id="uploadedImage-0" src="" alt="Uploaded Image">
-                                                    <input name="image" type="file" id="imageUpload-0" accept="image/*" style="display: none;" onchange="previewGalleryImage(event, 0)">
+                                                    <input name="image-0" type="file" id="imageUpload-0" accept="image/*" style="display: none;" onchange="previewGalleryImage(event, 0)">
                                                 </div>
                                                 <div class="ms-3 w-100">
                                                     <div class="d-flex">
@@ -594,6 +616,7 @@
                                                     <textarea name="description" class="form-control" rows="3" placeholder="Description"></textarea>
                                                 </div>
                                             </div>
+                                            {% endif %}
                                         </div>
     
                                         <div class="w-100 d-flex justify-content-between">
