@@ -1,0 +1,39 @@
+.image-upload-wrapper {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border: 1px solid #dbdfe2;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+body[data-layout-mode="dark"] .image-upload-wrapper {
+    border-color: #3d454e;
+    background-color: #303841;
+}
+
+.image-upload-wrapper img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.image-upload-wrapper::before {
+    content: '+';
+    font-size: 2rem;
+    color: #ddd;
+}
+
+.image-upload-wrapper img {
+    display: none;
+}
+
+.image-upload-wrapper.has-image::before {
+    display: none;
+}
+
+.image-upload-wrapper.has-image img {
+    display: block;
+}

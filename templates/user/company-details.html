@@ -18,6 +18,7 @@
     <!-- App Css-->
     <link href="{% static 'main/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
     <!--Custom Css-->
+    <link rel="stylesheet" href="{% static 'main/css/company-details.css' %}">
 {% endblock head %}
 
 {% block content %}
@@ -223,33 +224,31 @@
                                     <div class="candidate-portfolio mb-5">
                                         <h6 class="fs-17 fw-medium mb-4">Gallery</h6>
                                         <div class="row g-3">
-                                            <div class="col-lg-6">
-                                                <div class="candidate-portfolio-box card border-0">
-                                                    <img src="{% static 'main/images/blog/img-01.jpg' %}" alt="" class="img-fluid">
-                                                    <div class="bg-overlay"></div>
-                                                    <div class="zoom-icon">
-                                                        <a href="{% static 'main/images/blog/img-01.jpg' %}" class="image-popup text-white" data-title="Project Leader" data-description="There are many variations of passages of available, but the majority alteration in some form."><i class="uil uil-search-alt"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div><!-- end col -->
-                                            <div class="col-lg-6">
-                                                <div class="candidate-portfolio-box card border-0">
-                                                    <img src="{% static 'main/images/blog/img-03.jpg' %}" alt="" class="img-fluid">
-                                                    <div class="bg-overlay"></div>
-                                                    <div class="zoom-icon">
-                                                        <a href="{% static 'main/images/blog/img-03.jpg' %}" class="image-popup text-white" data-title="Project Leader" data-description="There are many variations of passages of available, but the majority alteration in some form."><i class="uil uil-search-alt"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div><!-- end col -->
+                                            {% if gallery %}
+                                            {% for image in gallery %}
+                                            {% if forloop.first %}
                                             <div class="col-lg-12">
-                                                <div class="candidate-portfolio-box card border-0">
-                                                    <img src="{% static 'main/images/blog/img-12.jpg' %}" alt="" class="img-fluid">
+                                                <div class="candidate-portfolio-box card border-0" style="width: 680px; height: 380px;">
+                                                    <img src="{{ image.image.url }}" alt="{{ image.title }}" class="img-fluid">
                                                     <div class="bg-overlay"></div>
                                                     <div class="zoom-icon">
-                                                        <a href="{% static 'main/images/blog/img-12.jpg' %}" class="image-popup text-white" data-title="Project Leader" data-description="There are many variations of passages of available, but the majority alteration in some form."><i class="uil uil-search-alt"></i></a>
+                                                        <a href="{{ image.image.url }}" class="image-popup text-white" data-title="{{ image.title }}" data-description="{{ image.description }}"><i class="uil uil-search-alt"></i></a>
                                                     </div>
                                                 </div>
                                             </div><!-- end col -->
+                                            {% else %}
+                                            <div class="col-lg-6">
+                                                <div class="candidate-portfolio-box card border-0" style="width: 330px; height: 220px;">
+                                                    <img src="{{ image.image.url }}" alt="{{ image.title }}" class="img-fluid">
+                                                    <div class="bg-overlay"></div>
+                                                    <div class="zoom-icon">
+                                                        <a href="{{ image.image.url }}" class="image-popup text-white" data-title="{{ image.title }}" data-description="{{ image.description }}"><i class="uil uil-search-alt"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div><!-- end col -->
+                                            {% endif %}
+                                            {% endfor %}
+                                            {% endif %}
                                         </div><!-- end row -->
                                     </div><!-- end portfolio -->  
                                     
@@ -536,43 +535,6 @@
                                     </form>
                                     <!--end form-->
                                 </div>
-
-                                <style>
-                                    .image-upload-wrapper {
-                                        position: relative;
-                                        width: 100px;
-                                        height: 100px;
-                                        border: 1px solid #dbdfe2;
-                                        border-radius: 5px;
-                                        display: flex;
-                                        justify-content: center;
-                                        align-items: center;
-                                        cursor: pointer;
-                                    }
-
-                                    body[data-layout-mode="dark"] .image-upload-wrapper {
-                                        border-color: #3d454e;
-                                        background-color: #303841;
-                                    }
-                                    .image-upload-wrapper img {
-                                        max-width: 100%;
-                                        max-height: 100%;
-                                    }
-                                    .image-upload-wrapper::before {
-                                        content: '+';
-                                        font-size: 2rem;
-                                        color: #ddd;
-                                    }
-                                    .image-upload-wrapper img {
-                                        display: none;
-                                    }
-                                    .image-upload-wrapper.has-image::before {
-                                        display: none;
-                                    }
-                                    .image-upload-wrapper.has-image img {
-                                        display: block;
-                                    }
-                                </style>
 
                                 <div class="tab-pane fade" id="gallery" role="tabpanel" aria-labelledby="gallery-tab">
                                     <form action="{% url 'user:gallery-upload' %}" method="post" enctype="multipart/form-data">
