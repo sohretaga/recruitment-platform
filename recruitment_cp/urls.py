@@ -93,4 +93,8 @@ urlpatterns = [
     path('parameters/faq-categories', parameters.faq_index, name='faq_categories'),
     path('parameters/faq-categories-load', parameters.faq_load, name='faq_categories_load'),
     path('parameters/faq-categories-save', parameters.faq_save, name='faq_categories_save'),
+
+    path('parameters/competence', parameters.competence_index, name='competence'),
+    path('parameters/competence-load', parameters.competence_load, name='competence_load'),
+    path('parameters/competence-save', parameters.competence_save, name='competence_save'),
 ]
