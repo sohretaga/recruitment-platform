@@ -56,6 +56,7 @@ class Candidate(models.Model):
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES, null=True)
     whatsapp = models.CharField(max_length=15, null=True)
     linkedin_url = models.URLField(blank=True, null=True)
+    cv = models.FileField(upload_to='cvs/', null=True)
 
     def __str__(self) -> str:
         return self.user.get_full_name()
