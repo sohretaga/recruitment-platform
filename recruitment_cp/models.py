@@ -111,3 +111,6 @@ class ParameterKeyword(ParameterCommonFields):
 
 class ParameterFAQ(ParameterCommonFields):
     ...
+
+class CompetenceFAQ(ParameterCommonFields):
+    ...
