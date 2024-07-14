@@ -500,10 +500,11 @@
                                                 <!--end col-->
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
-                                                        <label for="language" class="form-label">Languages</label>
-                                                        <select class="form-select" data-trigger name="language" id="language" multiple>
+                                                        <input type="hidden" id="langauge-values" name="languages">
+                                                        <label for="languages" class="form-label">Languages</label>
+                                                        <select class="form-select" data-trigger id="languages" multiple>
                                                             {% for competence in competencies %}
-                                                            {% if competence.id == user.candidate.competence.id %}
+                                                            {% if competence.id|stringformat:"s" in candidate.languages %}
                                                             <option value="{{ competence.id }}" selected>{{ competence.name }}</option>
                                                             {% else %}
                                                             <option value="{{ competence.id }}">{{ competence.name }}</option>

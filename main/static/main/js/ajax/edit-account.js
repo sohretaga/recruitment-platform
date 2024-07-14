@@ -3,8 +3,21 @@ const galleryImages = document.getElementById('gallery-images');
 const limitAlert = document.getElementById('limit-alert');
 
 selects.forEach(select => {
-    new Choices(`#${select.name}`)
+    new Choices(`#${select.id}`)
 });
+
+
+// Collects the values ​​selected from the Language selection into an input and prepares it for recording.
+const languages = document.getElementById('languages');
+const languageValuesInput = document.getElementById('langauge-values');
+languages.addEventListener('change', function() {
+    let values = new Array();
+    languages.querySelectorAll('option').forEach((option) => {
+        values.push(option.value);
+    });
+    languageValuesInput.value = values;
+});
+// End
 
 const profileImg = document.getElementById('profile-img');
 const previewImg = (input) => {

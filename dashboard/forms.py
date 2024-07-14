@@ -51,6 +51,7 @@ class ManageCandidateAccountForm(forms.ModelForm):
     linkedin_url = forms.URLField(required=False)
     first_name = forms.CharField(max_length=150, required=True)
     last_name = forms.CharField(max_length=150, required=True)
+    languages = forms.CharField(max_length=50, required=False)
 
     class Meta:
         model = Candidate
