@@ -6,9 +6,9 @@
                 <ul class="job-list-menu nav nav-pills nav-justified flex-column flex-sm-row mb-4" id="pills-tab" role="tablist">
                 {% for sector in sectors %}
                     <li class="sectors nav-item" role="presentation">
-                        <button class="sectors-btn nav-link" id="sector{{ sector.id }}-tab" data-bs-toggle="pill"
+                        <button class="sectors-btn nav-link" id="sector{{ sector.id }}-tab" 
                             data-bs-target="#sector{{ sector.id }}" type="button" role="tab" aria-controls="sector{{ sector.id }}"
-                            aria-selected="false">{{ sector.name }}</button>
+                            aria-selected="false">{{ sector.name }}</button> <!--data-bs-toggle="pill"-->
                     </li>
                 {% endfor %}
                 </ul>

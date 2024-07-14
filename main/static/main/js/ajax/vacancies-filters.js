@@ -10,8 +10,6 @@ var workPreferenceCheckboxes = '#preference input[type="checkbox"]';
 var departmentCheckboxes = '#department input[type="checkbox"]';
 var datePostedRadios = '#dateposted input[type="radio"]';
 
-decodeURIComponent(url);
-
 noUiSlider.create(slider, {
     start: [minValue, maxValue],
     step: 1,
@@ -50,7 +48,7 @@ class DataCollector {
     getSalaryRangeValue() {
         const lowerValue = parseInt(document.querySelector('.noUi-handle-lower').getAttribute('aria-valuenow'));
         const upperValue = parseInt(document.querySelector('.noUi-handle-upper').getAttribute('aria-valuenow'));
-        const salaryRangeList = lowerValue > minValue || upperValue < maxValue? [lowerValue, upperValue]: [];
+        const salaryRangeList = lowerValue > minValue || upperValue < maxValue ? [lowerValue, upperValue]: [];
         setUrl('salary-range', salaryRangeList.join(','));
 
         return salaryRangeList;
@@ -58,14 +56,10 @@ class DataCollector {
 
     getSelectedSectorValue() {
         const selectedSectorBtn = document.querySelector('button[aria-selected="true"]');
-        if (selectedSectorBtn) {
-            const selectedSectorValue = selectedSectorBtn.innerText;
-            setUrl('sector', selectedSectorValue);
+        let selectedSectorValue = selectedSectorBtn ? selectedSectorBtn.innerText:false;
+        setUrl('sector', selectedSectorValue);
 
-            return selectedSectorValue;
-        };
-
-        return false;
+        return selectedSectorValue;
     }
 
     collectData() {
@@ -85,20 +79,21 @@ class DataCollector {
 };
 
 const setUrl = (parameter, value) => {
-    const query_parameter = url.searchParams.has(parameter);
-
+    const queryParameter = url.searchParams.has(parameter);
     if (value) {
-        if (query_parameter) {
+        if (queryParameter) {
             url.searchParams.set(parameter, value);
         } else {
             url.searchParams.append(parameter, value);
         };
 
     } else {
-        url.searchParams.delete(parameter);
+        if (queryParameter) {
+            url.searchParams.delete(parameter);
+        };
     };
 
-    window.history.pushState('', '', decodeURIComponent(url));
+    window.history.pushState('', '', url);
 };
 
 const getUrlParameterValue = (parameterName) => {
@@ -303,16 +298,40 @@ setFilterCheckboxes(datePostedRadios, getUrlParameterValue('date')); // Set work
 
 
 // Sector filter settings
-const sectorsBtn = document.querySelectorAll('button[aria-selected="false"]');
+const sectorsButtons = document.querySelectorAll('.sectors-btn');
 const sectorUrlParam = getUrlParameterValue('sector');
 
-sectorsBtn.forEach(btn => {
-    if (btn.innerText == sectorUrlParam) {
-        btn.setAttribute('aria-selected', true);
-        btn.classList.add('active');
-    };
+const setButtonState = (btn, state) => {
+    const target = document.querySelector(btn.getAttribute('data-bs-target'));
+    btn.classList.toggle('active', state);
+    btn.setAttribute('aria-selected', state);
+    if (target) {
+        target.classList.toggle('active', state);
+        target.classList.toggle('show', state);
+    }
+};
 
-    btn.addEventListener('click', filterRequest);
+const deselectOtherButtons = (currentBtn) => {
+    sectorsButtons.forEach(btn => {
+        if (btn !== currentBtn) {
+            setButtonState(btn, false);
+        }
+    });
+};
+
+sectorsButtons.forEach(btn => {
+    if (btn.innerText === sectorUrlParam) {
+        setButtonState(btn, true);
+    }
+
+    btn.addEventListener('click', function () {
+        const isActive = btn.classList.contains('active');
+        setButtonState(btn, !isActive);
+        if (!isActive) {
+            deselectOtherButtons(btn);
+        }
+        filterRequest();
+    });
 });
 
 
