@@ -447,7 +447,7 @@
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label for="citizenship" class="form-label">Citizenship</label>
-                                                        <select class="form-select" data-trigger name="citizenship" id="citizenship" aria-label="Default select example">
+                                                        <select class="form-select" data-trigger name="citizenship" id="citizenship" >
                                                             {% for citizenship in citizenships %}
                                                             {% if citizenship.id == user.candidate.citizenship.id %}
                                                             <option value="{{ citizenship.id }}" selected>{{ citizenship.name }}</option>
@@ -462,7 +462,7 @@
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label for="gender" class="form-label">Gender</label>
-                                                        <select class="form-select" data-trigger name="gender" id="gender" aria-label="Default select example">
+                                                        <select class="form-select" data-trigger name="gender" id="gender" >
                                                             <option value="male" {% if user.candidate.gender == 'male'  %}selected{% endif %}>Male</option>
                                                             <option value="female" {% if user.candidate.gender == 'female' %}selected{% endif %}>Female</option>
                                                         </select>
@@ -500,9 +500,16 @@
                                                 <!--end col-->
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
-                                                        <label for="languages" class="form-label">Languages</label>
-                                                        <input type="text" class="form-control" id="languages"
-                                                            value="English, German, French" />
+                                                        <label for="language" class="form-label">Languages</label>
+                                                        <select class="form-select" data-trigger name="language" id="language" multiple>
+                                                            {% for competence in competencies %}
+                                                            {% if competence.id == user.candidate.competence.id %}
+                                                            <option value="{{ competence.id }}" selected>{{ competence.name }}</option>
+                                                            {% else %}
+                                                            <option value="{{ competence.id }}">{{ competence.name }}</option>
+                                                            {% endif %}
+                                                            {% endfor %}
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <!--end col-->

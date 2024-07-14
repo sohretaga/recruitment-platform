@@ -13,9 +13,16 @@ from .models import Gallery, GalleryImage
 from .decorators import logout_required
 from user.models import CustomUser, Candidate, Employer
 from job.utils import vacancy_with_related_info
-from recruitment_cp.models import ParameterKeyword, ParameterSector, ParameterOrganizationType, ParameterOrganizationOwnership, ParameterNumberOfEmployee, ParameterCountry
 from dashboard.forms import ManageEmployerAccountForm, ManageCandidateAccountForm
-
+from recruitment_cp.models import(
+        ParameterKeyword,
+        ParameterSector,
+        ParameterOrganizationType,
+        ParameterOrganizationOwnership,
+        ParameterNumberOfEmployee,
+        ParameterCountry,
+        ParameterCompetence
+    )
 
 @logout_required
 def sign_in(request):
@@ -145,10 +152,12 @@ def candidate_details(request, username):
 
     user = get_object_or_404(CustomUser, **params)
     citizenships = ParameterCountry.objects.values('id', 'name')
+    competencies = ParameterCompetence.objects.values('id', 'name')
 
     context = {
         'candidate': user.candidate,
-        'citizenships': citizenships
+        'citizenships': citizenships,
+        'competencies': competencies
     }
 
     return render(request, 'user/candidate-details.html', context)
@@ -236,8 +245,6 @@ def company_details(request, username):
     }
 
     return render(request, 'user/company-details.html', context)
-
-from django.views.decorators.csrf import csrf_exempt
 
 @login_required
 @require_POST
