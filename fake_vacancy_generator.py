@@ -139,8 +139,6 @@ keywords = []
 for key_id in models.ParameterKeyword.objects.all().values_list('id', flat=True):
     keywords.append(str(key_id))
 
-print(keywords)
-
 def run(limit):
     for i in range(1, limit+1):
         Vacancy.objects.create(
