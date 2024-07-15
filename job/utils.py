@@ -8,6 +8,7 @@ from datetime import timedelta
 from recruitment_cp import models
 from job.models import Vacancy
 
+
 def get_vacancies_context(request, vacancies) -> dict:
     # Set up Paginator
     paginator = Paginator(vacancies, 10)
@@ -74,19 +75,10 @@ def vacancy_with_related_info(objects):
 
 def fetch_vacancies(request) -> dict:
     # URL parameters are taken for filtering and used for the same filtering on the following pages.
-    salary_range:str|None = request.GET.get('salary-range')
-    work_experience:str|None = request.GET.get('work-experience')
-    employment_type:str|None = request.GET.get('employment-type')
-    sector:str|None = request.GET.get('sector')
-    department:str|None = request.GET.get('department')
-    work_preference:str|None = request.GET.get('work-preference')
-    date:str|None = request.GET.get('date')
-    job_title:str|None = request.GET.get('job-title')
-    company:str|None = request.GET.get('company')
     params = {'status': True}
     url:str = '' # Creating URL for Pagination
 
-    if salary_range:
+    if salary_range := request.GET.get('salary-range'):
         url += f'&salary-range={salary_range}'
         salary_range_lower = int(salary_range.split(',')[0])
         salary_range_upper = int(salary_range.split(',')[1])
@@ -99,36 +91,36 @@ def fetch_vacancies(request) -> dict:
         if salary_range_upper:
             params.update({'salary__lte': salary_range_upper})
 
-    if work_experience:
+    if work_experience := request.GET.get('work-experience'):
         url += f'&work-experience={work_experience}'
         params.update({'work_experience__name__in': work_experience.split(',')})
     
-    if employment_type:
+    if employment_type := request.GET.get('employment-type'):
         url += f'&employment-type={employment_type}'
         params.update({'employment_type__name__in': employment_type.split(',')})
     
-    if sector:
+    if sector := request.GET.get('sector'):
         url += f'&sector={sector}'
         params.update({'employer__sector': sector})
 
-    if department:
+    if department := request.GET.get('department'):
         url += f'&department={department}'
         params.update({'department__name__in': department.split(',')})
 
-    if work_preference:
+    if work_preference := request.GET.get('work-preference'):
         url += f'&work-preference={work_preference}'
         params.update({'work_preference__name__in': work_preference.split(',')})
 
-    if date:
+    if date := request.GET.get('date'):
         url += f'&date={date}'
         params.update({'created_date__gte': timezone.now() - timedelta(hours=int(date))})
     
     # filter settings for view more
-    if job_title:
+    if job_title := request.GET.get('job-title'):
         url += f'&job-title={job_title}'
         params.update({'job_title__name': job_title})
     
-    if company:
+    if company := request.GET.get('company'):
         url += f'&company={company}'
         params.update({'employer__user__first_name': company})
 
