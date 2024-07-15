@@ -16,7 +16,7 @@ def index(request):
     today_releases = Vacancy.objects.all().order_by('?')[:6]
     quick_career_tips = Blog.objects.filter(status='published', quick_career_tip=True)
     featured_slider_vacancies = get_vacancy_in_sublists()
-    trending_keywords = ParameterKeyword.objects.filter(trending=True).values_list('name', flat=True)
+    trending_keywords = ParameterKeyword.objects.filter(trending=True).values('id', 'name')
     
     context = {
         **vacancies,

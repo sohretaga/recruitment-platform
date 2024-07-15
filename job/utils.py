@@ -123,6 +123,11 @@ def fetch_vacancies(request) -> dict:
     if company := request.GET.get('company'):
         url += f'&company={company}'
         params.update({'employer__user__first_name': company})
+    # end
+
+    if keyword := request.GET.get('keyword'):
+        url += f'&keyword={keyword}'
+        params.update({'keywords__contains': keyword})
 
     filtered_vacancies = vacancy_with_related_info(Vacancy.objects.filter(**params))
 
