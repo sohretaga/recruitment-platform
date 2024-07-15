@@ -1063,7 +1063,7 @@ def keywords_load(request):
             language = request.POST.get('language')
             
             keywords = cp_models.ParameterKeyword.objects.filter(language=language).values(
-                'id', 'no', 'name', 'definition', 'note'
+                'id', 'no', 'name', 'definition', 'note', 'trending'
             )
             json_data = json.dumps(list(keywords))
 

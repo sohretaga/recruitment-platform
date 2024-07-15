@@ -29,7 +29,7 @@ class Vacancy(models.Model):
     salary_maximum = models.IntegerField(default=0, null=True)
 
     definition = models.TextField(blank=True, null=True)
-    keywords = models.JSONField(blank=True, null=True)
+    keywords = models.JSONField(blank=True, null=True) # The keyword id is saving as a list
     status = models.BooleanField()
     views = models.IntegerField(default=0)
     slug = models.SlugField(null=True)

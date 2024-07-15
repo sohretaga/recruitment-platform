@@ -132,9 +132,14 @@ locations = models.ParameterLocation.objects.all()
 employemnt_types = models.ParameterEmployeeType.objects.all()
 ftes = models.ParameterFTE.objects.all()
 experiences = models.ParameterWorkExperience.objects.all()
-keywords = models.ParameterKeyword.objects.all().values_list('name', flat=True)
-random_step =  [1,2,3,4,5]
+random_step = [1,2,3,4,5]
 superuser = CustomUser.objects.get(is_superuser=True)
+keywords = []
+
+for key_id in models.ParameterKeyword.objects.all().values_list('id', flat=True):
+    keywords.append(str(key_id))
+
+print(keywords)
 
 def run(limit):
     for i in range(1, limit+1):

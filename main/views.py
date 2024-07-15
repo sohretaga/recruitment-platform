@@ -3,11 +3,10 @@ from django.shortcuts import render
 from job.utils import fetch_vacancies
 from user.models import Employer
 from job.models import Vacancy
-from recruitment_cp.models import ParameterFAQ
+from recruitment_cp.models import ParameterFAQ, ParameterKeyword
 from main.models import FAQ
 from blog.models import Blog
-
-import math
+from .utils import get_vacancy_in_sublists
 
 # Create your views here.
 
@@ -16,32 +15,19 @@ def index(request):
     company_slider = Employer.objects.filter(slider=True, user__profile_photo__isnull=False).exclude(user__profile_photo='')
     today_releases = Vacancy.objects.all().order_by('?')[:6]
     quick_career_tips = Blog.objects.filter(status='published', quick_career_tip=True)
-
-    def get_objects_in_sublists(objects_per_list=5):
-        objects = list(Vacancy.objects.all().order_by('?')[:10])
-        
-        total_objects = len(objects)
-        
-        number_of_lists = math.ceil(total_objects / objects_per_list)
-        
-        sublists = [
-            objects[i * objects_per_list:(i + 1) * objects_per_list]
-            for i in range(number_of_lists)
-        ]
-    
-        return sublists
-    
+    featured_slider_vacancies = get_vacancy_in_sublists()
+    trending_kewywords = ParameterKeyword.objects.filter(trending=True).values_list('name', flat=True)
     
     context = {
         **vacancies,
         'company_slider': company_slider,
         'today_releases': today_releases,
-        'featured_slider': get_objects_in_sublists(),
-        'quick_career_tips': quick_career_tips
+        'featured_slider': featured_slider_vacancies,
+        'quick_career_tips': quick_career_tips,
+        'trending_kewywords': trending_kewywords
     }
 
     return render(request, 'main/index.html', context)
-
 
 def contact(request):
     if request.POST:
