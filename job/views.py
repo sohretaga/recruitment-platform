@@ -4,13 +4,13 @@ from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from django.db.models import F, Value
+from django.db.models import Q, F, Value
 from django.db.models.functions import Concat
 from django.core.exceptions import ObjectDoesNotExist
 from datetime import timedelta
 
 from job.models import Vacancy, Bookmark, Apply, EmployerAction, CandidateAction
-from job.utils import vacancy_with_related_info
+from job.utils import vacancy_with_related_info, get_vacancies_context
 from recruitment_cp.utils import is_ajax
 from .utils import fetch_vacancies
 from recruitment_cp.models import ParameterKeyword
@@ -164,75 +164,57 @@ def bookmarks(request):
 def ajax_filter_vacancies(request):
     if is_ajax:
         data = json.loads(request.body.decode('utf-8'))
-        salary_range_lower:str|None = data.get('salary_range_lower')
-        salary_range_upper:str|None = data.get('salary_range_upper')
-        work_experiences:str|None = data.get('work_experiences')
-        employment_type:str|None = data.get('employment_type')
-        sector:str|None = data.get('sector')
-        department:str|None = data.get('department')
-        work_preference:str|None = data.get('work_preference')
-        date = data.get('date_posted')
         params = {'status': True}
 
-        if salary_range_lower:
+        if salary_range_lower := data.get('salary_range_lower'):
             params.update({'salary__gte': salary_range_lower})
         
-        if salary_range_upper:
+        if salary_range_upper := data.get('salary_range_upper'):
             params.update({'salary__lte': salary_range_upper})
 
-        if work_experiences:
+        if work_experiences := data.get('work_experiences'):
             params.update({'work_experience__name__in': work_experiences})
         
-        if employment_type:
-            params.update({'employment_type__name__in':employment_type})    
+        if employment_type := data.get('employment_type'):
+            params.update({'employment_type__name__in': employment_type})    
 
-        if sector:
+        if sector := data.get('sector'):
             params.update({'employer__sector': sector})
 
-        if department:
+        if department := data.get('department'):
             params.update({'department__name__in': department})
 
-        if work_preference:
+        if work_preference := data.get('work_preference'):
             params.update({'work_preference__name__in': work_preference})
         
-        if date:
+        if date := data.get('date_posted'):
             params.update({'created_date__gte': timezone.now() - timedelta(hours=int(date))})
 
         filtered_vacancies = vacancy_with_related_info(Vacancy.objects.filter(**params))
-        # Set up Paginator
-        paginator = Paginator(filtered_vacancies, 10)
-        current_page_number = request.POST.get('page', 1)
-        vacancies_page = paginator.get_page(current_page_number)
-
-        # Serialize the data
-        vacancies_list = list(vacancies_page.object_list.values())
-        keywords = list(ParameterKeyword.objects.all().values('id', 'name'))
-        bookmarks, applications = list(), list()
-
-        if request.user.is_authenticated:
-            bookmarks = list(request.user.bookmarks.values_list('vacancy__id', flat=True))
-
-        if request.user.is_authenticated and request.user.user_type == 'candidate':
-            applications = list(request.user.candidate.applications.values_list('vacancy__id', flat=True))
-
-        pagination_info = {
-            'has_next': vacancies_page.has_next(),
-            'has_previous': vacancies_page.has_previous(),
-            'num_pages': vacancies_page.paginator.num_pages,
-            'current_page': vacancies_page.number,
-        }
-
-        context = {
-            'vacancies': vacancies_list,
-            'pagination': pagination_info,
-            'bookmarks': bookmarks,
-            'applications': applications,
-            'keywords': keywords
-        }
+        
+        context = get_vacancies_context(request, filtered_vacancies)
 
         return JsonResponse(context, safe=False)
 
     return JsonResponse({'error': 'Invalid request'}, status=400)
+
+
+@require_POST
+def ajax_search_vacancy(request):
+    query = request.POST.get('search_value', '')
+
+    filtered_vacancies = vacancy_with_related_info(
+        Vacancy.objects.filter(
+            Q(position_title__icontains=query) |
+            Q(job_title__name__icontains=query) |
+            Q(employer__user__first_name__icontains=query)
+        )
+    )
+
+    context = get_vacancies_context(request, filtered_vacancies)
+
+    return JsonResponse(context, safe=False)
+
 
 @login_required
 @require_POST

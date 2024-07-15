@@ -84,7 +84,7 @@
                                 <div class="col-lg-4 col-md-6">
                                     <div class="filler-job-form">
                                         <i class="uil uil-location-point"></i>
-                                        <select class="form-select" data-trigger name="choices-single-location" id="choices-single-location" aria-label="Default select example">
+                                        <select class="form-select" data-trigger name="choices-single-location" id="choices-single-location">
                                             {% for country in countries %}
                                                 <option value="{{ country.name }}">{{ country.name }}</option>
                                             {% endfor %}
@@ -94,7 +94,7 @@
                                 <div class="col-lg-4 col-md-6">
                                     <div class="filler-job-form">
                                         <i class="uil uil-clipboard-notes"></i>
-                                        <select class="form-select " data-trigger name="choices-single-categories" id="choices-single-categories" aria-label="Default select example">
+                                        <select class="form-select " data-trigger name="choices-single-categories" id="choices-single-categories">
                                             <option value="4">Accounting</option>
                                             <option value="1">IT & Software</option>
                                             <option value="3">Marketing</option>
@@ -103,7 +103,7 @@
                                     </div>
                                 </div><!--end col-->
                                 <div class="col-lg-4 col-md-6">
-                                    <a href="javascript:void(0)" class="btn btn-primary w-100"><i class="uil uil-filter"></i> Fliter</a>
+                                    <a href="javascript:void(0)" class="btn btn-primary w-100"><i class="uil uil-filter"></i> Filter</a>
                                 </div><!--end col-->
                             </div><!--end row-->
                         </form>
@@ -201,7 +201,7 @@
                             <div class="mb-3">
                                 <div class="filler-job-form position-relative">
                                     <i class="uil uil-briefcase-alt"></i>
-                                    <input type="search" class="form-control filter-job-input-box" id="exampleFormControlInput1" placeholder="Job, company... ">
+                                    <input type="search" class="form-control filter-job-input-box" id="search-vacancy" placeholder="Job, company... ">
                                 </div>
                             </div>
                         </div>

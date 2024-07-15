@@ -343,7 +343,7 @@ departmentSearchInput.addEventListener('input', function() {
     let searchValue = this.value.toLowerCase();
 
     Array.prototype.forEach.call(departmentItems, function(item) {
-        let label = item.parentElement;
+        const label = item.parentElement;
 
         if (label.textContent.toLowerCase().includes(searchValue)) {
             label.style.display = 'block';
@@ -351,4 +351,27 @@ departmentSearchInput.addEventListener('input', function() {
             label.style.display = 'none';
         }
     });
+});
+
+// Search settings
+const searchInput = document.getElementById('search-vacancy');
+searchInput.addEventListener('input', function() {
+    const searchValue = this.value;
+    $.ajax({
+        url: '/ajax/search-vacancy',
+        type: 'POST',
+        data: {search_value: searchValue},
+        success: function(response) {
+            generatePagination(
+                response.pagination
+            );
+
+            listVacancies(
+                response.vacancies,
+                response.bookmarks,
+                response.applications,
+                response.keywords
+            );
+        }
+    })
 });

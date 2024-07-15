@@ -8,6 +8,40 @@ from datetime import timedelta
 from recruitment_cp import models
 from job.models import Vacancy
 
+def get_vacancies_context(request, vacancies) -> dict:
+    # Set up Paginator
+    paginator = Paginator(vacancies, 10)
+    current_page_number = request.POST.get('page', 1)
+    vacancies_page = paginator.get_page(current_page_number)
+
+    # Serialize the data
+    vacancies_list = list(vacancies_page.object_list.values())
+    keywords = list(models.ParameterKeyword.objects.all().values('id', 'name'))
+    bookmarks, applications = list(), list()
+
+    if request.user.is_authenticated:
+        bookmarks = list(request.user.bookmarks.values_list('vacancy__id', flat=True))
+
+    if request.user.is_authenticated and request.user.user_type == 'candidate':
+        applications = list(request.user.candidate.applications.values_list('vacancy__id', flat=True))
+
+    pagination_info = {
+        'has_next': vacancies_page.has_next(),
+        'has_previous': vacancies_page.has_previous(),
+        'num_pages': vacancies_page.paginator.num_pages,
+        'current_page': vacancies_page.number,
+    }
+
+    context = {
+        'vacancies': vacancies_list,
+        'pagination': pagination_info,
+        'bookmarks': bookmarks,
+        'applications': applications,
+        'keywords': keywords
+    }
+
+    return context
+
 def vacancy_with_related_info(objects):
     return objects.select_related(
         'employer', 'career_type', 'career_level', 'location', 'fte', 'job_title',
