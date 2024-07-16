@@ -17,8 +17,9 @@ def get_vacancies_context(request, vacancies) -> dict:
 
     # Serialize the data
     vacancies_list = list(vacancies_page.object_list.values())
-    keywords = list(models.ParameterKeyword.objects.all().values('id', 'name'))
     bookmarks, applications = list(), list()
+    keyword_list = list(models.ParameterKeyword.objects.values('id', 'name'))
+    keywords = {item['id']: item['name'] for item in keyword_list}
 
     if request.user.is_authenticated:
         bookmarks = list(request.user.bookmarks.values_list('vacancy__id', flat=True))
@@ -145,7 +146,8 @@ def fetch_vacancies(request) -> dict:
     work_preferences = models.ParameterWorkPreference.objects.values('id', 'name')
 
     popular_job_titles = Vacancy.objects.values('job_title__name').annotate(count=Count('job_title__name')).order_by('-count')[:6]
-    keywords = models.ParameterKeyword.objects.all()
+    keyword_list = list(models.ParameterKeyword.objects.values('id', 'name'))
+    keywords = {item['id']: item['name'] for item in keyword_list}
 
     return {
         'vacancies': vacancies,

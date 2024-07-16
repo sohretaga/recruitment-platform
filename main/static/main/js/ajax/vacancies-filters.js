@@ -201,11 +201,9 @@ const listVacancies = (vacanciesInfo, bookmarks, applications, keywords) => {
                                 <li class="list-inline-item"><i class="uil uil-tag"></i> Keywords :</li>
                                 ${(() => {
                                     let itemsHtml = '';
-                                    let lastItem = vacancy.keywords.slice(-1)[0];
-                                    keywords.forEach(key => {
-                                        if (vacancy.keywords.includes(String(key.id))){
-                                            itemsHtml += `<li class="list-inline-item"><a href="javascript:void(0)" class="primary-link text-muted">${key.name}${key.id!=lastItem ? ',':''}</a></li>`;
-                                        };
+                                    const lastItem = vacancy.keywords.length-1;
+                                    vacancy.keywords.forEach((key, idx) => {
+                                        itemsHtml += `<li class="list-inline-item"><a href="javascript:void(0)" class="primary-link text-muted">${keywords[parseInt(key)]}${idx===lastItem?'':','}</a></li>`;
                                     });
                                     return itemsHtml;
                                 })()}

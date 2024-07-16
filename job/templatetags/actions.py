@@ -18,3 +18,7 @@ def applications(request, vacancy_id) -> bool:
         apply_exists = Apply.objects.filter(candidate=request.user.candidate, vacancy__id=vacancy_id).exists()
         return apply_exists
     return False
+
+@register.filter
+def get_item(dictionary, key):
+    return dictionary.get(int(key))

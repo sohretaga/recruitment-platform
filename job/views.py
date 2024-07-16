@@ -186,7 +186,7 @@ def ajax_filter_vacancies(request):
 
         if work_preference := data.get('work_preference'):
             params.update({'work_preference__name__in': work_preference})
-        
+
         if date := data.get('date_posted'):
             params.update({'created_date__gte': timezone.now() - timedelta(hours=int(date))})
 

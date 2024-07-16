@@ -47,10 +47,8 @@
                     <div>
                         <ul class="list-inline mb-0">
                             <li class="list-inline-item"><i class="uil uil-tag"></i> Keywords :</li>
-                            {% for keyword in keywords %}
-                            {% if keyword.id|slugify in vacancy.keywords %}
-                            <li class="list-inline-item"><a href="javascript:void(0)" class="primary-link text-muted">{{keyword.name}}{% if not keyword.id|slugify == vacancy.keywords|last %},{% endif %}</a></li>
-                            {% endif %}
+                            {% for key in vacancy.keywords %}
+                            <li class="list-inline-item"><a href="javascript:void(0)" class="primary-link text-muted" onclick="filterByKeyword('{{ key }}')">{{ keywords|get_item:key }}{% if not forloop.last %},{% endif %}</a></li>
                             {% endfor %}
                         </ul>
                     </div>
