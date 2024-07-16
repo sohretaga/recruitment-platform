@@ -120,8 +120,8 @@ def ajax_apply(request):
 
 @is_employer
 def job_postings(request):
-    vacancies = vacancy_with_related_info(request.user.employer.vacancies.all())
-    vacancy_count = request.user.employer.vacancies.count()
+    vacancies = vacancy_with_related_info(request.user.employer.vacancies.filter(delete=False))
+    vacancy_count = request.user.employer.vacancies.filter(delete=False).count()
 
     paginator = Paginator(vacancies, 30)
     current_page = request.GET.get('page')

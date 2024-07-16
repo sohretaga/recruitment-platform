@@ -4,7 +4,7 @@ from recruitment_cp.models import ParameterKeyword
 import math
 
 def get_vacancy_in_sublists(objects_per_list=5) -> list:
-    objects = list(Vacancy.objects.all().order_by('?')[:10])
+    objects = list(Vacancy.objects.filter(status=True, delete=False).order_by('?')[:10])
     
     total_objects = len(objects)
     

@@ -224,11 +224,11 @@ def company_details(request, username):
         }
 
     user = get_object_or_404(CustomUser, **params)
-    vacancies = vacancy_with_related_info(user.employer.vacancies.filter(status=True)[:5])
-    sectors = ParameterSector.objects.all().values('id', 'name')
-    organization_types = ParameterOrganizationType.objects.all().values('id', 'name')
-    organization_ownerships = ParameterOrganizationOwnership.objects.all().values('id', 'name')
-    number_of_employees = ParameterNumberOfEmployee.objects.all().values('id', 'name')
+    vacancies = vacancy_with_related_info(user.employer.vacancies.filter(status=True, delete=False)[:5])
+    sectors = ParameterSector.objects.values('id', 'name')
+    organization_types = ParameterOrganizationType.objects.values('id', 'name')
+    organization_ownerships = ParameterOrganizationOwnership.objects.values('id', 'name')
+    number_of_employees = ParameterNumberOfEmployee.objects.values('id', 'name')
     locations = ParameterCountry.objects.values('id', 'name')
 
     keyword_list = ParameterKeyword.objects.values('id', 'name')

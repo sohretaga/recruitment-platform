@@ -31,6 +31,7 @@ class Vacancy(models.Model):
     definition = models.TextField(blank=True, null=True)
     keywords = models.JSONField(blank=True, null=True) # The keyword id is saving as a list
     status = models.BooleanField()
+    delete = models.BooleanField(default=False)
     views = models.IntegerField(default=0)
     slug = models.SlugField(null=True)
     created_date = models.DateTimeField(auto_now_add=True)

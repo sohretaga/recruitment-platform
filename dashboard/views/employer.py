@@ -9,21 +9,22 @@ from dashboard.decorators import is_employer
 from dashboard.forms import PostVacancyForm, ManageEmployerAccountForm
 from job.models import Vacancy
 from job.utils import vacancy_with_related_info
-from recruitment_cp.models import (Language,
-                                   ParameterCareerType,
-                                   ParameterCareerLevel,
-                                   ParameterLocation,
-                                   ParameterEmployeeType,
-                                   ParameterFTE,
-                                   ParameterJobCatalogue,
-                                   ParameterWorkPreference,
-                                   ParameterDepartment,
-                                   ParameterSector,
-                                   ParameterOrganizationType,
-                                   ParameterOrganizationOwnership,
-                                   ParameterNumberOfEmployee,
-                                   ParameterKeyword
-                                )
+from recruitment_cp.models import (
+    Language,
+    ParameterCareerType,
+    ParameterCareerLevel,
+    ParameterLocation,
+    ParameterEmployeeType,
+    ParameterFTE,
+    ParameterJobCatalogue,
+    ParameterWorkPreference,
+    ParameterDepartment,
+    ParameterSector,
+    ParameterOrganizationType,
+    ParameterOrganizationOwnership,
+    ParameterNumberOfEmployee,
+    ParameterKeyword
+)
 
 
 @is_employer
@@ -38,16 +39,16 @@ def post_vacancy(request):
             instance.save()
             return redirect(reverse('dashboard:all-vacancy'))
 
-    languages = Language.objects.all().values('code', 'name')
-    job_catalogue = ParameterJobCatalogue.objects.all().values('id', 'name')
-    career_types = ParameterCareerType.objects.all().values('id', 'name')
-    career_levels = ParameterCareerLevel.objects.all().values('id', 'name')
-    locations = ParameterLocation.objects.all().values('id', 'name')
-    employment_types = ParameterEmployeeType.objects.all().values('id', 'name')
-    ftes = ParameterFTE.objects.all().values('id', 'name')
-    work_preferences = ParameterWorkPreference.objects.all().values('id', 'name')
-    departments = ParameterDepartment.objects.all().values('id', 'name')
-    keywords = ParameterKeyword.objects.all().values('id', 'name')
+    languages = Language.objects.values('code', 'name')
+    job_catalogue = ParameterJobCatalogue.objects.values('id', 'name')
+    career_types = ParameterCareerType.objects.values('id', 'name')
+    career_levels = ParameterCareerLevel.objects.values('id', 'name')
+    locations = ParameterLocation.objects.values('id', 'name')
+    employment_types = ParameterEmployeeType.objects.values('id', 'name')
+    ftes = ParameterFTE.objects.values('id', 'name')
+    work_preferences = ParameterWorkPreference.objects.values('id', 'name')
+    departments = ParameterDepartment.objects.values('id', 'name')
+    keywords = ParameterKeyword.objects.values('id', 'name')
 
     context = {
         'languages': languages,
@@ -74,7 +75,7 @@ def ajax_all_vacancy(request):
     length:str = int(request.GET.get('length', 10))
     search_value:str = request.GET.get('search[value]', '')
 
-    vacancies = vacancy_with_related_info(request.user.employer.vacancies.all())
+    vacancies = vacancy_with_related_info(request.user.employer.vacancies.filter(delete=False))
 
     if search_value:
         vacancies = vacancies.filter(position_title__icontains=search_value)
@@ -123,16 +124,16 @@ def edit_vacancy(request, id):
             instance.save()
             return redirect(reverse('dashboard:all-vacancy'))
         
-    languages = Language.objects.all().values('code', 'name')
-    job_catalogue = ParameterJobCatalogue.objects.all().values('id', 'name')
-    career_types = ParameterCareerType.objects.all().values('id', 'name')
-    career_levels = ParameterCareerLevel.objects.all().values('id', 'name')
-    locations = ParameterLocation.objects.all().values('id', 'name')
-    employment_types = ParameterEmployeeType.objects.all().values('id', 'name')
-    ftes = ParameterFTE.objects.all().values('id', 'name')
-    work_preferences = ParameterWorkPreference.objects.all().values('id', 'name')
-    departments = ParameterDepartment.objects.all().values('id', 'name')
-    keywords = ParameterKeyword.objects.all().values('id', 'name')
+    languages = Language.objects.values('code', 'name')
+    job_catalogue = ParameterJobCatalogue.objects.values('id', 'name')
+    career_types = ParameterCareerType.objects.values('id', 'name')
+    career_levels = ParameterCareerLevel.objects.values('id', 'name')
+    locations = ParameterLocation.objects.values('id', 'name')
+    employment_types = ParameterEmployeeType.objects.values('id', 'name')
+    ftes = ParameterFTE.objects.values('id', 'name')
+    work_preferences = ParameterWorkPreference.objects.values('id', 'name')
+    departments = ParameterDepartment.objects.values('id', 'name')
+    keywords = ParameterKeyword.objects.values('id', 'name')
 
     context = {
         'vacancy': vacancy,
@@ -176,10 +177,10 @@ def manage_account(request):
 
             return redirect(reverse('dashboard:all-vacancy'))
 
-    sectors = ParameterSector.objects.all().values('name')
-    organization_types = ParameterOrganizationType.objects.all().values('name')
-    organization_ownerships = ParameterOrganizationOwnership.objects.all().values('name')
-    number_of_employees = ParameterNumberOfEmployee.objects.all().values('name')
+    sectors = ParameterSector.objects.values('name')
+    organization_types = ParameterOrganizationType.objects.values('name')
+    organization_ownerships = ParameterOrganizationOwnership.objects.values('name')
+    number_of_employees = ParameterNumberOfEmployee.objects.values('name')
 
     context = {
         'sectors': sectors,
@@ -196,6 +197,6 @@ def ajax_delete_vacancy(request):
     vacancy = Vacancy.objects.filter(id=vacnacy_id)
 
     if request.user == vacancy.first().employer.user:
-        vacancy.delete()
+        vacancy.update(delete=True)
 
     return JsonResponse({'status': 200})
