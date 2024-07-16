@@ -62,6 +62,10 @@ class DataCollector {
         return selectedSectorValue;
     }
 
+    getClickedKeywordId() {
+
+    }
+
     collectData() {
         const data = {
             salary_range_lower: this.getSalaryRangeValue()[0],
@@ -203,7 +207,7 @@ const listVacancies = (vacanciesInfo, bookmarks, applications, keywords) => {
                                     let itemsHtml = '';
                                     const lastItem = vacancy.keywords.length-1;
                                     vacancy.keywords.forEach((key, idx) => {
-                                        itemsHtml += `<li class="list-inline-item"><a href="javascript:void(0)" class="primary-link text-muted">${keywords[parseInt(key)]}${idx===lastItem?'':','}</a></li>`;
+                                        itemsHtml += `<li class="list-inline-item"><a href="javascript:void(0)" class="primary-link text-muted" onclick="filterByKeyword('${key}')">${keywords[parseInt(key)]}${idx===lastItem?'':','}</a></li>`;
                                     });
                                     return itemsHtml;
                                 })()}
@@ -245,6 +249,28 @@ const filterRequest = () => {
         url: `/ajax/filter-vacancies`,
         type: 'POST',
         data: JSON.stringify(collectded_data),
+        success: (response) => {
+            generatePagination(
+                response.pagination
+            );
+
+            listVacancies(
+                response.vacancies,
+                response.bookmarks,
+                response.applications,
+                response.keywords
+            );
+        }
+
+    });
+};
+
+const filterByKeyword = (keywordId) => {
+    setUrl('keyword', keywordId);
+    $.ajax({
+        url: `/ajax/filter-vacancies`,
+        type: 'POST',
+        data: JSON.stringify({keyword:keywordId}),
         success: (response) => {
             generatePagination(
                 response.pagination

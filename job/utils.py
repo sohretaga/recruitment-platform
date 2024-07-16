@@ -73,7 +73,6 @@ def vacancy_with_related_info(objects):
         )
     )
 
-
 def fetch_vacancies(request) -> dict:
     # URL parameters are taken for filtering and used for the same filtering on the following pages.
     params = {'status': True}

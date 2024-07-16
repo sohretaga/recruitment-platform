@@ -190,6 +190,9 @@ def ajax_filter_vacancies(request):
         if date := data.get('date_posted'):
             params.update({'created_date__gte': timezone.now() - timedelta(hours=int(date))})
 
+        if keyword := data.get('keyword'):
+            params.update({'keywords__contains': keyword})
+        
         filtered_vacancies = vacancy_with_related_info(Vacancy.objects.filter(**params))
         
         context = get_vacancies_context(request, filtered_vacancies)
