@@ -39,7 +39,8 @@ def vacancy(request, slug):
         Vacancy.objects.filter(job_title=vacancy.job_title, status=True).exclude(slug=slug)[:5]
     )
 
-    keywords = ParameterKeyword.objects.all()
+    keyword_list = ParameterKeyword.objects.values('id', 'name')
+    keywords = {item['id']: item['name'] for item in keyword_list}
     
     context = {
         'vacancy': vacancy,
