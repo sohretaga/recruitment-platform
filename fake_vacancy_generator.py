@@ -164,3 +164,12 @@ def run(limit):
             status=True
         )
         print(f'Created {i} vacancy...')
+
+def update_keywords():
+    vacancies = Vacancy.objects.all()
+    counnt = 1
+    for vacancy in vacancies:
+        vacancy.keywords = random.sample(set(keywords), random.choice(random_step))
+        vacancy.save()
+        print(f'Updated {counnt} vacancy...')
+        counnt += 1
