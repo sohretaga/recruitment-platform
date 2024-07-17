@@ -21,6 +21,8 @@
 <!-- App Css-->
 <link href="{% static 'main/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
 <!--Custom Css-->
+<link href="{% static 'main/css/vacancy-detail.css' %}" rel="stylesheet" type="text/css" />
+
 {% endblock head %}
 
 {% block content %}
@@ -71,8 +73,10 @@
                 <div class="col-lg-8">
                     <div class="card job-detail overflow-hidden">
                         <div>
-                            <img src="{% static 'main/images/job-detail.jpg' %}" alt="" class="img-fluid">
-                            <div class="job-details-compnay-profile">
+                            {% if vacancy.employer.background_image %}
+                                <img src="{{ vacancy.employer.background_image.url }}" class="background-img" alt="{{ vacancy.company_name }} Background">
+                            {% endif %}
+                            <div class="job-details-compnay-profile {% if not vacancy.employer.background_image %}no-background-img{% endif %}">
                                 {% if vacancy.profile_photo_url %}
                                 <img src="{{ vacancy.profile_photo_url }}" alt="{{ vacancy.company_name }}" class="img-fluid rounded-3 rounded-3" style="width: 55px;">
                                 {% else %}

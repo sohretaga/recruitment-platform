@@ -26,6 +26,7 @@ class Employer(models.Model):
     The "first_name" and "last_name" fields are taken from the "user" field.
     """
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='employer', blank=True, null=True) # blank=True, null=True will delete
+    background_image = models.ImageField(upload_to='background-images/', null=True, blank=True)
     no = models.IntegerField(blank=True, null=True)
     sector = models.CharField(max_length=200, blank=True, null=True)
     organization_type = models.CharField(max_length=200, blank=True, null=True)
