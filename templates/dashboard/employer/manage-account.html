@@ -60,14 +60,26 @@
                         {% endif %}
                         <form novalidate method="post" enctype="multipart/form-data" class="needs-validation">
                             {% csrf_token %}
-                            <div class="text-center">
-                                <div class="mb-2 profile-user">
-                                <label for="profile-img-file-input">
-                                    <img src="{% if user.profile_photo %}{{ user.profile_photo.url }}{% else %}{% static 'main/images/user/img-02.jpg' %}{% endif %}" class="rounded-circle img-thumbnail profile-img" id="profile-img" alt="">
-                                    <input id="profile-img-file-input" type="file" class="profile-img-file-input" name="profile_photo" accept="image/*" onchange="previewImg(this)">     
-                                    <span class="icon-center"><i class="ri-edit-line"></i></span>
-                                    <span class="profile-photo-text">Company Logo</span>
-                                </label>
+                            <div class="row">
+                                <div class="text-center col-lg-6">
+                                    <div class="mb-2 profile-user">
+                                    <label for="profile-img-file-input">
+                                        <img src="{% if user.profile_photo %}{{ user.profile_photo.url }}{% else %}{% static 'main/images/user/img-02.jpg' %}{% endif %}" class="rounded-circle img-thumbnail profile-img" id="profile-img" alt="">
+                                        <input id="profile-img-file-input" type="file" class="profile-img-file-input" name="profile_photo" accept="image/*" onchange="previewImg(this)">     
+                                        <span class="icon-center"><i class="ri-edit-line"></i></span>
+                                        <span class="profile-photo-text">Company Logo</span>
+                                    </label>
+                                    </div>
+                                </div>
+                                <div class="text-center col-lg-6">
+                                    <div class="mb-2 profile-user">
+                                    <label for="background-img-file-input">
+                                        <img src="{% if user.employer.background_image %}{{ user.employer.background_image.url }}{% else %}{% static 'main/images/user/img-02.jpg' %}{% endif %}" class="img-thumbnail profile-img" id="background-img" alt="" style="width: 300px;">
+                                        <input id="background-img-file-input" type="file" class="profile-img-file-input" name="background_image" accept="image/*" onchange="previewImg(this)">     
+                                        <span class="icon-center"><i class="ri-edit-line"></i></span>
+                                        <span class="profile-photo-text">Background Image</span>
+                                    </label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
