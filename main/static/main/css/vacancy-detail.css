@@ -3,10 +3,6 @@
     height: 350px;
 }
 
-.no-background-img {
-    margin-top: 25px;
-}
-
 @media only screen and (max-width: 600px) {
     .background-img {
         width: 100%;

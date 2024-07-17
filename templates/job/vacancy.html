@@ -73,7 +73,7 @@
                 <div class="col-lg-8">
                     <div class="card job-detail overflow-hidden">
                         <div>
-                            {% if vacancy.employer.background_images %}
+                            {% if vacancy.employer.background_image %}
                                 <img src="{{ vacancy.employer.background_image.url }}" class="background-img" alt="{{ vacancy.company_name }} Background">
                             {% else %}
                                 <img src="{% static 'main/images/job-detail.jpg' %}" class="background-img" alt="{{ vacancy.company_name }} Background">
