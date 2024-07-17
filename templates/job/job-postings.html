@@ -61,20 +61,41 @@
     <section class="section">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-lg-8">
+                <div class="col-lg-4">
                     <div class="mb-4 mb-lg-0">
                         <h6 class="mb-0"> <span id="vacancy-count">{{ vacancy_count }}</span> Vacancies </h6>
                     </div>
                 </div><!--end col-->
-                <div class="col-lg-4">
+                <div class="col-lg-8">
                     <div class="candidate-list-widgets">
                         <div class="row">
-                            <div class="col-lg-12">
+                            <div class="col-lg-4">
                                 <div class="selection-widget">
                                     <select class="form-select" data-trigger name="filter-orderby" id="filter-orderby">
                                         <option value="active">Active Vacancies</option>
                                         <option value="deactivate">Deactivated Vacancies</option>
                                         <option value="delete">Deleted Vacancies</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="selection-widget">
+                                    <select class="form-select" data-trigger name="choices-single-filter-orderby" id="choices-single-filter-orderby" aria-label="Default select example">
+                                        <option value="df">Default</option>
+                                        <option value="ne">Newest</option>
+                                        <option value="od">Oldest</option>
+                                        <option value="rd">Random</option>
+                                    </select>
+                                </div>
+                            </div><!--end col-->
+                            <div class="col-lg-4">
+                                <div class="selection-widget mt-2 mt-lg-0">
+                                    <select class="form-select" data-trigger name="choices-candidate-page" id="choices-candidate-page" aria-label="Default select example">
+                                        <option value="df">All</option>
+                                        <option value="ne">Last 2 Month</option>
+                                        <option value="ne">Last 6 Month</option>
+                                        <option value="ne">Last 12 Month</option>
+                                        <option value="ne">Last 2 Year</option>
                                     </select>
                                 </div>
                             </div><!--end col-->

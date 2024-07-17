@@ -3,6 +3,8 @@ const deleteVacancyModal = new bootstrap.Modal(document.getElementById('deleteVa
 const vacancyCount = document.getElementById('vacancy-count');
 const url = new URL(window.location);
 
+new Choices('#choices-single-filter-orderby'), new Choices('#choices-candidate-page')
+
 const filterOrderby = new Choices('#filter-orderby', {
     shouldSort: false,
     shouldSortItems: false,
@@ -128,15 +130,15 @@ const listVacancies = (vacanciesInfo) => {
                     <div class="col-lg-4 align-self-center">
                         <ul class="list-inline mt-3 mb-0">
                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top">
-                                <a href="{% url 'job:applicants' vacancy.slug %}" class="btn btn-primary ${vacancy.application_count ? '':'disabled'}">Applicants (${vacancy.application_count}) <i class="uil uil-folder-open"></i></a>
+                                <a href="/vacancy/applicants/${vacancy.slug}" class="btn btn-primary ${vacancy.application_count ? '':'disabled'}">Applicants (${vacancy.application_count}) <i class="uil uil-folder-open"></i></a>
                             </li>
                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
-                                <a href="{% url 'dashboard:edit-vacancy' vacancy.id %}" class="avatar-sm bg-soft-success d-inline-block text-center rounded-circle fs-18">
+                                <a href="/dashboard/vacancy/edit/${vacancy.id}" class="avatar-sm bg-soft-success d-inline-block text-center rounded-circle fs-18">
                                     <i class="uil uil-edit"></i>
                                 </a>
                             </li>
                             <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
-                                <a href="javascript:void(0)" class="avatar-sm bg-soft-danger d-inline-block text-center rounded-circle fs-18" onclick="deleteRequest('{{ vacancy.id }}')"><i class="uil uil-trash-alt"></i>
+                                <a href="javascript:void(0)" class="avatar-sm bg-soft-danger d-inline-block text-center rounded-circle fs-18" onclick="deleteRequest('${vacancy.id}')"><i class="uil uil-trash-alt"></i>
                                 </a>
                             </li>
                         </ul>
