@@ -244,6 +244,13 @@
                                     Settings
                                 </button>
                             </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="education-tab" data-bs-toggle="pill"
+                                    data-bs-target="#education" type="button" role="tab" aria-controls="education"
+                                    aria-selected="false">
+                                    Education
+                                </button>
+                            </li>
                         </ul>
                         <!--end profile-content-nav-->
                         {% endif %}
@@ -619,6 +626,36 @@
                                     </form>
                                     <!--end form-->
                                 </div>
+                                <div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="education-tab">
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        <div id="educations">
+                                            <div class="d-flex justify-content-between mb-5">
+                                                <div class="ms-3 w-100">
+                                                    <div class="d-flex">
+                                                        <input name="school" type="text" class="form-control mb-2" placeholder="School">
+                                                        <button class="btn btn-danger fs-17 mb-2 ms-2" onclick="deleteImage(this)"><i class="uil uil-trash-alt"></i></button>
+                                                    </div>
+                                                    <input name="speciality" type="text" class="form-control mb-2" placeholder="Speciality">
+                                                    <div class="d-flex mb-2">
+                                                        <input type="text" class="form-control" data-provide="datepicker" data-date-format="M, yyyy" id=""
+                                                            name="start_date" placeholder="Started date">
+
+                                                        <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="M, yyyy" id=""
+                                                            name="end_date" placeholder="End date">
+                                                    </div>
+                                                    <textarea name="description" class="form-control" rows="3" placeholder="Description"></textarea>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+    
+                                        <div class="w-100 d-flex justify-content-between">
+                                            <button class="btn btn-success" type="submit">Save <i class="uil uil-image-v"></i></button>
+                                            <button class="btn btn-primary" type="button" onclick="addImage()">Add Image <i class="uil uil-plus-circle"></i></button>
+                                        </div>
+                                    </form>
+                                </div>
                                 {% endif %}
                                 <!--end tab-pane-->
                             </div><!--end card-body-->
@@ -655,5 +692,5 @@
 <script src="{% static 'main/js/app.js' %}"></script>
 
 <!-- Custom Js -->
-<script src="{% static 'main/js/ajax/edit-account.js' %}"></script>
+<script src="{% static 'main/js/ajax/edit-candidate-account.js' %}"></script>
 {% endblock script %}
