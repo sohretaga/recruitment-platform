@@ -169,7 +169,7 @@ const listVacancies = (vacanciesInfo, bookmarks, applications, keywords) => {
                 <div class="row">
                     <div class="col-lg-1">
                         <a href="/company/${vacancy.employer_username}"><img src="${vacancy.profile_photo_url ? `${vacancy.profile_photo_url}`:'/static/main/images/featured-job/default-company-img.jpeg'}" alt="${vacancy.company_name}" class="img-fluid rounded-3"></a>
-                    </div><!--end col-->
+                    </div>
                     <div class="col-lg-10">
                         <div class="mt-3 mt-lg-0">
                             <h5 class="fs-17 mb-1"><a href="/vacancy/${vacancy.slug}" class="text-dark">${vacancy.position_title}</a> <small class="text-muted fw-normal">(${vacancy.work_experience_name})</small></h5>
@@ -190,7 +190,7 @@ const listVacancies = (vacanciesInfo, bookmarks, applications, keywords) => {
                                 <span class="badge bg-soft-info mt-1">Private</span>
                             </div>
                         </div>
-                    </div><!--end col-->
+                    </div>
                 </div><!--end row-->
                 <div class="favorite-icon" style="cursor: pointer;" onclick="addBookmark(${vacancy.id})">
                     <a href="javascript:void(0);"><i class="uil uil-heart-alt fs-18"></i></a>
@@ -215,7 +215,6 @@ const listVacancies = (vacanciesInfo, bookmarks, applications, keywords) => {
                         </div>
                     `:''}
                     </div>
-                    <!--end col-->
                     <div class="col-md-3">
                         <div class="text-md-end">
                         ${(() => {
@@ -232,9 +231,7 @@ const listVacancies = (vacanciesInfo, bookmarks, applications, keywords) => {
                         })()}
                         </div>
                     </div>
-                    <!--end col-->
                 </div>
-                <!--end row-->
             </div>
         </div>`
     };

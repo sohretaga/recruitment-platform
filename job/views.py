@@ -4,7 +4,7 @@ from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q, F, Value
+from django.db.models import Q, F, Value, Count
 from django.db.models.functions import Concat
 from django.core.exceptions import ObjectDoesNotExist
 from datetime import timedelta
@@ -120,8 +120,21 @@ def ajax_apply(request):
 
 @is_employer
 def job_postings(request):
-    vacancies = vacancy_with_related_info(request.user.employer.vacancies.filter(delete=False))
-    vacancy_count = request.user.employer.vacancies.filter(delete=False).count()
+    filter_orderby = request.GET.get('orderby')
+    url:str = '' # Creating URL for Pagination
+    params = {'status': True, 'delete': False} # Default Active selected
+    
+    if filter_orderby:
+        url += f'orderby={filter_orderby}'
+
+        if filter_orderby == 'deactivate':
+            params.update({'status': False, 'delete': False})
+
+        elif filter_orderby == 'delete':
+            params.update({'delete': True})
+
+    vacancies = vacancy_with_related_info(request.user.employer.vacancies.filter(**params))
+    vacancy_count = vacancies.count()
 
     paginator = Paginator(vacancies, 30)
     current_page = request.GET.get('page')
@@ -129,10 +142,53 @@ def job_postings(request):
 
     context = {
         'vacancies': vacancies,
-        'vacancy_count': vacancy_count
+        'vacancy_count': vacancy_count,
+        'url': url
     }
 
     return render(request, 'job/job-postings.html', context)
+
+@require_POST
+def ajax_filter_job_postings(request):
+    filter_orderby = request.POST.get('filter_orderby')
+    params = {}
+
+    if filter_orderby:
+        if filter_orderby == 'active':
+            params.update({'status': True, 'delete': False})
+
+        elif filter_orderby == 'deactivate':
+            params.update({'status': False, 'delete': False})
+
+        elif filter_orderby == 'delete':
+            params.update({'delete': True})
+
+    vacancies = vacancy_with_related_info(request.user.employer.vacancies.filter(**params)).annotate(
+        application_count = Count('applications')
+    ).order_by('id')
+    vacancy_count = vacancies.count()
+
+    paginator = Paginator(vacancies, 30)
+    current_page_number = request.POST.get('page', 1)
+    vacancies_page = paginator.get_page(current_page_number)
+
+    # serialize data
+    vacancies_list = list(vacancies_page.object_list.values())
+
+    pagination_info = {
+        'has_next': vacancies_page.has_next(),
+        'has_previous': vacancies_page.has_previous(),
+        'num_pages': vacancies_page.paginator.num_pages,
+        'current_page': vacancies_page.number,
+    }
+
+    context = {
+        'vacancies': vacancies_list,
+        'pagination': pagination_info,
+        'vacancy_count': vacancy_count
+    }
+
+    return JsonResponse(context, safe=False)
 
 @login_required
 def bookmarks(request):

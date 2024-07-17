@@ -19,4 +19,5 @@ urlpatterns = [
     path('ajax/send-employer-action', views.ajax_send_employer_action, name='ajax-send-employer-action'),
     path('ajax/send-candidate-action', views.ajax_send_candidate_action, name='ajax-send-candidate-action'),
     path('ajax/search-vacancy', views.ajax_search_vacancy, name='ajax-search-vacancy'),
+    path('ajax/ajax-filter-job-postings', views.ajax_filter_job_postings, name='ajax-filter-job-postings'),
 ]

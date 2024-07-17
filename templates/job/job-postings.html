@@ -63,30 +63,18 @@
             <div class="row align-items-center">
                 <div class="col-lg-8">
                     <div class="mb-4 mb-lg-0">
-                        <h6 class="mb-0"> {{ vacancy_count }} Posted Vacancies </h6>
+                        <h6 class="mb-0"> <span id="vacancy-count">{{ vacancy_count }}</span> Vacancies </h6>
                     </div>
                 </div><!--end col-->
                 <div class="col-lg-4">
                     <div class="candidate-list-widgets">
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 <div class="selection-widget">
-                                    <select class="form-select" data-trigger name="choices-single-filter-orderby" id="choices-single-filter-orderby">
-                                        <option value="df">Default</option>
-                                        <option value="ne">Newest</option>
-                                        <option value="od">Oldest</option>
-                                        <option value="rd">Random</option>
-                                    </select>
-                                </div>
-                            </div><!--end col-->
-                            <div class="col-lg-6">
-                                <div class="selection-widget mt-2 mt-lg-0">
-                                    <select class="form-select" data-trigger name="choices-candidate-page" id="choices-candidate-page">
-                                        <option value="df">All</option>
-                                        <option value="ne">Last 2 Month</option>
-                                        <option value="ne">Last 6 Month</option>
-                                        <option value="ne">Last 12 Month</option>
-                                        <option value="ne">Last 2 Year</option>
+                                    <select class="form-select" data-trigger name="filter-orderby" id="filter-orderby">
+                                        <option value="active">Active Vacancies</option>
+                                        <option value="deactivate">Deactivated Vacancies</option>
+                                        <option value="delete">Deleted Vacancies</option>
                                     </select>
                                 </div>
                             </div><!--end col-->
@@ -95,7 +83,7 @@
                 </div><!--end col-->
             </div><!--end row-->
             <div class="row">
-                <div class="col-lg-12">
+                <div id="job-list-container" class="col-lg-12">
                     {% for vacancy in vacancies %}
                     <div id="vacancy-{{ vacancy.id }}" class="job-box card mt-4">
                         <div class="card-body p-4">
