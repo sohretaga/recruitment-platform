@@ -6,21 +6,6 @@ selects.forEach(select => {
     new Choices(`#${select.id}`)
 });
 
-
-// Collects the values ​​selected from the Language selection into an input and prepares it for recording.
-const languages = document.getElementById('languages');
-const languageValuesInput = document.getElementById('langauge-values');
-if (languages) {
-    languages.addEventListener('change', function() {
-        let values = new Array();
-        languages.querySelectorAll('option').forEach((option) => {
-            values.push(option.value);
-        });
-        languageValuesInput.value = values;
-    });
-};
-// End
-
 const previewImg = (input) => {
     if (input.files && input.files[0]) {
         var reader = new FileReader();

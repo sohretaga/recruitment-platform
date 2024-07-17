@@ -631,10 +631,11 @@
                                         {% csrf_token %}
                                         <div id="educations">
                                             <div class="d-flex justify-content-between mb-5">
-                                                <div class="ms-3 w-100">
+                                                <div class="w-100">
+                                                    <input type="hidden" name="education-id" value="">
                                                     <div class="d-flex">
                                                         <input name="school" type="text" class="form-control mb-2" placeholder="School">
-                                                        <button class="btn btn-danger fs-17 mb-2 ms-2" onclick="deleteImage(this)"><i class="uil uil-trash-alt"></i></button>
+                                                        <button class="btn btn-danger fs-17 mb-2 ms-2" onclick="deleteEducation(this)"><i class="uil uil-trash-alt"></i></button>
                                                     </div>
                                                     <input name="speciality" type="text" class="form-control mb-2" placeholder="Speciality">
                                                     <div class="d-flex mb-2">
@@ -645,14 +646,13 @@
                                                             name="end_date" placeholder="End date">
                                                     </div>
                                                     <textarea name="description" class="form-control" rows="3" placeholder="Description"></textarea>
-                                                    
                                                 </div>
                                             </div>
                                         </div>
     
                                         <div class="w-100 d-flex justify-content-between">
-                                            <button class="btn btn-success" type="submit">Save <i class="uil uil-image-v"></i></button>
-                                            <button class="btn btn-primary" type="button" onclick="addImage()">Add Image <i class="uil uil-plus-circle"></i></button>
+                                            <button class="btn btn-success" type="submit">Save <i class="uil uil-save"></i></button>
+                                            <button class="btn btn-primary" type="button" onclick="addEducation()">Add Education <i class="uil uil-plus-circle"></i></button>
                                         </div>
                                     </form>
                                 </div>
