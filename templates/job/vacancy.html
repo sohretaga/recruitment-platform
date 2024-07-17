@@ -73,14 +73,16 @@
                 <div class="col-lg-8">
                     <div class="card job-detail overflow-hidden">
                         <div>
-                            {% if vacancy.employer.background_image %}
+                            {% if vacancy.employer.background_images %}
                                 <img src="{{ vacancy.employer.background_image.url }}" class="background-img" alt="{{ vacancy.company_name }} Background">
+                            {% else %}
+                                <img src="{% static 'main/images/job-detail.jpg' %}" class="background-img" alt="{{ vacancy.company_name }} Background">
                             {% endif %}
-                            <div class="job-details-compnay-profile {% if not vacancy.employer.background_image %}no-background-img{% endif %}">
+                            <div class="job-details-compnay-profile">
                                 {% if vacancy.profile_photo_url %}
-                                <img src="{{ vacancy.profile_photo_url }}" alt="{{ vacancy.company_name }}" class="img-fluid rounded-3 rounded-3" style="width: 55px;">
+                                <img src="{{ vacancy.profile_photo_url }}" alt="{{ vacancy.company_name }}" class="img-fluid rounded-3 rounded-3" style="width: 55px; height: 55px;">
                                 {% else %}
-                                <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="{{ vacancy.company_name }}" class="img-fluid rounded-3 rounded-3" style="width: 55px;">
+                                <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="{{ vacancy.company_name }}" class="img-fluid rounded-3 rounded-3" style="width: 55px; height: 55px;">
                                 {% endif %}
                             </div>
                         </div>
