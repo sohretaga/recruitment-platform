@@ -263,33 +263,21 @@
                                         <p class="text-muted mb-0">{{ candidate.user.about }}</p>
                                     </div>
                                     {% endif %}
+                                    {% if educations %}
                                     <div class="candidate-education-details mt-4 pt-3">
                                         <h6 class="fs-17 fw-bold mb-0">Education</h6>
+                                        {% for edu in educations %}
                                         <div class="candidate-education-content mt-4 d-flex">
                                             <div class="circle flex-shrink-0 bg-soft-primary"> B </div>
                                             <div class="ms-4">
-                                                <h6 class="fs-16 mb-1">BCA - Bachelor of Computer Applications</h6>
-                                                <p class="mb-2 text-muted">International University - (2004 - 2010)</p>
-                                                <p class="text-muted">There are many variations of passages of available, but the majority alteration in some form. As a highly skilled and successfull product development and design specialist with more than 4 Years of My experience.</p>
+                                                <h6 class="fs-16 mb-1">{{ edu.speciality }}</h6>
+                                                <p class="mb-2 text-muted">{{ edu.school }} - ({{ edu.start_date }} - {{ edu.end_date }})</p>
+                                                <p class="text-muted">{{ edu.description }}</p>
                                             </div>
                                         </div>
-                                        <div class="candidate-education-content mt-4 d-flex">
-                                            <div class="circle flex-shrink-0 bg-soft-primary"> M </div>
-                                            <div class="ms-4">
-                                                <h6 class="fs-16 mb-1">MCA - Master of Computer Application</h6>
-                                                <p class="mb-2 text-muted">International University - (2010 - 2012)</p>
-                                                <p class="text-muted">There are many variations of passages of available, but the majority alteration in some form. As a highly skilled and successfull product development and design specialist with more than 4 Years of My experience.</p>
-                                            </div>
-                                        </div> 
-                                        <div class="candidate-education-content mt-4 d-flex">
-                                            <div class="circle flex-shrink-0 bg-soft-primary"> D </div>
-                                            <div class="ms-4">
-                                                <h6 class="fs-16 mb-1">Design Communication Visual</h6>
-                                                <p class="text-muted mb-2">International University - (2012-2015)</p>
-                                                <p class="text-muted">There are many variations of passages of available, but the majority alteration in some form. As a highly skilled and successfull product development and design specialist with more than 4 Years of My experience.</p>
-                                            </div>
-                                        </div>
+                                        {% endfor %}
                                     </div><!--end candidate-education-details-->
+                                    {% endif %}
                                     <div class="candidate-education-details mt-4 pt-3">
                                         <h6 class="fs-17 fw-bold mb-0">Experience</h6>
                                         <div class="candidate-education-content mt-4 d-flex">
@@ -627,27 +615,50 @@
                                     <!--end form-->
                                 </div>
                                 <div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="education-tab">
-                                    <form method="post">
+                                    <form method="post" action="{% url 'user:ajax-manage-education' %}">
                                         {% csrf_token %}
                                         <div id="educations">
-                                            <div class="d-flex justify-content-between mb-5">
+                                            {% if educations %}
+                                            {% for edu in educations %}
+                                            <div class="d-flex justify-content-between mb-5" id="{{ edu.id }}">
                                                 <div class="w-100">
-                                                    <input type="hidden" name="education-id" value="">
+                                                    <input type="hidden" name="education_id" value="{{ edu.id }}">
                                                     <div class="d-flex">
-                                                        <input name="school" type="text" class="form-control mb-2" placeholder="School">
+                                                        <input name="school" type="text" class="form-control mb-2" placeholder="School" required value="{{ edu.school }}">
                                                         <button class="btn btn-danger fs-17 mb-2 ms-2" onclick="deleteEducation(this)"><i class="uil uil-trash-alt"></i></button>
                                                     </div>
-                                                    <input name="speciality" type="text" class="form-control mb-2" placeholder="Speciality">
+                                                    <input name="speciality" type="text" class="form-control mb-2" placeholder="Speciality" required value="{{ edu.speciality }}">
                                                     <div class="d-flex mb-2">
-                                                        <input type="text" class="form-control" data-provide="datepicker" data-date-format="M, yyyy" id=""
-                                                            name="start_date" placeholder="Started date">
+                                                        <input type="text" class="form-control" data-provide="datepicker" data-date-format="mm, yyyy" id=""
+                                                            name="start_date" placeholder="Start date" required value="{{ edu.start_date }}">
 
-                                                        <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="M, yyyy" id=""
-                                                            name="end_date" placeholder="End date">
+                                                        <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="mm, yyyy" id=""
+                                                            name="end_date" placeholder="End date" required value="{{ edu.end_date }}">
                                                     </div>
-                                                    <textarea name="description" class="form-control" rows="3" placeholder="Description"></textarea>
+                                                    <textarea name="description" class="form-control" rows="3" placeholder="Description" required>{{ edu.description }}</textarea>
                                                 </div>
                                             </div>
+                                            {% endfor %}
+                                            {% else %}
+                                            <div class="d-flex justify-content-between mb-5">
+                                                <div class="w-100">
+                                                    <input type="hidden" name="education_id" value="">
+                                                    <div class="d-flex">
+                                                        <input name="school" type="text" class="form-control mb-2" placeholder="School" required>
+                                                        <button class="btn btn-danger fs-17 mb-2 ms-2" onclick="deleteEducation(this)"><i class="uil uil-trash-alt"></i></button>
+                                                    </div>
+                                                    <input name="speciality" type="text" class="form-control mb-2" placeholder="Speciality" required>
+                                                    <div class="d-flex mb-2">
+                                                        <input type="text" class="form-control" data-provide="datepicker" data-date-format="mm, yyyy" id=""
+                                                            name="start_date" placeholder="Start date" required>
+
+                                                        <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="mm, yyyy" id=""
+                                                            name="end_date" placeholder="End date" required>
+                                                    </div>
+                                                    <textarea name="description" class="form-control" rows="3" placeholder="Description" required></textarea>
+                                                </div>
+                                            </div>
+                                            {% endif %}
                                         </div>
     
                                         <div class="col-lg-3">

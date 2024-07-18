@@ -44,7 +44,7 @@ const deleteEducation = (button) => {
 
     if (education_id) {
         $.ajax({
-            url: '/ajax-delete-education',
+            url: '/ajax/delete-education',
             type: 'POST',
             data: {education_id: education_id},
         });
@@ -57,20 +57,20 @@ const addEducation = () => {
     educations.insertAdjacentHTML('beforeend', `
     <div class="d-flex justify-content-between mb-5">
         <div class="w-100">
-            <input type="hidden" name="education-id" value="">
+            <input type="hidden" name="education_id" value="">
             <div class="d-flex">
-                <input name="school" type="text" class="form-control mb-2" placeholder="School">
+                <input name="school" type="text" class="form-control mb-2" placeholder="School" required>
                 <button class="btn btn-danger fs-17 mb-2 ms-2" onclick="deleteEducation(this)"><i class="uil uil-trash-alt"></i></button>
             </div>
-            <input name="speciality" type="text" class="form-control mb-2" placeholder="Speciality">
+            <input name="speciality" type="text" class="form-control mb-2" placeholder="Speciality" required>
             <div class="d-flex mb-2">
-                <input type="text" class="form-control" data-provide="datepicker" data-date-format="M, yyyy" id=""
-                    name="start_date" placeholder="Started date">
+                <input type="text" class="form-control" data-provide="datepicker" data-date-format="mm, yyyy"
+                    name="start_date" placeholder="Start date" required>
 
-                <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="M, yyyy" id=""
-                    name="end_date" placeholder="End date">
+                <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="mm, yyyy"
+                    name="end_date" placeholder="End date" required>
             </div>
-            <textarea name="description" class="form-control" rows="3" placeholder="Description"></textarea>
+            <textarea name="description" class="form-control" rows="3" placeholder="Description" required></textarea>
         </div>
     </div>`);
 };

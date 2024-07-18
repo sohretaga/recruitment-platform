@@ -11,7 +11,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from . import forms
 from .models import Gallery, GalleryImage
 from .decorators import logout_required
-from user.models import CustomUser, Candidate, Employer
+from user.models import CustomUser, Candidate, Employer, Education
 from job.utils import vacancy_with_related_info
 from dashboard.forms import ManageEmployerAccountForm, ManageCandidateAccountForm
 from recruitment_cp.models import(
@@ -160,7 +160,8 @@ def candidate_details(request, username):
     context = {
         'candidate': user.candidate,
         'citizenships': citizenships,
-        'competencies': competencies
+        'competencies': competencies,
+        'educations': user.candidate.educations.all()
     }
 
     return render(request, 'user/candidate-details.html', context)
@@ -292,5 +293,57 @@ def delete_gallery_image(request):
 
     if image_exists:
         GalleryImage.objects.filter(id=image_id, gallery__user=request.user).delete()
+
+    return JsonResponse({'status': 200})
+
+@login_required
+@require_POST
+def manage_education(request):
+    education_ids = request.POST.getlist('education_id')
+    schools = request.POST.getlist('school')
+    specialties = request.POST.getlist('speciality')
+    start_dates = request.POST.getlist('start_date')
+    end_dates = request.POST.getlist('end_date')
+    descriptions = request.POST.getlist('description')
+
+    for edu_id, school, speciality, start_date, end_date, description in zip(
+        education_ids,
+        schools,
+        specialties,
+        start_dates,
+        end_dates,
+        descriptions
+    ):
+        if edu_id:
+            education_exists = Education.objects.filter(id=edu_id).exists()
+            if education_exists:
+                Education.objects.filter(id=edu_id).update(
+                    school=school,
+                    speciality=speciality,
+                    start_date=start_date,
+                    end_date=end_date,
+                    description=description
+                )
+        else:
+            Education.objects.create(
+                candidate=request.user.candidate,
+                school=school,
+                speciality=speciality,
+                start_date=start_date,
+                end_date=end_date,
+                description=description
+            )        
+    
+    return redirect(reverse('user:candidate', args=[request.user]))
+    
+
+@login_required
+@require_POST
+def delete_education(request):
+    education_id = request.POST.get('education_id', 0)
+    education_exists = Education.objects.filter(id=education_id, candidate=request.user.candidate).exists()
+
+    if education_exists:
+        Education.objects.filter(id=education_id, candidate=request.user.candidate).delete()
 
     return JsonResponse({'status': 200})

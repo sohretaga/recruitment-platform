@@ -17,5 +17,8 @@ urlpatterns = [
     path('candidate/<str:username>', views.candidate_details, name='candidate'),
 
     path('company-list', views.company_list, name='company-list'),
-    path('company/<str:username>', views.company_details, name='company')
+    path('company/<str:username>', views.company_details, name='company'),
+
+    path('ajax/manage-education', views.manage_education, name='ajax-manage-education'),
+    path('ajax/delete-education', views.delete_education, name='ajax-delete-education'),
 ]

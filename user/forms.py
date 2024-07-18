@@ -1,5 +1,5 @@
 from django import forms
-from .models import CustomUser, GalleryImage
+from .models import CustomUser, Education
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=65)
@@ -22,8 +22,3 @@ class CustomUserCreationForm(forms.ModelForm):
             user.save()
         
         return user
-    
-class GalleryImageForm(forms.ModelForm):
-    class Meta:
-        model = GalleryImage
-        fields = ['image', 'title', 'description']

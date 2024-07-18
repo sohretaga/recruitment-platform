@@ -71,3 +71,11 @@ class GalleryImage(models.Model):
     image = models.ImageField(upload_to='gallery/')
     title = models.CharField(max_length=300, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
+
+class Education(models.Model):
+    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, related_name='educations')
+    school = models.CharField(max_length=255)
+    speciality = models.CharField(max_length=500)
+    start_date = models.CharField(max_length=8)
+    end_date = models.CharField(max_length=8)
+    description = models.TextField()
