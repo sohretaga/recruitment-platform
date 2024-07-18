@@ -70,7 +70,6 @@ const addEducation = () => {
 const deleteExperience = (button) => {
     const parentDiv = button.closest('.d-flex.justify-content-between');
     const experienceId = parentDiv.id;
-    console.log(experienceId)
     parentDiv.remove();
 
     if (experienceId) {
@@ -98,11 +97,13 @@ const addExperience = () => {
 
                 <div class="input-group">
                     <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="M, yyyy"
-                        name="end_date" placeholder="End date*" required>
+                        name="end_date" placeholder="End date" required>
+                    <input type="hidden" name="end_date" value="" disabled="disabled">
+
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <input type="hidden" name="present_id" value="${tempPresentId}">
-                            <input class="form-check-input" type="checkbox" name="present-${tempPresentId}" id="present-t${tempPresentId}">
+                            <input class="form-check-input" type="checkbox" name="present-${tempPresentId}" id="present-t${tempPresentId}" onclick="endDateManage(this)">
                             <label class="form-check-label ms-2" for="present-t${tempPresentId}">Present</label>
                         </div>
                     </div>
@@ -113,4 +114,19 @@ const addExperience = () => {
     </div>`);
 
     tempPresentId += 1;
+};
+
+const endDateManage = (input) => {
+    const endDateInputText = input.closest('div.input-group').querySelector("input[name='end_date'][type='text']");
+    const endDateInputHidden = input.closest('div.input-group').querySelector("input[name='end_date'][type='hidden']");
+
+    if (input.checked) {
+        endDateInputText.setAttribute('disabled', 'disabled');
+        endDateInputText.removeAttribute('required');
+        endDateInputHidden.removeAttribute('disabled');
+    }else {
+        endDateInputText.removeAttribute('disabled');
+        endDateInputText.setAttribute('required', true),
+        endDateInputHidden.setAttribute('disabled', 'disabled');
+    };
 };

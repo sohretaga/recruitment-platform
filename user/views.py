@@ -357,15 +357,19 @@ def manage_experience(request):
         descriptions,
         present_ids
     ):
+        present = request.POST.get(f'present-{present_id}') == 'on'
+        
         start_date = start_date.split(',')
         start_date_month = start_date[0]
         start_date_year = start_date[1]
 
-        end_date = end_date.split(',')
-        end_date_month = end_date[0]
-        end_date_year = end_date[1]
+        end_date_month = None
+        end_date_year = None
 
-        present = request.POST.get(f'present-{present_id}') == 'on'
+        if end_date and not present:
+            end_date = end_date.split(',')
+            end_date_month = end_date[0]
+            end_date_year = end_date[1]
 
         if exp_id:
             experience_exists = Experience.objects.filter(id=exp_id).exists()

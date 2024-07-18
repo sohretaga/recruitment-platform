@@ -278,7 +278,7 @@
                                             <div class="circle flex-shrink-0 bg-soft-primary"> {{ exp.title|slice:':1' }} </div>
                                             <div class="ms-4">
                                                 <h6 class="fs-16 mb-1">{{ exp.title }}</h6>
-                                                <p class="mb-2 text-muted">{{ exp.company_name }} - ({{ exp.start_date_month }}, {{ exp.start_date_year }} - {{ exp.end_date_month }}, {{ exp.end_date_year }}){% if exp.present %} - Present{% endif %}</p>
+                                                <p class="mb-2 text-muted">{{ exp.company_name }} - ({{ exp.start_date_month }}, {{ exp.start_date_year }} - {% if exp.present %}Present{% else %}{{ exp.end_date_month }}, {{ exp.end_date_year }}{% endif %})</p>
                                                 <p class="text-muted">{{ exp.description }}</p>
                                             </div>
                                         </div>
@@ -637,12 +637,14 @@
 
                                                         <div class="input-group">
                                                             <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="M, yyyy"
-                                                                name="end_date" placeholder="End date*" required value="{{ exp.end_date_month }}, {{ exp.end_date_year }}">
+                                                                name="end_date" placeholder="End date" required {% if exp.present %}disabled="disabled"{% else %}value="{{ exp.end_date_month }}, {{ exp.end_date_year }}"{% endif %}>
+                                                            <input type="hidden" name="end_date" value="" {% if not exp.present %}disabled="disabled"{% endif %}>
+                                                            
                                                             <div class="input-group-append">
                                                                 <div class="input-group-text">
                                                                     <input type="hidden" name="present_id" value="{{ exp.id }}">
                                                                     <input class="form-check-input" type="checkbox" name="present-{{ exp.id }}" id="present-{{ exp.id }}"
-                                                                        {% if exp.present %}checked{% endif %}>
+                                                                        onclick="endDateManage(this)" {% if exp.present %}checked{% endif %}>
                                                                     <label class="form-check-label ms-2" for="present-{{ exp.id }}">Present</label>
                                                                 </div>
                                                             </div>
@@ -668,11 +670,13 @@
 
                                                         <div class="input-group">
                                                             <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="M, yyyy"
-                                                                name="end_date" placeholder="End date*" required>
+                                                                name="end_date" placeholder="End date" required>
+                                                            <input type="hidden" class="form-control" name="end_date" value="" disabled="disabled">
+                                                            
                                                             <div class="input-group-append">
                                                                 <div class="input-group-text">
                                                                     <input type="hidden" name="present_id" value="0">
-                                                                    <input class="form-check-input" type="checkbox" name="present-0" id="present-0">
+                                                                    <input class="form-check-input" type="checkbox" name="present-0" id="present-0" onclick="endDateManage(this)">
                                                                     <label class="form-check-label ms-2" for="present-0">Present</label>
                                                                 </div>
                                                             </div>
@@ -684,8 +688,8 @@
                                             {% endif %}
                                         </div>
     
-                                        <div class="col-lg-3">
-                                            <button class="btn btn-primary mb-2" type="button" onclick="addExperience()">Add Experience<i class="uil uil-plus-circle"></i></button>
+                                        <div class="col-lg-4">
+                                            <button class="btn btn-primary mb-2" type="button" onclick="addExperience()">Add Experience <i class="uil uil-plus-circle"></i></button>
                                             <button class="btn btn-success" type="submit">Save <i class="uil uil-save"></i></button>
                                         </div>
                                     </form>

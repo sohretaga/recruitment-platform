@@ -93,8 +93,8 @@ class Experience(models.Model):
     start_date_month = models.CharField(max_length=15)
     start_date_year = models.IntegerField()
 
-    end_date_month = models.CharField(max_length=15)
-    end_date_year = models.IntegerField()
+    end_date_month = models.CharField(max_length=15, blank=True, null=True)
+    end_date_year = models.IntegerField(blank=True, null=True)
 
     present = models.BooleanField()
     description = models.TextField()
