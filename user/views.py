@@ -13,6 +13,7 @@ from .models import Gallery, GalleryImage
 from .decorators import logout_required
 from user.models import CustomUser, Candidate, Employer, Education
 from job.utils import vacancy_with_related_info
+from .utils import manage_user_type_for_details
 from dashboard.forms import ManageEmployerAccountForm, ManageCandidateAccountForm
 from recruitment_cp.models import(
         ParameterKeyword,
@@ -138,20 +139,7 @@ def candidate_details(request, username):
 
             return redirect(reverse('user:candidate', args=[user.username]))
         
-       # If the logged-in user is a superuser
-    if request.user.is_superuser:
-        # Superusers can act as both "employer" and "candidate"
-        # Therefore, only the username information is sufficient
-        params = {
-            'username': username,
-        }
-    else:
-        # Non-superuser users can only act as "candidate"
-        # Therefore, both username and user_type information are required
-        params = {
-            'username': username,
-            'user_type': 'candidate'
-        }
+    params = manage_user_type_for_details(request, username, user_type='candidate')
 
     user = get_object_or_404(CustomUser, **params)
     citizenships = ParameterCountry.objects.values('id', 'name')
@@ -209,20 +197,7 @@ def company_details(request, username):
 
             return redirect(reverse('user:company', args=[user.username]))
         
-    # If the logged-in user is a superuser
-    if request.user.is_superuser:
-        # Superusers can act as both "employer" and "candidate"
-        # Therefore, only the username information is sufficient
-        params = {
-            'username': username,
-        }
-    else:
-        # Non-superuser users can only act as "candidate"
-        # Therefore, both username and user_type information are required
-        params = {
-            'username': username,
-            'user_type': 'employer'
-        }
+    params = manage_user_type_for_details(request, username, user_type='employer')
 
     user = get_object_or_404(CustomUser, **params)
     vacancies = vacancy_with_related_info(user.employer.vacancies.filter(status=True, delete=False)[:5])
