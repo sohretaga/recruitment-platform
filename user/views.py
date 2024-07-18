@@ -346,18 +346,16 @@ def manage_experience(request):
     start_dates = request.POST.getlist('start_date')
     end_dates = request.POST.getlist('end_date')
     descriptions = request.POST.getlist('description')
-    presents = request.POST.getlist('present')
+    present_ids = request.POST.getlist('present_id')
 
-    print(presents)
-
-    for exp_id, company_name, title, start_date, end_date, description, present in zip(
+    for exp_id, company_name, title, start_date, end_date, description, present_id in zip(
         experience_ids,
         company_names,
         titles,
         start_dates,
         end_dates,
         descriptions,
-        presents
+        present_ids
     ):
         start_date = start_date.split(',')
         start_date_month = start_date[0]
@@ -367,7 +365,7 @@ def manage_experience(request):
         end_date_month = end_date[0]
         end_date_year = end_date[1]
 
-        present = present == 'on'
+        present = request.POST.get(f'present-{present_id}') == 'on'
 
         if exp_id:
             experience_exists = Experience.objects.filter(id=exp_id).exists()
@@ -382,8 +380,6 @@ def manage_experience(request):
                     description=description,
                     present=present
                 )
-
-                print('inn if')
         else:
             Experience.objects.create(
                 candidate=request.user.candidate,
@@ -396,7 +392,6 @@ def manage_experience(request):
                 description=description,
                 present=present
             )  
-            print('inn else')
     
     return redirect(reverse('user:candidate', args=[request.user]))
     

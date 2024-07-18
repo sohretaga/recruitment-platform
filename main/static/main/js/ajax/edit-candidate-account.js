@@ -32,14 +32,14 @@ const previewImg = (input) => {
 
 const deleteEducation = (button) => {
     const parentDiv = button.closest('.d-flex.justify-content-between');
-    const education_id = parentDiv.id;
+    const educationId = parentDiv.id;
     parentDiv.remove();
 
-    if (education_id) {
+    if (educationId) {
         $.ajax({
             url: '/ajax/delete-education',
             type: 'POST',
-            data: {education_id: education_id},
+            data: {education_id: educationId},
         });
     };
 };
@@ -69,14 +69,15 @@ const addEducation = () => {
 
 const deleteExperience = (button) => {
     const parentDiv = button.closest('.d-flex.justify-content-between');
-    const experience_id = parentDiv.id;
+    const experienceId = parentDiv.id;
+    console.log(experienceId)
     parentDiv.remove();
 
-    if (experience_id) {
+    if (experienceId) {
         $.ajax({
             url: '/ajax/delete-experience',
             type: 'POST',
-            data: {experience_id: experience_id},
+            data: {experience_id: experienceId},
         });
     };
 };
@@ -95,14 +96,19 @@ const addExperience = () => {
                 <input type="text" class="form-control" data-provide="datepicker" data-date-format="M, yyyy"
                     name="start_date" placeholder="Start date*" required>
 
-                <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="M, yyyy"
-                    name="end_date" placeholder="End date*" required>
+                <div class="input-group">
+                    <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="M, yyyy"
+                        name="end_date" placeholder="End date*" required>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <input type="hidden" name="present_id" value="${tempPresentId}">
+                            <input class="form-check-input" type="checkbox" name="present-${tempPresentId}" id="present-t${tempPresentId}">
+                            <label class="form-check-label ms-2" for="present-t${tempPresentId}">Present</label>
+                        </div>
+                    </div>
+                </div>
             </div>
             <textarea name="description" class="form-control" rows="3" placeholder="Description*"></textarea>
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" name="present" id="present-t${tempPresentId}">
-                <label class="form-check-label" for="present-t${tempPresentId}">Present</label>
-            </div>
         </div>
     </div>`);
 

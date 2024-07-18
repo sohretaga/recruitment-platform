@@ -278,7 +278,7 @@
                                             <div class="circle flex-shrink-0 bg-soft-primary"> {{ exp.title|slice:':1' }} </div>
                                             <div class="ms-4">
                                                 <h6 class="fs-16 mb-1">{{ exp.title }}</h6>
-                                                <p class="mb-2 text-muted">{{ exp.company_name }} - ({{ exp.start_date_month }}, {{ exp.start_date_year }} - {{ exp.end_date_month }}, {{ exp.end_date_year }}) - {% if exp.present %}Present{% endif %}</p>
+                                                <p class="mb-2 text-muted">{{ exp.company_name }} - ({{ exp.start_date_month }}, {{ exp.start_date_year }} - {{ exp.end_date_month }}, {{ exp.end_date_year }}){% if exp.present %} - Present{% endif %}</p>
                                                 <p class="text-muted">{{ exp.description }}</p>
                                             </div>
                                         </div>
@@ -623,7 +623,7 @@
                                         <div id="experiences">
                                             {% if experiences %}
                                             {% for exp in experiences %}
-                                            <div class="d-flex justify-content-between mb-5">
+                                            <div class="d-flex justify-content-between mb-5" id="{{ exp.id }}">
                                                 <div class="w-100">
                                                     <input type="hidden" name="experience_id" value="{{ exp.id }}">
                                                     <div class="d-flex">
@@ -635,15 +635,21 @@
                                                         <input type="text" class="form-control" data-provide="datepicker" data-date-format="M, yyyy"
                                                             name="start_date" placeholder="Start date*" required value="{{ exp.start_date_month }}, {{ exp.start_date_year }}">
 
-                                                        <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="M, yyyy"
-                                                            name="end_date" placeholder="End date*" required value="{{ exp.end_date_month }}, {{ exp.end_date_year }}">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="M, yyyy"
+                                                                name="end_date" placeholder="End date*" required value="{{ exp.end_date_month }}, {{ exp.end_date_year }}">
+                                                            <div class="input-group-append">
+                                                                <div class="input-group-text">
+                                                                    <input type="hidden" name="present_id" value="{{ exp.id }}">
+                                                                    <input class="form-check-input" type="checkbox" name="present-{{ exp.id }}" id="present-{{ exp.id }}"
+                                                                        {% if exp.present %}checked{% endif %}>
+                                                                    <label class="form-check-label ms-2" for="present-{{ exp.id }}">Present</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                       
                                                     </div>
                                                     <textarea name="description" class="form-control" rows="3" placeholder="Description*">{{ exp.description }}</textarea>
-                                                    <div class="form-check mt-2">
-                                                        <input class="form-check-input" type="checkbox" name="present" id="present-{{ exp.id }}"
-                                                            {% if exp.present %}checked{% endif %}>
-                                                        <label class="form-check-label" for="present-{{ exp.id }}">Present</label>
-                                                    </div>
                                                 </div>
                                             </div>
                                             {% endfor %}
@@ -660,14 +666,19 @@
                                                         <input type="text" class="form-control" data-provide="datepicker" data-date-format="M, yyyy"
                                                             name="start_date" placeholder="Start date*" required>
 
-                                                        <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="M, yyyy"
-                                                            name="end_date" placeholder="End date*" required>
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="M, yyyy"
+                                                                name="end_date" placeholder="End date*" required>
+                                                            <div class="input-group-append">
+                                                                <div class="input-group-text">
+                                                                    <input type="hidden" name="present_id" value="0">
+                                                                    <input class="form-check-input" type="checkbox" name="present-0" id="present-0">
+                                                                    <label class="form-check-label ms-2" for="present-0">Present</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <textarea name="description" class="form-control" rows="3" placeholder="Description*"></textarea>
-                                                    <div class="form-check mt-2">
-                                                        <input class="form-check-input" type="checkbox" name="present" id="present-0">
-                                                        <label class="form-check-label" for="present-0">Present</label>
-                                                    </div>
                                                 </div>
                                             </div>
                                             {% endif %}
