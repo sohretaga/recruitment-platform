@@ -285,25 +285,21 @@
                                         {% endfor %}
                                     </div><!--end candidate-education-details-->
                                     {% endif %}
+                                    {% if experiences %}
                                     <div class="candidate-education-details mt-4 pt-3">
                                         <h6 class="fs-17 fw-bold mb-0">Experience</h6>
+                                        {% for exp in experiences %}
                                         <div class="candidate-education-content mt-4 d-flex">
-                                            <div class="circle flex-shrink-0 bg-soft-primary"> W </div>
+                                            <div class="circle flex-shrink-0 bg-soft-primary"> {{ exp.title|slice:':1' }} </div>
                                             <div class="ms-4">
-                                                <h6 class="fs-16 mb-1">Web Design & Development Team Leader</h6>
-                                                <p class="mb-2 text-muted">Creative Agency - (2013 - 2016)</p>
-                                                <p class="text-muted">There are many variations of passages of available, but the majority alteration in some form. As a highly skilled and successfull product development and design specialist with more than 4 Years of My experience.</p>
+                                                <h6 class="fs-16 mb-1">{{ exp.title }}</h6>
+                                                <p class="mb-2 text-muted">{{ exp.company_name }} - ({{ exp.start_date_month }}, {{ exp.start_date_year }} - {{ exp.end_date_month }}, {{ exp.end_date_year }}) - {% if exp.present %}Present{% endif %}</p>
+                                                <p class="text-muted">{{ exp.description }}</p>
                                             </div>
                                         </div>
-                                        <div class="candidate-education-content mt-4 d-flex">
-                                            <div class="circle flex-shrink-0 bg-soft-primary"> P </div>
-                                            <div class="ms-4">
-                                                <h6 class="fs-16 mb-1">Project Manager</h6>
-                                                <p class="mb-2 text-muted">Jobcy Technology Pvt.Ltd - (Pressent)</p>
-                                                <p class="text-muted mb-0">There are many variations of passages of available, but the majority alteration in some form. As a highly skilled and successfull product development and design specialist with more than 4 Years of My experience.</p>
-                                            </div>
-                                        </div>
+                                        {% endfor %}
                                     </div>
+                                    {% endif %}
                                     <div class="candidate-portfolio mt-4 pt-3">
                                         <h6 class="fs-17 fw-bold mb-0">Projects</h6>
                                         <div class="row">
