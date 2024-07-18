@@ -82,5 +82,19 @@ class Education(models.Model):
 
     end_date_month = models.CharField(max_length=15)
     end_date_year = models.IntegerField()
-    
+
+    description = models.TextField()
+
+class Experience(models.Model):
+    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, related_name='experiences')
+    company_name = models.CharField(max_length=255)
+    title = models.CharField(max_length=500)
+
+    start_date_month = models.CharField(max_length=15)
+    start_date_year = models.IntegerField()
+
+    end_date_month = models.CharField(max_length=15)
+    end_date_year = models.IntegerField()
+
+    present = models.BooleanField()
     description = models.TextField()

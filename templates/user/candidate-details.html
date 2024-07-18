@@ -245,6 +245,13 @@
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="experience-tab" data-bs-toggle="pill"
+                                    data-bs-target="#experience" type="button" role="tab" aria-controls="experience"
+                                    aria-selected="false">
+                                    Experience
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="education-tab" data-bs-toggle="pill"
                                     data-bs-target="#education" type="button" role="tab" aria-controls="education"
                                     aria-selected="false">
@@ -613,6 +620,59 @@
                                         </div>
                                     </form>
                                     <!--end form-->
+                                </div>
+                                <div class="tab-pane fade" id="experience" role="tabpanel" aria-labelledby="experience-tab">
+                                    <form method="post" action="{% url 'user:ajax-manage-education' %}">
+                                        {% csrf_token %}
+                                        <div id="educations">
+                                            {% if educations %}
+                                            {% for edu in educations %}
+                                            <div class="d-flex justify-content-between mb-5" id="{{ edu.id }}">
+                                                <div class="w-100">
+                                                    <input type="hidden" name="education_id" value="{{ edu.id }}">
+                                                    <div class="d-flex">
+                                                        <input name="school" type="text" class="form-control mb-2" placeholder="School" required value="{{ edu.school }}">
+                                                        <button class="btn btn-danger fs-17 mb-2 ms-2" onclick="deleteEducation(this)"><i class="uil uil-trash-alt"></i></button>
+                                                    </div>
+                                                    <input name="speciality" type="text" class="form-control mb-2" placeholder="Speciality" required value="{{ edu.speciality }}">
+                                                    <div class="d-flex mb-2">
+                                                        <input type="text" class="form-control" data-provide="datepicker" data-date-format="M, yyyy"
+                                                            name="start_date" placeholder="Start date" required value="{{ edu.start_date_month }}, {{ edu.start_date_year }}">
+
+                                                        <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="M, yyyy"
+                                                            name="end_date" placeholder="End date" required value="{{ edu.end_date_month }}, {{ edu.end_date_year }}">
+                                                    </div>
+                                                    <textarea name="description" class="form-control" rows="3" placeholder="Description" required>{{ edu.description }}</textarea>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                            {% else %}
+                                            <div class="d-flex justify-content-between mb-5">
+                                                <div class="w-100">
+                                                    <input type="hidden" name="education_id" value="">
+                                                    <div class="d-flex">
+                                                        <input name="school" type="text" class="form-control mb-2" placeholder="School" required>
+                                                        <button class="btn btn-danger fs-17 mb-2 ms-2" onclick="deleteEducation(this)"><i class="uil uil-trash-alt"></i></button>
+                                                    </div>
+                                                    <input name="speciality" type="text" class="form-control mb-2" placeholder="Speciality" required>
+                                                    <div class="d-flex mb-2">
+                                                        <input type="text" class="form-control" data-provide="datepicker" data-date-format="M, yyyy"
+                                                            name="start_date" placeholder="Start date" required>
+
+                                                        <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="M, yyyy"
+                                                            name="end_date" placeholder="End date" required>
+                                                    </div>
+                                                    <textarea name="description" class="form-control" rows="3" placeholder="Description" required></textarea>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+    
+                                        <div class="col-lg-3">
+                                            <button class="btn btn-primary mb-2" type="button" onclick="addEducation()">Add Education <i class="uil uil-plus-circle"></i></button>
+                                            <button class="btn btn-success" type="submit">Save <i class="uil uil-save"></i></button>
+                                        </div>
+                                    </form>
                                 </div>
                                 <div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="education-tab">
                                     <form method="post" action="{% url 'user:ajax-manage-education' %}">
