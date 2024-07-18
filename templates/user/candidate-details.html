@@ -270,21 +270,6 @@
                                         <p class="text-muted mb-0">{{ candidate.user.about }}</p>
                                     </div>
                                     {% endif %}
-                                    {% if educations %}
-                                    <div class="candidate-education-details mt-4 pt-3">
-                                        <h6 class="fs-17 fw-bold mb-0">Education</h6>
-                                        {% for edu in educations %}
-                                        <div class="candidate-education-content mt-4 d-flex">
-                                            <div class="circle flex-shrink-0 bg-soft-primary"> {{ edu.speciality|slice:':1' }} </div>
-                                            <div class="ms-4">
-                                                <h6 class="fs-16 mb-1">{{ edu.speciality }}</h6>
-                                                <p class="mb-2 text-muted">{{ edu.school }} - ({{ edu.start_date_month }}, {{ edu.start_date_year }} - {{ edu.end_date_month }}, {{ edu.end_date_year }})</p>
-                                                <p class="text-muted">{{ edu.description }}</p>
-                                            </div>
-                                        </div>
-                                        {% endfor %}
-                                    </div><!--end candidate-education-details-->
-                                    {% endif %}
                                     {% if experiences %}
                                     <div class="candidate-education-details mt-4 pt-3">
                                         <h6 class="fs-17 fw-bold mb-0">Experience</h6>
@@ -299,6 +284,21 @@
                                         </div>
                                         {% endfor %}
                                     </div>
+                                    {% endif %}
+                                    {% if educations %}
+                                    <div class="candidate-education-details mt-4 pt-3">
+                                        <h6 class="fs-17 fw-bold mb-0">Education</h6>
+                                        {% for edu in educations %}
+                                        <div class="candidate-education-content mt-4 d-flex">
+                                            <div class="circle flex-shrink-0 bg-soft-primary"> {{ edu.speciality|slice:':1' }} </div>
+                                            <div class="ms-4">
+                                                <h6 class="fs-16 mb-1">{{ edu.speciality }}</h6>
+                                                <p class="mb-2 text-muted">{{ edu.school }} - ({{ edu.start_date_month }}, {{ edu.start_date_year }} - {{ edu.end_date_month }}, {{ edu.end_date_year }})</p>
+                                                <p class="text-muted">{{ edu.description }}</p>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div><!--end candidate-education-details-->
                                     {% endif %}
                                     <div class="candidate-portfolio mt-4 pt-3">
                                         <h6 class="fs-17 fw-bold mb-0">Projects</h6>
