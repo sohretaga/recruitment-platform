@@ -1,6 +1,7 @@
 const selects = document.querySelectorAll('select');
 const galleryImages = document.getElementById('gallery-images');
 const limitAlert = document.getElementById('limit-alert');
+var tempImageId = 1;
 
 selects.forEach(select => {
     new Choices(`#${select.id}`)
@@ -20,15 +21,6 @@ const previewImg = (input) => {
         reader.readAsDataURL(input.files[0]);
     };
 };
-
-const genHexString = () => {
-    const hex = '456789ABCDEF';
-    let output = '';
-    for (let i = 0; i < 3; ++i) {
-        output += hex.charAt(Math.floor(Math.random() * hex.length));
-    }
-    return output;
-}
 
 const previewGalleryImage = (event, id) => {
     const input = event.target;
@@ -59,16 +51,15 @@ const deleteImage = (button) => {
 };
 
 const addImage = () => {
-    const randomId = genHexString();
     const galleryLength = galleryImages.children.length;
 
     if (galleryLength < 5) {
         galleryImages.insertAdjacentHTML('beforeend', `
         <div class="d-flex justify-content-between mb-5">
-            <input type="hidden" name="image-id" value="${randomId}">
-            <div class="image-upload-wrapper" id="image-upload-wrapper-${randomId}" onclick="document.getElementById('imageUpload-${randomId}').click();">
-                <img id="uploadedImage-${randomId}" src="" alt="Uploaded Image">
-                <input name="image-${randomId}" type="file" id="imageUpload-${randomId}" accept="image/*" style="display: none;" onchange="previewGalleryImage(event, '${randomId}')">
+            <input type="hidden" name="image-id" value="t${tempImageId}">
+            <div class="image-upload-wrapper" id="image-upload-wrapper-t${tempImageId}" onclick="document.getElementById('imageUpload-t${tempImageId}').click();">
+                <img id="uploadedImage-t${tempImageId}" src="" alt="Uploaded Image">
+                <input name="image-t${tempImageId}" type="file" id="imageUpload-t${tempImageId}" accept="image/*" style="display: none;" onchange="previewGalleryImage(event, 't${tempImageId}')">
             </div>
             <div class="ms-3 w-100">
                 <div class="d-flex">
@@ -86,4 +77,6 @@ const addImage = () => {
 
         limitAlert.style.display = 'block';
     };
+
+    tempImageId += 1;
 };

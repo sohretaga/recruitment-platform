@@ -19,6 +19,9 @@ urlpatterns = [
     path('company-list', views.company_list, name='company-list'),
     path('company/<str:username>', views.company_details, name='company'),
 
-    path('ajax/manage-education', views.manage_education, name='ajax-manage-education'),
+    path('manage-education', views.manage_education, name='manage-education'),
     path('ajax/delete-education', views.delete_education, name='ajax-delete-education'),
+
+    path('manage-experience', views.manage_experience, name='manage-experience'),
+    path('ajax/delete-experience', views.delete_experience, name='ajax-delete-experience'),
 ]

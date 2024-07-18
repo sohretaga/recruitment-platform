@@ -11,7 +11,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from . import forms
 from .models import Gallery, GalleryImage
 from .decorators import logout_required
-from user.models import CustomUser, Candidate, Employer, Education
+from user.models import CustomUser, Candidate, Employer, Education, Experience
 from job.utils import vacancy_with_related_info
 from .utils import manage_user_type_for_details
 from dashboard.forms import ManageEmployerAccountForm, ManageCandidateAccountForm
@@ -149,7 +149,8 @@ def candidate_details(request, username):
         'candidate': user.candidate,
         'citizenships': citizenships,
         'competencies': competencies,
-        'educations': user.candidate.educations.all()
+        'educations': user.candidate.educations.all(),
+        'experiences': user.candidate.experiences.all()
     }
 
     return render(request, 'user/candidate-details.html', context)
@@ -332,5 +333,81 @@ def delete_education(request):
 
     if education_exists:
         Education.objects.filter(id=education_id, candidate=request.user.candidate).delete()
+
+    return JsonResponse({'status': 200})
+
+
+@login_required
+@require_POST
+def manage_experience(request):
+    experience_ids = request.POST.getlist('experience_id')
+    company_names = request.POST.getlist('company_name')
+    titles = request.POST.getlist('title')
+    start_dates = request.POST.getlist('start_date')
+    end_dates = request.POST.getlist('end_date')
+    descriptions = request.POST.getlist('description')
+    presents = request.POST.getlist('present')
+
+    print(presents)
+
+    for exp_id, company_name, title, start_date, end_date, description, present in zip(
+        experience_ids,
+        company_names,
+        titles,
+        start_dates,
+        end_dates,
+        descriptions,
+        presents
+    ):
+        start_date = start_date.split(',')
+        start_date_month = start_date[0]
+        start_date_year = start_date[1]
+
+        end_date = end_date.split(',')
+        end_date_month = end_date[0]
+        end_date_year = end_date[1]
+
+        present = present == 'on'
+
+        if exp_id:
+            experience_exists = Experience.objects.filter(id=exp_id).exists()
+            if experience_exists:
+                Experience.objects.filter(id=exp_id).update(
+                    company_name=company_name,
+                    title=title,
+                    start_date_month=start_date_month,
+                    start_date_year=start_date_year,
+                    end_date_month=end_date_month,
+                    end_date_year=end_date_year,
+                    description=description,
+                    present=present
+                )
+
+                print('inn if')
+        else:
+            Experience.objects.create(
+                candidate=request.user.candidate,
+                company_name=company_name,
+                title=title,
+                start_date_month=start_date_month,
+                start_date_year=start_date_year,
+                end_date_month=end_date_month,
+                end_date_year=end_date_year,
+                description=description,
+                present=present
+            )  
+            print('inn else')
+    
+    return redirect(reverse('user:candidate', args=[request.user]))
+    
+
+@login_required
+@require_POST
+def delete_experience(request):
+    experience_id = request.POST.get('experience_id', 0)
+    experience_exists = Experience.objects.filter(id=experience_id, candidate=request.user.candidate).exists()
+
+    if experience_exists:
+        Experience.objects.filter(id=experience_id, candidate=request.user.candidate).delete()
 
     return JsonResponse({'status': 200})

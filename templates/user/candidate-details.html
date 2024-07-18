@@ -622,60 +622,69 @@
                                     <!--end form-->
                                 </div>
                                 <div class="tab-pane fade" id="experience" role="tabpanel" aria-labelledby="experience-tab">
-                                    <form method="post" action="{% url 'user:ajax-manage-education' %}">
+                                    <form method="post" action="{% url 'user:manage-experience' %}">
                                         {% csrf_token %}
-                                        <div id="educations">
-                                            {% if educations %}
-                                            {% for edu in educations %}
-                                            <div class="d-flex justify-content-between mb-5" id="{{ edu.id }}">
+                                        <div id="experiences">
+                                            {% if experiences %}
+                                            {% for exp in experiences %}
+                                            <div class="d-flex justify-content-between mb-5">
                                                 <div class="w-100">
-                                                    <input type="hidden" name="education_id" value="{{ edu.id }}">
+                                                    <input type="hidden" name="experience_id" value="{{ exp.id }}">
                                                     <div class="d-flex">
-                                                        <input name="school" type="text" class="form-control mb-2" placeholder="School" required value="{{ edu.school }}">
-                                                        <button class="btn btn-danger fs-17 mb-2 ms-2" onclick="deleteEducation(this)"><i class="uil uil-trash-alt"></i></button>
+                                                        <input name="company_name" type="text" class="form-control mb-2" placeholder="Company name*" required value="{{ exp.company_name }}">
+                                                        <button class="btn btn-danger fs-17 mb-2 ms-2" onclick="deleteExperience(this)"><i class="uil uil-trash-alt"></i></button>
                                                     </div>
-                                                    <input name="speciality" type="text" class="form-control mb-2" placeholder="Speciality" required value="{{ edu.speciality }}">
+                                                    <input name="title" type="text" class="form-control mb-2" placeholder="Title*" required value="{{ exp.title }}">
                                                     <div class="d-flex mb-2">
                                                         <input type="text" class="form-control" data-provide="datepicker" data-date-format="M, yyyy"
-                                                            name="start_date" placeholder="Start date" required value="{{ edu.start_date_month }}, {{ edu.start_date_year }}">
+                                                            name="start_date" placeholder="Start date*" required value="{{ exp.start_date_month }}, {{ exp.start_date_year }}">
 
                                                         <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="M, yyyy"
-                                                            name="end_date" placeholder="End date" required value="{{ edu.end_date_month }}, {{ edu.end_date_year }}">
+                                                            name="end_date" placeholder="End date*" required value="{{ exp.end_date_month }}, {{ exp.end_date_year }}">
                                                     </div>
-                                                    <textarea name="description" class="form-control" rows="3" placeholder="Description" required>{{ edu.description }}</textarea>
+                                                    <textarea name="description" class="form-control" rows="3" placeholder="Description*">{{ exp.description }}</textarea>
+                                                    <div class="form-check mt-2">
+                                                        <input class="form-check-input" type="checkbox" name="present" id="present-{{ exp.id }}"
+                                                            {% if exp.present %}checked{% endif %}>
+                                                        <label class="form-check-label" for="present-{{ exp.id }}">Present</label>
+                                                    </div>
                                                 </div>
                                             </div>
                                             {% endfor %}
                                             {% else %}
                                             <div class="d-flex justify-content-between mb-5">
                                                 <div class="w-100">
-                                                    <input type="hidden" name="education_id" value="">
+                                                    <input type="hidden" name="experience_id" value="">
                                                     <div class="d-flex">
-                                                        <input name="school" type="text" class="form-control mb-2" placeholder="School" required>
-                                                        <button class="btn btn-danger fs-17 mb-2 ms-2" onclick="deleteEducation(this)"><i class="uil uil-trash-alt"></i></button>
+                                                        <input name="company_name" type="text" class="form-control mb-2" placeholder="Company name*" required>
+                                                        <button class="btn btn-danger fs-17 mb-2 ms-2" onclick="deleteExperience(this)"><i class="uil uil-trash-alt"></i></button>
                                                     </div>
-                                                    <input name="speciality" type="text" class="form-control mb-2" placeholder="Speciality" required>
+                                                    <input name="title" type="text" class="form-control mb-2" placeholder="Title*" required>
                                                     <div class="d-flex mb-2">
                                                         <input type="text" class="form-control" data-provide="datepicker" data-date-format="M, yyyy"
-                                                            name="start_date" placeholder="Start date" required>
+                                                            name="start_date" placeholder="Start date*" required>
 
                                                         <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="M, yyyy"
-                                                            name="end_date" placeholder="End date" required>
+                                                            name="end_date" placeholder="End date*" required>
                                                     </div>
-                                                    <textarea name="description" class="form-control" rows="3" placeholder="Description" required></textarea>
+                                                    <textarea name="description" class="form-control" rows="3" placeholder="Description*"></textarea>
+                                                    <div class="form-check mt-2">
+                                                        <input class="form-check-input" type="checkbox" name="present" id="present-0">
+                                                        <label class="form-check-label" for="present-0">Present</label>
+                                                    </div>
                                                 </div>
                                             </div>
                                             {% endif %}
                                         </div>
     
                                         <div class="col-lg-3">
-                                            <button class="btn btn-primary mb-2" type="button" onclick="addEducation()">Add Education <i class="uil uil-plus-circle"></i></button>
+                                            <button class="btn btn-primary mb-2" type="button" onclick="addExperience()">Add Experience<i class="uil uil-plus-circle"></i></button>
                                             <button class="btn btn-success" type="submit">Save <i class="uil uil-save"></i></button>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="education-tab">
-                                    <form method="post" action="{% url 'user:ajax-manage-education' %}">
+                                    <form method="post" action="{% url 'user:manage-education' %}">
                                         {% csrf_token %}
                                         <div id="educations">
                                             {% if educations %}
@@ -684,18 +693,18 @@
                                                 <div class="w-100">
                                                     <input type="hidden" name="education_id" value="{{ edu.id }}">
                                                     <div class="d-flex">
-                                                        <input name="school" type="text" class="form-control mb-2" placeholder="School" required value="{{ edu.school }}">
+                                                        <input name="school" type="text" class="form-control mb-2" placeholder="School*" required value="{{ edu.school }}">
                                                         <button class="btn btn-danger fs-17 mb-2 ms-2" onclick="deleteEducation(this)"><i class="uil uil-trash-alt"></i></button>
                                                     </div>
-                                                    <input name="speciality" type="text" class="form-control mb-2" placeholder="Speciality" required value="{{ edu.speciality }}">
+                                                    <input name="speciality" type="text" class="form-control mb-2" placeholder="Speciality*" required value="{{ edu.speciality }}">
                                                     <div class="d-flex mb-2">
                                                         <input type="text" class="form-control" data-provide="datepicker" data-date-format="M, yyyy"
-                                                            name="start_date" placeholder="Start date" required value="{{ edu.start_date_month }}, {{ edu.start_date_year }}">
+                                                            name="start_date" placeholder="Start date*" required value="{{ edu.start_date_month }}, {{ edu.start_date_year }}">
 
                                                         <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="M, yyyy"
-                                                            name="end_date" placeholder="End date" required value="{{ edu.end_date_month }}, {{ edu.end_date_year }}">
+                                                            name="end_date" placeholder="End date*" required value="{{ edu.end_date_month }}, {{ edu.end_date_year }}">
                                                     </div>
-                                                    <textarea name="description" class="form-control" rows="3" placeholder="Description" required>{{ edu.description }}</textarea>
+                                                    <textarea name="description" class="form-control" rows="3" placeholder="Description*" required>{{ edu.description }}</textarea>
                                                 </div>
                                             </div>
                                             {% endfor %}
@@ -704,18 +713,18 @@
                                                 <div class="w-100">
                                                     <input type="hidden" name="education_id" value="">
                                                     <div class="d-flex">
-                                                        <input name="school" type="text" class="form-control mb-2" placeholder="School" required>
+                                                        <input name="school" type="text" class="form-control mb-2" placeholder="School*" required>
                                                         <button class="btn btn-danger fs-17 mb-2 ms-2" onclick="deleteEducation(this)"><i class="uil uil-trash-alt"></i></button>
                                                     </div>
-                                                    <input name="speciality" type="text" class="form-control mb-2" placeholder="Speciality" required>
+                                                    <input name="speciality" type="text" class="form-control mb-2" placeholder="Speciality*" required>
                                                     <div class="d-flex mb-2">
                                                         <input type="text" class="form-control" data-provide="datepicker" data-date-format="M, yyyy"
-                                                            name="start_date" placeholder="Start date" required>
+                                                            name="start_date" placeholder="Start date*" required>
 
                                                         <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="M, yyyy"
-                                                            name="end_date" placeholder="End date" required>
+                                                            name="end_date" placeholder="End date*" required>
                                                     </div>
-                                                    <textarea name="description" class="form-control" rows="3" placeholder="Description" required></textarea>
+                                                    <textarea name="description" class="form-control" rows="3" placeholder="Description*" required></textarea>
                                                 </div>
                                             </div>
                                             {% endif %}
