@@ -76,6 +76,11 @@ class Education(models.Model):
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, related_name='educations')
     school = models.CharField(max_length=255)
     speciality = models.CharField(max_length=500)
-    start_date = models.CharField(max_length=8)
-    end_date = models.CharField(max_length=8)
+
+    start_date_month = models.CharField(max_length=15)
+    start_date_year = models.IntegerField()
+
+    end_date_month = models.CharField(max_length=15)
+    end_date_year = models.IntegerField()
+    
     description = models.TextField()

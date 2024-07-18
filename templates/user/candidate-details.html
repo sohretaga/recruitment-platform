@@ -271,7 +271,7 @@
                                             <div class="circle flex-shrink-0 bg-soft-primary"> {{ edu.speciality|slice:':1' }} </div>
                                             <div class="ms-4">
                                                 <h6 class="fs-16 mb-1">{{ edu.speciality }}</h6>
-                                                <p class="mb-2 text-muted">{{ edu.school }} - ({{ edu.start_date }} - {{ edu.end_date }})</p>
+                                                <p class="mb-2 text-muted">{{ edu.school }} - ({{ edu.start_date_month }}, {{ edu.start_date_year }} - {{ edu.end_date_month }}, {{ edu.end_date_year }})</p>
                                                 <p class="text-muted">{{ edu.description }}</p>
                                             </div>
                                         </div>
@@ -629,11 +629,11 @@
                                                     </div>
                                                     <input name="speciality" type="text" class="form-control mb-2" placeholder="Speciality" required value="{{ edu.speciality }}">
                                                     <div class="d-flex mb-2">
-                                                        <input type="text" class="form-control" data-provide="datepicker" data-date-format="mm, yyyy" id=""
-                                                            name="start_date" placeholder="Start date" required value="{{ edu.start_date }}">
+                                                        <input type="text" class="form-control" data-provide="datepicker" data-date-format="M, yyyy"
+                                                            name="start_date" placeholder="Start date" required value="{{ edu.start_date_month }}, {{ edu.start_date_year }}">
 
-                                                        <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="mm, yyyy" id=""
-                                                            name="end_date" placeholder="End date" required value="{{ edu.end_date }}">
+                                                        <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="M, yyyy"
+                                                            name="end_date" placeholder="End date" required value="{{ edu.end_date_month }}, {{ edu.end_date_year }}">
                                                     </div>
                                                     <textarea name="description" class="form-control" rows="3" placeholder="Description" required>{{ edu.description }}</textarea>
                                                 </div>
@@ -649,10 +649,10 @@
                                                     </div>
                                                     <input name="speciality" type="text" class="form-control mb-2" placeholder="Speciality" required>
                                                     <div class="d-flex mb-2">
-                                                        <input type="text" class="form-control" data-provide="datepicker" data-date-format="mm, yyyy" id=""
+                                                        <input type="text" class="form-control" data-provide="datepicker" data-date-format="M, yyyy"
                                                             name="start_date" placeholder="Start date" required>
 
-                                                        <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="mm, yyyy" id=""
+                                                        <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="M, yyyy"
                                                             name="end_date" placeholder="End date" required>
                                                     </div>
                                                     <textarea name="description" class="form-control" rows="3" placeholder="Description" required></textarea>

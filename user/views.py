@@ -289,14 +289,24 @@ def manage_education(request):
         end_dates,
         descriptions
     ):
+        start_date = start_date.split(',')
+        start_date_month = start_date[0]
+        start_date_year = start_date[1]
+
+        end_date = end_date.split(',')
+        end_date_month = end_date[0]
+        end_date_year = end_date[1]
+
         if edu_id:
             education_exists = Education.objects.filter(id=edu_id).exists()
             if education_exists:
                 Education.objects.filter(id=edu_id).update(
                     school=school,
                     speciality=speciality,
-                    start_date=start_date,
-                    end_date=end_date,
+                    start_date_month=start_date_month,
+                    start_date_year=start_date_year,
+                    end_date_month=end_date_month,
+                    end_date_year=end_date_year,
                     description=description
                 )
         else:
@@ -304,8 +314,10 @@ def manage_education(request):
                 candidate=request.user.candidate,
                 school=school,
                 speciality=speciality,
-                start_date=start_date,
-                end_date=end_date,
+                start_date_month=start_date_month,
+                start_date_year=start_date_year,
+                end_date_month=end_date_month,
+                end_date_year=end_date_year,
                 description=description
             )        
     
