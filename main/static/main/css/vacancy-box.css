@@ -8,12 +8,12 @@
 
 @media only screen and (max-width: 600px) {
     .job-box img {
-      width: 55px;
-      height: 55px;
+      width: 40px;
+      height: 40px;
     }
 
     .position-title-mobile {
-      margin-left: 5px;
+      margin-left: 15px;
       max-width: 75%;
       display: flex;
       align-items: center;
