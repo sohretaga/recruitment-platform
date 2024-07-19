@@ -1,13 +1,11 @@
 {% load static %}
 {% load actions %}
 
-<link href="{% static 'main/css/vacancy-box.css' %}" rel="stylesheet" type="text/css" />
-
 {% for vacancy in vacancies %}
     <div id="vacancy-{{ vacancy.id }}" class="job-box card mt-5 {% bookmarks request vacancy.id %}">
         <div class="p-4">
             <div class="row">
-                <div class="col-lg-1 d-flex vacancy-content">
+                <div class="col-lg-1 company-logo">
                     {% if vacancy.employer.user.profile_photo %}
                     <a href="{% url 'user:company' vacancy.employer_username %}"><img src="{{ vacancy.employer.user.profile_photo.url }}" alt="{{ vacancy.company_name }}" class="img-fluid rounded-3"></a>
                     {% else %}
@@ -15,7 +13,7 @@
                     {% endif %}
                 </div><!--end col-->
                 <div class="col-lg-10 vacancy-content">
-                    <div class="mt-3 mt-lg-0 vacancy-content">
+                    <div class="mt-lg-0">
                         <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' vacancy.slug %}" class="text-dark">{{ vacancy.position_title }}</a></h5>
                         <ul class="list-inline mb-0">
                             <li class="list-inline-item">

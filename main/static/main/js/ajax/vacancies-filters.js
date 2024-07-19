@@ -163,16 +163,16 @@ const listVacancies = (vacanciesInfo, bookmarks, applications, keywords) => {
     container.innerHTML = ''; // Clear existing content
 
     for (const [key, vacancy] of Object.entries(vacanciesInfo)) {
-        container.innerHTML += `
+        container.insertAdjacentHTML('beforeend' ,`
         <div id="vacancy-${vacancy.id}" class="job-box card mt-5 ${bookmarks.includes(vacancy.id) ? 'bookmark-post':''}">
             <div class="p-4">
                 <div class="row">
-                    <div class="col-lg-1">
+                    <div class="col-lg-1 company-logo">
                         <a href="/company/${vacancy.employer_username}"><img src="${vacancy.profile_photo_url ? `${vacancy.profile_photo_url}`:'/static/main/images/featured-job/default-company-img.jpeg'}" alt="${vacancy.company_name}" class="img-fluid rounded-3"></a>
                     </div>
-                    <div class="col-lg-10">
-                        <div class="mt-3 mt-lg-0">
-                            <h5 class="fs-17 mb-1"><a href="/vacancy/${vacancy.slug}" class="text-dark">${vacancy.position_title}</a> <small class="text-muted fw-normal">(${vacancy.work_experience_name})</small></h5>
+                    <div class="col-lg-10 vacancy-content">
+                        <div class="mt-lg-0">
+                            <h5 class="fs-17 mb-1"><a href="/vacancy/${vacancy.slug}" class="text-dark">${vacancy.position_title}</a></h5>
                             <ul class="list-inline mb-0">
                                 <li class="list-inline-item">
                                     <p class="text-muted fs-14 mb-0">${vacancy.company_name}</p>
@@ -184,6 +184,8 @@ const listVacancies = (vacanciesInfo, bookmarks, applications, keywords) => {
                                     <p class="text-muted fs-14 mb-0"><i class="uil uil-wallet"></i> ${vacancy.salary_minimum} ₼ - ${vacancy.salary_maximum} ₼ / month</p>
                                 </li>
                             </ul>
+                            <small class="text-muted fw-normal mb-0">(${vacancy.work_experience_name})</small>
+
                             <div class="mt-2">
                                 <span class="badge bg-soft-success mt-1">Full Time</span>
                                 <span class="badge bg-soft-warning mt-1">Urgent</span>
@@ -234,7 +236,7 @@ const listVacancies = (vacanciesInfo, bookmarks, applications, keywords) => {
                 </div>
             </div>
         </div>`
-    };
+    )};
 };
 
 // Filter Request

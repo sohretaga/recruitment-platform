@@ -4,9 +4,11 @@
       height: 40px;
     }
 
-    .vacancy-content {
+    .company-logo {
       width: auto;
-      margin-top: 0 !important;
     }
-    
+
+    .vacancy-content {
+      width: 80%;
+    }
 }
