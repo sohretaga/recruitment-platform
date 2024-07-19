@@ -181,16 +181,9 @@ const listVacancies = (vacanciesInfo, bookmarks, applications, keywords) => {
                         </div>
                     </div>
                     <div class="col-lg-12 mt-2">
-                        <ul class="list-inline mb-0">
-                            <li class="list-inline-item">
-                                <p class="text-muted fs-14 mb-0"><i class="mdi mdi-map-marker"></i> ${vacancy.location_name}</p>
-                            </li>
-                            <li class="list-inline-item">
-                                <p class="text-muted fs-14 mb-0"><i class="uil uil-wallet"></i> ${vacancy.salary_minimum} ₼ - ${vacancy.salary_maximum} ₼ / month</p>
-                            </li>
-                        </ul>
+                        <p class="text-muted fs-14 mb-0"><i class="mdi mdi-map-marker"></i> ${vacancy.location_name}</p>
+                        <p class="text-muted fs-14 mb-0"><i class="uil uil-wallet"></i> ${vacancy.salary_minimum} ₼ - ${vacancy.salary_maximum} ₼ / month</p>
                         <small class="text-muted fw-normal mb-0">(${vacancy.work_experience_name})</small>
-
                         <div class="mt-2">
                             <span class="badge bg-soft-success mt-1">Full Time</span>
                             <span class="badge bg-soft-warning mt-1">Urgent</span>
