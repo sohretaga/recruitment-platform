@@ -7,20 +7,16 @@
     <div id="vacancy-{{ vacancy.id }}" class="job-box card mt-5 {% bookmarks request vacancy.id %}">
         <div class="p-4">
             <div class="row">
-                <div class="col-lg-1 d-flex">
+                <div class="col-lg-1 d-flex vacancy-content">
                     {% if vacancy.employer.user.profile_photo %}
                     <a href="{% url 'user:company' vacancy.employer_username %}"><img src="{{ vacancy.employer.user.profile_photo.url }}" alt="{{ vacancy.company_name }}" class="img-fluid rounded-3"></a>
                     {% else %}
                     <a href="{% url 'user:company' vacancy.employer_username %}"><img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="{{ vacancy.company_name }}" class="img-fluid rounded-3"></a>
                     {% endif %}
-                    <div class="position-title-mobile">
-                        <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' vacancy.slug %}" class="text-dark">{{ vacancy.position_title }}</a></h5>
-                    </div>
                 </div><!--end col-->
-                <div class="col-lg-10">
-                    <div class="mt-3 mt-lg-0">
-                        <h5 class="fs-17 mb-1 position-title-desktop"><a href="{% url 'job:vacancy' vacancy.slug %}" class="text-dark">{{ vacancy.position_title }}</a></h5>
-                        <small class="text-muted fw-normal mb-1">({{ vacancy.work_experience_name }})</small>
+                <div class="col-lg-10 vacancy-content">
+                    <div class="mt-3 mt-lg-0 vacancy-content">
+                        <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' vacancy.slug %}" class="text-dark">{{ vacancy.position_title }}</a></h5>
                         <ul class="list-inline mb-0">
                             <li class="list-inline-item">
                                 <p class="text-muted fs-14 mb-0">{{ vacancy.company_name }}</p>
@@ -32,6 +28,8 @@
                                 <p class="text-muted fs-14 mb-0"><i class="uil uil-wallet"></i> {{ vacancy.salary_minimum }} ₼ - {{ vacancy.salary_maximum }} ₼ / month</p>
                             </li>
                         </ul>
+                        <small class="text-muted fw-normal mb-0">({{ vacancy.work_experience_name }})</small>
+
                         <div class="mt-2">
                             <span class="badge bg-soft-success mt-1">Full Time</span>
                             <span class="badge bg-soft-warning mt-1">Urgent</span>
