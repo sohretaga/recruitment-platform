@@ -54,6 +54,11 @@
     padding-bottom: 20px;
 }
 
+.company-slider {
+    width: 100px;
+    height: 100px;
+}
+
 
 @media screen and (max-width:768px) {
 
@@ -89,6 +94,11 @@
 
     .card-content h5 {
         margin-top: .5rem;
+    }
+
+    .company-slider {
+        width: 80px;
+        height: 80px;
     }
 
 }
