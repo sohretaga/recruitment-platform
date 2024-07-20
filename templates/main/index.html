@@ -105,10 +105,11 @@
                                                     <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" class="img-fluid rounded-3">
                                                 {% endif %}
                                             </div>
-                                            <div class="card-content">
-                                                <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' vacancy.slug %}" class="text-dark">{{ vacancy.position_title }}</a> <small class="text-muted fw-normal">({{ vacancy.work_experience.name }})</small></h5>
+                                            <div class="card-content mb-2">
+                                                <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' vacancy.slug %}" class="text-dark">{{ vacancy.position_title }}</a></h5>
                                                 <p class="fs-14 mb-0">{{ vacancy.employer.user.first_name }}</p>
                                                 <p class="text-muted fs-14 mb-0">{{ vacancy.location.name }}</p>
+                                                <small class="text-muted fw-normal mb-0">({{ vacancy.work_experience.name }})</small>
                                             </div>
                                         </div>
                                     {% endfor %}
@@ -140,9 +141,10 @@
                                     {% endif %}
                                 </div>
                                 <div class="card-content">
-                                    <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' vacancy.slug %}" class="text-dark">{{ vacancy.position_title }}</a> <small class="text-muted fw-normal">({{ vacancy.work_experience.name }})</small></h5>
+                                    <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' vacancy.slug %}" class="text-dark">{{ vacancy.position_title }}</a></h5>
                                     <p class="fs-14 mb-0">{{ vacancy.employer.user.first_name }}</p>
                                     <p class="text-muted fs-14 mb-0">{{ vacancy.location.name }} - {{ vacancy.career_type.name }}</p>
+                                    <small class="text-muted fw-normal">({{ vacancy.work_experience.name }})</small>
                                 </div>
                             </div>
                             <div class="card-bottom">
