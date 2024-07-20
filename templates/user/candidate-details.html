@@ -436,14 +436,14 @@
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label for="first-name" class="form-label">First Name</label>
-                                                        <input type="text" name="first_name" class="form-control" id="first-name" value="{{ candidate.user.first_name }}" />
+                                                        <input type="text" name="first_name" class="form-control" id="first-name" value="{{ candidate.user.first_name }}" required/>
                                                     </div>
                                                 </div>
                                                 <!--end col-->
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label for="last-name" class="form-label">Last Name</label>
-                                                        <input type="text" name="last_name" class="form-control" id="last-name" value="{{ candidate.user.last_name }}" />
+                                                        <input type="text" name="last_name" class="form-control" id="last-name" value="{{ candidate.user.last_name }}" required/>
                                                     </div>
                                                 </div>
                                                 <!--end col-->
@@ -465,7 +465,7 @@
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label for="gender" class="form-label">Gender</label>
-                                                        <select class="form-select" data-trigger name="gender" id="gender" >
+                                                        <select class="form-select" data-trigger name="gender" id="gender" required>
                                                             <option value="male" {% if user.candidate.gender == 'male'  %}selected{% endif %}>Male</option>
                                                             <option value="female" {% if user.candidate.gender == 'female' %}selected{% endif %}>Female</option>
                                                         </select>
@@ -475,14 +475,14 @@
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label for="email" class="form-label">Email</label>
-                                                        <input type="email" name="email" class="form-control" id="email" value="{{ candidate.user.email }}" />
+                                                        <input type="email" name="email" class="form-control" id="email" value="{{ candidate.user.email }}" required/>
                                                     </div>
                                                 </div>
                                                 <!--end col-->
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label for="phone-number" class="form-label">Phone Number</label>
-                                                        <input type="tel" name="phone_number" class="form-control" id="phone-number" value="{% if candidate.user.phone_number %}{{ candidate.user.phone_number }}{% endif %}" />
+                                                        <input type="tel" name="phone_number" class="form-control" id="phone-number" value="{% if candidate.user.phone_number %}{{ candidate.user.phone_number }}{% endif %}" required/>
                                                     </div>
                                                 </div>
                                                 <!--end col-->
@@ -490,14 +490,14 @@
                                                     <div class="mb-3">
                                                         <label for="birthday" class="form-label">Birthday</label>
                                                         <input type="text" class="form-control" data-provide="datepicker" data-date-format="dd M, yyyy" id="birthday"
-                                                            name="birthday" placeholder="Your Birthday" value="{% if user.candidate.birthday %}{{ user.candidate.birthday|date:'d M, Y' }}{% endif %}">
+                                                            name="birthday" placeholder="Your Birthday" value="{% if user.candidate.birthday %}{{ user.candidate.birthday|date:'d M, Y' }}{% endif %}" required>
                                                     </div>
                                                 </div>
                                                 <!--end col-->
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label for="id-card-number" class="form-label">ID Card Number</label>
-                                                        <input type="text" name="id_card_number" class="form-control" id="id-card-number" value="{{ candidate.id_card_number}}" />
+                                                        <input type="text" name="id_card_number" class="form-control" id="id-card-number" value="{{ candidate.id_card_number}}" required/>
                                                     </div>
                                                 </div>
                                                 <!--end col-->

@@ -47,11 +47,8 @@ class ManageCandidateAccountForm(forms.ModelForm):
     about = forms.CharField(required=False, widget=forms.Textarea)
     phone_number = forms.CharField(max_length=15 ,required=True)
     address = forms.CharField(max_length=255, required=False)
-    whatsapp = forms.CharField(max_length=15, required=False)
-    linkedin_url = forms.URLField(required=False)
     first_name = forms.CharField(max_length=150, required=True)
     last_name = forms.CharField(max_length=150, required=True)
-    languages = forms.CharField(max_length=50, required=False)
 
     class Meta:
         model = Candidate
