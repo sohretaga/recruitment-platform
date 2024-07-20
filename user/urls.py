@@ -18,6 +18,7 @@ urlpatterns = [
 
     path('company-list', views.company_list, name='company-list'),
     path('company/<str:username>', views.company_details, name='company'),
+    path('ajax/delete-profile-image', views.delete_pfofile_image, name='delete-profile-image'),
 
     path('manage-education', views.manage_education, name='manage-education'),
     path('ajax/delete-education', views.delete_education, name='ajax-delete-education'),

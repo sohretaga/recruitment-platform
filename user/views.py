@@ -25,6 +25,8 @@ from recruitment_cp.models import(
         ParameterCompetence
     )
 
+import os
+
 @logout_required
 def sign_in(request):
     if request.method == "POST":
@@ -408,5 +410,26 @@ def delete_experience(request):
 
     if experience_exists:
         Experience.objects.filter(id=experience_id, candidate=request.user.candidate).delete()
+
+    return JsonResponse({'status': 200})
+
+@login_required
+@require_POST
+def delete_pfofile_image(request):
+    user = request.user
+    image_id = request.POST.get('image_id')
+
+    if image_id == 'profile-img':
+        if os.path.isfile(user.profile_photo.path):
+            os.remove(user.profile_photo.path)
+
+        user.profile_photo = ''
+        user.save()
+    else:
+        if os.path.isfile(user.employer.background_image.path):
+            os.remove(user.employer.background_image.path)
+
+        user.employer.background_image = ''
+        user.employer.save()
 
     return JsonResponse({'status': 200})

@@ -77,7 +77,7 @@
                             {% if vacancy.employer.background_image %}
                                 <img src="{{ vacancy.employer.background_image.url }}" class="background-img" alt="{{ vacancy.company_name }} Background">
                             {% else %}
-                                <img src="{% static 'main/images/job-detail.jpg' %}" class="background-img" alt="{{ vacancy.company_name }} Background">
+                                <img src="{% static 'main/images/featured-job/default-job-bg.jpg' %}" class="background-img" alt="{{ vacancy.company_name }} Background">
                             {% endif %}
                             <div class="job-details-compnay-profile">
                                 {% if vacancy.profile_photo_url %}

@@ -1,6 +1,7 @@
 const selects = document.querySelectorAll('select');
 const educations = document.getElementById('educations');
-const experiences = document.getElementById('experiences')
+const experiences = document.getElementById('experiences');
+
 var tempPresentId = 1;
 
 selects.forEach(select => {

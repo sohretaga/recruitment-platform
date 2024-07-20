@@ -1,6 +1,7 @@
 const selects = document.querySelectorAll('select');
 const galleryImages = document.getElementById('gallery-images');
 const limitAlert = document.getElementById('limit-alert');
+const menus = document.querySelectorAll('.edit-menu');
 var tempImageId = 1;
 
 selects.forEach(select => {
@@ -80,3 +81,42 @@ const addImage = () => {
 
     tempImageId += 1;
 };
+
+const toggleMenu = (menuId) => {
+    var menu = document.getElementById(menuId);
+    var isMenuVisible = menu.style.display === 'block';
+    closeAllMenus();
+    if (!isMenuVisible) {
+        menu.style.display = 'block';
+    }
+};
+
+const closeAllMenus = () => {
+    menus.forEach(function(menu) {
+        menu.style.display = 'none';
+    });
+};
+
+const removeImage = (imageId) => {
+    var img = document.getElementById(imageId);
+
+    $.ajax({
+        url: '/ajax/delete-profile-image',
+        type: 'POST',
+        data: {image_id: imageId},
+        success: function () {
+            if (imageId == 'profile-img') {
+                img.src = '/static/main/images/featured-job/default-company-img.jpeg';
+            }else {
+                img.src = '/static/main/images/featured-job/default-job-bg.jpg';
+            };
+        }
+    });
+};
+
+document.addEventListener('click', function(event) {
+    var isClickInsideMenu = event.target.closest('.profile-photo-edit') || event.target.closest('.edit-menu');
+    if (!isClickInsideMenu) {
+        closeAllMenus();
+    }
+});
