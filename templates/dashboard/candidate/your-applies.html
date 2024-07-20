@@ -81,7 +81,7 @@
                                 <tbody>
                                     {% for apply in applications %}
                                     <tr>
-                                        <td><a href="{% url 'user:company' apply.slug %}" class="text-dark font-weight-bold" target='_blank'>{{ apply.position_title }}</a></td>
+                                        <td><a href="{% url 'job:vacancy' apply.slug %}" class="text-dark font-weight-bold" target='_blank'>{{ apply.position_title }}</a></td>
                                         <td>{{ apply.job_title }}</td>
                                         <td>{{ apply.career_level }}</td>
                                         <td>{{ apply.company_name }}</td>
