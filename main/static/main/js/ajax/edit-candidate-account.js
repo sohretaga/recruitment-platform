@@ -1,7 +1,7 @@
 const selects = document.querySelectorAll('select');
 const educations = document.getElementById('educations');
 const experiences = document.getElementById('experiences');
-
+const menus = document.querySelectorAll('.edit-menu');
 var tempPresentId = 1;
 
 selects.forEach(select => {
@@ -131,3 +131,38 @@ const endDateManage = (input) => {
         endDateInputHidden.setAttribute('disabled', 'disabled');
     };
 };
+
+const toggleMenu = (menuId) => {
+    var menu = document.getElementById(menuId);
+    var isMenuVisible = menu.style.display === 'block';
+    closeAllMenus();
+    if (!isMenuVisible) {
+        menu.style.display = 'block';
+    }
+};
+
+const closeAllMenus = () => {
+    menus.forEach(function(menu) {
+        menu.style.display = 'none';
+    });
+};
+
+const removeImage = (imageId) => {
+    var img = document.getElementById(imageId);
+
+    $.ajax({
+        url: '/ajax/delete-profile-image',
+        type: 'POST',
+        data: {image_id: imageId},
+        success: function () {
+            img.src = '/static/main/images/featured-job/default-company-img.jpeg';
+        }
+    });
+};
+
+document.addEventListener('click', function(event) {
+    var isClickInsideMenu = event.target.closest('.profile-photo-edit') || event.target.closest('.edit-menu');
+    if (!isClickInsideMenu) {
+        closeAllMenus();
+    }
+});

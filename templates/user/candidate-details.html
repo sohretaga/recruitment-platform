@@ -18,6 +18,7 @@
      <!-- App Css-->
      <link href="{% static 'main/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
      <!--Custom Css-->
+    <link rel="stylesheet" href="{% static 'main/css/company-details.css' %}">
 {% endblock head %}
 
 {% block content %}
@@ -417,13 +418,17 @@
                                                     {% if candidate.user.profile_photo %}
                                                     <img src="{{ candidate.user.profile_photo.url }}" class="rounded-circle img-thumbnail profile-img" id="profile-img" alt="{{ candidate.user.first_name }}">
                                                     {% else %}
-                                                    <img src="{% static 'main/images/user/img-02.jpg' %}" class="rounded-circle img-thumbnail profile-img" id="profile-img" alt="{{ candidate.user.first_name }}">
+                                                    <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" class="rounded-circle img-thumbnail profile-img" id="profile-img" alt="{{ candidate.user.first_name }}">
                                                     {% endif %}
                                                     <div class="p-0 rounded-circle profile-photo-edit">
                                                         <input name="profile_photo" id="profile-img-file-input" type="file" class="profile-img-file-input" accept="image/*" onchange="previewImg(this)">
-                                                        <label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
+                                                        <label class="profile-photo-edit avatar-xs" onclick="toggleMenu('profile-menu')">
                                                             <i class="uil uil-edit"></i>
                                                         </label>
+                                                        <div class="edit-menu" id="profile-menu">
+                                                            <label for="profile-img-file-input" class="edit-option">Upload</label>
+                                                            <label class="edit-option" onclick="removeImage('profile-img')">Remove</label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
