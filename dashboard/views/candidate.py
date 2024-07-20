@@ -31,6 +31,8 @@ def manage_account(request):
         user = request.user
         form = ManageCandidateAccountForm(request.POST, request.FILES, instance=user.candidate)
 
+        print(form.errors)
+
         if form.is_valid():
             email = form.cleaned_data.get('email')
             profile_photo = form.cleaned_data.get('profile_photo')

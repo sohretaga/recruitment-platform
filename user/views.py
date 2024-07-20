@@ -123,9 +123,12 @@ def candidate_details(request, username):
             address = form.cleaned_data.get('address')
             first_name = form.cleaned_data.get('first_name')
             last_name = form.cleaned_data.get('last_name')
+            languages = form.cleaned_data.get('languages')
             instance = form.save(commit=False)
+            
+            if languages:
+                instance.languages = languages.split(',')
 
-            instance.languages = form.cleaned_data.get('languages').split(',')
             instance.save()
 
             if profile_photo:
