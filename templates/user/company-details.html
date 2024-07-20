@@ -268,38 +268,37 @@
                                         {% csrf_token %}
                                         <div>
                                             <h5 class="fs-17 fw-semibold mb-3 mb-0">My Account</h5>
-                                            <div class="row">
-                                                <div class="text-center col-lg-6">
-                                                    <div class="mb-4 profile-user">
-                                                        {% if employer.user.profile_photo %}
-                                                        <img src="{{ employer.user.profile_photo.url }}" class="rounded-circle img-thumbnail profile-img" id="profile-img" alt="{{ employer.user.first_name }}">
+                                            <div class="row mb-5">
+                                                <div class="text-center col-lg-12">
+                                                    <div class="mb-4 profile-user position-relative w-100">
+                                                        {% if employer.background_image %}
+                                                        <img src="{{ employer.background_image.url }}" class="img-thumbnail profile-bg-img" id="background-img" alt="{{ employer.user.first_name }}">
                                                         {% else %}
-                                                        <img src="{% static 'main/images/user/img-02.jpg' %}" class="rounded-circle img-thumbnail profile-img" id="profile-img" alt="{{ employer.user.first_name }}">
+                                                        <img src="{% static 'main/images/user/img-02.jpg' %}" class="img-thumbnail profile-bg-img" id="background-img" alt="{{ employer.user.first_name }}">
                                                         {% endif %}
-                                                        <div class="p-0 rounded-circle profile-photo-edit">
-                                                            <input name="profile_photo" id="profile-img-file-input" type="file" class="profile-img-file-input" accept="image/*" onchange="previewImg(this)">
-                                                            <label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
+                                                        <div class="p-0 profile-photo-edit bg-photo-edit">
+                                                            <input name="background_image" id="background-img-file-input" type="file" class="profile-img-file-input" accept="image/*" onchange="previewImg(this)">
+                                                            <label for="background-img-file-input" class="profile-photo-edit bg-photo avatar-xs">
                                                                 <i class="uil uil-edit"></i>
                                                             </label>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div class="text-center col-lg-6">
-                                                    <div class="mb-4 profile-user">
-                                                        {% if employer.background_image %}
-                                                        <img src="{{ employer.background_image.url }}" class="img-thumbnail profile-img" id="background-img" alt="{{ employer.user.first_name }}" style="width: 300px;">
-                                                        {% else %}
-                                                        <img src="{% static 'main/images/user/img-02.jpg' %}" class="img-thumbnail profile-img" id="background-img" alt="{{ employer.user.first_name }}" style="width: 300px;">
-                                                        {% endif %}
-                                                        <div class="p-0 profile-photo-edit">
-                                                            <input name="background_image" id="background-img-file-input" type="file" class="profile-img-file-input" accept="image/*" onchange="previewImg(this)">
-                                                            <label for="background-img-file-input" class="profile-photo-edit avatar-xs">
-                                                                <i class="uil uil-edit"></i>
-                                                            </label>
+                                                        <div class="profile-photo-wrapper">
+                                                            {% if employer.user.profile_photo %}
+                                                            <img src="{{ employer.user.profile_photo.url }}" class="rounded-circle img-thumbnail profile-img" id="profile-img" alt="{{ employer.user.first_name }}">
+                                                            {% else %}
+                                                            <img src="{% static 'main/images/user/img-02.jpg' %}" class="rounded-circle img-thumbnail profile-img" id="profile-img" alt="{{ employer.user.first_name }}">
+                                                            {% endif %}
+                                                            <div class="p-0 rounded-circle profile-photo-edit">
+                                                                <input name="profile_photo" id="profile-img-file-input" type="file" class="profile-img-file-input" accept="image/*" onchange="previewImg(this)">
+                                                                <label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
+                                                                    <i class="uil uil-edit"></i>
+                                                                </label>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            
                                             <div class="row">
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
