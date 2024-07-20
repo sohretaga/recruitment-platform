@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="{{ vacancy.definition|safe }}">
-<meta name="keywords" content="{% for keyword in keywords %}{% if keyword.id|slugify in vacancy.keywords %}{{keyword.name}}{% if not keyword.id|slugify == vacancy.keywords|last %},{% endif %}{% endif %}{% endfor %}">
+<meta name="keywords" content="{% if vacancy.keywords %}{% for key in vacancy.keywords %}{{ keywords|get_item:key }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}">
 {% endblock meta %}
 
 {% block head %}
@@ -123,25 +123,25 @@
                             <div class="mt-4">
                                 <div class="row g-2">
                                     <div class="col-lg-3">
-                                        <div class="border rounded-start p-3">
+                                        <div class="border rounded-start p-3 h-100">
                                             <p class="text-muted mb-0 fs-13">Experience</p>
                                             <p class="fw-medium fs-15 mb-0">{{ vacancy.work_experience_name }}</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
-                                        <div class="border p-3">
+                                        <div class="border p-3 h-100">
                                             <p class="text-muted fs-13 mb-0">Employee type</p>
                                             <p class="fw-medium mb-0">{{ vacancy.employment_type_name }}</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
-                                        <div class="border p-3">
+                                        <div class="border p-3 h-100">
                                             <p class="text-muted fs-13 mb-0">Position</p>
                                             <p class="fw-medium mb-0">{{ vacancy.career_type_name }}</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
-                                        <div class="border rounded-end p-3">
+                                        <div class="border rounded-end p-3 h-100">
                                             <p class="text-muted fs-13 mb-0">Offer Salary</p>
                                             <p class="fw-medium mb-0">{{ vacancy.salary }} ₼ / Month</p>
                                         </div>
