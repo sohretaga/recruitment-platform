@@ -444,6 +444,7 @@
                     <input type="hidden" id="has-value-action-{{ applicant.id }}" value="{{ applicant.employer_action.action }}">
                     <input type="hidden" id="has-value-invite-date-{{ applicant.id }}" value="{{ applicant.employer_action.invite_date }}">
                     <input type="hidden" id="has-value-request-other-date-{{ applicant.id }}" value="{{ applicant.candidate_action.request_other_date }}">
+                    <input type="hidden" id="applicant-user-{{ applicant.id }}" value="{{ applicant.candidate.user.id }}">
                     {% endfor %}
                 </div><!--end col-->
             </div><!--end row-->

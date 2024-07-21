@@ -194,83 +194,19 @@
                     <!--end navabar-collapse-->
                     <ul class="header-menu list-inline d-flex align-items-center mb-0">
                         {% if user.is_authenticated %}
-                            <li class="list-inline-item dropdown me-4">
+                            <li class="list-inline-item dropdown me-4" hx-ext="ws" ws-connect="/ws/notifications/{{ user.id }}/">
                                 <a href="javascript:void(0)" class="header-item noti-icon position-relative" id="notification" data-bs-toggle="dropdown"
                                     aria-expanded="false">
                                     <i class="mdi mdi-bell fs-22"></i>
-                                    <div class="count position-absolute">3</div>
+                                    <div class="count position-absolute" id="notification-count"></div>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end p-0" aria-labelledby="notification">
                                     <div class="notification-header border-bottom bg-light">
                                         <h6 class="mb-1"> Notification </h6>
                                         <p class="text-muted fs-13 mb-0">You have 4 unread Notification</p>
                                     </div>
-                                    <div class="notification-wrapper dropdown-scroll">
-                                        <a href="javascript:void(0)" class="text-dark notification-item d-block active">
-                                            <div class="d-flex align-items-center">
-                                                <div class="flex-shrink-0 me-3">
-                                                    <div class="avatar-xs bg-primary text-white rounded-circle text-center">
-                                                        <i class="uil uil-user-check"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-grow-1">
-                                                    <h6 class="mt-0 mb-1 fs-14">22 verified registrations</h6>
-                                                    <p class="mb-0 fs-12 text-muted"><i class="mdi mdi-clock-outline"></i> <span>3 min
-                                                        ago</span></p>
-                                                </div>
-                                            </div>
-                                        </a><!--end notification-item-->
-                                        <a href="javascript:void(0)" class="text-dark notification-item d-block">
-                                            <div class="d-flex align-items-center">
-                                                <div class="flex-shrink-0 me-3">
-                                                    <img src="{% static 'main/images/user/img-02.jpg' %}" class="rounded-circle avatar-xs" alt="user-pic">
-                                                </div>
-                                                <div class="flex-grow-1">
-                                                    <h6 class="mt-0 mb-1 fs-14">James Lemire</h6>
-                                                    <p class="text-muted fs-12 mb-0"><i class="mdi mdi-clock-outline"></i> <span>15 min
-                                                        ago</span></p>
-                                                </div>
-                                            </div>
-                                        </a><!--end notification-item-->
-                                        <a href="javascript:void(0)" class="text-dark notification-item d-block">
-                                            <div class="d-flex align-items-center">
-                                                <div class="flex-shrink-0 me-3">
-                                                    <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" class="rounded-circle avatar-xs"
-                                                        alt="user-pic">
-                                                </div>
-                                                <div class="flex-grow-1">
-                                                    <h6 class="mt-0 mb-1 fs-14">Applications has been approved</h6>
-                                                    <p class="text-muted mb-0 fs-12"><i class="mdi mdi-clock-outline"></i> <span>45 min
-                                                        ago</span></p>
-                                                </div>
-                                            </div>
-                                        </a><!--end notification-item-->
-                                        <a href="javascript:void(0)" class="text-dark notification-item d-block">
-                                            <div class="d-flex align-items-center">
-                                                <div class="flex-shrink-0 me-3">
-                                                    <img src="{% static 'main/images/user/img-01.jpg' %}" class="rounded-circle avatar-xs"
-                                                        alt="user-pic">
-                                                </div>
-                                                <div class="flex-grow-1">
-                                                    <h6 class="mt-0 mb-1 fs-14">Kevin Stewart</h6>
-                                                    <p class="text-muted mb-0 fs-12"><i class="mdi mdi-clock-outline"></i> <span>1 hour
-                                                        ago</span></p>
-                                                </div>
-                                            </div>
-                                        </a><!--end notification-item-->
-                                        <a href="javascript:void(0)" class="text-dark notification-item d-block">
-                                            <div class="d-flex align-items-center">
-                                                <div class="flex-shrink-0 me-3">
-                                                    <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" class="rounded-circle avatar-xs"
-                                                        alt="user-pic">
-                                                </div>
-                                                <div class="flex-grow-1">
-                                                    <h6 class="mt-0 mb-1 fs-15">Creative Agency</h6>
-                                                    <p class="text-muted mb-0 fs-12"><i class="mdi mdi-clock-outline"></i> <span>2 hour
-                                                        ago</span></p>
-                                                </div>
-                                            </div>
-                                        </a><!--end notification-item-->
+                                    <div class="notification-wrapper dropdown-scroll" id="notifications">
+                                        
                                     </div><!--end notification-wrapper-->
                                     <div class="notification-footer border-top text-center">
                                         <a class="primary-link fs-13" href="javascript:void(0)">
@@ -554,6 +490,60 @@
 
         </div>
         <!-- END layout-wrapper -->
+        
+
+        <!-- HTMX -->
+        <!-- <script src="https://unpkg.com/htmx.org@1.8.5" integrity="sha384-7aHh9lqPYGYZ7sTHvzP1t3BAfLhYSTy9ArHdP3Xsr9/3TlGurYgcPBoFmXX2TX/w" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/htmx.org/dist/ext/ws.js"></script> -->
+
+        <script>
+            let WsUrl = `ws://${window.location.host}/ws/notifications/{{ user.id }}/`;
+            const notificationSocket = new WebSocket(WsUrl);
+            const notifications = document.getElementById('notifications');
+            const notificationCoutn = document.getElementById('notification-count');
+            
+            notificationSocket.onmessage = function(e) {
+                const data = JSON.parse(e.data);
+                const message = data['message'];
+
+                if(notificationCoutn.innerText){
+                    notificationCoutn.innerText = parseInt(notificationCoutn.innerText)+1;
+                }else {
+                    notificationCoutn.innerText = 1;
+                };
+                
+                notifications.insertAdjacentHTML('afterend', `
+                <a href="javascript:void(0)" class="text-dark notification-item d-block">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0 me-3">
+                            <img src="/static/main/images/featured-job/default-company-img.jpeg" class="rounded-circle avatar-xs"
+                                alt="user-pic">
+                        </div>
+                        <div class="flex-grow-1">
+                            <h6 class="mt-0 mb-1 fs-14">${message}</h6>
+                            <p class="text-muted mb-0 fs-12"><i class="mdi mdi-clock-outline"></i> <span>45 min
+                                ago</span></p>
+                        </div>
+                    </div>
+                </a>
+                `);
+            }
+
+            const sendNotification = (message, target_id) => {
+                const targetWsUrl = `ws://${window.location.host}/ws/send-notifications/${target_id}/`;
+                const targetSocket = new WebSocket(targetWsUrl);
+
+                targetSocket.onopen = () => {
+                    targetSocket.send(
+                        JSON.stringify({
+                            message: message,
+                            target_id: target_id
+                        })
+                    );
+                }
+            };
+        </script>
+
 
         <script src="{% static 'dashboard/libs/jquery/jquery.min.js' %}"></script>
         <script>

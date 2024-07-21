@@ -35,16 +35,17 @@ ALLOWED_HOSTS = ['127.0.0.1', 'rec.mec.az']
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     'froala_editor',
     'fontawesomefree',
-    'phonenumber_field',
+    'channels',
 
     'recruitment_cp',
     'dashboard',
@@ -85,6 +86,21 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'recruitment.wsgi.application'
+ASGI_APPLICATION = 'recruitment.asgi.application'
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels.layers.InMemoryChannelLayer",
+#     },
+# }
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+        },
+    },
+}
 
 
 # Database

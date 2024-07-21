@@ -165,6 +165,7 @@ const sendAction = (id) => {
             employerActionModal.hide();
             const asctionStatus = document.getElementById(`action-status-${id}`);
             const hasValueAcceptRequestOtherDate =  document.getElementById(`has-value-request-other-date-${id}`);
+            const applicantUserId = document.getElementById(`applicant-user-${id}`).value;
 
             document.getElementById(`has-value-action-${id}`).value = selectedActionValue;
             document.getElementById(`has-value-invite-date-${id}`).value = selectedInviteDateValue;
@@ -194,6 +195,8 @@ const sendAction = (id) => {
                 asctionStatus.innerHTML = `<span>Requested Date Accepted<br>${hasValueAcceptRequestOtherDate.value}</span> <i class="uil uil-clock-eight"></i>`;
                 asctionStatus.classList = 'btn btn-success';
             }
+            
+            sendNotification(`The employer has processed your application! - ${selectedActionValue}`, applicantUserId);
         }
     });
 };
