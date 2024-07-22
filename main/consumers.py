@@ -32,7 +32,7 @@ class NotificationConsumer(WebsocketConsumer):
         )
     
     def employer_action_notification(self, event):
-        message = text_data=event['message']
+        message = event['message']
 
         self.send(text_data=json.dumps(
             {'message': message}
