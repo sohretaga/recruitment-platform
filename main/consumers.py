@@ -3,7 +3,6 @@ from asgiref.sync import async_to_sync
 from django.contrib.auth import get_user_model
 import json
 
-User = get_user_model()
 
 class NotificationConsumer(WebsocketConsumer):
     def connect(self):
@@ -24,12 +23,6 @@ class NotificationConsumer(WebsocketConsumer):
     def receive(self, text_data=None, bytes_data=None):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
-
-        try:
-            target_user = User.objects.aget(id=self.user)
-
-        except User.DoesNotExist:
-            ...
 
         async_to_sync(self.channel_layer.group_send)(
             self.group_name,
