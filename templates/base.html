@@ -242,10 +242,6 @@
                                         <li><a class="dropdown-item" target="_blank" href="{% url 'cp:vacancy' %}">Control Panel</a></li>
                                     {% endif %}
                                 </ul>
-
-                                {% if user.user_type == 'employer' or user.is_superuser %}
-                                    <a href="{% url 'dashboard:post-vacancy' %}"><span class="d-none d-md-inline-block fw-medium">| Post Vacancy</span></a>
-                                {% endif %}
                             </li>
                         {% else %}
                             <li class="list-inline-item py-2 me-2 align-middle dropdown login-mobile">
