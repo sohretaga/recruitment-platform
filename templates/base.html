@@ -194,19 +194,18 @@
                     <!--end navabar-collapse-->
                     <ul class="header-menu list-inline d-flex align-items-center mb-0">
                         {% if user.is_authenticated %}
-                            <li class="list-inline-item dropdown me-4" hx-ext="ws" ws-connect="/ws/notifications/{{ user.id }}/">
-                                <a href="javascript:void(0)" class="header-item noti-icon position-relative" id="notification" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
+                            <li class="list-inline-item dropdown me-4">
+                                <a href="javascript:void(0)" class="header-item noti-icon position-relative" data-bs-toggle="dropdown" aria-expanded="false" id="notification-toggle">
                                     <i class="mdi mdi-bell fs-22"></i>
-                                    <div class="count position-absolute" id="notification-count"></div>
+                                    <div class="count position-absolute {% if not notification_count %}d-none{% endif %}" id="notification-count">{{ notification_count }}</div>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end p-0" aria-labelledby="notification">
                                     <div class="notification-header border-bottom bg-light">
                                         <h6 class="mb-1"> Notification </h6>
-                                        <p class="text-muted fs-13 mb-0">You have 4 unread Notification</p>
+                                        <p class="text-muted fs-13 mb-0 d-none" id="unread-notification-text">You have <span>4</span> unread Notification</p>
                                     </div>
-                                    <div class="notification-wrapper dropdown-scroll" id="notifications">
-                                        
+                                    <div class="notification-wrapper dropdown-scroll" id="notification-list">
+                                        <!-- Notifications will be dynamically added here -->
                                     </div><!--end notification-wrapper-->
                                     <div class="notification-footer border-top text-center">
                                         <a class="primary-link fs-13" href="javascript:void(0)">
@@ -486,13 +485,54 @@
 
         </div>
         <!-- END layout-wrapper -->
-        
-
-        <!-- HTMX -->
-        <!-- <script src="https://unpkg.com/htmx.org@1.8.5" integrity="sha384-7aHh9lqPYGYZ7sTHvzP1t3BAfLhYSTy9ArHdP3Xsr9/3TlGurYgcPBoFmXX2TX/w" crossorigin="anonymous"></script>
-        <script src="https://unpkg.com/htmx.org/dist/ext/ws.js"></script> -->
 
         <script>
+
+            document.getElementById('notification-toggle').addEventListener('show.bs.dropdown', function() {
+                fetch('/get-notifications')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                            }
+                        return response.json();
+                    })
+                    .then(data => {
+                        const notifications = JSON.parse(data.notifications);
+                        loadNotifications(notifications);
+                    })
+                    .catch(error => {
+                        console.error('Fetch error:', error);
+                    });
+            });
+
+            const loadNotifications = (data) => {
+                const notificationList = document.getElementById('notification-list');
+                const notificationCount = document.getElementById('notification-count');
+
+                notificationList.innerHTML = '';
+                notificationCount.innerText = '';
+                notificationCount.classList.add('d-none');
+                
+                let unreadCount = 0;
+
+                data.forEach(notification => {
+                    const newNotificationHTML = `
+                        <a href="javascript:void(0)" class="text-dark notification-item d-block">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0 me-3">
+                                    <img src="/static/main/images/featured-job/default-company-img.jpeg" class="rounded-circle avatar-xs" alt="user-pic">
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="mt-0 mb-1 fs-14">${notification.content}</h6>
+                                    <p class="text-muted mb-0 fs-12"><i class="mdi mdi-clock-outline"></i> <span>45 min ago</span></p>
+                                </div>
+                            </div>
+                        </a>
+                    `;
+                    notificationList.innerHTML = newNotificationHTML + notificationList.innerHTML;
+                });
+            };
+
             let wsProtocol;
             if(window.location.protocol == 'https:'){
                 wsProtocol = 'wss://';
@@ -502,12 +542,13 @@
 
             const WsUrl = `${wsProtocol}${window.location.host}/ws/notifications/{{ user.id }}/`;
             const notificationSocket = new WebSocket(WsUrl);
-            const notifications = document.getElementById('notifications');
+            const notificationList = document.getElementById('notification-list');
             const notificationCoutn = document.getElementById('notification-count');
             
             notificationSocket.onmessage = function(e) {
                 const data = JSON.parse(e.data);
                 const message = data['message'];
+                notificationCoutn.classList.remove('d-none');
 
                 if(notificationCoutn.innerText){
                     notificationCoutn.innerText = parseInt(notificationCoutn.innerText)+1;
@@ -515,22 +556,22 @@
                     notificationCoutn.innerText = 1;
                 };
                 
-                notifications.insertAdjacentHTML('afterend', `
-                <a href="javascript:void(0)" class="text-dark notification-item d-block">
-                    <div class="d-flex align-items-center">
-                        <div class="flex-shrink-0 me-3">
-                            <img src="/static/main/images/featured-job/default-company-img.jpeg" class="rounded-circle avatar-xs"
-                                alt="user-pic">
+                const newNotificationHTML = `
+                    <a href="javascript:void(0)" class="text-dark notification-item d-block">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0 me-3">
+                                <img src="/static/main/images/featured-job/default-company-img.jpeg" class="rounded-circle avatar-xs" alt="user-pic">
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="mt-0 mb-1 fs-14">${message}</h6>
+                                <p class="text-muted mb-0 fs-12"><i class="mdi mdi-clock-outline"></i> <span>45 min ago</span></p>
+                            </div>
                         </div>
-                        <div class="flex-grow-1">
-                            <h6 class="mt-0 mb-1 fs-14">${message}</h6>
-                            <p class="text-muted mb-0 fs-12"><i class="mdi mdi-clock-outline"></i> <span>45 min
-                                ago</span></p>
-                        </div>
-                    </div>
-                </a>
-                `);
-            }
+                    </a>
+                `;
+
+                notificationList.innerHTML = newNotificationHTML + notificationList.innerHTML;
+            };
 
             const sendNotification = (message, target_id) => {
                 const targetWsUrl = `${wsProtocol}${window.location.host}/ws/send-notifications/${target_id}/`;

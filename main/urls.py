@@ -12,5 +12,6 @@ urlpatterns = [
     path('pricing', views.pricing, name='pricing'),
     path('privacy-policy', views.privacy_policy, name='privacy-policy'),
     path('faqs', views.faqs, name='faqs'),
-    path('coming-soon', views.coming_soon, name='coming-soon')
+    path('coming-soon', views.coming_soon, name='coming-soon'),
+    path('get-notifications', views.get_notifications, name='get-notifications')
 ]

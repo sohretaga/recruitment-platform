@@ -1,6 +1,7 @@
 from collections import Counter
 from job.models import Vacancy
 from recruitment_cp.models import ParameterKeyword
+from main.models import Notification
 import math
 
 def get_vacancy_in_sublists(objects_per_list=5) -> list:
@@ -39,3 +40,11 @@ def get_trending_keywords():
     most_common_keyword_names = ParameterKeyword.objects.filter(id__in=most_common_keyword_ids).values_list('name', flat=True)
 
     return most_common_keyword_names
+
+def mark_notifications_as_read(request) -> None:
+    unread_notifictions = request.user.notifications_received.filter(read=False)
+    if unread_notifictions:
+        for read in unread_notifictions:
+            read.read = True
+
+        Notification.objects.bulk_update(unread_notifictions, ['read'])

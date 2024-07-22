@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.http import JsonResponse
+from threading import Thread
 
 from job.utils import fetch_vacancies
 from user.models import Employer
@@ -6,7 +8,9 @@ from job.models import Vacancy
 from recruitment_cp.models import ParameterFAQ, ParameterKeyword
 from main.models import FAQ
 from blog.models import Blog
-from .utils import get_vacancy_in_sublists
+from .utils import get_vacancy_in_sublists, mark_notifications_as_read
+
+import json
 
 # Create your views here.
 
@@ -63,3 +67,18 @@ def faqs(request):
 
 def coming_soon(request):
     return render(request, 'main/coming-soon.html')
+
+
+def get_notifications(request):
+    thread = Thread(target=mark_notifications_as_read, args=(request,))
+    thread.start()
+
+    notifications = request.user.notifications_received.values(
+        'content'
+    )[:10]
+
+    context = {
+        'notifications': json.dumps(list(notifications))
+    }
+
+    return JsonResponse(context, safe=False)
