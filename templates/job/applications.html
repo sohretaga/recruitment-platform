@@ -185,6 +185,7 @@
                     <input type="hidden" id="has-value-employer-action-{{ apply.id }}" value="{{ apply.employer_action.action }}">
                     <input type="hidden" id="has-value-request-other-date-{{ apply.id }}" value="{{ apply.candidate_action.request_other_date }}">
                     <input type="hidden" id="has-value-invite-date-{{ apply.id }}" value="{{ apply.employer_action.invite_date }}">
+                    <input type="hidden" id="employer-user-{{ apply.id }}" value="{{ apply.vacancy.employer.user.id }}">
                     {% endfor %}
                 </div><!--end col-->    
             </div><!--end row-->

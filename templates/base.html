@@ -493,7 +493,14 @@
         <script src="https://unpkg.com/htmx.org/dist/ext/ws.js"></script> -->
 
         <script>
-            let WsUrl = `wss://${window.location.host}/ws/notifications/{{ user.id }}/`;
+            let wsProtocol;
+            if(window.location.protocol == 'https:'){
+                wsProtocol = 'wss://';
+            }else if (window.location.protocol == 'http:') {
+                wsProtocol = 'ws://';
+            };
+
+            const WsUrl = `${wsProtocol}${window.location.host}/ws/notifications/{{ user.id }}/`;
             const notificationSocket = new WebSocket(WsUrl);
             const notifications = document.getElementById('notifications');
             const notificationCoutn = document.getElementById('notification-count');
@@ -526,7 +533,7 @@
             }
 
             const sendNotification = (message, target_id) => {
-                const targetWsUrl = `wss://${window.location.host}/ws/send-notifications/${target_id}/`;
+                const targetWsUrl = `${wsProtocol}${window.location.host}/ws/send-notifications/${target_id}/`;
                 const targetSocket = new WebSocket(targetWsUrl);
 
                 targetSocket.onopen = () => {

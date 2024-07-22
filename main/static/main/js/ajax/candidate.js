@@ -101,7 +101,8 @@ const sendAction = (id) => {
             const asctionStatus = document.getElementById(`action-status-${id}`);
             const hasValueInviteDate = document.getElementById(`has-value-invite-date-${id}`);
             document.getElementById(`has-value-action-${id}`).value = selectedActionValue;
-            document.getElementById(`has-value-request-other-date-${id}`).value = selectedRequestOtherDate;            
+            document.getElementById(`has-value-request-other-date-${id}`).value = selectedRequestOtherDate;  
+            const employerId = document.getElementById(`employer-user-${id}`).value;
             
             if (selectedActionValue == 'ACCEPT') {
                 asctionStatus.innerHTML = `<span>Invitation Accepted<br>${hasValueInviteDate.value}</span> <i class="uil uil-check-circle">`;
@@ -115,6 +116,8 @@ const sendAction = (id) => {
                 asctionStatus.innerHTML = `<span>Requested Another Date<br>${selectedRequestOtherDate}</span> <i class="uil uil-clock-eight"></i>`;
                 asctionStatus.classList = 'btn btn-success';
             };
+
+            sendNotification(`The candidate has processed your action! - ${selectedActionValue}`, employerId);
         }
     });
 };
