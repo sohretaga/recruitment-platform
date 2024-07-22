@@ -490,6 +490,12 @@
 
             document.getElementById('notification-toggle').addEventListener('show.bs.dropdown', function() {
                 fetch('/get-notifications')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                            }
+                        return response.json();
+                    })
                     .then(data => {
                         const notifications = JSON.parse(data.notifications);
                         loadNotifications(notifications);
