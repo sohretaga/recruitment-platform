@@ -534,13 +534,7 @@
                 });
             };
 
-            let wsProtocol;
-            if(window.location.protocol == 'https:'){
-                wsProtocol = 'wss://';
-            }else if (window.location.protocol == 'http:') {
-                wsProtocol = 'ws://';
-            };
-
+            const wsProtocol = window.location.protocol === "https:" ? "wss://" : "ws://";
             const WsUrl = `${wsProtocol}${window.location.host}/ws/notifications/{{ user.id }}/`;
             const notificationSocket = new WebSocket(WsUrl);
             const notificationList = document.getElementById('notification-list');
