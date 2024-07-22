@@ -498,6 +498,7 @@
                     })
                     .then(data => {
                         const notifications = JSON.parse(data.notifications);
+                        console.log('inn', notifications)
                         loadNotifications(notifications);
                     })
                     .catch(error => {
