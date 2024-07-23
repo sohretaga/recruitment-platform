@@ -4,19 +4,6 @@ import os
 import sys
 
 
-import os
-
-os.environ.setdefault(
-  'DJANGO_SETTINGS_MODULE',
-  'recruitment.settings'
-)
-
-import django
-
-django.setup()
-
-
-
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'recruitment.settings')
