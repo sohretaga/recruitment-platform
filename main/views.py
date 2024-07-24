@@ -12,8 +12,10 @@ from blog.models import Blog
 from .utils import get_vacancy_in_sublists, mark_notifications_as_read, humanize_time
 
 import json
+import logging
 
 # Create your views here.
+logger = logging.getLogger(__name__)
 
 def index(request):
     vacancies = fetch_vacancies(request)
@@ -72,27 +74,32 @@ def coming_soon(request):
 
 @require_POST
 def get_notifications(request):
-    thread = Thread(target=mark_notifications_as_read, args=(request,))
-    thread.start()
+    try:
+        thread = Thread(target=mark_notifications_as_read, args=(request,))
+        thread.start()
 
-    notifications_list = []
-    notifications = request.user.notifications_received.all()[:10]
+        notifications_list = []
+        notifications = request.user.notifications_received.all()[:10]
 
-    for notification in notifications:
-        related_object = notification.related_object
-        
-        related_data = {
-            'user_type': notification.to_user.user_type,
-            'profile_photo': notification.from_user.profile_photo,
-            'content': notification.content,
-            'vacancy_slug': related_object.vacancy.slug,
-            'timestamp': humanize_time(notification.timestamp)
+        for notification in notifications:
+            related_object = notification.related_object
+            
+            related_data = {
+                'user_type': notification.to_user.user_type,
+                'profile_photo': notification.from_user.profile_photo,
+                'content': notification.content,
+                'vacancy_slug': related_object.vacancy.slug,
+                'timestamp': humanize_time(notification.timestamp)
+            }
+
+            notifications_list.append(related_data)
+
+        context = {
+            'notifications': json.dumps(notifications_list, default=str)
         }
 
-        notifications_list.append(related_data)
+        return JsonResponse(context, safe=False)
 
-    context = {
-        'notifications': json.dumps(notifications_list, default=str)
-    }
-
-    return JsonResponse(context, safe=False)
+    except Exception as e:
+        logger.error(f"Error fetching notifications: {str(e)}")
+        return JsonResponse({'error': 'Internal Server Error'}, status=500)
