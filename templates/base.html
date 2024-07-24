@@ -509,7 +509,8 @@
 
             document.getElementById('notification-toggle').addEventListener('show.bs.dropdown', function() {
                 fetch('/get-notifications', {
-                    method: 'POST'
+                    method: 'POST',
+                    'X-CSRFToken': csrf_token
                 })
                 .then(response => {
                     if (!response.ok) {
