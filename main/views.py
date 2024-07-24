@@ -73,12 +73,22 @@ def get_notifications(request):
     thread = Thread(target=mark_notifications_as_read, args=(request,))
     thread.start()
 
-    notifications = request.user.notifications_received.values(
-        'content'
-    )[:10]
+    notifications_list = []
+    notifications = request.user.notifications_received.all()[:10]
+
+    for notification in notifications:
+        related_object = notification.related_object
+        
+        related_data = {
+            'user_type': notification.to_user.user_type,
+            'content': notification.content,
+            'vacancy_slug': related_object.vacancy.slug
+        }
+
+        notifications_list.append(related_data)
 
     context = {
-        'notifications': json.dumps(list(notifications))
+        'notifications': json.dumps(notifications_list, default=str)
     }
 
     return JsonResponse(context, safe=False)
