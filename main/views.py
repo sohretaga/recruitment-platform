@@ -8,7 +8,7 @@ from job.models import Vacancy
 from recruitment_cp.models import ParameterFAQ, ParameterKeyword
 from main.models import FAQ
 from blog.models import Blog
-from .utils import get_vacancy_in_sublists, mark_notifications_as_read
+from .utils import get_vacancy_in_sublists, mark_notifications_as_read, humanize_time
 
 import json
 
@@ -82,7 +82,8 @@ def get_notifications(request):
         related_data = {
             'user_type': notification.to_user.user_type,
             'content': notification.content,
-            'vacancy_slug': related_object.vacancy.slug
+            'vacancy_slug': related_object.vacancy.slug,
+            'timestamp': humanize_time(notification.timestamp)
         }
 
         notifications_list.append(related_data)

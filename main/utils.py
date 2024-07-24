@@ -48,3 +48,15 @@ def mark_notifications_as_read(request) -> None:
             read.read = True
 
         Notification.objects.bulk_update(unread_notifictions, ['read'])
+
+
+from django.utils.timesince import timesince
+import datetime
+
+def humanize_time(value):
+    now = datetime.datetime.now(datetime.timezone.utc)
+    diff = now - value
+    if diff.days >= 1:
+        return value.strftime('%d %b, %Y')
+    
+    return timesince(value)
