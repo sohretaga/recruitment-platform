@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 from threading import Thread
 
 from job.utils import fetch_vacancies
@@ -69,6 +70,7 @@ def coming_soon(request):
     return render(request, 'main/coming-soon.html')
 
 
+@require_POST
 def get_notifications(request):
     thread = Thread(target=mark_notifications_as_read, args=(request,))
     thread.start()
