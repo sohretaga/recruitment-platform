@@ -1,7 +1,7 @@
 from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
+from channels.db import database_sync_to_async
 import json
-
 
 class NotificationConsumer(WebsocketConsumer):
     def connect(self):
@@ -21,9 +21,25 @@ class NotificationConsumer(WebsocketConsumer):
         )
 
     def receive(self, text_data=None):
+        async_to_sync(self.create_notification)(text_data)
+
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
 
+        self.send(text_data=json.dumps(
+            {'message': message}
+        ))
+
+        async_to_sync(self.channel_layer.group_send)(
+            self.group_name,
+            {
+                'type': 'send_notification',
+                'message': message,
+            }
+        )
+    
+    @database_sync_to_async
+    def create_notification(self, text_data) -> None:
         from main.models import Notification
         from user.models import CustomUser
 
@@ -37,14 +53,6 @@ class NotificationConsumer(WebsocketConsumer):
             to_user=to_user,
             content=message,
             read=False
-        )
-
-        async_to_sync(self.channel_layer.group_send)(
-            self.group_name,
-            {
-                'type': 'send_notification',
-                'message': message,
-            }
         )
     
     def send_notification(self, event):
