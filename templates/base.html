@@ -508,28 +508,21 @@
         <script>
 
             document.getElementById('notification-toggle').addEventListener('show.bs.dropdown', function() {
-
-                $.ajax({
-                    'url': '/get-notifications',
-                    'type': 'POST',
-                    'success': function(response){
-                        const notifications = JSON.parse(response.notifications);
+                fetch('/get-notifications')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                            }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log(data)
+                        const notifications = JSON.parse(data.notifications);
                         loadNotifications(notifications);
-                    }
-                });
-                // fetch('/get-notifications')
-                //     .then(response => {
-                //         if (!response.ok) {
-                //             throw new Error('Network response was not ok');
-                //             }
-                //         return response.json();
-                //     })
-                //     .then(data => {
-                        
-                //     })
-                //     .catch(error => {
-                //         console.error('Fetch error:', error);
-                //     });
+                    })
+                    .catch(error => {
+                        console.error('Fetch error:', error);
+                    });
             });
 
             const loadNotifications = (data) => {

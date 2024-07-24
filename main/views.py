@@ -72,8 +72,8 @@ def coming_soon(request):
 
 @require_POST
 def get_notifications(request):
-    # thread = Thread(target=mark_notifications_as_read, args=(request,))
-    # thread.start()
+    thread = Thread(target=mark_notifications_as_read, args=(request,))
+    thread.start()
 
     notifications_list = []
     notifications = request.user.notifications_received.all()[:10]
