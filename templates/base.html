@@ -516,6 +516,7 @@
                     //     return response.json();
                     // })
                     .then(data => {
+                        console.log(data)
                         const notifications = JSON.parse(data.notifications);
                         loadNotifications(notifications);
                     })
