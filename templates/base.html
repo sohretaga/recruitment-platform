@@ -508,23 +508,13 @@
         <script>
 
             document.getElementById('notification-toggle').addEventListener('show.bs.dropdown', function() {
-                fetch('/get-notifications', {
-                    method: 'POST',
-                    'X-CSRFToken': csrf_token
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                        }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log(data)
-                    const notifications = JSON.parse(data.notifications);
-                    loadNotifications(notifications);
-                })
-                .catch(error => {
-                    console.error('Fetch error:', error);
+                $.ajax({
+                    'url': '/get-notifications',
+                    'type': 'POST',
+                    success: function(response) {
+                        const notifications = JSON.parse(response.notifications);
+                        loadNotifications(notifications);
+                    }
                 });
             });
 
