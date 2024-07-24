@@ -53,10 +53,10 @@ def mark_notifications_as_read(request) -> None:
 from django.utils.timesince import timesince
 import datetime
 
-def humanize_time(value):
+def humanize_time(value) -> str:
     now = datetime.datetime.now(datetime.timezone.utc)
     diff = now - value
     if diff.days >= 1:
         return value.strftime('%d %b, %Y')
     
-    return timesince(value)
+    return f'{timesince(value)}'
