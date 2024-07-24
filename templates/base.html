@@ -554,7 +554,7 @@
             };
 
             const wsProtocol = window.location.protocol === "https:" ? "wss://" : "ws://";
-            const WsUrl = `${wsProtocol}${window.location.host}:8001/ws/notifications/{{ user.id }}/`;
+            const WsUrl = `${wsProtocol}${window.location.host}/ws/notifications/{{ user.id }}/`;
             const notificationSocket = new WebSocket(WsUrl);
             const notificationList = document.getElementById('notification-list');
             const notificationCoutn = document.getElementById('notification-count');
