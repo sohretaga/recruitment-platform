@@ -81,6 +81,7 @@ def get_notifications(request):
         
         related_data = {
             'user_type': notification.to_user.user_type,
+            'profile_photo': notification.from_user.profile_photo,
             'content': notification.content,
             'vacancy_slug': related_object.vacancy.slug,
             'timestamp': humanize_time(notification.timestamp)
