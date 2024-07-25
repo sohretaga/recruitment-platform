@@ -103,5 +103,13 @@ def delete_notifications(request):
     id_list = json.loads(request.POST.get('id_list'))
     notifications = Notification.objects.filter(id__in=id_list)
     notifications.delete()
+
+    return JsonResponse({'status':200})
+
+@require_POST
+def delete_notification(request):
+    notification_id = request.POST.get('notification_id')
+    notifications = Notification.objects.filter(id=notification_id)
+    notifications.delete()
     
     return JsonResponse({'status':200})

@@ -1,6 +1,8 @@
 const selectAllBtn = document.getElementById('select-all-btn');
 const clearAllBtn = document.getElementById('clear-all-btn');
 const deleteNotificationCheckbox = document.querySelectorAll('.notification-delete');
+const deleteNotificationModal = new bootstrap.Modal(document.getElementById('deleteNotificationModal'));
+const deleteNotificationBtn = document.getElementById('delete-notification-btn');
 
 selectAllBtn.addEventListener('click', () => {
     deleteNotificationCheckbox.forEach((checkbox) => {
@@ -44,4 +46,25 @@ const bulkDelete = () => {
             }
         });
     };
+};
+
+$('#deleteNotificationModal').on('hidden.bs.modal', function(e) {
+    deleteNotificationBtn.removeAttribute('onclick');
+});
+
+const deleteRequest = (id) => {
+    deleteNotificationBtn.setAttribute('onclick', `deleteNotification(${id})`);
+    deleteNotificationModal.show();
+};
+
+const deleteNotification = (id) => {
+    $.ajax({
+        url:'/ajax/delete-notification',
+        type: 'POST',
+        data: {notification_id: id},
+        success: function(response) {
+            document.getElementById(`notification-${id}`).remove();
+            deleteNotificationModal.hide();
+        }
+    });
 };
