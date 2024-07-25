@@ -65,17 +65,21 @@
     <section class="section">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-lg-8">
+                <div class="col-lg-4">
                     <div class="mb-4 mb-lg-0">
                         <h6 class="mb-0"> My Notifications </h6>
                     </div>
                 </div><!--end col-->
-                <div class="col-lg-4">
+                <div class="col-lg-8">
                     <div class="candidate-list-widgets">
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 mb-2 d-flex justify-content-end">
+                                <button type="button" class="btn btn-primary me-2 d-none" id="select-all-btn"><i class="uil uil-check-square"></i> Select All</button>
+                                <button type="button" class="btn btn-primary" id="clear-all-btn"><i class="uil uil-trash-alt"></i> Clear All</button>
+                            </div>
+                            <div class="col-lg-3">
                                 <div class="selection-widget">
-                                    <select class="form-select" data-trigger name="choices-single-filter-orderby" id="choices-single-filter-orderby" aria-label="Default select example">
+                                    <select class="form-select" data-trigger name="choices-single-filter-orderby" id="choices-single-filter-orderby">
                                         <option value="df">Default</option>
                                         <option value="ne">Newest</option>
                                         <option value="od">Oldest</option>
@@ -83,9 +87,9 @@
                                     </select>
                                 </div>
                             </div><!--end col-->
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="selection-widget mt-2 mt-lg-0">
-                                    <select class="form-select" data-trigger name="choices-candidate-page" id="choices-candidate-page" aria-label="Default select example">
+                                    <select class="form-select" data-trigger name="choices-candidate-page" id="choices-candidate-page">
                                         <option value="df">All</option>
                                         <option value="ne">Last 2 Month</option>
                                         <option value="ne">Last 6 Month</option>
@@ -101,7 +105,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     {% for notification in notifications %}
-                    <div id="notification-{{ apply.id }}" class="job-box card mt-4">
+                    <div id="notification-{{ notification.id }}" class="job-box card mt-4 notification" data-id="{{ notification.id }}">
                         <div class="card-body p-4">
                             <div class="row">
                                 <div class="col-lg-1">
@@ -123,6 +127,11 @@
                                 </div><!--end col-->
                                 <div class="col-lg-4">
                                     <ul class="list-inline mt-1 mb-0 d-flex justify-content-end">
+                                        <li class="list-inline-item d-none align-items-center me-5 notification-delete" data-bs-toggle="tooltip" data-bs-placement="top" title="Select to delete">
+                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="delete-notification-{{ notification.id }}">
+                                                <label class="form-check-label" for="delete-notification-{{ notification.id }}">Delete</label>
+                                            </div>
+                                        </li>
                                         <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
                                             <a href="javascript:void(0)" class="avatar-sm bg-soft-danger d-inline-block text-center rounded-circle fs-18" onclick="deleteRequest('{{ apply.id }}')">
                                                 <i class="uil uil-trash-alt"></i>
@@ -288,5 +297,5 @@
 <script src="{% static 'main/js/app.js' %}"></script>
 
 <!-- Custom Js -->
-<script src="{% static 'main/js/ajax/candidate.js' %}"></script>
+<script src="{% static 'main/js/ajax/notifications.js' %}"></script>
 {% endblock script %}

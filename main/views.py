@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.core.paginator import Paginator
@@ -10,6 +11,7 @@ from job.models import Vacancy
 from recruitment_cp.models import ParameterFAQ, ParameterKeyword
 from main.models import FAQ
 from blog.models import Blog
+from main.models import Notification
 from .utils import get_vacancy_in_sublists, mark_notifications_as_read, fetch_notifications
 
 import json
@@ -95,3 +97,11 @@ def notifications(request):
     }
 
     return render(request, 'main/notifications.html', context)
+
+@require_POST
+def delete_notifications(request):
+    id_list = json.loads(request.POST.get('id_list'))
+    notifications = Notification.objects.filter(id__in=id_list)
+    notifications.delete()
+    
+    return JsonResponse({'status':200})

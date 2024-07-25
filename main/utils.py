@@ -68,6 +68,7 @@ def fetch_notifications(objects) -> list:
         vacancy_slug = related_object.vacancy.slug if related_object else False
 
         related_data = {
+            'id': notification.id,
             'user_type': notification.to_user.user_type,
             'profile_photo': notification.from_user.profile_photo,
             'full_name':notification.from_user.get_full_name(),

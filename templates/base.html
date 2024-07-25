@@ -509,7 +509,7 @@
 
             document.getElementById('notification-toggle').addEventListener('show.bs.dropdown', function() {
                 $.ajax({
-                    'url': '/get-notifications',
+                    'url': '/ajax/get-notifications',
                     'type': 'POST',
                     success: function(response) {
                         const notifications = JSON.parse(response.notifications);
