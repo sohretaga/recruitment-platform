@@ -564,16 +564,13 @@
                 };
             };
 
-            const sendNotification = (message, target_id) => {
+            const sendNotification = (target_id, args) => {
                 const targetWsUrl = `${wsProtocol}${window.location.host}/ws/send-notifications/${target_id}/`;
                 const targetSocket = new WebSocket(targetWsUrl);
 
                 targetSocket.onopen = () => {
                     targetSocket.send(
-                        JSON.stringify({
-                            message: message,
-                            target_id: target_id
-                        })
+                        JSON.stringify(args)
                     );
                 }
             };

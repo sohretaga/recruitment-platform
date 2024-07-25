@@ -117,7 +117,10 @@ const sendAction = (id) => {
                 asctionStatus.classList = 'btn btn-success';
             };
 
-            sendNotification(`The candidate has processed your action! - ${selectedActionValue}`, employerId);
+            sendNotification(employerId, {
+                message: `The candidate has processed your action! - ${selectedActionValue}`,
+                apply_id: id
+            });
         }
     });
 };
