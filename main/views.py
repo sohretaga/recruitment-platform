@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+from django.core.paginator import Paginator
 from threading import Thread
 
 from job.utils import fetch_vacancies
@@ -9,7 +10,7 @@ from job.models import Vacancy
 from recruitment_cp.models import ParameterFAQ, ParameterKeyword
 from main.models import FAQ
 from blog.models import Blog
-from .utils import get_vacancy_in_sublists, mark_notifications_as_read, humanize_time
+from .utils import get_vacancy_in_sublists, mark_notifications_as_read, fetch_notifications
 
 import json
 
@@ -69,31 +70,28 @@ def faqs(request):
 def coming_soon(request):
     return render(request, 'main/coming-soon.html')
 
-
 @require_POST
 def get_notifications(request):
     thread = Thread(target=mark_notifications_as_read, args=(request,))
     thread.start()
 
-    notifications_list = []
-    notifications = request.user.notifications_received.all()[:10]
-
-    for notification in notifications:
-        related_object = notification.related_object
-        vacancy_slug = related_object.vacancy.slug if related_object else False
-
-        related_data = {
-            'user_type': notification.to_user.user_type,
-            'profile_photo': notification.from_user.profile_photo,
-            'content': notification.content,
-            'vacancy_slug': vacancy_slug,
-            'timestamp': humanize_time(notification.timestamp)
-        }
-
-        notifications_list.append(related_data)
+    notifications = fetch_notifications(request.user.notifications_received.all()[:10])
 
     context = {
-        'notifications': json.dumps(notifications_list, default=str)
+        'notifications': json.dumps(notifications, default=str)
     }
 
     return JsonResponse(context, safe=False)
+
+def notifications(request):
+    notifications = fetch_notifications(request.user.notifications_received.all())
+
+    paginator = Paginator(notifications, 30)
+    current_page = request.GET.get('page', 1)
+    notifications = paginator.get_page(current_page)
+
+    context = {
+        'notifications': notifications
+    }
+
+    return render(request, 'main/notifications.html', context)

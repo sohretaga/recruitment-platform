@@ -60,3 +60,22 @@ def humanize_time(value):
         return value.strftime('%d %b, %Y')
     
     return timesince(value)
+
+def fetch_notifications(objects) -> list:
+    notifications_list = []
+    for notification in objects:
+        related_object = notification.related_object
+        vacancy_slug = related_object.vacancy.slug if related_object else False
+
+        related_data = {
+            'user_type': notification.to_user.user_type,
+            'profile_photo': notification.from_user.profile_photo,
+            'full_name':notification.from_user.get_full_name(),
+            'content': notification.content,
+            'vacancy_slug': vacancy_slug,
+            'timestamp': humanize_time(notification.timestamp)
+        }
+
+        notifications_list.append(related_data)
+
+    return notifications_list
