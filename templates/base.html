@@ -525,8 +525,6 @@
                 notificationList.innerHTML = '';
                 notificationCount.innerText = '';
                 notificationCount.classList.add('d-none');
-                
-                let unreadCount = 0;
 
                 data.forEach(notification => {
                     const newNotificationHTML = `
@@ -553,8 +551,6 @@
             const notificationCoutn = document.getElementById('notification-count');
             
             notificationSocket.onmessage = function(e) {
-                const data = JSON.parse(e.data);
-                const message = data['message'];
                 notificationCoutn.classList.remove('d-none');
 
                 if(notificationCoutn.innerText){

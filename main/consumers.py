@@ -50,13 +50,12 @@ class NotificationConsumer(WebsocketConsumer):
         apply_id = text_data_json['apply_id']
 
         to_user = CustomUser.objects.get(id=self.target_user_id)
-        apply_instance = Apply.objects.get(id=apply_id)
+        apply = Apply.objects.get(id=apply_id)
 
         Notification.objects.create(
             from_user=self.user,
             to_user=to_user,
-            content_type=ContentType.objects.get_for_model(apply_instance),
-            object_id=apply_instance.id,
+            related_data=apply.vacancy.slug,
             content=message,
             read=False
         )

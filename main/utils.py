@@ -1,3 +1,6 @@
+from django.db.models import F
+from django.db.models.functions import Concat
+
 from collections import Counter
 from job.models import Vacancy
 from recruitment_cp.models import ParameterKeyword
@@ -61,22 +64,17 @@ def humanize_time(value):
     
     return timesince(value)
 
-def fetch_notifications(objects) -> list:
-    notifications_list = []
-    for notification in objects:
-        related_object = notification.related_object
-        vacancy_slug = related_object.vacancy.slug if related_object else False
-
-        related_data = {
-            'id': notification.id,
-            'user_type': notification.to_user.user_type,
-            'profile_photo': notification.from_user.profile_photo,
-            'full_name':notification.from_user.get_full_name(),
-            'content': notification.content,
-            'vacancy_slug': vacancy_slug,
-            'timestamp': humanize_time(notification.timestamp)
+def fetch_notifications(objects):
+    notifications = [
+        {
+            'user_type': n.to_user.user_type,
+            'profile_photo': n.from_user.profile_photo,
+            'full_name': n.from_user.get_full_name(),
+            'vacancy_slug': n.related_data,
+            'content': n.content,
+            'timestamp': humanize_time(n.timestamp)
         }
+        for n in objects
+    ]
 
-        notifications_list.append(related_data)
-
-    return notifications_list
+    return notifications

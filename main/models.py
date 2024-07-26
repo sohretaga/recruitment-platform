@@ -14,9 +14,7 @@ class FAQ(models.Model):
 class Notification(models.Model):
     from_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='notifications_sent')
     to_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='notifications_received')
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, blank=True, null=True)
-    object_id = models.PositiveIntegerField(blank=True, null=True)
-    related_object = GenericForeignKey('content_type', 'object_id')
+    related_data = models.CharField(max_length=255, blank=True, null=True)
     content = models.CharField(max_length=100)
     read = models.BooleanField()
     timestamp = models.DateTimeField(auto_now_add=True)
