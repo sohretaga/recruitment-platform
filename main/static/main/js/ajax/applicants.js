@@ -169,8 +169,8 @@ const sendAction = (id) => {
 
             document.getElementById(`has-value-action-${id}`).value = selectedActionValue;
             document.getElementById(`has-value-invite-date-${id}`).value = selectedInviteDateValue;
+            const relatedData = document.getElementById(`related-data-${id}`).value;
 
-            
             if (selectedActionValue == 'SHORTLIST') {
                 asctionStatus.innerHTML = 'Shortlisted <i class="uil uil-user-check">';
                 asctionStatus.classList = 'btn btn-primary';
@@ -198,7 +198,7 @@ const sendAction = (id) => {
             
             sendNotification(candidateId, {
                 message: `The employer has processed your application! - ${selectedActionValue}`,
-                apply_id: id
+                related_data: relatedData
             });
         }
     });

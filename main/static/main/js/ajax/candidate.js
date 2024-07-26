@@ -103,6 +103,7 @@ const sendAction = (id) => {
             document.getElementById(`has-value-action-${id}`).value = selectedActionValue;
             document.getElementById(`has-value-request-other-date-${id}`).value = selectedRequestOtherDate;  
             const employerId = document.getElementById(`employer-user-${id}`).value;
+            const relatedData = document.getElementById(`related-data-${id}`).value;
             
             if (selectedActionValue == 'ACCEPT') {
                 asctionStatus.innerHTML = `<span>Invitation Accepted<br>${hasValueInviteDate.value}</span> <i class="uil uil-check-circle">`;
@@ -119,7 +120,7 @@ const sendAction = (id) => {
 
             sendNotification(employerId, {
                 message: `The candidate has processed your action! - ${selectedActionValue}`,
-                apply_id: id
+                related_data: relatedData,
             });
         }
     });

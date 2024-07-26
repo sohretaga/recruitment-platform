@@ -36,31 +36,22 @@ class NotificationConsumer(WebsocketConsumer):
     
     @database_sync_to_async
     def create_notification(self, text_data) -> None:
-        from django.contrib.contenttypes.models import ContentType
         from main.models import Notification
         from user.models import CustomUser
-        from job.models import Apply
 
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
-        apply_id = text_data_json['apply_id']
+        related_data = text_data_json['related_data']
 
-        apply = Apply.objects.get(id=apply_id)
         to_user = CustomUser.objects.get(id=self.target_user_id)
 
-        notification = Notification.objects.create(
+        Notification.objects.create(
             from_user=self.user,
             to_user=to_user,
-            related_data=apply.vacancy.slug,
+            related_data=related_data,
             content=message,
             read=False
         )
-
-        with open("not.txt", "w") as f:
-            f.write({
-                'apply': apply,
-                'related_object': notification.related_data
-            })
 
     def send_notification(self, event):
         message = event['message']
