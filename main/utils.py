@@ -67,6 +67,7 @@ def humanize_time(value):
 def fetch_notifications(objects):
     notifications = [
         {
+            'id': n.id,
             'user_type': n.to_user.user_type,
             'profile_photo': n.from_user.profile_photo,
             'full_name': n.from_user.get_full_name(),
