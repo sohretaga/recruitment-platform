@@ -1,5 +1,4 @@
-from django.shortcuts import render, redirect
-from django.urls import reverse
+from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.core.paginator import Paginator

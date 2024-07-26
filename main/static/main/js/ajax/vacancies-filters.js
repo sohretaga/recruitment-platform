@@ -232,6 +232,8 @@ const listVacancies = (vacanciesInfo, bookmarks, applications, keywords) => {
                     </div>
                 </div>
             </div>
+            <input type="hidden" id="related-data-${vacancy.id}" value="${vacancy.slug}">
+            <input type="hidden" id="target-user-${vacancy.id}" value="${vacancy.user_id}">
         </div>`
     )};
 };

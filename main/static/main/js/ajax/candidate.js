@@ -102,7 +102,7 @@ const sendAction = (id) => {
             const hasValueInviteDate = document.getElementById(`has-value-invite-date-${id}`);
             document.getElementById(`has-value-action-${id}`).value = selectedActionValue;
             document.getElementById(`has-value-request-other-date-${id}`).value = selectedRequestOtherDate;  
-            const employerId = document.getElementById(`employer-user-${id}`).value;
+            const targetUserId = document.getElementById(`target-user-${id}`).value;
             const relatedData = document.getElementById(`related-data-${id}`).value;
             
             if (selectedActionValue == 'ACCEPT') {
@@ -118,7 +118,7 @@ const sendAction = (id) => {
                 asctionStatus.classList = 'btn btn-success';
             };
 
-            sendNotification(employerId, {
+            sendNotification(targetUserId, {
                 content: `The candidate has processed your action! - ${selectedActionValue}`,
                 related_data: relatedData,
             });
@@ -136,6 +136,9 @@ const deleteRequest = (id) => {
 };
 
 const deleteApplication = (id) => {
+    const targetUserId = document.getElementById(`target-user-${id}`).value;
+    const relatedData = document.getElementById(`related-data-${id}`).value;
+
     $.ajax({
         url:'/dashboard/ajax/delete-apply',
         type: 'POST',
@@ -143,6 +146,11 @@ const deleteApplication = (id) => {
         success: function(response) {
             document.getElementById(`application-${id}`).remove();
             deleteApplicationModal.hide();
+
+            sendNotification(targetUserId, {
+                content: `Candidate deleted application for your vacancy`,
+                related_data: relatedData
+            });
         }
     });
 };

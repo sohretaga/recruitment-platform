@@ -528,10 +528,10 @@
 
                 data.forEach(notification => {
                     const newNotificationHTML = `
-                        <a href="${notification.vacancy_slug && notification.user_type == 'employer' ? `/vacancy/applicants/${notification.vacancy_slug}`:`${notification.user_type == 'candidate' ? '/applications':'javascript:void(0)'}`}" class="text-dark notification-item d-block">
+                        <a href="${notification.related_data ? `${notification.related_data}`:'javascript:void(0)'}" class="text-dark notification-item d-block">
                             <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0 me-3">
-                                    <img src="${notification.profile_photo ? `/media/${notification.profile_photo}`:'/static/main/images/featured-job/default-company-img.jpeg'}" class="rounded-circle avatar-xs" alt="user-pic">
+                                    <img src="${notification.profile_photo ? `${notification.profile_photo}`:'/static/main/images/featured-job/default-company-img.jpeg'}" class="rounded-circle avatar-xs" alt="user-pic">
                                 </div>
                                 <div class="flex-grow-1">
                                     <h6 class="mt-0 mb-1 fs-14">${notification.content}</h6>

@@ -49,6 +49,9 @@ const sendApplication = (id) => {
     const message = document.getElementById('apply-message');
     const cv = document.getElementById('apply-cv');
     const messageWarning = document.getElementById('message-warning');
+    const relatedData = document.getElementById(`related-data-${id}`).value;
+    const targetUserId = document.getElementById(`target-user-${id}`).value;
+
     const formData = new FormData();
     formData.append('vacancy', id);
     formData.append('message', message.value);
@@ -73,6 +76,11 @@ const sendApplication = (id) => {
 
                 messageWarning.style.display = 'none';
                 message.style.borderColor = '';
+
+                sendNotification(targetUserId, {
+                    content: `Candidate has applied for your vacant position`,
+                    related_data: relatedData
+                });
             }
         });
     } else {
@@ -83,6 +91,8 @@ const sendApplication = (id) => {
 
 const deleteApplication = (id) => {
     const deleteApplyBtn = document.getElementById(`delete-apply-${id}`);
+    const relatedData = document.getElementById(`related-data-${id}`).value;
+    const targetUserId = document.getElementById(`target-user-${id}`).value;
 
     $.ajax({
         url: '/ajax/apply',
@@ -92,6 +102,11 @@ const deleteApplication = (id) => {
             deleteApply.hide();
             deleteApplyBtn.id = `apply-now-${id}`;
             deleteApplyBtn.innerHTML = 'Apply Now  <i class="mdi mdi-chevron-double-right">';
+
+            sendNotification(targetUserId, {
+                content: `Candidate deleted application for your vacancy`,
+                related_data: relatedData
+            });
         }
     });
 };

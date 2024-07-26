@@ -49,6 +49,7 @@ def vacancy_with_related_info(objects):
         'employer', 'career_type', 'career_level', 'location', 'fte', 'job_title',
         'employment_type', 'work_experience', 'work_preference', 'department'
     ).annotate(
+        user_id = F('employer__user__id'),
         employer_username = F('employer__user__username'),
         company_name = F('employer__user__first_name'),
         career_type_name = F('career_type__name'),

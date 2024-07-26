@@ -445,7 +445,7 @@
                     <input type="hidden" id="has-value-invite-date-{{ applicant.id }}" value="{{ applicant.employer_action.invite_date }}">
                     <input type="hidden" id="has-value-request-other-date-{{ applicant.id }}" value="{{ applicant.candidate_action.request_other_date }}">
                     <!-- notification data -->
-                    <input type="hidden" id="candidate-user-{{ applicant.id }}" value="{{ applicant.candidate.user.id }}">
+                    <input type="hidden" id="target-user-{{ applicant.id }}" value="{{ applicant.candidate.user.id }}">
                     <input type="hidden" id="related-data-{{ applicant.id }}" value="{{ applicant.vacancy.slug }}">
 
                     {% endfor %}

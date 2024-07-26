@@ -1,5 +1,5 @@
+from django.urls import reverse
 from django.db.models import F
-from django.db.models.functions import Concat
 
 from collections import Counter
 from job.models import Vacancy
@@ -65,17 +65,28 @@ def humanize_time(value):
     return timesince(value)
 
 def fetch_notifications(objects):
-    notifications = [
-        {
+    notifications = list()
+
+    for n in objects:
+        user_type = n.to_user.user_type
+        profile_photo = n.from_user.profile_photo
+
+        if profile_photo:
+            profile_photo = profile_photo.url
+        
+        if user_type == 'employer':
+            related_data = reverse('job:applicants', args=[n.related_data])
+        elif user_type == 'candidate':
+            related_data = reverse('job:applications')
+
+        notifications.append({
             'id': n.id,
             'user_type': n.to_user.user_type,
-            'profile_photo': n.from_user.profile_photo,
+            'profile_photo': profile_photo,
             'full_name': n.from_user.get_full_name(),
-            'vacancy_slug': n.related_data,
+            'related_data': related_data,
             'content': n.content,
             'timestamp': humanize_time(n.timestamp)
-        }
-        for n in objects
-    ]
+        })
 
     return notifications

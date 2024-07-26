@@ -9,7 +9,6 @@ from recruitment_cp.utils import is_ajax
 
 import json
 
-
 # Create your views here.
 
 def blog(request):
