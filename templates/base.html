@@ -527,7 +527,6 @@
                 notificationCount.classList.add('d-none');
 
                 data.forEach(notification => {
-                    console.log(notification)
                     const newNotificationHTML = `
                         <a href="${notification.vacancy_slug && notification.user_type == 'employer' ? `/vacancy/applicants/${notification.vacancy_slug}`:`${notification.user_type == 'candidate' ? '/applications':'javascript:void(0)'}`}" class="text-dark notification-item d-block">
                             <div class="d-flex align-items-center">
