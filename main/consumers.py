@@ -45,17 +45,20 @@ class NotificationConsumer(WebsocketConsumer):
         message = text_data_json['message']
         apply_id = text_data_json['apply_id']
 
-        to_user = CustomUser.objects.get(id=self.target_user_id)
         apply = Apply.objects.get(id=apply_id)
+        to_user = CustomUser.objects.get(id=self.target_user_id)
 
-        Notification.objects.create(
+        notification = Notification.objects.create(
             from_user=self.user,
             to_user=to_user,
             related_data=apply.vacancy.slug,
             content=message,
             read=False
         )
-    
+
+        with open("not.txt", "w") as f:
+            f.write(notification.related_data)
+
     def send_notification(self, event):
         message = event['message']
 
