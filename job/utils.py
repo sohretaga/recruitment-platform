@@ -115,6 +115,10 @@ def fetch_vacancies(request) -> dict:
     if date := request.GET.get('date'):
         url += f'&date={date}'
         params.update({'created_date__gte': timezone.now() - timedelta(hours=int(date))})
+
+    if location := request.GET.get('location'):
+        url += f'&location={location}'
+        params.update({'location__name': location})
     
     # filter settings for view more
     if job_title := request.GET.get('job-title'):
@@ -138,7 +142,7 @@ def fetch_vacancies(request) -> dict:
     vacancies = paginator.get_page(current_page)
 
     # Filter Fields
-    countries = models.ParameterCountry.objects.values('name')
+    locations = models.ParameterLocation.objects.values('name')
     experiences = models.ParameterWorkExperience.objects.values('id', 'name')
     employments = models.ParameterEmployeeType.objects.values('id', 'name')
     sectors = models.ParameterSector.objects.values('id', 'name')
@@ -151,7 +155,7 @@ def fetch_vacancies(request) -> dict:
 
     return {
         'vacancies': vacancies,
-        'countries': countries,
+        'locations': locations,
         'experiences': experiences,
         'employments': employments,
         'sectors': sectors,

@@ -84,9 +84,10 @@
                                 <div class="col-lg-4 col-md-6">
                                     <div class="filler-job-form">
                                         <i class="uil uil-location-point"></i>
-                                        <select class="form-select" data-trigger name="choices-single-location" id="choices-single-location">
-                                            {% for country in countries %}
-                                                <option value="{{ country.name }}">{{ country.name }}</option>
+                                        <select class="form-select" data-trigger name="location" id="location">
+                                            <option value="">Location</option>
+                                            {% for location in locations %}
+                                                <option value="{{ location.name }}">{{ location.name }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>

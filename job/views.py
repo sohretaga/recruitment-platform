@@ -249,6 +249,9 @@ def ajax_filter_vacancies(request):
 
         if keyword := data.get('keyword'):
             params.update({'keywords__contains': keyword})
+
+        if location := data.get('location'):
+            params.update({'location__name': location})
         
         filtered_vacancies = vacancy_with_related_info(Vacancy.objects.filter(**params))
         

@@ -1,6 +1,12 @@
 const slider = document.getElementById('slider1');
 const url = new URL(window.location);
 
+const locationFilter = new Choices("#location", {
+    shouldSort: false,
+    shouldSortItems: false,
+});
+singleCategories=new Choices("#choices-single-categories");
+
 // Salary Values
 const [minValue, maxValue] = [0, 100000]
 
@@ -60,11 +66,7 @@ class DataCollector {
         setUrl('sector', selectedSectorValue);
 
         return selectedSectorValue;
-    }
-
-    getClickedKeywordId() {
-
-    }
+    };
 
     collectData() {
         const data = {
@@ -75,7 +77,8 @@ class DataCollector {
             work_preference: this.getSelectedValues(workPreferenceCheckboxes, 'work-preference'),
             department: this.getSelectedValues(departmentCheckboxes, 'department'),
             date_posted: this.getSelectedValues(datePostedRadios, 'date')[0],
-            sector: this.getSelectedSectorValue()
+            sector: this.getSelectedSectorValue(),
+            location: locationFilter.getValue(true)
         };
 
         return data;
@@ -311,12 +314,17 @@ addCheckboxListener(departmentCheckboxes, filterRequest); // Department Listener
 addCheckboxListener(datePostedRadios, filterRequest); // Date Posted Listener
 
 // Set filter inputs from url parameters
-slider.noUiSlider.set(getUrlParameterValue('salary-range'));
 setFilterCheckboxes(workExperiencesCheckboxes, getUrlParameterValue('work-experience')); // Set work experience
 setFilterCheckboxes(employmentTypeCheckboxes, getUrlParameterValue('employment-type')); // Set type of employment
 setFilterCheckboxes(workPreferenceCheckboxes, getUrlParameterValue('work-preference')); // Set work preference
-setFilterCheckboxes(departmentCheckboxes, getUrlParameterValue('department')); // Set work preference
-setFilterCheckboxes(datePostedRadios, getUrlParameterValue('date')); // Set work preference
+setFilterCheckboxes(departmentCheckboxes, getUrlParameterValue('department')); // Set department
+setFilterCheckboxes(datePostedRadios, getUrlParameterValue('date')); // Set date posted
+
+slider.noUiSlider.set(getUrlParameterValue('salary-range'));
+locationFilter.passedElement.element.addEventListener('change', function(event) {
+    setUrl('location', event.target.value);
+    filterRequest();
+});
 
 
 // Sector filter settings
