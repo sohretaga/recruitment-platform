@@ -110,7 +110,7 @@
                             <div class="row">
                                 <div class="col-lg-1">
                                     {% if notification.profile_photo %}
-                                    <a href="#"><img src="/media/{{ notification.profile_photo }}" alt="{{ notification.full_name }}" class="img-fluid rounded-3" style="width: 55px; height: 55px;"></a>
+                                    <a href="#"><img src="{{ notification.profile_photo }}" alt="{{ notification.full_name }}" class="img-fluid rounded-3" style="width: 55px; height: 55px;"></a>
                                     {% else %}
                                     <a href="#"><img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="{{ notification.full_name }}" class="img-fluid rounded-3" style="width: 55px; height: 55px;"></a>
                                     {% endif %}
