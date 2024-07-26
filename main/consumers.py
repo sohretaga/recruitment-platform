@@ -57,7 +57,10 @@ class NotificationConsumer(WebsocketConsumer):
         )
 
         with open("not.txt", "w") as f:
-            f.write(notification.related_data)
+            f.write({
+                'apply': apply,
+                'related_object': notification.related_data
+            })
 
     def send_notification(self, event):
         message = event['message']
