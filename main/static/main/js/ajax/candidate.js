@@ -119,7 +119,7 @@ const sendAction = (id) => {
             };
 
             sendNotification(employerId, {
-                message: `The candidate has processed your action! - ${selectedActionValue}`,
+                content: `The candidate has processed your action! - ${selectedActionValue}`,
                 related_data: relatedData,
             });
         }

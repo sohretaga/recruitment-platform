@@ -24,7 +24,7 @@ class NotificationConsumer(WebsocketConsumer):
         async_to_sync(self.create_notification)(text_data)
 
         text_data_json = json.loads(text_data)
-        message = text_data_json['message']
+        message = text_data_json['content']
 
         async_to_sync(self.channel_layer.group_send)(
             self.group_name,
@@ -40,17 +40,14 @@ class NotificationConsumer(WebsocketConsumer):
         from user.models import CustomUser
 
         text_data_json = json.loads(text_data)
-        message = text_data_json['message']
-        related_data = text_data_json['related_data']
 
         to_user = CustomUser.objects.get(id=self.target_user_id)
 
         Notification.objects.create(
             from_user=self.user,
             to_user=to_user,
-            related_data=related_data,
-            content=message,
-            read=False
+            read=False,
+            **text_data_json
         )
 
     def send_notification(self, event):
