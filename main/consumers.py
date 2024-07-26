@@ -40,14 +40,17 @@ class NotificationConsumer(WebsocketConsumer):
         from user.models import CustomUser
 
         text_data_json = json.loads(text_data)
+        related_data = text_data_json['related_data']
+        content = text_data_json['content']
 
         to_user = CustomUser.objects.get(id=self.target_user_id)
 
         Notification.objects.create(
             from_user=self.user,
             to_user=to_user,
+            content=content,
+            related_data=related_data,
             read=False,
-            **text_data_json
         )
 
     def send_notification(self, event):
