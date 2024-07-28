@@ -114,3 +114,6 @@ class ParameterFAQ(ParameterCommonFields):
 
 class ParameterCompetence(ParameterCommonFields):
     ...
+
+class ParameterJobFamily(ParameterCommonFields):
+    ...

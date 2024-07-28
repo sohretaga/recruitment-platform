@@ -81,6 +81,7 @@
                     <li {% if 'keywords' in request.path %} class="active" {% endif %}><a href="{% url 'cp:keywords' %}">Keywords</a></li>
                     <li {% if 'faq-categories' in request.path %} class="active" {% endif %}><a href="{% url 'cp:faq_categories' %}">FAQ Categories</a></li>
                     <li {% if 'competence' in request.path %} class="active" {% endif %}><a href="{% url 'cp:competence' %}">Competencies</a></li>
+                    <li {% if 'job-family' in request.path %} class="active" {% endif %}><a href="{% url 'cp:job_family' %}">Job Family</a></li>
                 {% endif %}
             </ul>
         </div>

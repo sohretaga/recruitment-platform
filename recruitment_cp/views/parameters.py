@@ -1208,3 +1208,56 @@ def competence_save(request):
             raise PermissionError
     else:
         raise Http404
+    
+#======================================================================================================
+def job_family_index(request):
+    if request.user.is_superuser:
+        return render(request, 'cp/parameters/job_family.html')
+    
+    raise Http404
+
+def job_family_load(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            language = request.POST.get('language')
+            
+            job_family = cp_models.ParameterJobFamily.objects.filter(language=language).values(
+                'id', 'no', 'name', 'definition', 'note'
+            )
+            json_data = json.dumps(list(job_family))
+
+            return JsonResponse(json_data, safe=False)
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+
+def job_family_save(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            hot = json.loads(request.POST.get('hot'))
+            language = request.POST.get('language')
+            index = 0
+
+            while index < len(hot):
+                pk = hot[index].pop('id', None)
+                name = hot[index].get('name', None)
+
+                if name:
+                    if pk:
+                        job_family = cp_models.ParameterJobFamily.objects.filter(pk=pk)
+                        job_family.update(**hot[index])
+                    else:
+                        job_family = cp_models.ParameterJobFamily(language=language, **hot[index])
+                        job_family.save()
+                else:
+                    job_family = cp_models.ParameterJobFamily.objects.filter(pk = pk)
+                    job_family.delete()
+                
+                index += 1
+
+            return JsonResponse({'status': 200})
+        else:
+            raise PermissionError
+    else:
+        raise Http404
