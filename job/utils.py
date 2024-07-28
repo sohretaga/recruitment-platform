@@ -63,7 +63,7 @@ def vacancy_with_related_info(objects):
         department_name = F('department__name'),
         profile_photo_url = Case(
             When(
-                employer__user__profile_photo__isnull=False,
+                employer__user__profile_photo = True,
                 then=Concat(
                     Value(settings.MEDIA_URL),
                     F('employer__user__profile_photo')
