@@ -58,6 +58,9 @@ def load_source(request):
                 
                 case 'department':
                     source = cp_models.ParameterDepartment.objects.filter(**params).values_list('name', flat=True)
+
+                case 'job_family':
+                    source = cp_models.ParameterJobFamily.objects.filter(**params).values_list('name', flat=True)
             
             source = json.dumps(list(source))
             return JsonResponse(source, safe=False)
