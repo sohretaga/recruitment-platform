@@ -96,6 +96,7 @@
                                     <div class="filler-job-form">
                                         <i class="uil uil-clipboard-notes"></i>
                                         <select class="form-select " data-trigger name="job_family" id="job-family">
+                                            <option value="">Job Family</option>
                                             {% for family in job_family %}
                                                 <option value="{{ family.name }}">{{ family.name }}</option>
                                             {% endfor %}
