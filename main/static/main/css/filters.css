@@ -22,6 +22,22 @@ body[data-layout-mode="dark"] .sectors-btn {
   color: #f8f9fa !important;
 }
 
+.choices__item--selectable, .choices__item--choice {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.choices__list--dropdown {
+  z-index: 100;
+  max-height: none;
+}
+
+.active-trend {
+  color: #766df4 !important;
+}
+
 @media (max-width: 767px) {
 
   #job-list #row-container {

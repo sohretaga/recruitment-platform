@@ -123,6 +123,10 @@ def fetch_vacancies(request) -> dict:
     if job_family := request.GET.get('job-family'):
         url += f'&job-family={job_family}'
         params.update({'job_title__job_family': job_family})
+
+    if trending := request.GET.get('trending'):
+        url += f'&trending={trending}'
+        params.update({'job_title__name': trending})
     
     # filter settings for view more
     if job_title := request.GET.get('job-title'):

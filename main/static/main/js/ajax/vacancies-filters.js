@@ -1,4 +1,5 @@
 const slider = document.getElementById('slider1');
+const trending = document.querySelectorAll('.trending');
 const url = new URL(window.location);
 
 const locationFilter = new Choices("#location", {
@@ -66,11 +67,19 @@ class DataCollector {
 
     getSelectedSectorValue() {
         const selectedSectorBtn = document.querySelector('button[aria-selected="true"]');
-        let selectedSectorValue = selectedSectorBtn ? selectedSectorBtn.innerText:false;
+        const selectedSectorValue = selectedSectorBtn ? selectedSectorBtn.innerText:false;
         setUrl('sector', selectedSectorValue);
 
         return selectedSectorValue;
     };
+
+    getTrending() {
+        const activeTrend = document.querySelector('.active-trend');
+        const activeTrendValue = activeTrend ? activeTrend.textContent:false;
+        setUrl('trending', activeTrendValue);
+
+        return activeTrendValue;
+    }
 
     collectData() {
         const data = {
@@ -83,7 +92,8 @@ class DataCollector {
             date_posted: this.getSelectedValues(datePostedRadios, 'date')[0],
             sector: this.getSelectedSectorValue(),
             location: locationFilter.getValue(true),
-            job_family: jobFamilyFilter.getValue(true)
+            job_family: jobFamilyFilter.getValue(true),
+            trending: this.getTrending()
         };
 
         return data;
@@ -335,6 +345,27 @@ jobFamilyFilter.passedElement.element.addEventListener('change', function(event)
     setUrl('job-family', event.target.value);
     filterRequest();
 });
+
+trending.forEach((trend) => {
+    trend.addEventListener('click', (event) => {
+        const trendElement = event.target;
+        const trnedText = trendElement.textContent;
+        const activeTrend = document.querySelector('.active-trend');
+
+        if(activeTrend && activeTrend.textContent == trnedText) {
+            activeTrend.classList.remove('active-trend');
+
+        }else {
+            if(activeTrend) {
+                activeTrend.classList.remove('active-trend');
+            };
+
+            event.target.classList.add('active-trend');
+        };
+
+        filterRequest();
+    })
+})
 
 
 // Sector filter settings
