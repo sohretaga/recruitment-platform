@@ -1,3 +1,10 @@
+.choices__item--selectable, .choices__item--choice {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
 @media only screen and (max-width: 600px) {
     .job-box img {
       width: 30px;
