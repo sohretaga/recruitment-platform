@@ -95,11 +95,10 @@
                                 <div class="col-lg-4 col-md-6">
                                     <div class="filler-job-form">
                                         <i class="uil uil-clipboard-notes"></i>
-                                        <select class="form-select " data-trigger name="choices-single-categories" id="choices-single-categories">
-                                            <option value="4">Accounting</option>
-                                            <option value="1">IT & Software</option>
-                                            <option value="3">Marketing</option>
-                                            <option value="5">Banking</option>
+                                        <select class="form-select " data-trigger name="job_family" id="job-family">
+                                            {% for family in job_family %}
+                                                <option value="{{ family.name }}">{{ family.name }}</option>
+                                            {% endfor %}
                                         </select>
                                     </div>
                                 </div><!--end col-->

@@ -5,7 +5,11 @@ const locationFilter = new Choices("#location", {
     shouldSort: false,
     shouldSortItems: false,
 });
-singleCategories=new Choices("#choices-single-categories");
+
+const jobFamilyFilter = singleCategories=new Choices("#job-family",{
+    shouldSort: false,
+    shouldSortItems: false,
+});
 
 // Salary Values
 const [minValue, maxValue] = [0, 100000]
@@ -78,7 +82,8 @@ class DataCollector {
             department: this.getSelectedValues(departmentCheckboxes, 'department'),
             date_posted: this.getSelectedValues(datePostedRadios, 'date')[0],
             sector: this.getSelectedSectorValue(),
-            location: locationFilter.getValue(true)
+            location: locationFilter.getValue(true),
+            job_family: jobFamilyFilter.getValue(true)
         };
 
         return data;
@@ -323,6 +328,11 @@ setFilterCheckboxes(datePostedRadios, getUrlParameterValue('date')); // Set date
 slider.noUiSlider.set(getUrlParameterValue('salary-range'));
 locationFilter.passedElement.element.addEventListener('change', function(event) {
     setUrl('location', event.target.value);
+    filterRequest();
+});
+
+jobFamilyFilter.passedElement.element.addEventListener('change', function(event) {
+    setUrl('job-family', event.target.value);
     filterRequest();
 });
 

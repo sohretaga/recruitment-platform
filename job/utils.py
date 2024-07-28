@@ -119,6 +119,10 @@ def fetch_vacancies(request) -> dict:
     if location := request.GET.get('location'):
         url += f'&location={location}'
         params.update({'location__name': location})
+
+    if job_family := request.GET.get('job-family'):
+        url += f'&job-family={job_family}'
+        params.update({'job_title__job_family': job_family})
     
     # filter settings for view more
     if job_title := request.GET.get('job-title'):
@@ -148,6 +152,8 @@ def fetch_vacancies(request) -> dict:
     sectors = models.ParameterSector.objects.values('id', 'name')
     departments = models.ParameterDepartment.objects.values('id', 'name')
     work_preferences = models.ParameterWorkPreference.objects.values('id', 'name')
+    work_preferences = models.ParameterWorkPreference.objects.values('id', 'name')
+    job_family = models.ParameterJobFamily.objects.values('id', 'name')
 
     popular_job_titles = Vacancy.objects.values('job_title__name').annotate(count=Count('job_title__name')).order_by('-count')[:6]
     keyword_list = list(models.ParameterKeyword.objects.values('id', 'name'))
@@ -165,5 +171,6 @@ def fetch_vacancies(request) -> dict:
         'related_vacancies_title': job_title,
         'company': company,
         'popular_job_titles': popular_job_titles,
-        'keywords': keywords
+        'keywords': keywords,
+        'job_family': job_family
     }

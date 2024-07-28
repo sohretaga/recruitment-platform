@@ -252,6 +252,9 @@ def ajax_filter_vacancies(request):
 
         if location := data.get('location'):
             params.update({'location__name': location})
+
+        if job_family := data.get('job_family'):
+            params.update({'job_title__job_family': job_family})
         
         filtered_vacancies = vacancy_with_related_info(Vacancy.objects.filter(**params))
         
