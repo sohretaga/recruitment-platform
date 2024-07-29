@@ -506,17 +506,36 @@
         </script>
 
         <script>
+            const notificationToggle = document.getElementById('notification-toggle');
 
-            document.getElementById('notification-toggle').addEventListener('show.bs.dropdown', function() {
-                $.ajax({
-                    'url': '/ajax/get-notifications',
-                    'type': 'POST',
-                    success: function(response) {
-                        const notifications = JSON.parse(response.notifications);
-                        loadNotifications(notifications);
-                    }
+            if(notificationToggle) {
+                const wsProtocol = window.location.protocol === "https:" ? "wss://" : "ws://";
+                const WsUrl = `${wsProtocol}${window.location.host}/ws/notifications/{{ user.id }}/`;
+                const notificationSocket = new WebSocket(WsUrl);
+                const notificationList = document.getElementById('notification-list');
+                const notificationCoutn = document.getElementById('notification-count');
+                
+                notificationSocket.onmessage = function(e) {
+                    notificationCoutn.classList.remove('d-none');
+
+                    if(notificationCoutn.innerText){
+                        notificationCoutn.innerText = parseInt(notificationCoutn.innerText)+1;
+                    }else {
+                        notificationCoutn.innerText = 1;
+                    };
+                };
+
+                notificationToggle.addEventListener('show.bs.dropdown', function() {
+                    $.ajax({
+                        url: '/ajax/get-notifications',
+                        type: 'POST',
+                        success: function(response) {
+                            const notifications = JSON.parse(response.notifications);
+                            loadNotifications(notifications);
+                        }
+                    });
                 });
-            });
+            };
 
             const loadNotifications = (data) => {
                 const notificationList = document.getElementById('notification-list');
@@ -542,22 +561,6 @@
                     `;
                     notificationList.innerHTML = notificationList.innerHTML + newNotificationHTML;
                 });
-            };
-
-            const wsProtocol = window.location.protocol === "https:" ? "wss://" : "ws://";
-            const WsUrl = `${wsProtocol}${window.location.host}/ws/notifications/{{ user.id }}/`;
-            const notificationSocket = new WebSocket(WsUrl);
-            const notificationList = document.getElementById('notification-list');
-            const notificationCoutn = document.getElementById('notification-count');
-            
-            notificationSocket.onmessage = function(e) {
-                notificationCoutn.classList.remove('d-none');
-
-                if(notificationCoutn.innerText){
-                    notificationCoutn.innerText = parseInt(notificationCoutn.innerText)+1;
-                }else {
-                    notificationCoutn.innerText = 1;
-                };
             };
 
             const sendNotification = (target_id, args) => {

@@ -30,13 +30,13 @@ def vacancies(request):
     return render(request, 'job/vacancies.html', context)
 
 def vacancy(request, slug):
-    vacancy = get_object_or_404(vacancy_with_related_info(Vacancy.objects), slug=slug, status=True)
+    vacancy = get_object_or_404(vacancy_with_related_info(Vacancy.objects), slug=slug, status=True, delete=False)
     vacancy.views += 1
     vacancy.save()
 
     # get related vacancies
     related_vacancies = vacancy_with_related_info(
-        Vacancy.objects.filter(job_title=vacancy.job_title, status=True).exclude(slug=slug)[:5]
+        Vacancy.objects.filter(job_title=vacancy.job_title, status=True, delete=False).exclude(slug=slug)[:5]
     )
 
     keyword_list = ParameterKeyword.objects.values('id', 'name')
@@ -221,7 +221,7 @@ def bookmarks(request):
 def ajax_filter_vacancies(request):
     if is_ajax:
         data = json.loads(request.body.decode('utf-8'))
-        params = {'status': True}
+        params = {'status': True, 'delete': False}
 
         if salary_range_lower := data.get('salary_range_lower'):
             params.update({'salary__gte': salary_range_lower})
@@ -276,7 +276,8 @@ def ajax_search_vacancy(request):
         Vacancy.objects.filter(
             Q(position_title__icontains=query) |
             Q(job_title__name__icontains=query) |
-            Q(employer__user__first_name__icontains=query)
+            Q(employer__user__first_name__icontains=query),
+            status=True, delete=False
         )
     )
 
