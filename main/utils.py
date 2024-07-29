@@ -1,11 +1,14 @@
 from django.urls import reverse
 from django.db.models import F
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import get_template
 
 from collections import Counter
 from job.models import Vacancy
 from recruitment_cp.models import ParameterKeyword
-from main.models import Notification
+from main.models import Notification, ContactEmail
 import math
+import time
 
 def get_vacancy_in_sublists(objects_per_list=5) -> list:
     objects = list(Vacancy.objects.filter(status=True, delete=False).order_by('?')[:10])
@@ -90,3 +93,27 @@ def fetch_notifications(objects):
         })
 
     return notifications
+
+
+def send_contact_email(name, email, subject, message):
+    content = get_template('main/contact-email-template.html').render({
+        'name': name,
+        'email': email,
+        'subject': subject,
+        'message': message
+    })
+
+    contact_emails = ContactEmail.objects.values_list('email', flat=True)
+
+    for contact_email in contact_emails:
+        mail = EmailMultiAlternatives(
+            "New Contact",
+            f"Message: {message}",
+            "Recruitment Contact <contact@sohretaga.com>",
+            [contact_email]
+        )
+
+        mail.attach_alternative(content, "text/html")
+        mail.send()
+
+        time.sleep(1)

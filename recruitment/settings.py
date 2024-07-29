@@ -169,4 +169,11 @@ AUTH_USER_MODEL = 'user.CustomUser'
 LOGIN_URL = 'user:sign-in'
 
 FROALA_UPLOAD_PATH = 'blog/editor'
-FRAOLA_EDITOR_THIRD_PARTY = ('image_aviary', 'spell_checker')  
+FRAOLA_EDITOR_THIRD_PARTY = ('image_aviary', 'spell_checker')
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')

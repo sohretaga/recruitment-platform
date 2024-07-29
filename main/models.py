@@ -26,3 +26,6 @@ class Contact(models.Model):
     subject = models.CharField(max_length=255)
     message = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
+
+class ContactEmail(models.Model):
+    email = models.EmailField()

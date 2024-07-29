@@ -12,7 +12,7 @@ from main.models import FAQ
 from blog.models import Blog
 from main.models import Notification
 from .forms import ContactForm
-from .utils import get_vacancy_in_sublists, mark_notifications_as_read, fetch_notifications
+from .utils import get_vacancy_in_sublists, mark_notifications_as_read, fetch_notifications, send_contact_email
 
 import json
 
@@ -48,6 +48,13 @@ def contact(request):
         if form.is_valid():
             form.save()
             context['submitted'] = True
+            
+            name = form.cleaned_data.get('name')
+            email = form.cleaned_data.get('email')
+            subject = form.cleaned_data.get('subject')
+            message = form.cleaned_data.get('message')
+
+            send_contact_email(name, email, subject, message)
 
     return render(request, 'main/contact.html', context)
 
