@@ -16,6 +16,7 @@
 
 {% block content %}
 {% get_site_content 'CONTACT' as contact %}
+{% get_site_content 'CONTACT_THANKS_MESSAGE' as contact_thanks_message %}
 
     <div class="page-content">
 
@@ -67,9 +68,9 @@
                             <form method="post" onsubmit="return validateForm()" class="contact-form mt-4" name="contactForm" id="contactForm">
                                 {% csrf_token %}
                                 <span id="error-msg">
-                                    {% if submitted %}
+                                    {% if submitted and contact_thanks_message %}
                                     <div class='alert alert-success success_message'>
-                                        <i class='mdi mdi-email-check'></i> Your message has been sent successfully.
+                                        <i class='mdi mdi-email-check'></i> {{ contact_thanks_message.content }}
                                     </div>
                                     {% endif %}
                                 </span>
