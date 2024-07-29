@@ -18,6 +18,8 @@
     <!-- App Css-->
     <link href="{% static 'main/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
     <!--Custom Css-->
+    <link href="{% static 'main/css/notifications.css' %}" rel="stylesheet" type="text/css" />
+
 {% endblock head %}
 
 {% block content %}
@@ -108,19 +110,20 @@
                     <div id="notification-{{ notification.id }}" class="job-box card mt-4 notification" data-id="{{ notification.id }}">
                         <div class="card-body p-4">
                             <div class="row">
-                                <div class="col-lg-1">
+                                <div class="col-lg-1 user-profile-photo">
                                     {% if notification.profile_photo %}
                                     <a href="#"><img src="{{ notification.profile_photo }}" alt="{{ notification.full_name }}" class="img-fluid rounded-3" style="width: 55px; height: 55px;"></a>
                                     {% else %}
                                     <a href="#"><img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="{{ notification.full_name }}" class="img-fluid rounded-3" style="width: 55px; height: 55px;"></a>
                                     {% endif %}
                                 </div><!--end col-->
-                                <div class="col-lg-7">
+                                <div class="col-lg-7 user-profile-content">
                                     <div class="mt-3 mt-lg-0">
                                         <h5 class="fs-17 mb-1"><a href="#" class="text-dark">{{ notification.full_name }}</a></h5>
                                         <ul class="list-inline mb-0">
                                             <li class="list-inline-item">
                                                 <p class="text-muted fs-14 mb-0">{{ notification.content }}</p>
+                                                <p class="text-muted mb-0 fs-12"><i class="mdi mdi-clock-outline"></i> <span>{{ notification.timestamp }}</span></p>
                                             </li>
                                         </ul>
                                     </div>
@@ -138,7 +141,7 @@
                                             </a>
                                         </li>
                                     </ul>
-                                </div><!--end col-->
+                                </div>
                             </div><!--end row-->
                         </div>
                     </div><!--end job-box-->

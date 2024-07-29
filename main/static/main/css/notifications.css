@@ -1,0 +1,13 @@
+@media only screen and (max-width: 600px) {
+    .user-profile-photo {
+        width: auto;
+    }
+
+    .user-profile-content {
+        width: 75%;
+    }
+
+    .user-profile-content > div {
+        margin-top: 0 !important;
+    }
+}

@@ -4,6 +4,10 @@ const deleteNotificationCheckbox = document.querySelectorAll('.notification-dele
 const deleteNotificationModal = new bootstrap.Modal(document.getElementById('deleteNotificationModal'));
 const deleteNotificationBtn = document.getElementById('delete-notification-btn');
 
+const choicesSingleFilterOrderby = new Choices('#choices-single-filter-orderby');
+const choicesCandidatePage = new Choices('#choices-candidate-page');
+
+
 selectAllBtn.addEventListener('click', () => {
     deleteNotificationCheckbox.forEach((checkbox) => {
         const input = checkbox.querySelector('input');
