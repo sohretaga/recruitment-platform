@@ -1,6 +1,8 @@
 from django.core.paginator import Paginator
 from django.utils import timezone
-from django.db.models import F, Count
+from django.db.models import F, Count, When, Case, Value, CharField
+from django.db.models.functions import Concat
+from django.conf import settings
 from datetime import timedelta
 
 from recruitment_cp import models
@@ -59,7 +61,17 @@ def vacancy_with_related_info(objects):
         work_experience_name = F('work_experience__name'),
         work_preference_name = F('work_preference__name'),
         department_name = F('department__name'),
-        profile_photo_url = F('employer__user__profile_photo'),
+        profile_photo_url = Case(
+            When(
+                employer__user__profile_photo__icontains = 'profile-photos',
+                then=Concat(
+                    Value(settings.MEDIA_URL),
+                    F('employer__user__profile_photo')
+                )
+            ),
+            default=Value(''),
+            output_field=CharField()
+        )
     )
 
 def fetch_vacancies(request) -> dict:
