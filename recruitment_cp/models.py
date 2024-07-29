@@ -7,7 +7,8 @@ class SiteContent(models.Model):
         ('SIGN_UP', 'Sign Up'),
         ('SIGN_IN', 'Sign In'),
         ('SIGN_OUT', 'Sign Out'),
-        ('CONTCAT', 'Contact'),
+        ('CONTACT', 'Contact'),
+        ('CONTACT_THANKS_MESSAGE', 'Contact - Thanks Message'),
         ('TERMS', 'Privacy & Policy'),
         ('EMPLOYER_COMPLETE_REGISTER', 'Employer - Complete Register'),
         ('CANDIDATE_COMPLETE_REGISTER', 'Candidate - Complete Register'),
@@ -19,12 +20,12 @@ class SiteContent(models.Model):
 
     def short_content(self) -> str:
         return self.content[:75]+'...' if len(self.content) > 75 else self.content 
-    
+
     short_content.short_description = 'Content'
 
     def __str__(self) -> str:
         return self.page
-    
+
     class Meta:
         verbose_name = 'Site Content'
         verbose_name_plural = 'Site Contents'

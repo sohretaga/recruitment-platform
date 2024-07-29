@@ -38,13 +38,18 @@ def index(request):
     return render(request, 'main/index.html', context)
 
 def contact(request):
+    context = {
+        'submitted': False
+    }
+
     if request.POST:
         form = ContactForm(request.POST)
 
         if form.is_valid():
             form.save()
+            context['submitted'] = True
 
-    return render(request, 'main/contact.html')
+    return render(request, 'main/contact.html', context)
 
 def about(request):
     return render(request, 'main/about.html')

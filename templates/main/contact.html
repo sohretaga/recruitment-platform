@@ -56,7 +56,6 @@
         </div>
         <!-- END SHAPE -->
 
-
         <!-- START CONTACT-PAGE -->
         <section class="section">
             <div class="container">
@@ -67,7 +66,13 @@
                             <p class="text-muted">{{ contact.content }}</p>
                             <form method="post" onsubmit="return validateForm()" class="contact-form mt-4" name="contactForm" id="contactForm">
                                 {% csrf_token %}
-                                <span id="error-msg"></span>
+                                <span id="error-msg">
+                                    {% if submitted %}
+                                    <div class='alert alert-success success_message'>
+                                        <i class='mdi mdi-email-check'></i> Your message has been sent successfully.
+                                    </div>
+                                    {% endif %}
+                                </span>
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="mb-3">
