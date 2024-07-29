@@ -11,6 +11,7 @@ from recruitment_cp.models import ParameterFAQ, ParameterKeyword
 from main.models import FAQ
 from blog.models import Blog
 from main.models import Notification
+from .forms import ContactForm
 from .utils import get_vacancy_in_sublists, mark_notifications_as_read, fetch_notifications
 
 import json
@@ -38,7 +39,10 @@ def index(request):
 
 def contact(request):
     if request.POST:
-        ...
+        form = ContactForm(request.POST)
+
+        if form.is_valid():
+            form.save()
 
     return render(request, 'main/contact.html')
 

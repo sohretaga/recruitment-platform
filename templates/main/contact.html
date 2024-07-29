@@ -65,7 +65,8 @@
                         <div class="section-title mt-4 mt-lg-0">
                             <h3 class="title">Get in touch</h3>
                             <p class="text-muted">{{ contact.content }}</p>
-                            <form method="post" onsubmit="return validateForm()" class="contact-form mt-4" name="myForm" id="myForm">
+                            <form method="post" onsubmit="return validateForm()" class="contact-form mt-4" name="contactForm" id="contactForm">
+                                {% csrf_token %}
                                 <span id="error-msg"></span>
                                 <div class="row">
                                     <div class="col-lg-12">
@@ -92,7 +93,7 @@
                                     <div class="col-lg-12">
                                         <div class="mb-3">
                                             <label for="meassageInput" class="form-label">Your Message</label>
-                                            <textarea class="form-control" id="meassageInput" placeholder="Enter your message" name="comments" id="comments" rows="3"></textarea>
+                                            <textarea class="form-control" id="meassageInput" placeholder="Enter your message" name="message" id="comments" rows="3"></textarea>
                                         </div>
                                     </div><!--end col-->
                                 </div><!--end row-->
