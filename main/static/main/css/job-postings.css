@@ -1,0 +1,18 @@
+@media only screen and (max-width: 768px)  {
+    .vacancy-user-profile-photo {
+        width: auto;
+        padding: 0;
+    }
+
+    .vacancy-user-profile-photo > a > img {
+        width: 55px !important;
+    }
+
+    .vacancy-content {
+        width: 80%;
+    }
+
+    .vacancy-content > div {
+        margin-top: 0 !important;
+    }
+}

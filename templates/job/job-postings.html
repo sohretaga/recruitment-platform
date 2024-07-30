@@ -14,6 +14,8 @@
     <!-- App Css-->
     <link href="{% static 'main/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
     <!--Custom Css-->
+    <link href="{% static 'main/css/job-postings.css' %}" rel="stylesheet" type="text/css" />
+
 {% endblock head %}
 
 {% block content %}
@@ -79,7 +81,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-4">
-                                <div class="selection-widget">
+                                <div class="selection-widget mt-2 mt-lg-0">
                                     <select class="form-select" data-trigger name="choices-single-filter-orderby" id="choices-single-filter-orderby" aria-label="Default select example">
                                         <option value="df">Default</option>
                                         <option value="ne">Newest</option>
@@ -109,14 +111,14 @@
                     <div id="vacancy-{{ vacancy.id }}" class="job-box card mt-4">
                         <div class="card-body p-4">
                             <div class="row">
-                                <div class="col-lg-1">
+                                <div class="col-lg-1 vacancy-user-profile-photo">
                                     {% if vacancy.employer.user.profile_photo %}
                                     <a href="{% url 'user:company' vacancy.employer_username %}"><img src="{{ vacancy.employer.user.profile_photo.url }}" alt="{{ vacancy.company_name }}" class="img-fluid rounded-3" width="70"></a>
                                     {% else %}
                                     <a href="{% url 'user:company' vacancy.employer_username %}"><img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="{{ vacancy.company_name }}" class="img-fluid rounded-3" width="70"></a>
                                     {% endif %}
                                 </div><!--end col-->
-                                <div class="col-lg-7 d-flex">
+                                <div class="col-lg-7 d-flex vacancy-content">
                                     <div class="mt-3 mt-lg-0">
                                         <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' vacancy.slug %}" class="text-dark">{{ vacancy.position_title }}</a> {% if not vacancy.status %}<span class="badge bg-soft-danger mt-1">Deactive</span>{% endif %}</h5>
                                         <ul class="list-inline mb-0">
