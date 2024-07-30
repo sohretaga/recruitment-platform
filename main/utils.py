@@ -73,14 +73,19 @@ def fetch_notifications(objects):
     for n in objects:
         user_type = n.to_user.user_type
         profile_photo = n.from_user.profile_photo
+        content_object = n.content_object
 
         if profile_photo:
             profile_photo = profile_photo.url
         
-        if user_type == 'employer':
-            related_data = reverse('job:applicants', args=[n.related_data])
-        elif user_type == 'candidate':
+        if user_type == 'employer' and content_object:
+            related_data = reverse('job:applicants', args=[content_object.vacancy.slug])
+
+        elif user_type == 'candidate' and content_object:
             related_data = reverse('job:applications')
+
+        else:
+            related_data = False
 
         notifications.append({
             'id': n.id,

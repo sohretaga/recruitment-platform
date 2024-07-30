@@ -36,6 +36,8 @@ class NotificationConsumer(WebsocketConsumer):
     
     @database_sync_to_async
     def create_notification(self, text_data) -> None:
+        from django.contrib.contenttypes.models import ContentType
+        from job.models import Apply
         from main.models import Notification
         from user.models import CustomUser
 
@@ -43,14 +45,24 @@ class NotificationConsumer(WebsocketConsumer):
         related_data = text_data_json['related_data']
         content = text_data_json['content']
 
+        related_object = dict()
         to_user = CustomUser.objects.get(id=self.target_user_id)
+
+        if Apply.objects.filter(id=related_data).exists():
+            apply = Apply.objects.get(id=related_data)
+            apply_content_type = ContentType.objects.get_for_model(apply)
+
+            related_object = {
+                'content_type': apply_content_type,
+                'object_id': apply.id
+            }
 
         Notification.objects.create(
             from_user=self.user,
             to_user=to_user,
             content=content,
-            related_data=related_data,
             read=False,
+            **related_object
         )
 
     def send_notification(self, event):

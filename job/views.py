@@ -111,11 +111,22 @@ def ajax_apply(request):
     apply_exists = Apply.objects.filter(candidate=request.user.candidate, vacancy=vacancy).exists()
 
     if apply_exists:
-        Apply.objects.filter(candidate=request.user.candidate, vacancy=vacancy).delete()
-        return JsonResponse({'status': 'success', 'message': 'Apply removed'})
+        apply = Apply.objects.get(
+            candidate=request.user.candidate,
+            vacancy=vacancy
+        )
+        apply_id = apply.id
+        apply.delete()
+
     else:
-        Apply.objects.create(candidate=request.user.candidate, vacancy=vacancy, message=message, cv=cv)
-        return JsonResponse({'status': 'success', 'message': 'Bookmark removed'})
+        apply = Apply.objects.create(
+            candidate=request.user.candidate,
+            vacancy=vacancy,
+            message=message,
+            cv=cv
+        )
+        apply_id = apply.id
+    return JsonResponse({'apply_id': apply_id})
 
 
 @is_employer

@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+
 from recruitment_cp.models import ParameterFAQ
 from user.models import CustomUser
 
@@ -12,7 +15,9 @@ class FAQ(models.Model):
 class Notification(models.Model):
     from_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='notifications_sent')
     to_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='notifications_received')
-    related_data = models.CharField(max_length=255)
+    content_type = models.ForeignKey(ContentType, on_delete=models.SET_NULL, null=True, blank=True)
+    object_id = models.PositiveIntegerField(null=True, blank=True)
+    content_object = GenericForeignKey("content_type", "object_id")
     content = models.CharField(max_length=100)
     read = models.BooleanField()
     timestamp = models.DateTimeField(auto_now_add=True)
