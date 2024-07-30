@@ -507,9 +507,9 @@
 
         <script>
             const notificationToggle = document.getElementById('notification-toggle');
+            const wsProtocol = window.location.protocol === "https:" ? "wss://" : "ws://";
 
             if(notificationToggle) {
-                const wsProtocol = window.location.protocol === "https:" ? "wss://" : "ws://";
                 const WsUrl = `${wsProtocol}${window.location.host}/ws/notifications/{{ user.id }}/`;
                 const notificationSocket = new WebSocket(WsUrl);
                 const notificationList = document.getElementById('notification-list');

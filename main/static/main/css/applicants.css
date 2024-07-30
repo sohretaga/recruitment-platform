@@ -1,0 +1,17 @@
+@media only screen and (max-width:768px) {
+    .candidate-row {
+        align-items: normal !important;
+    }
+
+    .candidate-row > div {
+        padding: 0 10px 0 0;
+    }
+
+    .candidate-content {
+        width: 75%;
+    }
+
+    .candidate-content > div {
+        margin-top: 0 !important;
+    }
+}
