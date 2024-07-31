@@ -547,7 +547,7 @@
 
                 data.forEach(notification => {
                     const newNotificationHTML = `
-                        <a href="${notification.related_data ? `${notification.related_data}`:'javascript:void(0)'}" class="text-dark notification-item d-block ${notification.related_data ? '':'deactive-notification'}">
+                        <a href="${notification.related_data ? `${notification.related_data}`:'javascript:void(0)'}" class="notification-item d-block ${notification.related_data ? 'text-dark':'deactive-notification'}">
                             <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0 me-3">
                                     <img src="${notification.profile_photo ? `${notification.profile_photo}`:'/static/main/images/featured-job/default-company-img.jpeg'}" class="rounded-circle avatar-xs" alt="user-pic">
