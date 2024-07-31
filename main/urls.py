@@ -19,4 +19,5 @@ urlpatterns = [
     path('ajax/get-notifications', views.get_notifications, name='ajax-get-notifications'),
     path('ajax/delete-notifications', views.delete_notifications, name='ajax-delete-notifications'),
     path('ajax/delete-notification', views.delete_notification, name='ajax-delete-notifications'),
+    path('ajax/subscribe', views.subscribe, name='ajax-subscribe'),
 ]

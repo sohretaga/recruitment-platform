@@ -10,7 +10,7 @@ from job.models import Vacancy
 from recruitment_cp.models import ParameterFAQ, ParameterKeyword
 from main.models import FAQ
 from blog.models import Blog
-from main.models import Notification
+from main.models import Notification, Subscribe
 from .forms import ContactForm
 from .utils import get_vacancy_in_sublists, mark_notifications_as_read, fetch_notifications, send_contact_email
 
@@ -128,3 +128,10 @@ def delete_notification(request):
     notifications.delete()
     
     return JsonResponse({'status':200})
+
+@require_POST
+def subscribe(request):
+    email = request.POST.get('email')
+    Subscribe.objects.create(email=email)
+
+    return JsonResponse({'status': 200})

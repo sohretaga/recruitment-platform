@@ -34,3 +34,7 @@ class Contact(models.Model):
 
 class ContactEmail(models.Model):
     email = models.EmailField()
+
+class Subscribe(models.Model):
+    email = models.EmailField()
+    subscribe_date = models.DateTimeField(auto_now_add=True)

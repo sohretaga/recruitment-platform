@@ -32,6 +32,7 @@
 
     <body>
         <input id="csrf-token" type="hidden" value="{{ csrf_token }}">
+        <input id="user-id" type="hidden" value="{{ user.id }}">
         <div id="user-info" data-is-authenticated="{{ user.is_authenticated|yesno:'yes,no' }}"></div>
         
          <!--start page Loader -->
@@ -374,9 +375,10 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="mt-4 mt-lg-0">
+                                    <div id="subscribe-alert"></div>
                                     <form class="subscribe-form" action="#">
                                         <div class="input-group justify-content-center justify-content-lg-end">
-                                            <input type="text" class="form-control" id="subscribe" placeholder="Enter your email">
+                                            <input type="email" class="form-control" id="subscribe" placeholder="Enter your email">
                                             <button class="btn btn-primary" type="button" id="subscribebtn">Subscribe</button>
                                         </div>
                                     </form><!--end form-->
@@ -486,94 +488,8 @@
         </div>
         <!-- END layout-wrapper -->
 
-
         <script src="{% static 'dashboard/libs/jquery/jquery.min.js' %}"></script>
-        <script>
-            const csrf_token = document.getElementById('csrf-token').value;
-            $.ajaxSetup({
-                beforeSend: function (xhr, settings) {
-                    xhr.setRequestHeader('X-CSRFToken', csrf_token);
-                    $('body').css('cursor', 'wait');
-                },
-                complete: function () {
-                    $('body').css('cursor', 'default');
-                },
-                error: function () {
-                    console.error('Failure when operation performed...');
-                }
-            });
-
-        </script>
-
-        <script>
-            const notificationToggle = document.getElementById('notification-toggle');
-            const wsProtocol = window.location.protocol === "https:" ? "wss://" : "ws://";
-
-            if(notificationToggle) {
-                const WsUrl = `${wsProtocol}${window.location.host}/ws/notifications/{{ user.id }}/`;
-                const notificationSocket = new WebSocket(WsUrl);
-                const notificationList = document.getElementById('notification-list');
-                const notificationCoutn = document.getElementById('notification-count');
-                
-                notificationSocket.onmessage = function(e) {
-                    notificationCoutn.classList.remove('d-none');
-
-                    if(notificationCoutn.innerText){
-                        notificationCoutn.innerText = parseInt(notificationCoutn.innerText)+1;
-                    }else {
-                        notificationCoutn.innerText = 1;
-                    };
-                };
-
-                notificationToggle.addEventListener('show.bs.dropdown', function() {
-                    $.ajax({
-                        url: '/ajax/get-notifications',
-                        type: 'POST',
-                        success: function(response) {
-                            const notifications = JSON.parse(response.notifications);
-                            loadNotifications(notifications);
-                        }
-                    });
-                });
-            };
-
-            const loadNotifications = (data) => {
-                const notificationList = document.getElementById('notification-list');
-                const notificationCount = document.getElementById('notification-count');
-
-                notificationList.innerHTML = '';
-                notificationCount.innerText = '';
-                notificationCount.classList.add('d-none');
-
-                data.forEach(notification => {
-                    const newNotificationHTML = `
-                        <a href="${notification.related_data ? `${notification.related_data}`:'javascript:void(0)'}" class="notification-item d-block ${notification.related_data ? 'text-dark':'deactive-notification'}">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0 me-3">
-                                    <img src="${notification.profile_photo ? `${notification.profile_photo}`:'/static/main/images/featured-job/default-company-img.jpeg'}" class="rounded-circle avatar-xs" alt="user-pic">
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h6 class="mt-0 mb-1 fs-14">${notification.content}</h6>
-                                    <p class="text-muted mb-0 fs-12"><i class="mdi mdi-clock-outline"></i> <span>${notification.timestamp}</span></p>
-                                </div>
-                            </div>
-                        </a>
-                    `;
-                    notificationList.innerHTML = notificationList.innerHTML + newNotificationHTML;
-                });
-            };
-
-            const sendNotification = (target_id, args) => {
-                const targetWsUrl = `${wsProtocol}${window.location.host}/ws/send-notifications/${target_id}/`;
-                const targetSocket = new WebSocket(targetWsUrl);
-
-                targetSocket.onopen = () => {
-                    targetSocket.send(
-                        JSON.stringify(args)
-                    );
-                }
-            };
-        </script>
+        <script src="{% static 'main/js/ajax/base.js' %}"></script>
 
         {% block script %}
 
