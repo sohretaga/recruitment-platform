@@ -87,7 +87,7 @@ subscribeBtn.addEventListener('click', () => {
     const subscribeInput = document.getElementById('subscribe');
     if (subscribeInput.value) {
         $.ajax({
-            url:'ajax/subscribe',
+            url:'/ajax/subscribe',
             type: 'POST',
             data: {email: subscribeInput.value},
             success: () => {
