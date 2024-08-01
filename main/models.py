@@ -38,3 +38,8 @@ class ContactEmail(models.Model):
 class Subscribe(models.Model):
     email = models.EmailField()
     subscribe_date = models.DateTimeField(auto_now_add=True)
+
+class HowItWork(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    image = models.ImageField(upload_to='how-it-work/')

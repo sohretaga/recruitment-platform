@@ -10,7 +10,7 @@ from job.models import Vacancy
 from recruitment_cp.models import ParameterFAQ, ParameterKeyword
 from main.models import FAQ
 from blog.models import Blog
-from main.models import Notification, Subscribe
+from main.models import Notification, Subscribe, HowItWork
 from .forms import ContactForm
 from .utils import get_vacancy_in_sublists, mark_notifications_as_read, fetch_notifications, send_contact_email
 
@@ -25,6 +25,7 @@ def index(request):
     quick_career_tips = Blog.objects.filter(status='published', quick_career_tip=True)
     featured_slider_vacancies = get_vacancy_in_sublists()
     trending_keywords = ParameterKeyword.objects.filter(trending=True).values('id', 'name')
+    how_it_works = HowItWork.objects.all()
     
     context = {
         **vacancies,
@@ -32,7 +33,8 @@ def index(request):
         'today_releases': today_releases,
         'featured_slider': featured_slider_vacancies,
         'quick_career_tips': quick_career_tips,
-        'trending_keywords': trending_keywords
+        'trending_keywords': trending_keywords,
+        'how_it_works': how_it_works
     }
 
     return render(request, 'main/index.html', context)

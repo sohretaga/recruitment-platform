@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Contact, ContactEmail, Subscribe
+from .models import Contact, ContactEmail, Subscribe, HowItWork
 
 # Register your models here.
 
@@ -14,3 +14,7 @@ class ContactEmailAdmin(admin.ModelAdmin):
 @admin.register(Subscribe)
 class SubscribeAdmin(admin.ModelAdmin):
     list_display = ['email', 'subscribe_date']
+
+@admin.register(HowItWork)
+class HowItWorkAdmin(admin.ModelAdmin):
+    list_display = ['title']
