@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Contact, ContactEmail, Subscribe, HowItWork
+from .models import Contact, ContactEmail, Subscribe, HowItWork, Team
 
 # Register your models here.
 
@@ -18,3 +18,7 @@ class SubscribeAdmin(admin.ModelAdmin):
 @admin.register(HowItWork)
 class HowItWorkAdmin(admin.ModelAdmin):
     list_display = ['title']
+
+@admin.register(Team)
+class TeamAdmin(admin.ModelAdmin):
+    list_display = ['full_name', 'profession']

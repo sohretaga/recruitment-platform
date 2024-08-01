@@ -32,14 +32,37 @@ class Contact(models.Model):
     message = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self) -> str:
+        return self.name
+
 class ContactEmail(models.Model):
     email = models.EmailField()
+
+    def __str__(self) -> str:
+        return self.email
 
 class Subscribe(models.Model):
     email = models.EmailField()
     subscribe_date = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self) -> str:
+        return self.email
+
 class HowItWork(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     image = models.ImageField(upload_to='how-it-work/')
+
+    def __str__(self) -> str:
+        return self.title
+
+class Team(models.Model):
+    full_name = models.CharField(max_length=150)
+    profession = models.CharField(max_length=255)
+    image = models.ImageField(upload_to='team-image/')
+    facebook_url = models.URLField(blank=True, null=True)
+    linkedin_url = models.URLField(blank=True, null=True)
+    website_url = models.URLField(blank=True, null=True)
+
+    def __str__(self) -> str:
+        return self.full_name

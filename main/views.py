@@ -10,7 +10,7 @@ from job.models import Vacancy
 from recruitment_cp.models import ParameterFAQ, ParameterKeyword
 from main.models import FAQ
 from blog.models import Blog
-from main.models import Notification, Subscribe, HowItWork
+from main.models import Notification, Subscribe, HowItWork, Team
 from .forms import ContactForm
 from .utils import get_vacancy_in_sublists, mark_notifications_as_read, fetch_notifications, send_contact_email
 
@@ -67,7 +67,11 @@ def services(request):
     return render(request, 'main/services.html')
 
 def team(request):
-    return render(request, 'main/team.html')
+    team = Team.objects.all()
+    context = {
+        'team': team
+    }
+    return render(request, 'main/team.html', context)
 
 def pricing(request):
     return render(request, 'main/pricing.html')
