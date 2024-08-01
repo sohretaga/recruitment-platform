@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load site_content %}
 
 {% block title %}About Us{% endblock title %}
 
@@ -14,6 +15,7 @@
 {% endblock head %}
 
 {% block content %}
+{% get_site_content 'ABOUT_US' as about_us %}
 <div class="page-content">
 
     <!-- Start home -->
@@ -61,9 +63,10 @@
                 <div class="col-lg-6">
                     <div class="section-title me-lg-5">
                         <h6 class="sub-title">About Us</h6>
-                        <h2 class="title mb-4">Why <span class="text-warning fw-bold">35,000+</span> People Trust On Jobcy?</h2>
+                        <!-- <h2 class="title mb-4">Why <span class="text-warning fw-bold">35,000+</span> People Trust On Us</h2> -->
+                        <h2 class="title mb-4">Why Do People Trust Us?</h2>
 
-                        <p class="text-muted">Start working with Jobcy that can provide everything you need to generate awareness, drive traffic, connect. Dummy text is text that is used in the publishing industry or by web designers to occupy the space which will later be filled with 'real' content.</p>
+                        <p class="text-muted">{{ about_us.content }}</p>
                         
                         <div class="row mt-4 pt-2">
                             <div class="col-md-6">
@@ -88,11 +91,13 @@
                         </div>
                     </div>
                 </div><!--end col-->
+                {% if about_us and about_us.image %}
                 <div class="col-lg-6">
-                <div class="about-img mt-4 mt-lg-0">
-                    <img src="{% static 'main/images/about/img-01.jpg' %}" alt="" class="img-fluid rounded">
-                </div>
+                    <div class="about-img mt-4 mt-lg-0">
+                        <img src="{{ about_us.image.url }}" alt="about us" class="img-fluid rounded">
+                    </div>
                 </div><!--end col-->
+                {% endif %}
             </div><!--end row-->
         </div><!--end container-->
     </section>
