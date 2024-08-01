@@ -54,13 +54,13 @@ const loadNotifications = (data) => {
 
     data.forEach(notification => {
         const newNotificationHTML = `
-            <a href="${notification.related_data ? `${notification.related_data}`:'javascript:void(0)'}" class="notification-item d-block ${notification.related_data ? 'text-dark':'deactive-notification'}">
+            <a href="${notification.related_data ? `${notification.related_data}`:'javascript:void(0)'}" class="text-dark notification-item d-block">
                 <div class="d-flex align-items-center">
                     <div class="flex-shrink-0 me-3">
                         <img src="${notification.profile_photo ? `${notification.profile_photo}`:'/static/main/images/featured-job/default-company-img.jpeg'}" class="rounded-circle avatar-xs" alt="user-pic">
                     </div>
                     <div class="flex-grow-1">
-                        <h6 class="mt-0 mb-1 fs-14">${notification.content}</h6>
+                        <h6 class="mt-0 mb-1 fs-14 ${notification.related_data ? '':'text-muted'}">${notification.content}</h6>
                         <p class="text-muted mb-0 fs-12"><i class="mdi mdi-clock-outline"></i> <span>${notification.timestamp}</span></p>
                     </div>
                 </div>
