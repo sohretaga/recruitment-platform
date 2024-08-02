@@ -49,9 +49,13 @@ class Subscribe(models.Model):
         return self.email
 
 class HowItWork(models.Model):
+    no = models.PositiveIntegerField()
     title = models.CharField(max_length=255)
     description = models.TextField()
     image = models.ImageField(upload_to='how-it-work/')
+
+    class Meta:
+        ordering = ['no']
 
     def __str__(self) -> str:
         return self.title
