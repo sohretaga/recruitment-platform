@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Contact, ContactEmail, Subscribe, HowItWork, Team, Service
+from .models import Contact, ContactEmail, Subscribe, HowItWork, Team, Service, AboutSection, AboutSectionFactor, AboutUs
 
 # Register your models here.
 
@@ -40,3 +40,20 @@ class ServiceAdmin(admin.ModelAdmin):
 
     title_with_no.short_description = 'Title'
     short_description.short_description = 'Description'
+
+class AboutSectionFactorInline(admin.StackedInline):
+    model = AboutSectionFactor
+    extra = 0
+
+class AboutSectionInline(admin.StackedInline):
+    model = AboutSection
+    can_delete = False
+    max_num = 1
+    extra = 0
+
+@admin.register(AboutUs)
+class AboutUsAdmin(admin.ModelAdmin):
+    inlines = [
+        AboutSectionInline,
+        AboutSectionFactorInline
+    ]

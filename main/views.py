@@ -10,7 +10,7 @@ from job.models import Vacancy
 from recruitment_cp.models import ParameterFAQ, ParameterKeyword
 from main.models import FAQ
 from blog.models import Blog
-from main.models import Notification, Subscribe, HowItWork, Team, Service
+from main.models import Notification, Subscribe, HowItWork, Team, Service, AboutUs
 from .forms import ContactForm
 from .utils import get_vacancy_in_sublists, mark_notifications_as_read, fetch_notifications, send_contact_email
 
@@ -61,7 +61,18 @@ def contact(request):
     return render(request, 'main/contact.html', context)
 
 def about(request):
-    return render(request, 'main/about.html')
+    about_section = get_object_or_404(AboutUs, section='ABOUT_SECTION')
+    about_section = about_section.about_section
+
+    about_section_factors = get_object_or_404(AboutUs, section='ABOUT_SECTION_FACTORS')
+    about_section_factors = about_section_factors.factors.all()
+
+    context = {
+        'about_section': about_section,
+        'about_section_factors': about_section_factors
+    }
+    
+    return render(request, 'main/about.html', context)
 
 def services(request):
     services = Service.objects.all()

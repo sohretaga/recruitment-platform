@@ -15,7 +15,6 @@
 {% endblock head %}
 
 {% block content %}
-{% get_site_content 'ABOUT_US' as about_us %}
 <div class="page-content">
 
     <!-- Start home -->
@@ -64,40 +63,29 @@
                     <div class="section-title me-lg-5">
                         <h6 class="sub-title">About Us</h6>
                         <!-- <h2 class="title mb-4">Why <span class="text-warning fw-bold">35,000+</span> People Trust On Us</h2> -->
-                        <h2 class="title mb-4">Why Do People Trust Us?</h2>
+                        <h2 class="title mb-4">{{ about_section.title }}</h2>
 
-                        <p class="text-muted">{{ about_us.content }}</p>
+                        <p class="text-muted">{{ about_section.description }}</p>
                         
                         <div class="row mt-4 pt-2">
+                            {% for factor in about_section_factors %}
                             <div class="col-md-6">
                                 <ul class="list-unstyled about-list text-muted mb-0 mb-md-3">
-                                    <li> Digital Marketing Solutions</li>
-                                    <li> Our Talented & Experienced Marketing Agency</li>
-                                    <li> Creative Design</li>
-                                    <li> New jobs Innovation</li>
+                                    <li> {{ factor.text }}</li>
                                 </ul>
                             </div>
-                            <div class="col-md-6">
-                                <ul class="list-unstyled about-list text-muted">
-                                    <li> Create Resume</li>
-                                    <li> 5000+ Comnpanies</li>
-                                    <li> Our Blog</li>
-                                    <li> and more...</li>
-                                </ul>
-                            </div>
+                            {% endfor %}
                         </div>
                         <div class="mt-3">
                                 <a href="javascript:void(0)" class="btn btn-primary btn-hover">Learn More <i class="uil uil-angle-right-b align-middle"></i></a>
                         </div>
                     </div>
                 </div><!--end col-->
-                {% if about_us and about_us.image %}
                 <div class="col-lg-6">
                     <div class="about-img mt-4 mt-lg-0">
-                        <img src="{{ about_us.image.url }}" alt="about us" class="img-fluid rounded">
+                        <img src="{{ about_section.image.url }}" alt="about us" class="img-fluid rounded">
                     </div>
                 </div><!--end col-->
-                {% endif %}
             </div><!--end row-->
         </div><!--end container-->
     </section>

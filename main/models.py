@@ -96,3 +96,33 @@ class Service(models.Model):
                 counter += 1
                 queryset = Service.objects.filter(slug=self.slug)
         super(Service, self).save(*args, **kwargs)
+
+# About Us Models
+
+class AboutUs(models.Model):
+    SECTION_CHOICES = [
+        ('ABOUT_SECTION', 'About Section'),
+        ('ABOUT_SECTION_FACTORS', 'About Section Factors'),
+    ]
+
+    section = models.CharField(max_length=25, choices=SECTION_CHOICES, unique=True)
+
+    class Meta:
+        verbose_name = "About Us"
+        verbose_name_plural = "About Us"
+
+    def __str__(self) -> str:
+        return self.get_section_display()
+
+class AboutSection(models.Model):
+    about_us = models.OneToOneField(AboutUs, on_delete=models.CASCADE, related_name='about_section')
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    image = models.ImageField(upload_to='about-images/')
+
+    def __str__(self):
+        return self.title
+
+class AboutSectionFactor(models.Model):
+    about_section = models.ForeignKey(AboutUs, on_delete=models.CASCADE, related_name='factors')
+    text = models.CharField(max_length=100)

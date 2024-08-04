@@ -13,7 +13,6 @@ class SiteContent(models.Model):
         ('EMPLOYER_COMPLETE_REGISTER', 'Employer - Complete Register'),
         ('CANDIDATE_COMPLETE_REGISTER', 'Candidate - Complete Register'),
         ('HOW_IT_WORK', 'How It Work'),
-        ('ABOUT_US', 'About Us')
     )
 
     page = models.CharField(max_length=30, choices=PAGE_CHOICES, unique=True)
