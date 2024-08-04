@@ -72,6 +72,10 @@ class Team(models.Model):
         return self.full_name
 
 class Service(models.Model):
+    no = models.PositiveIntegerField()
     title = models.CharField(max_length=255)
-    icon = models.ImageField(upload_to='service/')
-    description = models.TextField()
+    icon = models.ImageField(upload_to='service/', blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+
+    class Meta:
+        ordering = ['no']

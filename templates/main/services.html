@@ -74,7 +74,9 @@
                     <div class="card service-box mt-4">
                         <div class="card-body p-4">
                             <div class="service-icon icons-md">
+                                 {% if service.icon %}
                                  <img src="{{ service.icon.url }}" alt="{{ service.title }}" width="32" height="32">
+                                 {% endif %}
                             </div>
                             <div class="mt-4">
                                 <h5>{{ service.title }}</h5>

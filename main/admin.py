@@ -30,9 +30,13 @@ class TeamAdmin(admin.ModelAdmin):
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
-    list_display = ['title', 'short_description']
+    list_display = ['title_with_no', 'short_description']
+
+    def title_with_no(self, obj):
+        return f'{obj.no}.{obj.title}'
 
     def short_description(self, obj):
         return f'{obj.description[:75]}...' if len(obj.description) > 75 else obj.description
-    
+
+    title_with_no.short_description = 'Title'
     short_description.short_description = 'Description'
