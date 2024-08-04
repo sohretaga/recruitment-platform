@@ -209,12 +209,20 @@
                                 <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <!-- item-->
-                                <a class="dropdown-item" href="#"><i class="ri-user-line align-middle mr-1"></i> Profile</a>
-                                <a class="dropdown-item" href="#"><i class="ri-wallet-2-line align-middle mr-1"></i> My Wallet</a>
-                                <a class="dropdown-item d-block" href="#"><span class="badge badge-success float-right mt-1">11</span><i class="ri-settings-2-line align-middle mr-1"></i> Settings</a>
-                                <a class="dropdown-item" href="#"><i class="ri-lock-unlock-line align-middle mr-1"></i> Lock screen</a>
-                                <div class="dropdown-divider"></div>
+                                {% if user.is_superuser %}
+                                <a class="dropdown-item" href="{% url 'job:job-postings' %}"><i class="ri-briefcase-line align-middle mr-1"></i> Job Postings</a>
+                                <a class="dropdown-item" href="{% url 'job:applications' %}"><i class="ri-file-list-line align-middle mr-1"></i> My Applies</a>
+                                <a class="dropdown-item" href="{% url 'user:company' user.username %}"><i class="ri-building-line align-middle mr-1"></i> Employer</a>
+                                <a class="dropdown-item" href="{% url 'user:candidate' user.username %}"><i class="ri-user-line align-middle mr-1"></i> Candidate</a>
+                                {% elif user.user_type == 'employer' %}
+                                <a class="dropdown-item" href="{% url 'job:job-postings' %}"><i class="ri-briefcase-line align-middle mr-1"></i> Job Postings</a>
+                                <a class="dropdown-item" href="{% url 'user:company' user.username %}"><i class="ri-building-line align-middle mr-1"></i> Employer</a>
+                                {% elif user.user_type == 'candidate' %}
+                                <a class="dropdown-item" href="{% url 'job:applications' %}"><i class="ri-file-list-line align-middle mr-1"></i> My Applies</a>
+                                <a class="dropdown-item" href="{% url 'user:candidate' user.username %}"><i class="ri-user-line align-middle mr-1"></i> Candidate</a>
+                                {% endif %}
+                                <a class="dropdown-item" href="{% url 'job:bookmarks' %}"><i class="ri-bookmark-line align-middle mr-1"></i> Bookmarks</a>
+                                <a class="dropdown-item" href="{% url 'user:profile' %}"><i class="ri-account-circle-line align-middle mr-1"></i> My Profile</a>
                                 <a class="dropdown-item text-danger" href="{% url 'user:sign-out' %}"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i> Logout</a>
                             </div>
                         </div>
