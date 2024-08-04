@@ -17,6 +17,7 @@ class SiteContent(models.Model):
     )
 
     page = models.CharField(max_length=30, choices=PAGE_CHOICES, unique=True)
+    title = models.CharField(max_length=255, blank=True, null=True)
     content = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to='site-content/', blank=True, null=True)
 
