@@ -61,16 +61,21 @@ def contact(request):
     return render(request, 'main/contact.html', context)
 
 def about(request):
-    about_section = get_object_or_404(AboutUs, section='ABOUT_SECTION')
-    about_section = about_section.about_section
+    about_section = list()
+    about_section_factors = list()
 
-    about_section_factors = get_object_or_404(AboutUs, section='ABOUT_SECTION_FACTORS')
-    about_section_factors = about_section_factors.factors.all()
+    try:
+        about_section = AboutUs.objects.get(section='ABOUT_SECTION')
+        about_section = about_section.about_section
 
-    context = {
-        'about_section': about_section,
-        'about_section_factors': about_section_factors
-    }
+        about_section_factors = AboutUs.objects.get(section='ABOUT_SECTION_FACTORS')
+        about_section_factors = about_section_factors.factors.all()
+
+    finally:
+        context = {
+            'about_section': about_section,
+            'about_section_factors': about_section_factors
+        }
     
     return render(request, 'main/about.html', context)
 
