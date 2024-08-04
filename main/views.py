@@ -66,11 +66,14 @@ def about(request):
         about_section = AboutUs.objects.get(section='ABOUT_SECTION')
         about_section = about_section.about_section
 
+    except AboutUs.DoesNotExist:
+        about_section = list()
+
+    try:
         about_section_factors = AboutUs.objects.get(section='ABOUT_SECTION_FACTORS')
         about_section_factors = about_section_factors.factors.all()
 
     except AboutUs.DoesNotExist:
-        about_section = list()
         about_section_factors = list()
 
     context = {
