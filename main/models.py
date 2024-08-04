@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.utils.text import slugify
-
+from ckeditor.fields import RichTextField
 from recruitment_cp.models import ParameterFAQ
 from user.models import CustomUser
 
@@ -76,7 +76,7 @@ class Service(models.Model):
     no = models.PositiveIntegerField()
     title = models.CharField(max_length=255)
     icon = models.ImageField(upload_to='service/', blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
+    description = RichTextField(blank=True, null=True)
     slug = models.SlugField(editable=False)
 
     class Meta:
