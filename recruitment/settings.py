@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     'froala_editor',
     'ckeditor',
+    'ckeditor_uploader',
     'fontawesomefree',
     'channels',
 
@@ -173,6 +174,7 @@ FROALA_UPLOAD_PATH = 'blog/editor'
 FRAOLA_EDITOR_THIRD_PARTY = ('image_aviary', 'spell_checker')
 
 CKEDITOR_UPLOAD_PATH = 'ckeditor/'
+
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.getenv('EMAIL_HOST')
