@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.utils.text import slugify
 
 from recruitment_cp.models import ParameterFAQ
 from user.models import CustomUser
@@ -76,6 +77,22 @@ class Service(models.Model):
     title = models.CharField(max_length=255)
     icon = models.ImageField(upload_to='service/', blank=True, null=True)
     description = models.TextField(blank=True, null=True)
+    slug = models.SlugField(editable=False)
 
     class Meta:
         ordering = ['no']
+
+    def __str__(self) -> str:
+        return self.title
+
+    def save(self, *args, **kwargs) -> None:
+        if not self.slug:
+            self.slug = slugify(self.title)
+            original_slug = self.slug
+            queryset = Service.objects.filter(slug=self.slug)
+            counter = 1
+            while queryset.exists():
+                self.slug = f"{original_slug}-{counter}"
+                counter += 1
+                queryset = Service.objects.filter(slug=self.slug)
+        super(Service, self).save(*args, **kwargs)

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.core.paginator import Paginator
@@ -70,6 +70,17 @@ def services(request):
     }
 
     return render(request, 'main/services.html', context)
+
+def service_detail(request, slug):
+    service = get_object_or_404(Service, slug=slug)
+    services = Service.objects.exclude(slug=slug)
+
+    context = {
+        'service': service,
+        'services': services
+    }
+
+    return render(request, 'main/service-detail.html', context)
 
 def team(request):
     team = Team.objects.all()
