@@ -17,7 +17,12 @@ class SubscribeAdmin(admin.ModelAdmin):
 
 @admin.register(HowItWork)
 class HowItWorkAdmin(admin.ModelAdmin):
-    list_display = ['title']
+    list_display = ['title_with_no']
+
+    def title_with_no(self, obj):
+        return f'{obj.no}.{obj.title}'
+
+    title_with_no.short_description = 'Title'
 
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
