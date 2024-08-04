@@ -209,7 +209,10 @@
                                 <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="{% url 'main:main-index' %}"><i class="ri-home-line align-middle mr-1"></i> Home</a>
                                 {% if user.is_superuser %}
+                                <a class="dropdown-item" href="/admin"><i class="ri-admin-line align-middle mr-1"></i> Admin</a>
+                                <a class="dropdown-item" href="{% url 'cp:vacancy' %}"><i class="ri-dashboard-line align-middle mr-1"></i> Control Panel</a>
                                 <a class="dropdown-item" href="{% url 'job:job-postings' %}"><i class="ri-briefcase-line align-middle mr-1"></i> Job Postings</a>
                                 <a class="dropdown-item" href="{% url 'job:applications' %}"><i class="ri-file-list-line align-middle mr-1"></i> My Applies</a>
                                 <a class="dropdown-item" href="{% url 'user:company' user.username %}"><i class="ri-building-line align-middle mr-1"></i> Employer</a>
@@ -223,6 +226,7 @@
                                 {% endif %}
                                 <a class="dropdown-item" href="{% url 'job:bookmarks' %}"><i class="ri-bookmark-line align-middle mr-1"></i> Bookmarks</a>
                                 <a class="dropdown-item" href="{% url 'user:profile' %}"><i class="ri-account-circle-line align-middle mr-1"></i> My Profile</a>
+
                                 <a class="dropdown-item text-danger" href="{% url 'user:sign-out' %}"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i> Logout</a>
                             </div>
                         </div>
