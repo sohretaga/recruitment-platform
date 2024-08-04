@@ -70,3 +70,8 @@ class Team(models.Model):
 
     def __str__(self) -> str:
         return self.full_name
+
+class Service(models.Model):
+    title = models.CharField(max_length=255)
+    icon = models.ImageField(upload_to='service/')
+    description = models.TextField()

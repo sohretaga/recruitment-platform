@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Contact, ContactEmail, Subscribe, HowItWork, Team
+from .models import Contact, ContactEmail, Subscribe, HowItWork, Team, Service
 
 # Register your models here.
 
@@ -27,3 +27,12 @@ class HowItWorkAdmin(admin.ModelAdmin):
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
     list_display = ['full_name', 'profession']
+
+@admin.register(Service)
+class ServiceAdmin(admin.ModelAdmin):
+    list_display = ['title', 'short_description']
+
+    def short_description(self, obj):
+        return f'{obj.description[:75]}...' if len(obj.description) > 75 else obj.description
+    
+    short_description.short_description = 'Description'
