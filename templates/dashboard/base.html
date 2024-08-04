@@ -59,15 +59,6 @@
                             </div>
                         </form>
 
-                        <div class="dropdown dropdown-mega d-none d-lg-block ml-2">
-                            <a href="{% url 'main:main-index' %}"><button type="button" class="btn header-item">Home</button></a>
-                            
-                            {% if request.user.is_superuser %}
-                                <a href="{% url 'cp:vacancy' %}" target="_blank"><button type="button" class="btn header-item">Control Page</button></a>
-                                <a href="/admin" target="_blank"><button type="button" class="btn header-item">Admin Page</button></a>
-                            {% endif %}
-                        </div>
-
                     </div>
 
                     <div class="d-flex">
