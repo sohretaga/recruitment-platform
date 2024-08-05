@@ -9,7 +9,7 @@ from django.http import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
 
 from . import forms
-from .models import Gallery, GalleryImage
+from .models import Gallery, GalleryImage, CandidateBookmark
 from .decorators import logout_required
 from user.models import CustomUser, Candidate, Employer, Education, Experience
 from job.utils import vacancy_with_related_info
@@ -436,3 +436,22 @@ def delete_pfofile_image(request):
         user.employer.save()
 
     return JsonResponse({'status': 200})
+
+@login_required
+@require_POST
+def ajax_candidate_bookmarks(request):
+    candidate_id = request.POST.get('candidate')
+    candidate = Candidate.objects.get(id=candidate_id)
+    params = {
+        'employer': request.user.employer,
+        'candidate': candidate
+    }
+
+    candidate_bookmark_exists = CandidateBookmark.objects.filter(**params).exists()
+
+    if candidate_bookmark_exists:
+        CandidateBookmark.objects.filter(**params).delete()
+        return JsonResponse({'status': 'success', 'message': 'Bookmark removed'})
+    else:
+        CandidateBookmark.objects.create(**params)
+        return JsonResponse({'status': 'success', 'message': 'Bookmark added'})

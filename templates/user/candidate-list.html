@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load actions %}
 
 {% block title %}Candidate List{% endblock title %}
 
@@ -384,7 +385,7 @@
                 <div class="col-lg-12">
                     <div class="candidate-list">
                         {% for candidate in candidates %}
-                        <div class="candidate-list-box bookmark-post card mt-4">
+                        <div id="candidate-{{ candidate.id }}" class="candidate-list-box card mt-4  {% candidate_bookmarks request candidate.id %}">
                             <div class="card-body p-4">
                                 <div class="row align-items-center">
                                     <div class="col-auto">
@@ -419,7 +420,7 @@
                                         </div>
                                     </div><!--end col-->
                                 </div><!--end row-->
-                                <div class="favorite-icon">
+                                <div class="favorite-icon" onclick="addCandidateBookmark('{{ candidate.id }}')">
                                     <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a>
                                 </div>
                             </div>

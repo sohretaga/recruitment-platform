@@ -98,3 +98,7 @@ class Experience(models.Model):
 
     present = models.BooleanField()
     description = models.TextField()
+
+class CandidateBookmark(models.Model):
+    employer = models.ForeignKey(Employer, on_delete=models.CASCADE, related_name='bookmarks')
+    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
