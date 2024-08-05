@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.core.paginator import Paginator
+from django.core.cache import cache
 from threading import Thread
 
 from job.utils import fetch_vacancies
@@ -177,3 +178,11 @@ def subscribe(request):
     Subscribe.objects.create(email=email)
 
     return JsonResponse({'status': 200})
+
+
+@require_POST
+def set_language(request):
+    data = json.loads(request.body)
+    language_code = data.get('language', 'en')
+    cache.set(f'site_language', language_code, timeout=86400)
+    return JsonResponse({'status': 'success'})

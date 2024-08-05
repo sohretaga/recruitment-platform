@@ -1,6 +1,6 @@
 from django.urls import path
 
-from recruitment_cp.views import main, parameters
+from recruitment_cp.views import main, parameters, languages
 
 app_name = 'cp'
 
@@ -101,4 +101,13 @@ urlpatterns = [
     path('parameters/job-family', parameters.job_family_index, name='job_family'),
     path('parameters/job-family-load', parameters.job_family_load, name='job_family_load'),
     path('parameters/job-family-save', parameters.job_family_save, name='job_family_save'),
+
+    #LANGUAGE URLS
+    path('translation/contents', languages.contents, name='contents'),
+    path('translation/contents-load', languages.contents_load, name='contents_load'),
+    path('translation/contents-save', languages.contents_save, name='contents_save'),
+
+    path('translation/languages', languages.languages, name='languages'),
+    path('translation/languages-load', languages.languages_load, name='languages_load'),
+    path('translation/languages-save', languages.languages_save, name='languages_save'),
 ]

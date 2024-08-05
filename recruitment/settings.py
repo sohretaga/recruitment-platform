@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'job',
     'blog',
     'user',
+    'language'
 ]
 
 MIDDLEWARE = [
@@ -82,11 +83,18 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'main.context_processors.notification_count'
+                'main.context_processors.notification_count',
+                'main.context_processors.selected_language',
             ],
         },
     },
 ]
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
+}
 
 WSGI_APPLICATION = 'recruitment.wsgi.application'
 ASGI_APPLICATION = 'recruitment.asgi.application'
@@ -174,7 +182,6 @@ FROALA_UPLOAD_PATH = 'blog/editor'
 FRAOLA_EDITOR_THIRD_PARTY = ('image_aviary', 'spell_checker')
 
 CKEDITOR_UPLOAD_PATH = 'ckeditor/'
-
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.getenv('EMAIL_HOST')

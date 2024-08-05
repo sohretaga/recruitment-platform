@@ -52,6 +52,7 @@
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li {% if 'parameters' in request.path %} class="active" {% endif %}><a href="{% url 'cp:career_type' %}">Parameters</a></li>
+                <li {% if 'translation' in request.path %} class="active" {% endif %}><a href="{% url 'cp:languages' %}">Translation</a></li>
             </ul>
         </div>
     </div>
@@ -82,6 +83,9 @@
                     <li {% if 'faq-categories' in request.path %} class="active" {% endif %}><a href="{% url 'cp:faq_categories' %}">FAQ Categories</a></li>
                     <li {% if 'competence' in request.path %} class="active" {% endif %}><a href="{% url 'cp:competence' %}">Competencies</a></li>
                     <li {% if 'job-family' in request.path %} class="active" {% endif %}><a href="{% url 'cp:job_family' %}">Job Family</a></li>
+                {% elif 'translation' in request.path %}
+                    <li {% if 'languages' in request.path %} class="active" {% endif %}><a href="{% url 'cp:languages' %}">Language</a></li>
+                    <li {% if 'contents' in request.path %} class="active" {% endif %}><a href="{% url 'cp:contents' %}">Contents</a></li>
                 {% endif %}
             </ul>
         </div>
