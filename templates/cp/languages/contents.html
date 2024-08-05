@@ -52,6 +52,7 @@
     const bmtTable = document.getElementById('table');
     const consoleText = 'Contents';
     var hot;
+    const selectedLanguageCode = document.querySelector("input[name='language']:checked").value.toUpperCase();
 
     $(document).ready(function() {
         hot = new Handsontable(bmtTable, {
@@ -78,12 +79,12 @@
                     readOnly: true
                 },
                 {
-                    title: 'Text',
+                    title: 'EN',
                     data: 'text',
                     readOnly: true
                 },
                 {
-                    title: 'Translation',
+                    title: '',
                     data: 'translation'
                 },
                 {
@@ -94,9 +95,27 @@
                 }
             ],
         });
-        
 
+        const changeSingleColumnHeader = (code) => {
+            var currentHeaders = hot.getColHeader();
+            currentHeaders[2] = code;
+            hot.updateSettings({
+                colHeaders: currentHeaders
+            });
+        };
+
+        var languages = document.querySelectorAll("input[name='language']");
+        languages.forEach((language) => {
+
+            language.addEventListener('change', () => {
+                let code = language.value.toUpperCase();
+                changeSingleColumnHeader(code);
+            });
+        });
+
+        changeSingleColumnHeader(selectedLanguageCode);
         loadData();
+
     })
 
 </script>

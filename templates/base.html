@@ -1,4 +1,5 @@
 {% load static %}
+{% load translate %}
 
 <!doctype html>
 <html lang="en">
@@ -60,7 +61,7 @@
                         <div class="col-md-7">
                             <ul class="list-inline mb-0 text-center text-md-start">
                                 <li class="list-inline-item">
-                                    <p class="fs-13 mb-0"> <i class="mdi mdi-map-marker"></i> Your Location: <a href="javascript:void(0)" class="text-dark">Agdam</a></p>
+                                    <p class="fs-13 mb-0"> <i class="mdi mdi-map-marker"></i> {% tr 'Your Location' %}: <a href="javascript:void(0)" class="text-dark">Agdam</a></p>
                                 </li>
                                 <li class="list-inline-item">
                                     <ul class="topbar-social-menu list-inline mb-0">
@@ -83,7 +84,7 @@
                                 </li>
                                 {% if user.is_authenticated %}
                                     <li class="list-inline-item py-2 me-2 align-middle">
-                                        <a href="{% url 'dashboard:index' %}" class="text-dark fw-medium fs-13" >Dashboard</a> <!-- #signupModal data-bs-toggle="modal" -->
+                                        <a href="{% url 'dashboard:index' %}" class="text-dark fw-medium fs-13" >{% tr 'Dashboard' %}</a> <!-- #signupModal data-bs-toggle="modal" -->
                                     </li>
                                 {% else %}
                                     <li class="list-inline-item py-2 me-2 align-middle dropdown">
@@ -92,8 +93,8 @@
                                         </a>
 
                                         <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="logindropdown">
-                                            <li><a class="dropdown-item" href="{% url 'user:sign-up' %}"><i class="uil uil-lock"></i>Sign Up</a></li>
-                                            <li><a class="dropdown-item" href="{% url 'user:sign-in' %}"><i class="uil uil-unlock"></i>Sign In</a></li>
+                                            <li><a class="dropdown-item" href="{% url 'user:sign-up' %}"><i class="uil uil-lock"></i>{% tr 'Sign Up' %}</a></li>
+                                            <li><a class="dropdown-item" href="{% url 'user:sign-in' %}"><i class="uil uil-unlock"></i>{% tr 'Sign In' %}</a></li>
                                         </ul>
                                     </li>
                                 {% endif %}
@@ -146,24 +147,24 @@
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <ul class="navbar-nav mx-auto navbar-center">
                             <li class="nav-item">
-                                <a href="{% url 'main:main-index' %}" class="nav-link">Home</a>
+                                <a href="{% url 'main:main-index' %}" class="nav-link">{% tr 'Home' %}</a>
                             </li>
                             <li class="nav-item dropdown dropdown-hover">
                                 <a class="nav-link" href="javascript:void(0)" id="jobsdropdown" role="button" data-bs-toggle="dropdown">
-                                    Company <div class="arrow-down"></div>
+                                    {% tr 'Company' %} <div class="arrow-down"></div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="jobsdropdown">
-                                    <li><a class="dropdown-item" href="{% url 'main:about' %}">About Us</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'main:services' %}">Services</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'main:team' %}">Team</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'main:pricing' %}">Pricing</a></li>
-                                    <a class="dropdown-item" href="{% url 'main:privacy-policy' %}">Privacy & Policy</a>
-                                    <li><a class="dropdown-item" href="{% url 'main:faqs' %}">Faqs</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'main:about' %}">{% tr 'About Us' %}</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'main:services' %}">{% tr 'Services' %}</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'main:team' %}">{% tr 'Team' %}</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'main:pricing' %}">{% tr 'Pricing' %}</a></li>
+                                    <a class="dropdown-item" href="{% url 'main:privacy-policy' %}">{% tr 'Privacy & Policy' %}</a>
+                                    <li><a class="dropdown-item" href="{% url 'main:faqs' %}">{% tr 'Faqs' %}</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown dropdown-hover">
                                 <a class="nav-link" href="javascript:void(0)" id="pagesdoropdown" role="button" data-bs-toggle="dropdown">
-                                    Pages
+                                    {% tr 'Pages' %}
                                     <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-center" aria-labelledby="pagesdoropdown">
@@ -185,13 +186,13 @@
                                 </div>
                             </li><!--end dropdown-->
                             <li class="nav-item">
-                                <a href="{% url 'job:vacancies' %}" class="nav-link">Vacancies</a>
+                                <a href="{% url 'job:vacancies' %}" class="nav-link">{% tr 'Vacancies' %}</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{% url 'blog:blog' %}" class="nav-link">Blog</a>
+                                <a href="{% url 'blog:blog' %}" class="nav-link">{% tr 'Blog' %}</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{% url 'main:contact' %}" class="nav-link">Contact</a>
+                                <a href="{% url 'main:contact' %}" class="nav-link">{% tr 'Contact' %}</a>
                             </li>
                         </ul><!--end navbar-nav-->
                     </div>

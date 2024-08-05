@@ -84,6 +84,7 @@ def languages_save(request):
                 pk = hot[index].pop('id', None)
                 reload = hot[index].pop('reload', None)
                 name = hot[index].get('name', None)
+                hot[index]['code'] = hot[index]['code'].lower()
 
                 if name:
                     if pk:
