@@ -79,8 +79,8 @@ class Service(models.Model):
     title_en = models.CharField(max_length=255, verbose_name='Title EN')
     title_tr = models.CharField(max_length=255, verbose_name='Title TR')
 
-    description_en = RichTextUploadingField(blank=True, null=True, verbose_name='Description EN')
-    description_tr = RichTextUploadingField(blank=True, null=True, verbose_name='Description TR')
+    description_en = RichTextUploadingField(default='', verbose_name='Description EN')
+    description_tr = RichTextUploadingField(default='', verbose_name='Description TR')
 
     icon = models.ImageField(upload_to='service/', blank=True, null=True)
     slug = models.SlugField(editable=False)
