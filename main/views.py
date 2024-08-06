@@ -11,7 +11,7 @@ from job.models import Vacancy
 from recruitment_cp.models import ParameterFAQ, ParameterKeyword
 from main.models import FAQ
 from blog.models import Blog
-from main.models import Notification, Subscribe, HowItWork, Team, Service, AboutUs
+from main.models import Notification, Subscribe, HowItWork, Team, Service, AboutUs, AboutSectionFactor
 from .forms import ContactForm
 from .utils import get_vacancy_in_sublists, mark_notifications_as_read, fetch_notifications, send_contact_email
 
@@ -65,14 +65,14 @@ def about(request):
 
     try:
         about_section = AboutUs.objects.get(section='ABOUT_SECTION')
-        about_section = about_section.about_section
+        about_section = about_section.about_section.translation()[0]
 
     except AboutUs.DoesNotExist:
         about_section = list()
 
     try:
         about_section_factors = AboutUs.objects.get(section='ABOUT_SECTION_FACTORS')
-        about_section_factors = about_section_factors.factors.all()
+        about_section_factors = AboutSectionFactor.translation().filter(about_section=about_section_factors)
 
     except AboutUs.DoesNotExist:
         about_section_factors = list()

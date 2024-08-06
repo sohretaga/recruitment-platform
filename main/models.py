@@ -158,13 +158,48 @@ class AboutUs(models.Model):
 
 class AboutSection(models.Model):
     about_us = models.OneToOneField(AboutUs, on_delete=models.CASCADE, related_name='about_section')
-    title_en = models.CharField(max_length=200)
-    description_en = models.TextField()
+    title_en = models.CharField(max_length=200, verbose_name='Title EN')
+    title_tr = models.CharField(max_length=200, verbose_name='Title TR')
+
+    description_en = models.TextField(verbose_name='Description EN')
+    description_tr = models.TextField(verbose_name='Description TR')
+
     image = models.ImageField(upload_to='about-images/')
 
     def __str__(self):
-        return self.title
+        return self.title_en
+    
+    @classmethod
+    def translation(cls):
+        language = cache.get('site_language', 'en')
+        match language:
+            case 'en':
+                sections = cls.objects.annotate(
+                    title = F('title_en'),
+                    description = F('description_en')
+                )
+            case 'tr':
+                sections = cls.objects.annotate(
+                    title = F('title_tr'),
+                    description = F('description_tr')
+                )
+        return sections.all()
 
 class AboutSectionFactor(models.Model):
     about_section = models.ForeignKey(AboutUs, on_delete=models.CASCADE, related_name='factors')
-    text_en = models.CharField(max_length=100)
+    text_en = models.CharField(max_length=100, verbose_name='Title EN')
+    text_tr = models.CharField(max_length=100, verbose_name='Title TR')
+
+    @classmethod
+    def translation(cls):
+        language = cache.get('site_language', 'en')
+        match language:
+            case 'en':
+                factors = cls.objects.annotate(
+                    text = F('text_en'),
+                )
+            case 'tr':
+                factors = cls.objects.annotate(
+                    text = F('text_tr'),
+                )
+        return factors.all()
