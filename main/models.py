@@ -53,8 +53,8 @@ class Subscribe(models.Model):
 
 class HowItWork(models.Model):
     no = models.PositiveIntegerField()
-    title = models.CharField(max_length=255)
-    description = models.TextField()
+    title_en = models.CharField(max_length=255)
+    description_en = models.TextField()
     image = models.ImageField(upload_to='how-it-work/')
 
     class Meta:
