@@ -158,8 +158,8 @@ class AboutUs(models.Model):
 
 class AboutSection(models.Model):
     about_us = models.OneToOneField(AboutUs, on_delete=models.CASCADE, related_name='about_section')
-    title = models.CharField(max_length=200)
-    description = models.TextField()
+    title_en = models.CharField(max_length=200)
+    description_en = models.TextField()
     image = models.ImageField(upload_to='about-images/')
 
     def __str__(self):
@@ -167,4 +167,4 @@ class AboutSection(models.Model):
 
 class AboutSectionFactor(models.Model):
     about_section = models.ForeignKey(AboutUs, on_delete=models.CASCADE, related_name='factors')
-    text = models.CharField(max_length=100)
+    text_en = models.CharField(max_length=100)
