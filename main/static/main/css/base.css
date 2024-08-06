@@ -1,3 +1,8 @@
+.navbar .navbar-nav .nav-link {
+    font-size: 14px !important;
+    text-transform: none !important;
+}
+
 .login-mobile {
     display: none !important;
 }
