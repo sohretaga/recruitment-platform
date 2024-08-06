@@ -26,7 +26,7 @@ def index(request):
     quick_career_tips = Blog.objects.filter(status='published', quick_career_tip=True)
     featured_slider_vacancies = get_vacancy_in_sublists()
     trending_keywords = ParameterKeyword.objects.filter(trending=True).values('id', 'name')
-    how_it_works = HowItWork.objects.all()
+    how_it_works = HowItWork.translation()
     
     context = {
         **vacancies,
@@ -95,8 +95,6 @@ def services(request):
 def service_detail(request, slug):
     service = get_object_or_404(Service.translation(), slug=slug)
     services = Service.translation().exclude(slug=slug)
-
-    print(service)
 
     context = {
         'service': service,

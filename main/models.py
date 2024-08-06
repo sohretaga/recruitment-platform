@@ -53,15 +53,35 @@ class Subscribe(models.Model):
 
 class HowItWork(models.Model):
     no = models.PositiveIntegerField()
-    title_en = models.CharField(max_length=255)
-    description_en = models.TextField()
+    title_en = models.CharField(max_length=255, verbose_name='Title EN')
+    title_tr = models.CharField(max_length=255, verbose_name='Title TR')
+
+    description_en = models.TextField(verbose_name='Description EN')
+    description_tr = models.TextField(verbose_name='Description TR')
+
     image = models.ImageField(upload_to='how-it-work/')
 
     class Meta:
         ordering = ['no']
 
     def __str__(self) -> str:
-        return self.title
+        return self.title_en
+    
+    @classmethod
+    def translation(cls):
+        language = cache.get('site_language', 'en')
+        match language:
+            case 'en':
+                how_it_work = cls.objects.annotate(
+                    title = F('title_en'),
+                    description = F('description_en')
+                ).all()
+            case 'tr':
+                how_it_work = cls.objects.annotate(
+                    title = F('title_tr'),
+                    description = F('description_tr')
+                ).all()
+        return how_it_work
 
 class Team(models.Model):
     full_name = models.CharField(max_length=150)
