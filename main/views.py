@@ -184,5 +184,5 @@ def subscribe(request):
 def set_language(request):
     data = json.loads(request.body)
     language_code = data.get('language', 'en')
-    cache.set(f'site_language', language_code, timeout=86400)
+    cache.set(f'site_language', language_code, timeout=None)
     return JsonResponse({'status': 'success'})

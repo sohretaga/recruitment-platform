@@ -17,8 +17,13 @@ class SiteContent(models.Model):
     )
 
     page = models.CharField(max_length=30, choices=PAGE_CHOICES, unique=True)
-    title = models.CharField(max_length=255, blank=True, null=True)
-    content = models.TextField(blank=True, null=True)
+
+    title = models.CharField(max_length=255, blank=True, null=True, verbose_name='Title EN')
+    title_tr = models.CharField(max_length=255, blank=True, null=True, verbose_name='Title TR')
+
+    content = models.TextField(blank=True, null=True, verbose_name='Content EN')
+    content_tr = models.TextField(blank=True, null=True, verbose_name='Content TR')
+
     image = models.ImageField(upload_to='site-content/', blank=True, null=True)
 
     def short_content(self) -> str:
