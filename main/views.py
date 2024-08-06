@@ -85,7 +85,7 @@ def about(request):
     return render(request, 'main/about.html', context)
 
 def services(request):
-    services = Service.objects.all()
+    services = Service.translation()
     context = {
         'services': services
     }
@@ -93,8 +93,10 @@ def services(request):
     return render(request, 'main/services.html', context)
 
 def service_detail(request, slug):
-    service = get_object_or_404(Service, slug=slug)
-    services = Service.objects.exclude(slug=slug)
+    service = get_object_or_404(Service.translation(), slug=slug)
+    services = Service.translation().exclude(slug=slug)
+
+    print(service)
 
     context = {
         'service': service,

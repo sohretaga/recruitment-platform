@@ -33,10 +33,10 @@ class ServiceAdmin(admin.ModelAdmin):
     list_display = ['title_with_no', 'short_description']
 
     def title_with_no(self, obj):
-        return f'{obj.no}.{obj.title}'
+        return f'{obj.no}.{obj.title_en}'
 
     def short_description(self, obj):
-        return f'{obj.description[:75]}...' if len(obj.description) > 75 else obj.description
+        return f'{obj.description_en[:75]}...' if len(obj.description_en) > 75 else obj.description_en
 
     title_with_no.short_description = 'Title'
     short_description.short_description = 'Description'

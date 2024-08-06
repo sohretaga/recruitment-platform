@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.utils.text import slugify
+from django.core.cache import cache
+from django.db.models import F
 from ckeditor_uploader.fields import RichTextUploadingField
 from recruitment_cp.models import ParameterFAQ
 from user.models import CustomUser
@@ -74,20 +76,24 @@ class Team(models.Model):
 
 class Service(models.Model):
     no = models.PositiveIntegerField()
-    title = models.CharField(max_length=255)
+    title_en = models.CharField(max_length=255, verbose_name='Title EN')
+    title_tr = models.CharField(max_length=255, verbose_name='Title TR')
+
+    description_en = RichTextUploadingField(blank=True, null=True, verbose_name='Description EN')
+    description_tr = RichTextUploadingField(blank=True, null=True, verbose_name='Description TR')
+
     icon = models.ImageField(upload_to='service/', blank=True, null=True)
-    description = RichTextUploadingField(blank=True, null=True)
     slug = models.SlugField(editable=False)
 
     class Meta:
         ordering = ['no']
 
     def __str__(self) -> str:
-        return self.title
+        return self.title_en
 
     def save(self, *args, **kwargs) -> None:
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = slugify(self.title_en)
             original_slug = self.slug
             queryset = Service.objects.filter(slug=self.slug)
             counter = 1
@@ -96,6 +102,22 @@ class Service(models.Model):
                 counter += 1
                 queryset = Service.objects.filter(slug=self.slug)
         super(Service, self).save(*args, **kwargs)
+
+    @classmethod
+    def translation(cls):
+        language = cache.get('site_language', 'en')
+        match language:
+            case 'en':
+                services = cls.objects.annotate(
+                    title = F('title_en'),
+                    description = F('description_en')
+                ).all()
+            case 'tr':
+                services = cls.objects.annotate(
+                    title = F('title_tr'),
+                    description = F('description_tr')
+                ).all()
+        return services
 
 # About Us Models
 
