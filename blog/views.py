@@ -50,9 +50,13 @@ def detail(request, slug):
     if blog.status != 'published' and not request.user.is_superuser:
         raise Http404
 
+    # Popular Blogs
+    pobular_blogs = Blog.translation().filter(status='published').order_by('-views')[:4]
+
     context = {
         'blog': blog,
-        'categories': categories
+        'categories': categories,
+        'pobular_blogs': pobular_blogs,
     }
 
     return render(request, 'blog/detail.html', context)
