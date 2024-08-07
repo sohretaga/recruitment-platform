@@ -14,6 +14,8 @@
     <!-- App Css-->
     <link href="{% static 'main/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
     <!--Custom Css-->
+    <link href="{% static 'main/css/bookmarks.css' %}" rel="stylesheet" type="text/css" />
+
 {% endblock head %}
 
 {% block content %}
@@ -100,14 +102,14 @@
                     <div id="vacancy-{{ bookmark.vacancy.id }}" class="job-box card mt-4 bookmark-post">
                         <div class="card-body p-4">
                             <div class="row">
-                                <div class="col-lg-1">
+                                <div class="col-lg-1 user-profile-photo">
                                     {% if bookmark.profile_photo %}
                                     <a href="{% url 'user:company' bookmark.username %}"><img src="{{ bookmark.vacancy.employer.user.profile_photo.url }}" alt="{{ bookmark.company_name }}" class="img-fluid rounded-3" width="55" height="55"></a>
                                     {% else %}
                                     <a href="{% url 'user:company' bookmark.username %}"><img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="{{ bookmark.company_name }}" class="img-fluid rounded-3" width="55" height="55"></a>
                                     {% endif %}
                                 </div><!--end col-->
-                                <div class="col-lg-9">
+                                <div class="col-lg-9 bookmark-content">
                                     <div class="mt-3 mt-lg-0">
                                         <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' bookmark.slug %}" class="text-dark">{{ bookmark.position_title }}</a> <small class="text-muted fw-normal">({{ bookmark.work_experience }})</small></h5>
                                         <ul class="list-inline mb-0">

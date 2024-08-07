@@ -1,0 +1,13 @@
+@media only screen and (max-width: 992px) {
+    .user-profile-photo {
+      width: auto;
+    }
+
+    .bookmark-content {
+        width: 80%;
+    }
+
+    .bookmark-content > div {
+        margin-top: 0 !important;
+    }
+}
