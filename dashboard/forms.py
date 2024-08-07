@@ -21,7 +21,7 @@ class PostVacancyForm(forms.ModelForm):
 class PostBlogForm(forms.ModelForm):
     class Meta:
         model = Blog
-        fields = ('title', 'category', 'cover_photo', 'content', 'quick_career_tip', 'status')
+        fields = ( 'category', 'cover_photo', 'quick_career_tip', 'status')
 
 class ManageEmployerAccountForm(forms.ModelForm):
     primary_email = forms.EmailField(required=True)
