@@ -104,7 +104,7 @@ def service_detail(request, slug):
     return render(request, 'main/service-detail.html', context)
 
 def team(request):
-    team = Team.objects.all()
+    team = Team.translation()
     context = {
         'team': team
     }

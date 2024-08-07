@@ -85,6 +85,9 @@ class HowItWork(models.Model):
 
 class Team(models.Model):
     full_name = models.CharField(max_length=150)
+    about_en = models.TextField(blank=True, null=True, verbose_name='About EN')
+    about_tr = models.TextField(blank=True, null=True, verbose_name='About TR')
+
     profession = models.CharField(max_length=255)
     image = models.ImageField(upload_to='team-image/')
     facebook_url = models.URLField(blank=True, null=True)
@@ -93,6 +96,20 @@ class Team(models.Model):
 
     def __str__(self) -> str:
         return self.full_name
+    
+    @classmethod
+    def translation(cls):
+        language = cache.get('site_language', 'en')
+        match language:
+            case 'en':
+                members = cls.objects.annotate(
+                    about = F('about_en'),
+                )
+            case 'tr':
+                members = cls.objects.annotate(
+                    about = F('about_tr'),
+                )
+        return members.all()
 
 class Service(models.Model):
     no = models.PositiveIntegerField()
