@@ -102,9 +102,9 @@
                             <div class="row">
                                 <div class="col-lg-1">
                                     {% if bookmark.profile_photo %}
-                                    <a href="{% url 'user:company' bookmark.username %}"><img src="{{ bookmark.vacancy.employer.user.profile_photo.url }}" alt="{{ bookmark.company_name }}" class="img-fluid rounded-3"></a>
+                                    <a href="{% url 'user:company' bookmark.username %}"><img src="{{ bookmark.vacancy.employer.user.profile_photo.url }}" alt="{{ bookmark.company_name }}" class="img-fluid rounded-3" width="55" height="55"></a>
                                     {% else %}
-                                    <a href="{% url 'user:company' bookmark.username %}"><img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="{{ bookmark.company_name }}" class="img-fluid rounded-3"></a>
+                                    <a href="{% url 'user:company' bookmark.username %}"><img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="{{ bookmark.company_name }}" class="img-fluid rounded-3" width="55" height="55"></a>
                                     {% endif %}
                                 </div><!--end col-->
                                 <div class="col-lg-9">
