@@ -282,7 +282,7 @@
                             <ul class="widget-popular-post list-unstyled my-4">
                                 {% for obj in pobular_blogs %}
                                     <li class="d-flex mb-3 align-items-center pb-3 border-bottom">
-                                        <img src="{% if obj.cover_photo %}{{ obj.cover_photo.url }}{% else %} {% static 'main/images/obj/img-05.jpg' %} {% endif %}" alt="{{ obj.title|title }}" class="widget-popular-post-img rounded" style="min-width: 85px; min-height: 60px;" />
+                                        <img src="{% if obj.cover_photo %}{{ obj.cover_photo.url }}{% else %} {% static 'main/images/blog/img-05.jpg' %} {% endif %}" alt="{{ obj.title|title }}" class="widget-popular-post-img rounded" style="min-width: 85px; min-height: 60px;" />
                                         <div class="flex-grow-1 text-truncate ms-3">
                                             <a href="{% url 'blog:detail' obj.slug %}" class="text-dark">{{ obj.title|title }}</a>
                                             <span class="d-block text-muted fs-14">{{ obj.created_date|date:"M d, Y" }}</span>
