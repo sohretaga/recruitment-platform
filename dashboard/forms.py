@@ -19,9 +19,11 @@ class PostVacancyForm(forms.ModelForm):
                   'position_title', 'job_title', 'employment_type', 'definition', 'work_preference', 'department', 'status', 'keywords')
 
 class PostBlogForm(forms.ModelForm):
+    language = forms.CharField(max_length=2)
+
     class Meta:
         model = Blog
-        fields = ( 'category', 'cover_photo', 'quick_career_tip', 'status')
+        exclude = ['id', 'views', 'slug', 'created_date']
 
 class ManageEmployerAccountForm(forms.ModelForm):
     primary_email = forms.EmailField(required=True)

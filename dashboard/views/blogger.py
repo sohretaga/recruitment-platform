@@ -31,7 +31,7 @@ def post_blog(request):
 
 @is_blogger
 def all_blog(request):
-    blogs = Blog.objects.all()
+    blogs = Blog.translation()
 
     context = {
         'blogs': blogs,
@@ -48,6 +48,8 @@ def edit_blog(request, id):
         form = PostBlogForm(request.POST, request.FILES, instance=blog)
 
         if form.is_valid():
+            print(form.cleaned_data.get('content_en'))
+            print(form.cleaned_data.get('content_tr'))
             form.save()
             return redirect(reverse('dashboard:all-blog'))
 
@@ -57,6 +59,14 @@ def edit_blog(request, id):
     }
 
     return render(request, 'dashboard/blogger/post-blog.html', context)
+
+@require_POST
+def ajax_delete_blog(request):
+    blog_id = request.POST.get('blog_id')
+    blog = Blog.objects.filter(id=blog_id)
+    blog.delete()
+
+    return JsonResponse({'status':200})
 
 def upload_editor_image(request):
     if request.POST and request.FILES.get('file'):
@@ -92,12 +102,3 @@ def delete_editor_image(request):
                 return JsonResponse({'error': 'The specified image was not found.'}, status=404)
 
     return HttpResponse()
-
-@require_POST
-def ajax_delete_blog(request):
-    blog_id = request.POST.get('blog_id')
-    blog = Blog.objects.filter(id=blog_id)
-    blog.delete()
-
-    return JsonResponse({'status':200})
-

@@ -1,7 +1,7 @@
 from django.db import models
-from django.db.models import F
 from django.utils.text import slugify
 from django.core.cache import cache
+from django.db.models import F, Value, CharField
 from froala_editor.fields import FroalaField
 
 # Create your models here.
@@ -20,10 +20,14 @@ class Blog(models.Model):
         ('deactivated', 'Deactivated')
     ]
 
-    title_en = models.CharField(max_length=1000)
+    title_en = models.CharField(max_length=255, blank=True, null=True, verbose_name='Title EN')
+    title_tr = models.CharField(max_length=255, blank=True, null=True, verbose_name='Title TR')
+
+    content_en = FroalaField(blank=True, null=True)
+    content_tr = FroalaField(blank=True, null=True)
+
     category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL)
     cover_photo = models.ImageField(upload_to='blog/cover', null=True, blank=True)
-    content_en = FroalaField()
     views = models.IntegerField(default=0)
     status = models.CharField(max_length=12, choices=STATUS_CHOICES)
     quick_career_tip = models.BooleanField(default=False)
@@ -44,7 +48,7 @@ class Blog(models.Model):
                 counter += 1
                 queryset = Blog.objects.filter(slug=self.slug)
         super(Blog, self).save(*args, **kwargs)
-    
+
     @classmethod
     def translation(cls):
         language = cache.get('site_language', 'en')
@@ -52,9 +56,13 @@ class Blog(models.Model):
             case 'en':
                 blogs = cls.objects.annotate(
                     title = F('title_en'),
-                    content = F('content_en')
+                    content = F('content_en'),
+                    language = Value(value=language, output_field=CharField())
                 )
             case 'tr':
                 blogs = cls.objects.annotate(
+                    title = F('title_tr'),
+                    content = F('content_tr'),
+                    language = Value(value=language, output_field=CharField())
                 )
         return blogs.all()

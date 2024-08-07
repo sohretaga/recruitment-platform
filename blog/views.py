@@ -22,7 +22,7 @@ def blog(request):
         params.update({'category__name__in': categories.split(',')})
 
     # Set up Paginator
-    all_blogs = Blog.objects.filter(**params).order_by('created_date')
+    all_blogs = Blog.translation().filter(**params).order_by('created_date')
     paginator = Paginator(all_blogs, 8)
     current_page = request.GET.get('page')
     blogs = paginator.get_page(current_page)
@@ -30,7 +30,7 @@ def blog(request):
     categories = Category.objects.all()
 
     # Popular Blogs
-    pobular_blogs = Blog.objects.filter(status='published').order_by('-views')[:4]
+    pobular_blogs = Blog.translation().filter(status='published').order_by('-views')[:4]
 
     context = {
         'blogs': blogs,
@@ -43,7 +43,7 @@ def blog(request):
 
 def detail(request, slug):
     categories = Category.objects.all()
-    blog = Blog.objects.get(slug=slug)
+    blog = Blog.translation().get(slug=slug)
     blog.views += 1
     blog.save()
 
@@ -68,7 +68,7 @@ def ajax_filter_blog(request):
         if categories:
             params.update({'category__name__in':categories})        
 
-        filtered_blogs = Blog.objects.filter(**params).order_by('created_date')\
+        filtered_blogs = Blog.translation().filter(**params).order_by('created_date')\
         .values('title', 'category__name', 'cover_photo', 'views', 'slug', 'created_date')
         
         # Set up Paginator
