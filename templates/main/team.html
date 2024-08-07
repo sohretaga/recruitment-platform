@@ -91,7 +91,7 @@
                         <div class="team-content card-body text-center">
                             <a href="javascript:void(0)" class="primary-link"><h6 class="fs-17 mb-1">{{ obj.full_name }}</h6></a>
                             <p class="mb-0">{{ obj.profession }}</p>
-                            <p class="text-muted mb-0">{{ obj.about }}</p>
+                            <p class="text-muted mb-0">{{ obj.about|truncatechars:100 }}</p>
                         </div>
                     </div><!--end team-box-->
                 </div><!--end col-->
