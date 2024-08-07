@@ -28,6 +28,7 @@
 {% endblock head %}
 
 {% block content %}
+    {% get_site_content 'HOME' as home %}
     {% get_site_content 'HOW_IT_WORK' as how_it_work %}
 
     <div class="page-content">
@@ -39,9 +40,8 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
                         <div class="text-center text-white mb-5">
-                            <h1 class="display-5 fw-semibold mb-3">Search Between More Then <span class="text-warning fw-bold">10,000+</span>
-                                Open Jobs.</h1>
-                            <p class="fs-17">Find jobs, create trackable resumes and enrich your applications.</p>
+                            <h1 class="display-5 fw-semibold mb-3">{{ home.title }}</h1>
+                            <p class="fs-17">{{ home.content }}</p>
                         </div>
                     </div>
                     <!--end col-->
