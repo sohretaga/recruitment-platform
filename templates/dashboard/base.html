@@ -85,15 +85,19 @@
                         </div>
 
                         <div class="dropdown d-none d-sm-inline-block">
-                            <button type="button" class="btn header-item waves-effect"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img class="" src="{% static 'main/images/flags/british.jpg' %}" alt="Header Language" height="16">
+                            <button type="button" class="btn header-item waves-effect" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="selected-language" data-code="{{ language_code }}">
+                                {% if language_code == 'en' %}
+                                <img src="{% static 'main/images/flags/british.jpg' %}" alt="Header Language" height="16" />
+                                {% elif language_code == 'tr' %}
+                                <img src="{% static 'main/images/flags/turkish.jpg' %}" alt="Header Language" height="16" />
+                                {% endif %}
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
-                    
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                <a href="javascript:void(0);" class="dropdown-item notify-item language" data-code="tr">
                                     <img src="{% static 'main/images/flags/turkish.jpg' %}" alt="user-image" class="mr-1" height="12"> <span class="align-middle">Turkic</span>
+                                </a>
+                                <a href="javascript:void(0);" class="dropdown-item notify-item language" data-code="en">
+                                    <img src="{% static 'main/images/flags/british.jpg' %}" alt="user-image" class="mr-1" height="12"> <span class="align-middle">English</span>
                                 </a>
                             </div>
                         </div>
@@ -408,6 +412,7 @@
         <!-- END layout-wrapper -->
 
         <script src="{% static 'dashboard/libs/jquery/jquery.min.js' %}"></script>
+
         <script>
             const csrf_token = document.getElementById('csrf-token').value;
             $.ajaxSetup({
@@ -424,6 +429,7 @@
             });
 
         </script>
+        <script src="{% static 'main/js/ajax/language.js' %}"></script>
 
         {% block script %}
 
