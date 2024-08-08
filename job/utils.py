@@ -18,7 +18,7 @@ def get_vacancies_context(request, vacancies) -> dict:
     # Serialize the data
     vacancies_list = list(vacancies_page.object_list.values())
     bookmarks, applications = list(), list()
-    keyword_list = list(models.ParameterKeyword.objects.values('id', 'name'))
+    keyword_list = list(models.ParameterKeyword.translation().values('id', 'name'))
     keywords = {item['id']: item['name'] for item in keyword_list}
 
     if request.user.is_authenticated:
@@ -45,22 +45,19 @@ def get_vacancies_context(request, vacancies) -> dict:
     return context
 
 def vacancy_with_related_info(objects):
-    return objects.select_related(
-        'employer', 'career_type', 'career_level', 'location', 'fte', 'job_title',
-        'employment_type', 'work_experience', 'work_preference', 'department'
-    ).annotate(
+    return objects.select_related('employer').annotate(
         user_id = F('employer__user__id'),
         employer_username = F('employer__user__username'),
         company_name = F('employer__user__first_name'),
-        career_type_name = F('career_type__name'),
-        career_level_name = F('career_level__name'),
-        location_name = F('location__name'),
-        fte_name = F('fte__name'),
-        job_title_name = F('job_title__name'),
-        employment_type_name = F('employment_type__name'),
-        work_experience_name = F('work_experience__name'),
-        work_preference_name = F('work_preference__name'),
-        department_name = F('department__name'),
+        # career_type_name = F('career_type__name'),
+        # career_level_name = F('career_level__name'),
+        # location_name = F('location__name'),
+        # fte_name = F('fte__name'),
+        # job_title_name = F('job_title__name'),
+        # employment_type_name = F('employment_type__name'),
+        # work_experience_name = F('work_experience__name'),
+        # work_preference_name = F('work_preference__name'),
+        # department_name = F('department__name'),
         profile_photo_url = Case(
             When(
                 employer__user__profile_photo__icontains = 'profile-photos',
@@ -94,11 +91,11 @@ def fetch_vacancies(request) -> dict:
 
     if work_experience := request.GET.get('work-experience'):
         url += f'&work-experience={work_experience}'
-        params.update({'work_experience__name__in': work_experience.split(',')})
+        params.update({'work_experience_name__in': work_experience.split(',')})
     
     if employment_type := request.GET.get('employment-type'):
         url += f'&employment-type={employment_type}'
-        params.update({'employment_type__name__in': employment_type.split(',')})
+        params.update({'employment_type_name__in': employment_type.split(',')})
     
     if sector := request.GET.get('sector'):
         url += f'&sector={sector}'
@@ -106,11 +103,11 @@ def fetch_vacancies(request) -> dict:
 
     if department := request.GET.get('department'):
         url += f'&department={department}'
-        params.update({'department__name__in': department.split(',')})
+        params.update({'department_name__in': department.split(',')})
 
     if work_preference := request.GET.get('work-preference'):
         url += f'&work-preference={work_preference}'
-        params.update({'work_preference__name__in': work_preference.split(',')})
+        params.update({'work_preference_name__in': work_preference.split(',')})
 
     if date := request.GET.get('date'):
         url += f'&date={date}'
@@ -118,7 +115,7 @@ def fetch_vacancies(request) -> dict:
 
     if location := request.GET.get('location'):
         url += f'&location={location}'
-        params.update({'location__name': location})
+        params.update({'location_name': location})
 
     if job_family := request.GET.get('job-family'):
         url += f'&job-family={job_family}'
@@ -126,12 +123,12 @@ def fetch_vacancies(request) -> dict:
 
     if trending := request.GET.get('trending'):
         url += f'&trending={trending}'
-        params.update({'job_title__name': trending})
+        params.update({'job_title_name': trending})
     
     # filter settings for view more
     if job_title := request.GET.get('job-title'):
         url += f'&job-title={job_title}'
-        params.update({'job_title__name': job_title})
+        params.update({'job_title_name': job_title})
     
     if company := request.GET.get('company'):
         url += f'&company={company}'
@@ -142,7 +139,7 @@ def fetch_vacancies(request) -> dict:
         url += f'&keyword={keyword}'
         params.update({'keywords__contains': keyword})
 
-    filtered_vacancies = vacancy_with_related_info(Vacancy.objects.filter(**params))
+    filtered_vacancies = vacancy_with_related_info(Vacancy.translation().filter(**params))
 
     # Set up Paginator
     paginator = Paginator(filtered_vacancies, 10)
@@ -150,17 +147,17 @@ def fetch_vacancies(request) -> dict:
     vacancies = paginator.get_page(current_page)
 
     # Filter Fields
-    locations = models.ParameterLocation.objects.values('name')
-    experiences = models.ParameterWorkExperience.objects.values('id', 'name')
-    employments = models.ParameterEmployeeType.objects.values('id', 'name')
-    sectors = models.ParameterSector.objects.values('id', 'name')
-    departments = models.ParameterDepartment.objects.values('id', 'name')
-    work_preferences = models.ParameterWorkPreference.objects.values('id', 'name')
-    work_preferences = models.ParameterWorkPreference.objects.values('id', 'name')
-    job_family = models.ParameterJobFamily.objects.values('id', 'name')
+    locations = models.ParameterLocation.translation().values('name')
+    experiences = models.ParameterWorkExperience.translation().values('id', 'name')
+    employments = models.ParameterEmployeeType.translation().values('id', 'name')
+    sectors = models.ParameterSector.translation().values('id', 'name')
+    departments = models.ParameterDepartment.translation().values('id', 'name')
+    work_preferences = models.ParameterWorkPreference.translation().values('id', 'name')
+    work_preferences = models.ParameterWorkPreference.translation().values('id', 'name')
+    job_family = models.ParameterJobFamily.translation().values('id', 'name')
 
-    popular_job_titles = Vacancy.objects.values('job_title__name').annotate(count=Count('job_title__name')).order_by('-count')[:6]
-    keyword_list = list(models.ParameterKeyword.objects.values('id', 'name'))
+    popular_job_titles = Vacancy.translation().values('job_title_name').annotate(count=Count('job_title_name')).order_by('-count')[:6]
+    keyword_list = list(models.ParameterKeyword.translation().values('id', 'name'))
     keywords = {item['id']: item['name'] for item in keyword_list}
 
     return {

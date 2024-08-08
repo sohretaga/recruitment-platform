@@ -8,10 +8,9 @@ from job.models import Vacancy
 from recruitment_cp.models import ParameterKeyword
 from main.models import Notification, ContactEmail
 import math
-import time
 
 def get_vacancy_in_sublists(objects_per_list=5) -> list:
-    objects = list(Vacancy.objects.filter(status=True, delete=False).order_by('?')[:10])
+    objects = list(Vacancy.translation().filter(status=True, delete=False).order_by('?')[:10])
     
     total_objects = len(objects)
     
@@ -25,7 +24,7 @@ def get_vacancy_in_sublists(objects_per_list=5) -> list:
     return sublists
 
 def get_trending_keywords():
-    vacancies = Vacancy.objects.all()
+    vacancies = Vacancy.translation().all()
     all_keywords = []
 
     for vacancy in vacancies:
@@ -120,5 +119,3 @@ def send_contact_email(name, email, subject, message):
 
         mail.attach_alternative(content, "text/html")
         mail.send()
-
-        time.sleep(1)

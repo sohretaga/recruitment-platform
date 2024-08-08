@@ -22,7 +22,7 @@ def career_type_load(request):
         if is_ajax(request) and request.POST:
             language = request.POST.get('language')
             
-            career_types = cp_models.ParameterCareerType.objects.filter(language=language).values(
+            career_types = cp_models.ParameterCareerType.language_filter(language_code=language).values(
                 'id', 'no', 'name', 'definition', 'note'
             )
             json_data = json.dumps(list(career_types))
@@ -47,10 +47,10 @@ def career_type_save(request):
                 if name:
                     if pk:
                         career_types = cp_models.ParameterCareerType.objects.filter(pk=pk)
-                        career_types.update(**hot[index])
+                        career_types.custom_update(language, **hot[index])
                     else:
-                        career_types = cp_models.ParameterCareerType(language = language, **hot[index])
-                        career_types.save()
+                        career_types = cp_models.ParameterCareerType()
+                        career_types.save(language=language, **hot[index])
                 else:
                     career_types = cp_models.ParameterCareerType.objects.filter(pk = pk)
                     career_types.delete()
@@ -76,7 +76,7 @@ def career_level_load(request):
         if is_ajax(request) and request.POST:
             language = request.POST.get('language')
             
-            career_levels = cp_models.ParameterCareerLevel.objects.filter(language=language).values(
+            career_levels = cp_models.ParameterCareerLevel.language_filter(language_code=language).values(
                 'id', 'no', 'name', 'definition', 'note'
             )
             json_data = json.dumps(list(career_levels))
@@ -101,10 +101,10 @@ def career_level_save(request):
                 if name:
                     if pk:
                         career_level = cp_models.ParameterCareerLevel.objects.filter(pk=pk)
-                        career_level.update(**hot[index])
+                        career_level.custom_update(language, **hot[index])
                     else:
-                        career_level = cp_models.ParameterCareerLevel(language = language, **hot[index])
-                        career_level.save()
+                        career_level = cp_models.ParameterCareerLevel()
+                        career_level.save(language=language, **hot[index])
                 else:
                     career_level = cp_models.ParameterCareerLevel.objects.filter(pk = pk)
                     career_level.delete()
@@ -1009,7 +1009,7 @@ def work_preference_load(request):
         if is_ajax(request) and request.POST:
             language = request.POST.get('language')
             
-            work_preference = cp_models.ParameterWorkPreference.objects.filter(language=language).values(
+            work_preference = cp_models.ParameterWorkPreference.language_filter(language_code=language).values(
                 'id', 'no', 'name', 'definition', 'note'
             )
             json_data = json.dumps(list(work_preference))
@@ -1034,10 +1034,10 @@ def work_preference_save(request):
                 if name:
                     if pk:
                         work_preference = cp_models.ParameterWorkPreference.objects.filter(pk=pk)
-                        work_preference.update(**hot[index])
+                        work_preference.custom_update(language, **hot[index])
                     else:
-                        work_preference = cp_models.ParameterWorkPreference(language=language, **hot[index])
-                        work_preference.save()
+                        work_preference = cp_models.ParameterWorkPreference()
+                        work_preference.save(language=language, **hot[index])
                 else:
                     work_preference = cp_models.ParameterWorkPreference.objects.filter(pk = pk)
                     work_preference.delete()

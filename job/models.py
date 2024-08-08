@@ -1,5 +1,8 @@
 from django.db import models
 from django.utils.text import slugify
+from django.db.models import F
+from django.core.cache import cache
+from django.conf import settings
 
 from user.models import Employer, Candidate, CustomUser
 from recruitment_cp import models as cp_models
@@ -54,6 +57,36 @@ class Vacancy(models.Model):
     def __str__(self) -> str:
         return self.position_title
     
+    @classmethod
+    def translation(cls):
+        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
+        match language:
+            case 'en':
+                vacancies = cls.objects.annotate(
+                    career_type_name = F('career_type__name_en'),
+                    career_level_name = F('career_level__name_en'),
+                    location_name = F('location__name_en'),
+                    fte_name = F('fte__name_en'),
+                    job_title_name = F('job_title__name_en'),
+                    employment_type_name = F('employment_type__name_en'),
+                    work_experience_name = F('work_experience__name_en'),
+                    work_preference_name = F('work_preference__name_en'),
+                    department_name = F('department__name_en'),
+                )
+            case 'tr':
+                vacancies = cls.objects.annotate(
+                    career_type_name = F('career_type__name_tr'),
+                    career_level_name = F('career_level__name_tr'),
+                    location_name = F('location__name_tr'),
+                    fte_name = F('fte__name_tr'),
+                    job_title_name = F('job_title__name_tr'),
+                    employment_type_name = F('employment_type__name_tr'),
+                    work_experience_name = F('work_experience__name_tr'),
+                    work_preference_name = F('work_preference__name_tr'),
+                    department_name = F('department__name_tr'),
+                )
+
+        return vacancies
 
 class Bookmark(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='bookmarks')

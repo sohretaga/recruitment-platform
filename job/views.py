@@ -241,19 +241,19 @@ def ajax_filter_vacancies(request):
             params.update({'salary__lte': salary_range_upper})
 
         if work_experiences := data.get('work_experiences'):
-            params.update({'work_experience__name__in': work_experiences})
+            params.update({'work_experience_name__in': work_experiences})
         
         if employment_type := data.get('employment_type'):
-            params.update({'employment_type__name__in': employment_type})    
+            params.update({'employment_type_name__in': employment_type})    
 
         if sector := data.get('sector'):
             params.update({'employer__sector': sector})
 
         if department := data.get('department'):
-            params.update({'department__name__in': department})
+            params.update({'department_name__in': department})
 
         if work_preference := data.get('work_preference'):
-            params.update({'work_preference__name__in': work_preference})
+            params.update({'work_preference_name__in': work_preference})
 
         if date := data.get('date_posted'):
             params.update({'created_date__gte': timezone.now() - timedelta(hours=int(date))})
@@ -262,15 +262,15 @@ def ajax_filter_vacancies(request):
             params.update({'keywords__contains': keyword})
 
         if location := data.get('location'):
-            params.update({'location__name': location})
+            params.update({'location_name': location})
 
         if job_family := data.get('job_family'):
             params.update({'job_title__job_family': job_family})
 
         if trending := data.get('trending'):
-            params.update({'job_title__name': trending})
+            params.update({'job_title_name': trending})
         
-        filtered_vacancies = vacancy_with_related_info(Vacancy.objects.filter(**params))
+        filtered_vacancies = vacancy_with_related_info(Vacancy.translation().filter(**params))
         
         context = get_vacancies_context(request, filtered_vacancies)
 
@@ -284,9 +284,9 @@ def ajax_search_vacancy(request):
     query = request.POST.get('search_value', '')
 
     filtered_vacancies = vacancy_with_related_info(
-        Vacancy.objects.filter(
+        Vacancy.translation().filter(
             Q(position_title__icontains=query) |
-            Q(job_title__name__icontains=query) |
+            Q(job_title_name__icontains=query) |
             Q(employer__user__first_name__icontains=query),
             status=True, delete=False
         )

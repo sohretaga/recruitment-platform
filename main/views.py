@@ -22,10 +22,10 @@ import json
 def index(request):
     vacancies = fetch_vacancies(request)
     company_slider = Employer.objects.filter(slider=True, user__profile_photo__isnull=False).exclude(user__profile_photo='')
-    today_releases = Vacancy.objects.filter(status=True, delete=False).order_by('?')[:6]
+    today_releases = Vacancy.translation().filter(status=True, delete=False).order_by('?')[:6]
     quick_career_tips = Blog.translation().filter(status='published', quick_career_tip=True)
     featured_slider_vacancies = get_vacancy_in_sublists()
-    trending_keywords = ParameterKeyword.objects.filter(trending=True).values('id', 'name')
+    trending_keywords = ParameterKeyword.translation().filter(trending=True).values('id', 'name')
     how_it_works = HowItWork.translation()
     
     context = {
@@ -184,5 +184,5 @@ def subscribe(request):
 def set_language(request):
     data = json.loads(request.body)
     language_code = data.get('language', 'en')
-    cache.set(f'site_language', language_code, timeout=None)
+    cache.set(f'site_language', language_code, timeout=604800)
     return JsonResponse({'status': 'success'})
