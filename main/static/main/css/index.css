@@ -1,0 +1,13 @@
+@media only screen and (max-width: 992px) {
+    #how-it-work-content {
+        width: 70%;
+    }
+
+    #how-it-work-content .row {
+        width: 70%;
+    }
+
+    #how-it-work-image {
+        width: 30%;
+    }
+}
