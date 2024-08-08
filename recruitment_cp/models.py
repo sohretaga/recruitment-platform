@@ -52,9 +52,9 @@ class Language(models.Model):
 
 class ParameterCommonFields(models.Model):
     no = models.IntegerField(blank=True, null=True)
-    name = models.CharField(max_length=500)
-    definition = models.TextField(blank=True, null=True)
-    note = models.CharField(max_length=500, blank=True, null=True)
+    name_en = models.CharField(max_length=500)
+    definition_en = models.TextField(blank=True, null=True)
+    note_en = models.CharField(max_length=500, blank=True, null=True)
     language = models.CharField(max_length=5)
 
     class Meta:
