@@ -36,10 +36,10 @@ def vacancy(request, slug):
 
     # get related vacancies
     related_vacancies = vacancy_with_related_info(
-        Vacancy.objects.filter(job_title=vacancy.job_title, status=True, delete=False).exclude(slug=slug)[:5]
+        Vacancy.translation().filter(job_title=vacancy.job_title, status=True, delete=False).exclude(slug=slug)[:5]
     )
 
-    keyword_list = ParameterKeyword.objects.values('id', 'name')
+    keyword_list = ParameterKeyword.translation().values('id', 'name')
     keywords = {item['id']: item['name'] for item in keyword_list}
     
     context = {
