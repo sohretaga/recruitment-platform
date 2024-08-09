@@ -7,6 +7,7 @@ from django.db.models import F
 from ckeditor_uploader.fields import RichTextUploadingField
 from recruitment_cp.models import ParameterFAQ
 from user.models import CustomUser
+from django.conf import settings
 
 # Create your models here.
 
@@ -69,7 +70,7 @@ class HowItWork(models.Model):
     
     @classmethod
     def translation(cls):
-        language = cache.get('site_language', 'en')
+        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
         match language:
             case 'en':
                 how_it_work = cls.objects.annotate(
@@ -99,7 +100,7 @@ class Team(models.Model):
     
     @classmethod
     def translation(cls):
-        language = cache.get('site_language', 'en')
+        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
         match language:
             case 'en':
                 members = cls.objects.annotate(
@@ -142,7 +143,7 @@ class Service(models.Model):
 
     @classmethod
     def translation(cls):
-        language = cache.get('site_language', 'en')
+        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
         match language:
             case 'en':
                 services = cls.objects.annotate(
@@ -188,7 +189,7 @@ class AboutSection(models.Model):
     
     @classmethod
     def translation(cls):
-        language = cache.get('site_language', 'en')
+        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
         match language:
             case 'en':
                 sections = cls.objects.annotate(
@@ -209,7 +210,7 @@ class AboutSectionFactor(models.Model):
 
     @classmethod
     def translation(cls):
-        language = cache.get('site_language', 'en')
+        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
         match language:
             case 'en':
                 factors = cls.objects.annotate(

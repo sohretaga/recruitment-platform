@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.core.paginator import Paginator
 from django.core.cache import cache
+from django.conf import settings
 from threading import Thread
 
 from job.utils import fetch_vacancies
@@ -183,6 +184,6 @@ def subscribe(request):
 @require_POST
 def set_language(request):
     data = json.loads(request.body)
-    language_code = data.get('language', 'en')
+    language_code = data.get('language', settings.SITE_LANGUAGE_CODE)
     cache.set(f'site_language', language_code, timeout=604800)
     return JsonResponse({'status': 'success'})

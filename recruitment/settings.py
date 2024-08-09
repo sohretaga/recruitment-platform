@@ -162,7 +162,7 @@ USE_TZ = True
 # It is used to set the default language code of the site.
 # If there is no language code in the cache, the site uses this language code by default.
 
-SITE_LANGUAGE_CODE = 'en'
+SITE_LANGUAGE_CODE = 'tr'
 
 
 # Static files (CSS, JavaScript, Images)
