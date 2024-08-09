@@ -49,15 +49,6 @@ def vacancy_with_related_info(objects):
         user_id = F('employer__user__id'),
         employer_username = F('employer__user__username'),
         company_name = F('employer__user__first_name'),
-        # career_type_name = F('career_type__name'),
-        # career_level_name = F('career_level__name'),
-        # location_name = F('location__name'),
-        # fte_name = F('fte__name'),
-        # job_title_name = F('job_title__name'),
-        # employment_type_name = F('employment_type__name'),
-        # work_experience_name = F('work_experience__name'),
-        # work_preference_name = F('work_preference__name'),
-        # department_name = F('department__name'),
         profile_photo_url = Case(
             When(
                 employer__user__profile_photo__icontains = 'profile-photos',

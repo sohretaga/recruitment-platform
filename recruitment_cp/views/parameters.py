@@ -53,7 +53,7 @@ def career_type_save(request):
                         career_types.save(language=language, **hot[index])
                 else:
                     career_types = cp_models.ParameterCareerType.objects.filter(pk = pk)
-                    career_types.delete()
+                    # career_types.delete()
                 
                 index += 1
 
@@ -107,7 +107,7 @@ def career_level_save(request):
                         career_level.save(language=language, **hot[index])
                 else:
                     career_level = cp_models.ParameterCareerLevel.objects.filter(pk = pk)
-                    career_level.delete()
+                    # career_level.delete()
                 
                 index += 1
 
@@ -129,7 +129,7 @@ def career_type_level_load(request):
         if is_ajax(request) and request.POST:
             language = request.POST.get('language')
             
-            career_types_levels = cp_models.ParameterCareerTypeLevel.objects.filter(language=language).values(
+            career_types_levels = cp_models.ParameterCareerTypeLevel.language_filter(language).values(
                 'id', 'no', 'name', 'definition', 'note'
             )
             json_data = json.dumps(list(career_types_levels))
@@ -154,13 +154,13 @@ def career_type_level_save(request):
                 if name:
                     if pk:
                         career_types_levels = cp_models.ParameterCareerTypeLevel.objects.filter(pk=pk)
-                        career_types_levels.update(**hot[index])
+                        career_types_levels.custom_update(language, **hot[index])
                     else:
-                        career_types_levels = cp_models.ParameterCareerTypeLevel(language = language, **hot[index])
-                        career_types_levels.save()
+                        career_types_levels = cp_models.ParameterCareerTypeLevel()
+                        career_types_levels.save(language, **hot[index])
                 else:
                     career_types_levels = cp_models.ParameterCareerTypeLevel.objects.filter(pk = pk)
-                    career_types_levels.delete()
+                    # career_types_levels.delete()
                 
                 index += 1
 
@@ -182,7 +182,7 @@ def location_load(request):
         if is_ajax(request) and request.POST:
             language = request.POST.get('language')
             
-            locations = cp_models.ParameterLocation.objects.filter(language=language).values(
+            locations = cp_models.ParameterLocation.language_filter(language).values(
                 'id', 'no', 'name', 'definition', 'note'
             )
             json_data = json.dumps(list(locations))
@@ -207,13 +207,13 @@ def location_save(request):
                 if name:
                     if pk:
                         locations = cp_models.ParameterLocation.objects.filter(pk=pk)
-                        locations.update(**hot[index])
+                        locations.custom_update(language, **hot[index])
                     else:
-                        locations = cp_models.ParameterLocation(language = language, **hot[index])
-                        locations.save()
+                        locations = cp_models.ParameterLocation()
+                        locations.save(language, **hot[index])
                 else:
                     locations = cp_models.ParameterLocation.objects.filter(pk = pk)
-                    locations.delete()
+                    # locations.delete()
                 
                 index += 1
 
@@ -235,7 +235,7 @@ def country_load(request):
         if is_ajax(request) and request.POST:
             language = request.POST.get('language')
             
-            countries = cp_models.ParameterCountry.objects.filter(language=language).values(
+            countries = cp_models.ParameterCountry.language_filter(language).values(
                 'id', 'no', 'name', 'definition', 'note'
             )
             json_data = json.dumps(list(countries))
@@ -260,13 +260,13 @@ def country_save(request):
                 if name:
                     if pk:
                         countries = cp_models.ParameterCountry.objects.filter(pk=pk)
-                        countries.update(**hot[index])
+                        countries.custom_update(language, **hot[index])
                     else:
-                        countries = cp_models.ParameterCountry(language = language, **hot[index])
-                        countries.save()
+                        countries = cp_models.ParameterCountry()
+                        countries.save(language, **hot[index])
                 else:
                     countries = cp_models.ParameterCountry.objects.filter(pk = pk)
-                    countries.delete()
+                    # countries.delete()
                 
                 index += 1
 
@@ -289,7 +289,7 @@ def work_experience_load(request):
         if is_ajax(request) and request.POST:
             language = request.POST.get('language')
             
-            work_experience = cp_models.ParameterWorkExperience.objects.filter(language=language).values(
+            work_experience = cp_models.ParameterWorkExperience.language_filter(language).values(
                 'id', 'no', 'name', 'definition', 'note'
             )
             json_data = json.dumps(list(work_experience))
@@ -314,13 +314,13 @@ def work_experience_save(request):
                 if name:
                     if pk:
                         work_experience = cp_models.ParameterWorkExperience.objects.filter(pk=pk)
-                        work_experience.update(**hot[index])
+                        work_experience.custom_update(language, **hot[index])
                     else:
-                        work_experience = cp_models.ParameterWorkExperience(language = language, **hot[index])
-                        work_experience.save()
+                        work_experience = cp_models.ParameterWorkExperience()
+                        work_experience.save(language, **hot[index])
                 else:
                     work_experience = cp_models.ParameterWorkExperience.objects.filter(pk = pk)
-                    work_experience.delete()
+                    # work_experience.delete()
                 
                 index += 1
 
@@ -342,7 +342,7 @@ def fte_load(request):
         if is_ajax(request) and request.POST:
             language = request.POST.get('language')
             
-            fte = cp_models.ParameterFTE.objects.filter(language=language).values(
+            fte = cp_models.ParameterFTE.language_filter(language).values(
                 'id', 'no', 'name', 'definition', 'note'
             )
             json_data = json.dumps(list(fte))
@@ -367,13 +367,13 @@ def fte_save(request):
                 if name:
                     if pk:
                         fte = cp_models.ParameterFTE.objects.filter(pk=pk)
-                        fte.update(**hot[index])
+                        fte.custom_update(language, **hot[index])
                     else:
-                        fte = cp_models.ParameterFTE(language = language, **hot[index])
-                        fte.save()
+                        fte = cp_models.ParameterFTE()
+                        fte.save(language, **hot[index])
                 else:
                     fte = cp_models.ParameterFTE.objects.filter(pk = pk)
-                    fte.delete()
+                    # fte.delete()
                 
                 index += 1
 
@@ -448,7 +448,7 @@ def employee_type_load(request):
         if is_ajax(request) and request.POST:
             language = request.POST.get('language')
             
-            employee_type = cp_models.ParameterEmployeeType.objects.filter(language=language).values(
+            employee_type = cp_models.ParameterEmployeeType.language_filter(language).values(
                 'id', 'no', 'name', 'definition', 'note'
             )
             json_data = json.dumps(list(employee_type))
@@ -473,13 +473,13 @@ def employee_type_save(request):
                 if name:
                     if pk:
                         employee_type = cp_models.ParameterEmployeeType.objects.filter(pk=pk)
-                        employee_type.update(**hot[index])
+                        employee_type.custom_update(language, **hot[index])
                     else:
-                        employee_type = cp_models.ParameterEmployeeType(language = language, **hot[index])
-                        employee_type.save()
+                        employee_type = cp_models.ParameterEmployeeType()
+                        employee_type.save(language, **hot[index])
                 else:
                     employee_type = cp_models.ParameterEmployeeType.objects.filter(pk = pk)
-                    employee_type.delete()
+                    # employee_type.delete()
                 
                 index += 1
 
@@ -744,7 +744,7 @@ def sector_load(request):
         if is_ajax(request) and request.POST:
             language = request.POST.get('language')
             
-            sector = cp_models.ParameterSector.objects.filter(language=language).values(
+            sector = cp_models.ParameterSector.language_filter(language).values(
                 'id', 'no', 'name', 'definition', 'note'
             )
             json_data = json.dumps(list(sector))
@@ -769,13 +769,13 @@ def sector_save(request):
                 if name:
                     if pk:
                         sector = cp_models.ParameterSector.objects.filter(pk=pk)
-                        sector.update(**hot[index])
+                        sector.custom_update(language, **hot[index])
                     else:
-                        sector = cp_models.ParameterSector(language = language, **hot[index])
-                        sector.save()
+                        sector = cp_models.ParameterSector()
+                        sector.save(language, **hot[index])
                 else:
                     sector = cp_models.ParameterSector.objects.filter(pk = pk)
-                    sector.delete()
+                    # sector.delete()
                 
                 index += 1
 
@@ -797,7 +797,7 @@ def organization_type_load(request):
         if is_ajax(request) and request.POST:
             language = request.POST.get('language')
             
-            organization_type = cp_models.ParameterOrganizationType.objects.filter(language=language).values(
+            organization_type = cp_models.ParameterOrganizationType.language_filter(language).values(
                 'id', 'no', 'name', 'definition', 'note'
             )
             json_data = json.dumps(list(organization_type))
@@ -822,13 +822,13 @@ def organization_type_save(request):
                 if name:
                     if pk:
                         organization_type = cp_models.ParameterOrganizationType.objects.filter(pk=pk)
-                        organization_type.update(**hot[index])
+                        organization_type.custom_update(language, **hot[index])
                     else:
-                        organization_type = cp_models.ParameterOrganizationType(language = language, **hot[index])
-                        organization_type.save()
+                        organization_type = cp_models.ParameterOrganizationType()
+                        organization_type.save(language, **hot[index])
                 else:
                     organization_type = cp_models.ParameterOrganizationType.objects.filter(pk = pk)
-                    organization_type.delete()
+                    # organization_type.delete()
                 
                 index += 1
 
@@ -850,7 +850,7 @@ def organization_ownership_load(request):
         if is_ajax(request) and request.POST:
             language = request.POST.get('language')
             
-            organization_ownership = cp_models.ParameterOrganizationOwnership.objects.filter(language=language).values(
+            organization_ownership = cp_models.ParameterOrganizationOwnership.language_filter(language).values(
                 'id', 'no', 'name', 'definition', 'note'
             )
             json_data = json.dumps(list(organization_ownership))
@@ -875,13 +875,13 @@ def organization_ownership_save(request):
                 if name:
                     if pk:
                         organization_ownership = cp_models.ParameterOrganizationOwnership.objects.filter(pk=pk)
-                        organization_ownership.update(**hot[index])
+                        organization_ownership.custom_update(language, **hot[index])
                     else:
-                        organization_ownership = cp_models.ParameterOrganizationOwnership(language = language, **hot[index])
-                        organization_ownership.save()
+                        organization_ownership = cp_models.ParameterOrganizationOwnership()
+                        organization_ownership.save(language, **hot[index])
                 else:
                     organization_ownership = cp_models.ParameterOrganizationOwnership.objects.filter(pk = pk)
-                    organization_ownership.delete()
+                    # organization_ownership.delete()
                 
                 index += 1
 
@@ -903,7 +903,7 @@ def number_of_employees_load(request):
         if is_ajax(request) and request.POST:
             language = request.POST.get('language')
             
-            number_of_employees = cp_models.ParameterNumberOfEmployee.objects.filter(language=language).values(
+            number_of_employees = cp_models.ParameterNumberOfEmployee.language_filter(language).values(
                 'id', 'no', 'name', 'definition', 'note'
             )
             json_data = json.dumps(list(number_of_employees))
@@ -928,13 +928,13 @@ def number_of_employees_save(request):
                 if name:
                     if pk:
                         number_of_employees = cp_models.ParameterNumberOfEmployee.objects.filter(pk=pk)
-                        number_of_employees.update(**hot[index])
+                        number_of_employees.custom_update(language, **hot[index])
                     else:
-                        number_of_employees = cp_models.ParameterNumberOfEmployee(language = language, **hot[index])
-                        number_of_employees.save()
+                        number_of_employees = cp_models.ParameterNumberOfEmployee()
+                        number_of_employees.save(language, **hot[index])
                 else:
                     number_of_employees = cp_models.ParameterNumberOfEmployee.objects.filter(pk = pk)
-                    number_of_employees.delete()
+                    # number_of_employees.delete()
                 
                 index += 1
 
@@ -956,7 +956,7 @@ def department_load(request):
         if is_ajax(request) and request.POST:
             language = request.POST.get('language')
             
-            department = cp_models.ParameterDepartment.objects.filter(language=language).values(
+            department = cp_models.ParameterDepartment.language_filter(language).values(
                 'id', 'no', 'name', 'definition', 'note'
             )
             json_data = json.dumps(list(department))
@@ -981,13 +981,13 @@ def department_save(request):
                 if name:
                     if pk:
                         department = cp_models.ParameterDepartment.objects.filter(pk=pk)
-                        department.update(**hot[index])
+                        department.custom_update(language, **hot[index])
                     else:
-                        department = cp_models.ParameterDepartment(language=language, **hot[index])
-                        department.save()
+                        department = cp_models.ParameterDepartment()
+                        department.save(language, **hot[index])
                 else:
                     department = cp_models.ParameterDepartment.objects.filter(pk = pk)
-                    department.delete()
+                    # department.delete()
                 
                 index += 1
 
@@ -1040,7 +1040,7 @@ def work_preference_save(request):
                         work_preference.save(language=language, **hot[index])
                 else:
                     work_preference = cp_models.ParameterWorkPreference.objects.filter(pk = pk)
-                    work_preference.delete()
+                    # work_preference.delete()
                 
                 index += 1
 
@@ -1062,7 +1062,7 @@ def keywords_load(request):
         if is_ajax(request) and request.POST:
             language = request.POST.get('language')
             
-            keywords = cp_models.ParameterKeyword.objects.filter(language=language).values(
+            keywords = cp_models.ParameterKeyword.language_filter(language).values(
                 'id', 'no', 'name', 'definition', 'note', 'trending'
             )
             json_data = json.dumps(list(keywords))
@@ -1087,13 +1087,13 @@ def keywords_save(request):
                 if name:
                     if pk:
                         keywords = cp_models.ParameterKeyword.objects.filter(pk=pk)
-                        keywords.update(**hot[index])
+                        keywords.custom_update(language, **hot[index])
                     else:
-                        keywords = cp_models.ParameterKeyword(language=language, **hot[index])
-                        keywords.save()
+                        keywords = cp_models.ParameterKeyword()
+                        keywords.save(language, **hot[index])
                 else:
                     keywords = cp_models.ParameterKeyword.objects.filter(pk = pk)
-                    keywords.delete()
+                    # keywords.delete()
                 
                 index += 1
 
@@ -1115,7 +1115,7 @@ def faq_load(request):
         if is_ajax(request) and request.POST:
             language = request.POST.get('language')
             
-            faq = cp_models.ParameterFAQ.objects.filter(language=language).values(
+            faq = cp_models.ParameterFAQ.language_filter(language).values(
                 'id', 'no', 'name', 'definition', 'note'
             )
             json_data = json.dumps(list(faq))
@@ -1140,13 +1140,13 @@ def faq_save(request):
                 if name:
                     if pk:
                         faq = cp_models.ParameterFAQ.objects.filter(pk=pk)
-                        faq.update(**hot[index])
+                        faq.custom_update(language, **hot[index])
                     else:
-                        faq = cp_models.ParameterFAQ(language=language, **hot[index])
-                        faq.save()
+                        faq = cp_models.ParameterFAQ()
+                        faq.save(language, **hot[index])
                 else:
                     faq = cp_models.ParameterFAQ.objects.filter(pk = pk)
-                    faq.delete()
+                    # faq.delete()
                 
                 index += 1
 
@@ -1168,7 +1168,7 @@ def competence_load(request):
         if is_ajax(request) and request.POST:
             language = request.POST.get('language')
             
-            competence = cp_models.ParameterCompetence.objects.filter(language=language).values(
+            competence = cp_models.ParameterCompetence.language_filter(language).values(
                 'id', 'no', 'name', 'definition', 'note'
             )
             json_data = json.dumps(list(competence))
@@ -1193,13 +1193,13 @@ def competence_save(request):
                 if name:
                     if pk:
                         competence = cp_models.ParameterCompetence.objects.filter(pk=pk)
-                        competence.update(**hot[index])
+                        competence.custom_update(language, **hot[index])
                     else:
-                        competence = cp_models.ParameterCompetence(language=language, **hot[index])
-                        competence.save()
+                        competence = cp_models.ParameterCompetence()
+                        competence.save(language, **hot[index])
                 else:
                     competence = cp_models.ParameterCompetence.objects.filter(pk = pk)
-                    competence.delete()
+                    # competence.delete()
                 
                 index += 1
 
@@ -1221,7 +1221,7 @@ def job_family_load(request):
         if is_ajax(request) and request.POST:
             language = request.POST.get('language')
             
-            job_family = cp_models.ParameterJobFamily.objects.filter(language=language).values(
+            job_family = cp_models.ParameterJobFamily.language_filter(language).values(
                 'id', 'no', 'name', 'definition', 'note'
             )
             json_data = json.dumps(list(job_family))
@@ -1246,13 +1246,13 @@ def job_family_save(request):
                 if name:
                     if pk:
                         job_family = cp_models.ParameterJobFamily.objects.filter(pk=pk)
-                        job_family.update(**hot[index])
+                        job_family.custom_update(language, **hot[index])
                     else:
-                        job_family = cp_models.ParameterJobFamily(language=language, **hot[index])
-                        job_family.save()
+                        job_family = cp_models.ParameterJobFamily()
+                        job_family.save(language, **hot[index])
                 else:
                     job_family = cp_models.ParameterJobFamily.objects.filter(pk = pk)
-                    job_family.delete()
+                    # job_family.delete()
                 
                 index += 1
 
