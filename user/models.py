@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-from recruitment_cp.models import ParameterCountry
+from recruitment_cp.models import ParameterSector, ParameterOrganizationType, ParameterOrganizationOwnership, ParameterNumberOfEmployee, ParameterCountry
 
 class CustomUser(AbstractUser):
     USER_TYPE_CHOICES = (
@@ -28,11 +28,13 @@ class Employer(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='employer', blank=True, null=True) # blank=True, null=True will delete
     background_image = models.ImageField(upload_to='background-images/', null=True, blank=True)
     no = models.IntegerField(blank=True, null=True)
-    sector = models.CharField(max_length=200, blank=True, null=True)
-    organization_type = models.CharField(max_length=200, blank=True, null=True)
-    organization_ownership = models.CharField(max_length=200, blank=True, null=True)
-    number_of_employees = models.CharField(max_length=15, blank=True, null=True)
-    location = models.ForeignKey(ParameterCountry, on_delete=models.SET_NULL, null=True)
+
+    # sector = models.ForeignKey(ParameterSector, on_delete=models.SET_NULL, blank=True, null=True)
+    # organization_type = models.ForeignKey(ParameterOrganizationType, on_delete=models.SET_NULL, blank=True, null=True)
+    # organization_ownership = models.ForeignKey(ParameterOrganizationType, on_delete=models.SET_NULL, blank=True, null=True)
+    # number_of_employees = models.ForeignKey(ParameterNumberOfEmployee, on_delete=models.SET_NULL, blank=True, null=True)
+    location = models.ForeignKey(ParameterCountry, on_delete=models.SET_NULL, blank=True, null=True)
+
     second_email = models.EmailField(blank=True, null=True)
     other_email = models.EmailField(blank=True, null=True)
     certificate_of_registration = models.FileField(upload_to='certificates/', blank=True, null=True) 
