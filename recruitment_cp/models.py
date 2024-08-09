@@ -89,8 +89,6 @@ class ParameterCommonFields(models.Model):
     note_en = models.CharField(max_length=500, blank=True, null=True)
     note_tr = models.CharField(max_length=500, blank=True, null=True)
 
-    # language = models.CharField(max_length=5)
-
     objects = ParameterCommonFieldsManager()
 
     class Meta:
