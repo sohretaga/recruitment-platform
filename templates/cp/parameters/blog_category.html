@@ -13,9 +13,25 @@
 {% include 'cp/container.html' %}
 
 <div class="table-container">
-    <div id="data-filter" style="display: none;">
-        <input type="checkbox" name="language" checked="checked">
-        <!-- In the processes.js file, the "language" input should be entered here to avoid errors. -->
+    <div id="data-filter">
+        <div style="display: flex; margin-bottom: 10px;">
+            <div class="chb-style">
+                <span style="margin-right: 5px;">Language: </span>
+                <div class="filter-chb">
+                    {% languages as language_list %}
+                    {% for language in language_list reversed %}
+                        {% if forloop.first %}
+                            <span title="{{language.name}}"><input type="checkbox" id="id-{{language.code}}" name="language" value="{{language.code}}"
+                                    checked="checked"></span>
+                            <label for="id-{{language.code}}"></label>
+                        {% else %}
+                            <span title="{{language.name}}"><input type="checkbox" id="id-{{language.code}}" name="language" value="{{language.code}}"></span>
+                            <label for="id-{{language.code}}"></label>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="caption" id="caption">Blog Categories</div>

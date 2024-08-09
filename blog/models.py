@@ -3,14 +3,14 @@ from django.utils.text import slugify
 from django.core.cache import cache
 from django.db.models import F, Value, CharField
 from froala_editor.fields import FroalaField
+from django.conf import settings
+
+from recruitment_cp.models import ParameterCommonFields
 
 # Create your models here.
 
-class Category(models.Model):
-    no = models.IntegerField(blank=True, null=True)
-    name_en = models.CharField(max_length=500)
-    definition_en = models.TextField(blank=True, null=True)
-    note_en = models.CharField(max_length=500, blank=True, null=True)
+class Category(ParameterCommonFields):
+    ...
 
 class Blog(models.Model):
 
@@ -51,18 +51,20 @@ class Blog(models.Model):
 
     @classmethod
     def translation(cls):
-        language = cache.get('site_language', 'en')
+        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
         match language:
             case 'en':
                 blogs = cls.objects.annotate(
                     title = F('title_en'),
                     content = F('content_en'),
+                    category_name = F('category__name_en'),
                     language = Value(value=language, output_field=CharField())
                 )
             case 'tr':
                 blogs = cls.objects.annotate(
                     title = F('title_tr'),
                     content = F('content_tr'),
+                    category_name = F('category__name_tr'),
                     language = Value(value=language, output_field=CharField())
                 )
         return blogs.all()

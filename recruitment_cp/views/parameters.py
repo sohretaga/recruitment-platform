@@ -570,8 +570,11 @@ def blog_category_index(request):
 def blog_category_load(request):
     if request.user.is_superuser:
         if is_ajax(request) and request.POST:
+            language = request.POST.get('language')
             
-            blog_category = BlogCategory.objects.all().values()
+            blog_category = BlogCategory.language_filter(language).values(
+                'id', 'name', 'definition', 'note'
+            )
             
             json_data = json.dumps(list(blog_category))
 
@@ -595,13 +598,13 @@ def blog_category_save(request):
                 if name:
                     if pk:
                         blog_category = BlogCategory.objects.filter(pk=pk)
-                        blog_category.update(**hot[index])
+                        blog_category.custom_update(language, **hot[index])
                     else:
-                        blog_category = BlogCategory(**hot[index])
-                        blog_category.save()
+                        blog_category = BlogCategory()
+                        blog_category.save(language, **hot[index])
                 else:
                     blog_category = BlogCategory.objects.filter(pk = pk)
-                    blog_category.delete()
+                    # blog_category.delete()
                 
                 index += 1
 

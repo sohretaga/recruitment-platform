@@ -19,7 +19,7 @@ def blog(request):
 
     if categories:
         url += f'&categories={categories}'
-        params.update({'category__name__in': categories.split(',')})
+        params.update({'category_name__in': categories.split(',')})
 
     # Set up Paginator
     all_blogs = Blog.translation().filter(**params).order_by('created_date')
@@ -27,7 +27,7 @@ def blog(request):
     current_page = request.GET.get('page')
     blogs = paginator.get_page(current_page)
 
-    categories = Category.objects.all()
+    categories = Category.translation()
 
     # Popular Blogs
     pobular_blogs = Blog.translation().filter(status='published').order_by('-views')[:4]
@@ -42,7 +42,7 @@ def blog(request):
     return render(request, 'blog/blog.html', context)
 
 def detail(request, slug):
-    categories = Category.objects.all()
+    categories = Category.translation()
     blog = Blog.translation().get(slug=slug)
     blog.views += 1
     blog.save()
@@ -70,10 +70,10 @@ def ajax_filter_blog(request):
         params = {'status':'published'} # only get pusblised blogs
 
         if categories:
-            params.update({'category__name__in':categories})        
+            params.update({'category_name__in':categories})        
 
         filtered_blogs = Blog.translation().filter(**params).order_by('created_date')\
-        .values('title', 'category__name', 'cover_photo', 'views', 'slug', 'created_date')
+        .values('title', 'category_name', 'cover_photo', 'views', 'slug', 'created_date')
         
         # Set up Paginator
         paginator = Paginator(filtered_blogs, 8)

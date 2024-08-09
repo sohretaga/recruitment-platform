@@ -21,7 +21,7 @@ def post_blog(request):
             form.save()
             return redirect(reverse('dashboard:all-blog'))
     
-    categories = Category.objects.all()
+    categories = Category.translation()
 
     context = {
         'categories': categories
@@ -42,14 +42,12 @@ def all_blog(request):
 @is_blogger
 def edit_blog(request, id):
     blog = get_object_or_404(Blog, id=id)
-    categories = Category.objects.all()
+    categories = Category.translation()
 
     if request.POST:
         form = PostBlogForm(request.POST, request.FILES, instance=blog)
 
         if form.is_valid():
-            print(form.cleaned_data.get('content_en'))
-            print(form.cleaned_data.get('content_tr'))
             form.save()
             return redirect(reverse('dashboard:all-blog'))
 
