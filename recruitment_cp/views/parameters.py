@@ -417,7 +417,7 @@ def job_catalogue_save(request):
                 pk = hot[index].pop('id', None)
                 name = hot[index].get('name', None)
 
-                if name:
+                if name or language != 'en':
                     if pk:
                         job_catalogues = cp_models.ParameterJobCatalogue.objects.filter(pk=pk)
                         job_catalogues.custom_update(language, **hot[index])
