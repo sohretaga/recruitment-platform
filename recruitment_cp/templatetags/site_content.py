@@ -1,5 +1,6 @@
 from django import template
 from django.core.cache import cache
+from django.conf import settings
 from recruitment_cp.models import SiteContent
 
 register = template.Library()
@@ -8,7 +9,7 @@ register = template.Library()
 def get_site_content(key):
     try:
         content = SiteContent.objects.get(page=key)
-        language = cache.get('site_language', 'en')
+        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
         context = {
             'image': content.image
         }
