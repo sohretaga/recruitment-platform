@@ -228,3 +228,6 @@ class ParameterCompetence(ParameterCommonFields):
 
 class ParameterJobFamily(ParameterCommonFields):
     ...
+
+class ParameterDatePosted(ParameterCommonFields):
+    hours = models.PositiveIntegerField()

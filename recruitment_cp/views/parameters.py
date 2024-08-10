@@ -1254,3 +1254,56 @@ def job_family_save(request):
             raise PermissionError
     else:
         raise Http404
+    
+#======================================================================================================
+def date_posted_index(request):
+    if request.user.is_superuser:
+        return render(request, 'cp/parameters/date_posted.html')
+    
+    raise Http404
+
+def date_posted_load(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            language = request.POST.get('language')
+            
+            date_posted = cp_models.ParameterDatePosted.language_filter(language).values(
+                'id', 'no', 'name', 'definition', 'note', 'hours'
+            )
+            json_data = json.dumps(list(date_posted))
+
+            return JsonResponse(json_data, safe=False)
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+
+def date_posted_save(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            hot = json.loads(request.POST.get('hot'))
+            language = request.POST.get('language')
+            index = 0
+
+            while index < len(hot):
+                pk = hot[index].pop('id', None)
+                name = hot[index].get('name', None)
+
+                if name or language != 'en':
+                    if pk:
+                        date_posted = cp_models.ParameterDatePosted.objects.filter(pk=pk)
+                        date_posted.custom_update(language, **hot[index])
+                    else:
+                        date_posted = cp_models.ParameterDatePosted(hours=hot[index]['hours'])
+                        date_posted.save(language, **hot[index])
+                else:
+                    date_posted = cp_models.ParameterDatePosted.objects.filter(pk = pk)
+                    date_posted.delete()
+                
+                index += 1
+
+            return JsonResponse({'status': 200})
+        else:
+            raise PermissionError
+    else:
+        raise Http404

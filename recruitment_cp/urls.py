@@ -102,6 +102,10 @@ urlpatterns = [
     path('parameters/job-family-load', parameters.job_family_load, name='job_family_load'),
     path('parameters/job-family-save', parameters.job_family_save, name='job_family_save'),
 
+    path('parameters/date-posted', parameters.date_posted_index, name='date_posted'),
+    path('parameters/date-posted-load', parameters.date_posted_load, name='date_posted_load'),
+    path('parameters/date-posted-save', parameters.date_posted_save, name='date_posted_save'),
+
     #LANGUAGE URLS
     path('translation/contents', languages.contents, name='contents'),
     path('translation/contents-load', languages.contents_load, name='contents_load'),

@@ -261,36 +261,12 @@
                             <div id="dateposted" class="accordion-collapse collapse show" aria-labelledby="datePosted">
                                 <div class="accordion-body">
                                     <div class="side-title form-check-all">
+                                        {% for date in date_posted %}
                                         <div class="form-check mt-2">
-                                            <input class="form-check-input" type="radio"  name="datePosted"  value="1" id="date-1" />
-                                            <label class="form-check-label ms-2 text-muted" for="date-1">
-                                                Last Hour
-                                            </label>
+                                            <input class="form-check-input" type="radio"  name="datePosted"  value="{{ date.hours }}" id="date-{{ forloop.counter }}" />
+                                            <label class="form-check-label ms-2 text-muted" for="date-{{ forloop.counter }}">{{ date.name }}</label>
                                         </div>
-                                        <div class="form-check mt-2">
-                                            <input class="form-check-input" type="radio" name="datePosted" value="24" id="date-2" />
-                                            <label class="form-check-label ms-2 text-muted" for="date-2">
-                                                Last 24 hours
-                                            </label>
-                                        </div>
-                                        <div class="form-check mt-2">
-                                            <input class="form-check-input" type="radio" name="datePosted" value="168" id="date-3" />
-                                            <label class="form-check-label ms-2 text-muted" for="date-3">
-                                                Last 7 days
-                                            </label>
-                                        </div>
-                                        <div class="form-check mt-2">
-                                            <input class="form-check-input" type="radio" name="datePosted" value="336" id="date-4" />
-                                            <label class="form-check-label ms-2 text-muted" for="date-4">
-                                                Last 14 days
-                                            </label>
-                                        </div>
-                                        <div class="form-check mt-2">
-                                            <input class="form-check-input" type="radio" name="datePosted" value="720" id="date-5" />
-                                            <label class="form-check-label ms-2 text-muted" for="date-5">
-                                                Last 30 days
-                                            </label>
-                                        </div>
+                                        {% endfor %}
                                     </div>
                                 </div>
                             </div>

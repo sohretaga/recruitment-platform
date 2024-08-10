@@ -146,6 +146,7 @@ def fetch_vacancies(request) -> dict:
     work_preferences = models.ParameterWorkPreference.translation().values('id', 'name')
     work_preferences = models.ParameterWorkPreference.translation().values('id', 'name')
     job_family = models.ParameterJobFamily.translation().values('id', 'name')
+    date_posted = models.ParameterDatePosted.translation().values('hours', 'name')
 
     popular_job_titles = Vacancy.translation().values('job_title_name').annotate(count=Count('job_title_name')).order_by('-count')[:6]
     keyword_list = list(models.ParameterKeyword.translation().values('id', 'name'))
@@ -164,5 +165,6 @@ def fetch_vacancies(request) -> dict:
         'company': company,
         'popular_job_titles': popular_job_titles,
         'keywords': keywords,
-        'job_family': job_family
+        'job_family': job_family,
+        'date_posted': date_posted
     }
