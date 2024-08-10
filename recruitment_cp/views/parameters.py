@@ -395,7 +395,7 @@ def job_catalogue_load(request):
         if is_ajax(request) and request.POST:
             language = request.POST.get('language')
             
-            job_catalogues = cp_models.ParameterJobCatalogue.objects.filter(language=language)\
+            job_catalogues = cp_models.ParameterJobCatalogue.language_filter(language)\
                 .values('id', 'no', 'name', 'definition', 'note', 'job_family', 'job_sub_family', 'career_type',
                         'career_level', 'typical_education', 'relevant_experience', 'job_code')
             json_data = json.dumps(list(job_catalogues))
@@ -420,13 +420,13 @@ def job_catalogue_save(request):
                 if name:
                     if pk:
                         job_catalogues = cp_models.ParameterJobCatalogue.objects.filter(pk=pk)
-                        job_catalogues.update(**hot[index])
+                        job_catalogues.custom_update(language, **hot[index])
                     else:
-                        job_catalogues = cp_models.ParameterJobCatalogue(language = language, **hot[index])
-                        job_catalogues.save()
+                        job_catalogues = cp_models.ParameterJobCatalogue()
+                        job_catalogues.save(language, **hot[index])
                 else:
                     job_catalogues = cp_models.ParameterJobCatalogue.objects.filter(pk = pk)
-                    job_catalogues.delete()
+                    # job_catalogues.delete()
                 
                 index += 1
 

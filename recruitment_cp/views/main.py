@@ -19,48 +19,48 @@ def load_source(request):
             params = {}
 
             if language:
-                params.update({'language': language})
+                params.update({'language_code': language})
             
             match source_model:
             
                 case 'career_types':
-                    source = cp_models.ParameterCareerType.objects.filter(**params).values_list('name', flat=True)
+                    source = cp_models.ParameterCareerType.language_filter(**params).values_list('name', flat=True)
 
                 case 'career_levels':
-                    source = cp_models.ParameterCareerLevel.objects.filter(**params).values_list('name', flat=True)
+                    source = cp_models.ParameterCareerLevel.language_filter(**params).values_list('name', flat=True)
 
                 case 'locations':
-                    source = cp_models.ParameterLocation.objects.filter(**params).values_list('name', flat=True)
+                    source = cp_models.ParameterLocation.language_filter(**params).values_list('name', flat=True)
                 
                 case 'fte':
-                    source = cp_models.ParameterFTE.objects.filter(**params).values_list('name', flat=True)
+                    source = cp_models.ParameterFTE.language_filter(**params).values_list('name', flat=True)
                 
                 case 'employment_type':
-                    source = cp_models.ParameterEmployeeType.objects.filter(**params).values_list('name', flat=True)
+                    source = cp_models.ParameterEmployeeType.language_filter(**params).values_list('name', flat=True)
                 
                 case 'work_experience':
-                    source = cp_models.ParameterWorkExperience.objects.filter(**params).values_list('name', flat=True)
+                    source = cp_models.ParameterWorkExperience.language_filter(**params).values_list('name', flat=True)
                 
                 case 'sector':
-                    source = cp_models.ParameterSector.objects.filter(**params).values_list('name', flat=True)
+                    source = cp_models.ParameterSector.language_filter(**params).values_list('name', flat=True)
                 
                 case 'organization_type':
-                    source = cp_models.ParameterOrganizationType.objects.filter(**params).values_list('name', flat=True)
+                    source = cp_models.ParameterOrganizationType.language_filter(**params).values_list('name', flat=True)
                 
                 case 'organization_ownership':
-                    source = cp_models.ParameterOrganizationOwnership.objects.filter(**params).values_list('name', flat=True)
+                    source = cp_models.ParameterOrganizationOwnership.language_filter(**params).values_list('name', flat=True)
                 
                 case 'number_of_employees':
-                    source = cp_models.ParameterNumberOfEmployee.objects.filter(**params).values_list('name', flat=True)
+                    source = cp_models.ParameterNumberOfEmployee.language_filter(**params).values_list('name', flat=True)
                 
                 case 'work_preference':
-                    source = cp_models.ParameterWorkPreference.objects.filter(**params).values_list('name', flat=True)
+                    source = cp_models.ParameterWorkPreference.language_filter(**params).values_list('name', flat=True)
                 
                 case 'department':
-                    source = cp_models.ParameterDepartment.objects.filter(**params).values_list('name', flat=True)
+                    source = cp_models.ParameterDepartment.language_filter(**params).values_list('name', flat=True)
 
                 case 'job_family':
-                    source = cp_models.ParameterJobFamily.objects.filter(**params).values_list('name', flat=True)
+                    source = cp_models.ParameterJobFamily.language_filter(**params).values_list('name', flat=True)
             
             source = json.dumps(list(source))
             return JsonResponse(source, safe=False)
