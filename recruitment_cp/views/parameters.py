@@ -44,7 +44,7 @@ def career_type_save(request):
                 pk = hot[index].pop('id', None)
                 name = hot[index].get('name', None)
 
-                if name:
+                if name or language != 'en':
                     if pk:
                         career_types = cp_models.ParameterCareerType.objects.filter(pk=pk)
                         career_types.custom_update(language, **hot[index])
@@ -53,7 +53,7 @@ def career_type_save(request):
                         career_types.save(language=language, **hot[index])
                 else:
                     career_types = cp_models.ParameterCareerType.objects.filter(pk = pk)
-                    # career_types.delete()
+                    career_types.delete()
                 
                 index += 1
 
@@ -98,7 +98,7 @@ def career_level_save(request):
                 pk = hot[index].pop('id', None)
                 name = hot[index].get('name', None)
 
-                if name:
+                if name or language != 'en':
                     if pk:
                         career_level = cp_models.ParameterCareerLevel.objects.filter(pk=pk)
                         career_level.custom_update(language, **hot[index])
@@ -107,7 +107,7 @@ def career_level_save(request):
                         career_level.save(language=language, **hot[index])
                 else:
                     career_level = cp_models.ParameterCareerLevel.objects.filter(pk = pk)
-                    # career_level.delete()
+                    career_level.delete()
                 
                 index += 1
 
@@ -151,7 +151,7 @@ def career_type_level_save(request):
                 pk = hot[index].pop('id', None)
                 name = hot[index].get('name', None)
 
-                if name:
+                if name or language != 'en':
                     if pk:
                         career_types_levels = cp_models.ParameterCareerTypeLevel.objects.filter(pk=pk)
                         career_types_levels.custom_update(language, **hot[index])
@@ -160,7 +160,7 @@ def career_type_level_save(request):
                         career_types_levels.save(language, **hot[index])
                 else:
                     career_types_levels = cp_models.ParameterCareerTypeLevel.objects.filter(pk = pk)
-                    # career_types_levels.delete()
+                    career_types_levels.delete()
                 
                 index += 1
 
@@ -204,7 +204,7 @@ def location_save(request):
                 pk = hot[index].pop('id', None)
                 name = hot[index].get('name', None)
 
-                if name:
+                if name or language != 'en':
                     if pk:
                         locations = cp_models.ParameterLocation.objects.filter(pk=pk)
                         locations.custom_update(language, **hot[index])
@@ -213,7 +213,7 @@ def location_save(request):
                         locations.save(language, **hot[index])
                 else:
                     locations = cp_models.ParameterLocation.objects.filter(pk = pk)
-                    # locations.delete()
+                    locations.delete()
                 
                 index += 1
 
@@ -257,7 +257,7 @@ def country_save(request):
                 pk = hot[index].pop('id', None)
                 name = hot[index].get('name', None)
 
-                if name:
+                if name or language != 'en':
                     if pk:
                         countries = cp_models.ParameterCountry.objects.filter(pk=pk)
                         countries.custom_update(language, **hot[index])
@@ -266,7 +266,7 @@ def country_save(request):
                         countries.save(language, **hot[index])
                 else:
                     countries = cp_models.ParameterCountry.objects.filter(pk = pk)
-                    # countries.delete()
+                    countries.delete()
                 
                 index += 1
 
@@ -311,7 +311,7 @@ def work_experience_save(request):
                 pk = hot[index].pop('id', None)
                 name = hot[index].get('name', None)
 
-                if name:
+                if name or language != 'en':
                     if pk:
                         work_experience = cp_models.ParameterWorkExperience.objects.filter(pk=pk)
                         work_experience.custom_update(language, **hot[index])
@@ -320,7 +320,7 @@ def work_experience_save(request):
                         work_experience.save(language, **hot[index])
                 else:
                     work_experience = cp_models.ParameterWorkExperience.objects.filter(pk = pk)
-                    # work_experience.delete()
+                    work_experience.delete()
                 
                 index += 1
 
@@ -364,7 +364,7 @@ def fte_save(request):
                 pk = hot[index].pop('id', None)
                 name = hot[index].get('name', None)
 
-                if name:
+                if name or language != 'en':
                     if pk:
                         fte = cp_models.ParameterFTE.objects.filter(pk=pk)
                         fte.custom_update(language, **hot[index])
@@ -373,7 +373,7 @@ def fte_save(request):
                         fte.save(language, **hot[index])
                 else:
                     fte = cp_models.ParameterFTE.objects.filter(pk = pk)
-                    # fte.delete()
+                    fte.delete()
                 
                 index += 1
 
@@ -470,7 +470,7 @@ def employee_type_save(request):
                 pk = hot[index].pop('id', None)
                 name = hot[index].get('name', None)
 
-                if name:
+                if name or language != 'en':
                     if pk:
                         employee_type = cp_models.ParameterEmployeeType.objects.filter(pk=pk)
                         employee_type.custom_update(language, **hot[index])
@@ -479,7 +479,7 @@ def employee_type_save(request):
                         employee_type.save(language, **hot[index])
                 else:
                     employee_type = cp_models.ParameterEmployeeType.objects.filter(pk = pk)
-                    # employee_type.delete()
+                    employee_type.delete()
                 
                 index += 1
 
@@ -503,18 +503,8 @@ def vacancy_load(request):
             offset = int(request.POST.get('offset', 0))
             limit = int(request.POST.get('limit', 1000))
             
-            vacancies = Vacancy.objects.filter(language = language).select_related(
-                'employer', 'career_type', 'career_level', 'location', 'fte', 'job_title', 'employment_type', 'work_experience', 'work_preference', 'department'
-                ).annotate(company_name=F('employer__user__first_name'),
-                           career_type_name=F('career_type__name'),
-                           career_level_name=F('career_level__name'),
-                           location_name=F('location__name'),
-                           fte_name=F('fte__name'),
-                           job_title_name=F('job_title__name'),
-                           employment_type_name=F('employment_type__name'),
-                           work_experience_name=F('work_experience__name'),
-                           work_preference_name=F('work_preference__name'),
-                           department_name=F('department__name')
+            vacancies = Vacancy.translation().filter(language = language).select_related(
+                'employer').annotate(company_name=F('employer__user__first_name'),
                 ).values()[offset:offset+limit]
             
             json_data = json.dumps(list(vacancies), default=datetime_to_string)
@@ -595,7 +585,7 @@ def blog_category_save(request):
                 pk = hot[index].pop('id', None)
                 name = hot[index].get('name', None)
 
-                if name:
+                if name or language != 'en':
                     if pk:
                         blog_category = BlogCategory.objects.filter(pk=pk)
                         blog_category.custom_update(language, **hot[index])
@@ -604,7 +594,7 @@ def blog_category_save(request):
                         blog_category.save(language, **hot[index])
                 else:
                     blog_category = BlogCategory.objects.filter(pk = pk)
-                    # blog_category.delete()
+                    blog_category.delete()
                 
                 index += 1
 
@@ -769,7 +759,7 @@ def sector_save(request):
                 pk = hot[index].pop('id', None)
                 name = hot[index].get('name', None)
 
-                if name:
+                if name or language != 'en':
                     if pk:
                         sector = cp_models.ParameterSector.objects.filter(pk=pk)
                         sector.custom_update(language, **hot[index])
@@ -778,7 +768,7 @@ def sector_save(request):
                         sector.save(language, **hot[index])
                 else:
                     sector = cp_models.ParameterSector.objects.filter(pk = pk)
-                    # sector.delete()
+                    sector.delete()
                 
                 index += 1
 
@@ -822,7 +812,7 @@ def organization_type_save(request):
                 pk = hot[index].pop('id', None)
                 name = hot[index].get('name', None)
 
-                if name:
+                if name or language != 'en':
                     if pk:
                         organization_type = cp_models.ParameterOrganizationType.objects.filter(pk=pk)
                         organization_type.custom_update(language, **hot[index])
@@ -831,7 +821,7 @@ def organization_type_save(request):
                         organization_type.save(language, **hot[index])
                 else:
                     organization_type = cp_models.ParameterOrganizationType.objects.filter(pk = pk)
-                    # organization_type.delete()
+                    organization_type.delete()
                 
                 index += 1
 
@@ -875,7 +865,7 @@ def organization_ownership_save(request):
                 pk = hot[index].pop('id', None)
                 name = hot[index].get('name', None)
 
-                if name:
+                if name or language != 'en':
                     if pk:
                         organization_ownership = cp_models.ParameterOrganizationOwnership.objects.filter(pk=pk)
                         organization_ownership.custom_update(language, **hot[index])
@@ -884,7 +874,7 @@ def organization_ownership_save(request):
                         organization_ownership.save(language, **hot[index])
                 else:
                     organization_ownership = cp_models.ParameterOrganizationOwnership.objects.filter(pk = pk)
-                    # organization_ownership.delete()
+                    organization_ownership.delete()
                 
                 index += 1
 
@@ -928,7 +918,7 @@ def number_of_employees_save(request):
                 pk = hot[index].pop('id', None)
                 name = hot[index].get('name', None)
 
-                if name:
+                if name or language != 'en':
                     if pk:
                         number_of_employees = cp_models.ParameterNumberOfEmployee.objects.filter(pk=pk)
                         number_of_employees.custom_update(language, **hot[index])
@@ -937,7 +927,7 @@ def number_of_employees_save(request):
                         number_of_employees.save(language, **hot[index])
                 else:
                     number_of_employees = cp_models.ParameterNumberOfEmployee.objects.filter(pk = pk)
-                    # number_of_employees.delete()
+                    number_of_employees.delete()
                 
                 index += 1
 
@@ -981,7 +971,7 @@ def department_save(request):
                 pk = hot[index].pop('id', None)
                 name = hot[index].get('name', None)
 
-                if name:
+                if name or language != 'en':
                     if pk:
                         department = cp_models.ParameterDepartment.objects.filter(pk=pk)
                         department.custom_update(language, **hot[index])
@@ -990,7 +980,7 @@ def department_save(request):
                         department.save(language, **hot[index])
                 else:
                     department = cp_models.ParameterDepartment.objects.filter(pk = pk)
-                    # department.delete()
+                    department.delete()
                 
                 index += 1
 
@@ -1034,7 +1024,7 @@ def work_preference_save(request):
                 pk = hot[index].pop('id', None)
                 name = hot[index].get('name', None)
 
-                if name:
+                if name or language != 'en':
                     if pk:
                         work_preference = cp_models.ParameterWorkPreference.objects.filter(pk=pk)
                         work_preference.custom_update(language, **hot[index])
@@ -1043,7 +1033,7 @@ def work_preference_save(request):
                         work_preference.save(language=language, **hot[index])
                 else:
                     work_preference = cp_models.ParameterWorkPreference.objects.filter(pk = pk)
-                    # work_preference.delete()
+                    work_preference.delete()
                 
                 index += 1
 
@@ -1087,7 +1077,7 @@ def keywords_save(request):
                 pk = hot[index].pop('id', None)
                 name = hot[index].get('name', None)
 
-                if name:
+                if name or language != 'en':
                     if pk:
                         keywords = cp_models.ParameterKeyword.objects.filter(pk=pk)
                         keywords.custom_update(language, **hot[index])
@@ -1096,7 +1086,7 @@ def keywords_save(request):
                         keywords.save(language, **hot[index])
                 else:
                     keywords = cp_models.ParameterKeyword.objects.filter(pk = pk)
-                    # keywords.delete()
+                    keywords.delete()
                 
                 index += 1
 
@@ -1140,7 +1130,7 @@ def faq_save(request):
                 pk = hot[index].pop('id', None)
                 name = hot[index].get('name', None)
 
-                if name:
+                if name or language != 'en':
                     if pk:
                         faq = cp_models.ParameterFAQ.objects.filter(pk=pk)
                         faq.custom_update(language, **hot[index])
@@ -1149,7 +1139,7 @@ def faq_save(request):
                         faq.save(language, **hot[index])
                 else:
                     faq = cp_models.ParameterFAQ.objects.filter(pk = pk)
-                    # faq.delete()
+                    faq.delete()
                 
                 index += 1
 
@@ -1193,7 +1183,7 @@ def competence_save(request):
                 pk = hot[index].pop('id', None)
                 name = hot[index].get('name', None)
 
-                if name:
+                if name or language != 'en':
                     if pk:
                         competence = cp_models.ParameterCompetence.objects.filter(pk=pk)
                         competence.custom_update(language, **hot[index])
@@ -1202,7 +1192,7 @@ def competence_save(request):
                         competence.save(language, **hot[index])
                 else:
                     competence = cp_models.ParameterCompetence.objects.filter(pk = pk)
-                    # competence.delete()
+                    competence.delete()
                 
                 index += 1
 
@@ -1246,7 +1236,7 @@ def job_family_save(request):
                 pk = hot[index].pop('id', None)
                 name = hot[index].get('name', None)
 
-                if name:
+                if name or language != 'en':
                     if pk:
                         job_family = cp_models.ParameterJobFamily.objects.filter(pk=pk)
                         job_family.custom_update(language, **hot[index])
@@ -1255,7 +1245,7 @@ def job_family_save(request):
                         job_family.save(language, **hot[index])
                 else:
                     job_family = cp_models.ParameterJobFamily.objects.filter(pk = pk)
-                    # job_family.delete()
+                    job_family.delete()
                 
                 index += 1
 
