@@ -10,6 +10,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from . import forms
 from .models import Gallery, GalleryImage, CandidateBookmark
+from job.models import Vacancy
 from .decorators import logout_required
 from user.models import CustomUser, Candidate, Employer, Education, Experience
 from job.utils import vacancy_with_related_info
@@ -206,14 +207,14 @@ def company_details(request, username):
     params = manage_user_type_for_details(request, username, user_type='employer')
 
     user = get_object_or_404(CustomUser, **params)
-    vacancies = vacancy_with_related_info(user.employer.vacancies.filter(status=True, delete=False)[:5])
-    sectors = ParameterSector.objects.values('id', 'name')
-    organization_types = ParameterOrganizationType.objects.values('id', 'name')
-    organization_ownerships = ParameterOrganizationOwnership.objects.values('id', 'name')
-    number_of_employees = ParameterNumberOfEmployee.objects.values('id', 'name')
-    locations = ParameterCountry.objects.values('id', 'name')
+    vacancies = vacancy_with_related_info(Vacancy.translation().filter(employer=user.employer, status=True, delete=False)[:5])
+    sectors = ParameterSector.translation().values('id', 'name')
+    organization_types = ParameterOrganizationType.translation().values('id', 'name')
+    organization_ownerships = ParameterOrganizationOwnership.translation().values('id', 'name')
+    number_of_employees = ParameterNumberOfEmployee.translation().values('id', 'name')
+    locations = ParameterCountry.translation().values('id', 'name')
 
-    keyword_list = ParameterKeyword.objects.values('id', 'name')
+    keyword_list = ParameterKeyword.translation().values('id', 'name')
     keywords = {item['id']: item['name'] for item in keyword_list}
 
     try: gallery = user.gallery.images.all()
