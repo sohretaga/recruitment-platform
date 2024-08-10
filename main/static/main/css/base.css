@@ -10,6 +10,10 @@
     .login-mobile {
       display: inline !important;
     }
+
+    .language-mobile {
+        display: inline !important;
+    }
 }
 
 @media only screen and (max-width: 992px) {
