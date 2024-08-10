@@ -33,7 +33,7 @@ class ManageEmployerAccountForm(forms.ModelForm):
     address = forms.CharField(max_length=255, required=False)
     establishment_date = forms.DateField(required=False)
     website = forms.URLField(required=False)
-    whatsapp = forms.CharField(max_length=15 ,required=False)
+    whatsapp = forms.CharField(max_length=15, required=False)
     linkedin_url = forms.URLField(required=False)
     facebook_url = forms.URLField(required=False)
     first_name = forms.CharField(max_length=150, required=True)

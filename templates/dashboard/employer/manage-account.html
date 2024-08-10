@@ -118,10 +118,10 @@
                                         <label class="control-label">Sector</label>
                                         <select class="form-control select2" name="sector">
                                             {% for sector in sectors %}
-                                                {% if sector.name == user.employer.sector %}
-                                                    <option selected>{{ sector.name }}</option>
+                                                {% if sector.id == user.employer.sector.id %}
+                                                    <option value="{{ sector.id }}" selected>{{ sector.name }}</option>
                                                 {% else %}
-                                                    <option>{{ sector.name }}</option>
+                                                    <option value="{{ sector.id }}">{{ sector.name }}</option>
                                                 {% endif %}
                                             {% endfor %}
                                         </select>
@@ -132,10 +132,10 @@
                                         <label class="control-label">Number of Employees</label>
                                         <select class="form-control select2" name="number_of_employees">
                                             {% for number in number_of_employees %}
-                                                {% if number.name == user.employer.number_of_employees %}
-                                                    <option selected>{{ number.name }}</option>
+                                                {% if number.id == user.employer.number_of_employees.id %}
+                                                    <option value="{{ number.id }}" selected>{{ number.name }}</option>
                                                 {% else %}
-                                                    <option>{{ number.name }}</option>
+                                                    <option value="{{ number.id }}">{{ number.name }}</option>
                                                 {% endif %}
                                             {% endfor %}
                                         </select>
@@ -146,10 +146,10 @@
                                         <label class="control-label">Organization Ownership</label>
                                         <select class="form-control select2" name="organization_ownership">
                                             {% for ownership in organization_ownerships %}
-                                                {% if ownership.name == user.employer.organization_ownership %}
-                                                    <option selected>{{ ownership.name }}</option>
+                                                {% if ownership.id == user.employer.organization_ownership.id %}
+                                                    <option value="{{ ownership.id }}" selected>{{ ownership.name }}</option>
                                                 {% else %}
-                                                    <option>{{ ownership.name }}</option>
+                                                    <option value="{{ ownership.id }}">{{ ownership.name }}</option>
                                                 {% endif %}
                                             {% endfor %}
                                         </select>
@@ -160,10 +160,10 @@
                                         <label class="control-label">Organization Type</label>
                                         <select class="form-control select2" name="organization_type">
                                             {% for type in organization_types %}
-                                                {% if type.name == user.employer.organization_type %}
-                                                    <option selected>{{ type.name }}</option>
+                                                {% if type.id == user.employer.organization_type.id %}
+                                                    <option value="{{ type.id }}" selected>{{ type.name }}</option>
                                                 {% else %}
-                                                    <option>{{ type.name }}</option>
+                                                    <option value="{{ type.id }}">{{ type.name }}</option>
                                                 {% endif %}
                                             {% endfor %}
                                         </select>

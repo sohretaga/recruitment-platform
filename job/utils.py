@@ -90,7 +90,7 @@ def fetch_vacancies(request) -> dict:
     
     if sector := request.GET.get('sector'):
         url += f'&sector={sector}'
-        params.update({'employer__sector': sector})
+        params.update({'employer_sector': sector})
 
     if department := request.GET.get('department'):
         url += f'&department={department}'

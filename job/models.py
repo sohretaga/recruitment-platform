@@ -72,6 +72,7 @@ class Vacancy(models.Model):
                     work_experience_name = F('work_experience__name_en'),
                     work_preference_name = F('work_preference__name_en'),
                     department_name = F('department__name_en'),
+                    employer_sector = F('employer__sector__name_en')
                 )
             case 'tr':
                 vacancies = cls.objects.annotate(
@@ -84,6 +85,7 @@ class Vacancy(models.Model):
                     work_experience_name = F('work_experience__name_tr'),
                     work_preference_name = F('work_preference__name_tr'),
                     department_name = F('department__name_tr'),
+                    employer_sector = F('employer__sector__name_tr')
                 )
 
         return vacancies

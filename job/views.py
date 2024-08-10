@@ -247,7 +247,7 @@ def ajax_filter_vacancies(request):
             params.update({'employment_type_name__in': employment_type})    
 
         if sector := data.get('sector'):
-            params.update({'employer__sector': sector})
+            params.update({'employer_sector': sector})
 
         if department := data.get('department'):
             params.update({'department_name__in': department})

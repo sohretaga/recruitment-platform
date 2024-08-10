@@ -40,15 +40,15 @@ def post_vacancy(request):
             return redirect(reverse('dashboard:all-vacancy'))
 
     languages = Language.objects.values('code', 'name')
-    job_catalogue = ParameterJobCatalogue.objects.values('id', 'name')
-    career_types = ParameterCareerType.objects.values('id', 'name')
-    career_levels = ParameterCareerLevel.objects.values('id', 'name')
-    locations = ParameterLocation.objects.values('id', 'name')
-    employment_types = ParameterEmployeeType.objects.values('id', 'name')
-    ftes = ParameterFTE.objects.values('id', 'name')
-    work_preferences = ParameterWorkPreference.objects.values('id', 'name')
-    departments = ParameterDepartment.objects.values('id', 'name')
-    keywords = ParameterKeyword.objects.values('id', 'name')
+    job_catalogue = ParameterJobCatalogue.translation().values('id', 'name')
+    career_types = ParameterCareerType.translation().values('id', 'name')
+    career_levels = ParameterCareerLevel.translation().values('id', 'name')
+    locations = ParameterLocation.translation().values('id', 'name')
+    employment_types = ParameterEmployeeType.translation().values('id', 'name')
+    ftes = ParameterFTE.translation().values('id', 'name')
+    work_preferences = ParameterWorkPreference.translation().values('id', 'name')
+    departments = ParameterDepartment.translation().values('id', 'name')
+    keywords = ParameterKeyword.translation().values('id', 'name')
 
     context = {
         'languages': languages,
@@ -125,15 +125,15 @@ def edit_vacancy(request, id):
             return redirect(reverse('dashboard:all-vacancy'))
         
     languages = Language.objects.values('code', 'name')
-    job_catalogue = ParameterJobCatalogue.objects.values('id', 'name')
-    career_types = ParameterCareerType.objects.values('id', 'name')
-    career_levels = ParameterCareerLevel.objects.values('id', 'name')
-    locations = ParameterLocation.objects.values('id', 'name')
-    employment_types = ParameterEmployeeType.objects.values('id', 'name')
-    ftes = ParameterFTE.objects.values('id', 'name')
-    work_preferences = ParameterWorkPreference.objects.values('id', 'name')
-    departments = ParameterDepartment.objects.values('id', 'name')
-    keywords = ParameterKeyword.objects.values('id', 'name')
+    job_catalogue = ParameterJobCatalogue.translation().values('id', 'name')
+    career_types = ParameterCareerType.translation().values('id', 'name')
+    career_levels = ParameterCareerLevel.translation().values('id', 'name')
+    locations = ParameterLocation.translation().values('id', 'name')
+    employment_types = ParameterEmployeeType.translation().values('id', 'name')
+    ftes = ParameterFTE.translation().values('id', 'name')
+    work_preferences = ParameterWorkPreference.translation().values('id', 'name')
+    departments = ParameterDepartment.translation().values('id', 'name')
+    keywords = ParameterKeyword.translation().values('id', 'name')
 
     context = {
         'vacancy': vacancy,
@@ -177,10 +177,10 @@ def manage_account(request):
 
             return redirect(reverse('dashboard:all-vacancy'))
 
-    sectors = ParameterSector.objects.values('name')
-    organization_types = ParameterOrganizationType.objects.values('name')
-    organization_ownerships = ParameterOrganizationOwnership.objects.values('name')
-    number_of_employees = ParameterNumberOfEmployee.objects.values('name')
+    sectors = ParameterSector.translation().values('id', 'name')
+    organization_types = ParameterOrganizationType.translation().values('id', 'name')
+    organization_ownerships = ParameterOrganizationOwnership.translation().values('id', 'name')
+    number_of_employees = ParameterNumberOfEmployee.translation().values('id', 'name')
 
     context = {
         'sectors': sectors,

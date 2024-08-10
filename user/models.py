@@ -1,7 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-from recruitment_cp.models import ParameterSector, ParameterOrganizationType, ParameterOrganizationOwnership, ParameterNumberOfEmployee, ParameterCountry
+from recruitment_cp.models import (
+    ParameterSector,
+    ParameterOrganizationType,
+    ParameterOrganizationOwnership,
+    ParameterNumberOfEmployee,
+    ParameterCountry
+    )
 
 class CustomUser(AbstractUser):
     USER_TYPE_CHOICES = (
@@ -29,10 +35,10 @@ class Employer(models.Model):
     background_image = models.ImageField(upload_to='background-images/', null=True, blank=True)
     no = models.IntegerField(blank=True, null=True)
 
-    # sector = models.ForeignKey(ParameterSector, on_delete=models.SET_NULL, blank=True, null=True)
-    # organization_type = models.ForeignKey(ParameterOrganizationType, on_delete=models.SET_NULL, blank=True, null=True)
-    # organization_ownership = models.ForeignKey(ParameterOrganizationType, on_delete=models.SET_NULL, blank=True, null=True)
-    # number_of_employees = models.ForeignKey(ParameterNumberOfEmployee, on_delete=models.SET_NULL, blank=True, null=True)
+    sector = models.ForeignKey(ParameterSector, on_delete=models.SET_NULL, blank=True, null=True)
+    organization_type = models.ForeignKey(ParameterOrganizationType, on_delete=models.SET_NULL, blank=True, null=True)
+    organization_ownership = models.ForeignKey(ParameterOrganizationOwnership, on_delete=models.SET_NULL, blank=True, null=True)
+    number_of_employees = models.ForeignKey(ParameterNumberOfEmployee, on_delete=models.SET_NULL, blank=True, null=True)
     location = models.ForeignKey(ParameterCountry, on_delete=models.SET_NULL, blank=True, null=True)
 
     second_email = models.EmailField(blank=True, null=True)
@@ -42,7 +48,7 @@ class Employer(models.Model):
     slider = models.BooleanField(default=False, null=True)
     establishment_date = models.DateField(blank=True, null=True)
     website = models.URLField(blank=True, null=True)
-    whatsapp = models.CharField(max_length=15, null=True)
+    whatsapp = models.CharField(max_length=15, blank=True, null=True)
     facebook_url = models.URLField(blank=True, null=True)
     linkedin_url = models.URLField(blank=True, null=True)
 
