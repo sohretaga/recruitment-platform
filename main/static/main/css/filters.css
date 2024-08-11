@@ -38,6 +38,15 @@ body[data-layout-mode="dark"] .sectors-btn {
   color: #766df4 !important;
 }
 
+.uil-thumbs-up {
+  color: gray;
+  cursor: pointer;
+}
+
+.uil-thumbs-up.liked {
+  color: #766df4;
+}
+
 @media (max-width: 767px) {
 
   #job-list #row-container {

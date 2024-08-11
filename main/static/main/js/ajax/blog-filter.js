@@ -175,3 +175,24 @@ addCheckboxListener('#blog-categories input[type="checkbox"]', filterRequest); /
 try {
     setFilterCheckboxes('#blog-categories input[type="checkbox"]', getUrlParameterValue('categories').split(',')); // Set categories
 } catch (error) { };
+
+const likeBlog = (id) => {
+    let likeIcon = document.getElementById(`like-icon-${id}`);
+    let likeCount = document.getElementById(`like-count-${id}`);
+
+    $.ajax({
+        url: '/blog/ajax/like-blog',
+        type: 'POST',
+        data: {blog_id: id},
+        success: (response) => {
+            if (response.action == 'like'){
+                likeIcon.classList.add('liked');
+                likeCount.innerText = response.count;
+            }
+            else if(response.action == 'dislike') {
+                likeIcon.classList.remove('liked');
+                likeCount.innerText = response.count;
+            };
+        }
+    })
+}

@@ -55,16 +55,6 @@ def detail(request, slug):
     pobular_blogs = Blog.translation().filter(status='published').order_by('-views')[:4]
     all_blogs = Blog.translation().filter(status='published').exclude(slug=slug)
 
-    # Blog Like
-    session_id = request.session.session_key
-    
-    if request.user.is_authenticated:
-        user = request.user
-        like_exists = Like.objects.filter(blog=blog, user=user).exists()
-    else:
-        user = None
-        like_exists = Like.objects.filter(blog=blog, session_id=session_id).exists()
-
     # Comments
     comments = blog.comments.all()
 
@@ -73,7 +63,6 @@ def detail(request, slug):
         'categories': categories,
         'pobular_blogs': pobular_blogs,
         'all_blogs': all_blogs,
-        'like': like_exists,
         'comments': comments
     }
 

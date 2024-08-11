@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load filters %}
+{% load blog_actions %}
 
 {% block title %}{{ blog.title }}{% endblock title %}
 
@@ -61,7 +62,6 @@
     </div>
     <!-- END SHAPE -->
 
-
     <!-- START BLOG-DETAILS -->
     <section class="section">
         <div class="container">
@@ -112,7 +112,7 @@
                                 <a href="javascript:void(0)" id="like">
                                     <div class="d-flex align-items-center">
                                         <div class="flex-shrink-0">
-                                            <i class="uil uil-thumbs-up {% if like %}liked{% endif %}" id="like-icon"></i>
+                                            <i class="uil uil-thumbs-up {% liked request blog.id %}" id="like-icon"></i>
                                         </div>
                                         <div class="ms-2 flex-grow-1">
                                             <p class="mb-0"><span id="like-count">{{ blog.likes.count }}</span> Like</p>
