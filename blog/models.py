@@ -74,7 +74,15 @@ class Like(models.Model):
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name='likes')
     user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True)
     session_id = models.CharField(max_length=40, null=True, blank=True)
-    timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         unique_together = (('blog', 'user'), ('blog', 'session_id'))
+
+class Comment(models.Model):
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    comment = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-id']

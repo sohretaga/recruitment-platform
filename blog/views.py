@@ -4,8 +4,9 @@ from django.http import JsonResponse
 from django.core.paginator import Paginator
 from django.http import Http404
 
-from .models import Blog, Like, Category
+from .models import Blog, Like, Comment, Category
 from recruitment_cp.utils import is_ajax
+from main.utils import humanize_time
 
 import json
 
@@ -64,12 +65,16 @@ def detail(request, slug):
         user = None
         like_exists = Like.objects.filter(blog=blog, session_id=session_id).exists()
 
+    # Comments
+    comments = blog.comments.all()
+
     context = {
         'blog': blog,
         'categories': categories,
         'pobular_blogs': pobular_blogs,
         'all_blogs': all_blogs,
-        'like': like_exists
+        'like': like_exists,
+        'comments': comments
     }
 
     return render(request, 'blog/detail.html', context)
@@ -155,3 +160,26 @@ def ajax_like_blog(request):
         "action": action,
         'count': count
     })
+
+@require_POST
+def ajax_send_comment(request):
+    blog_id = request.POST.get('blog_id')
+    new_comment = request.POST.get('comment')
+    blog = get_object_or_404(Blog, id=blog_id)
+
+    comment = Comment.objects.create(
+        blog=blog,
+        user=request.user,
+        comment=new_comment
+    )
+
+    context = {
+        "user_full_name": comment.user.get_full_name(),
+        "username": comment.user.username,
+        "user_profile_photo": comment.user.profile_photo.url if comment.user.profile_photo else None,
+        "comment": comment.comment,
+        "timestamp": humanize_time(comment.timestamp),
+        "comment_count": blog.comments.count()
+    }
+    
+    return JsonResponse(context, safe=False)

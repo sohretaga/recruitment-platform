@@ -13,10 +13,13 @@ def languages():
     return langauges
 
 @register.filter
-def humanize_time(value):
+def humanize_time(value, as_str=True):
     now = datetime.datetime.now(datetime.timezone.utc)
     diff = now - value
     if diff.days >= 1:
         return value.strftime('%d %b, %Y')
-    
-    return f"Posted {timesince(value)} ago"
+
+    if as_str:
+        return f"Posted {timesince(value)} ago"
+    else:
+        return timesince(value)
