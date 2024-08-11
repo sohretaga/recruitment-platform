@@ -52,7 +52,7 @@ def detail(request, slug):
 
     # Blogs
     pobular_blogs = Blog.translation().filter(status='published').order_by('-views')[:4]
-    all_blogs = Blog.translation().filter(status='published').exclude(slug=slug).order_by('created_date')
+    all_blogs = Blog.translation().filter(status='published').exclude(slug=slug)
 
     context = {
         'blog': blog,
