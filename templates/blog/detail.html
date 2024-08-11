@@ -216,36 +216,22 @@
                             <h5 class="border-bottom pb-3"> Related Blog Posts</h5>
                             <div class="swiper blogSlider pb-5 mt-4">
                                 <div class="swiper-wrapper">
+                                    {% for obj in all_blogs %}
                                     <div class="swiper-slide">
                                         <div class="card blog-modern-box overflow-hidden border-0">
-                                            <img src="{% static 'main/images/blog/img-04.jpg' %}" alt="" class="img-fluid">
+                                            {% if obj.cover_photo %}
+                                            <img src="{{ obj.cover_photo.url }}" alt="{{ obj.title }}" class="img-fluid">
+                                            {% else %}
+                                            <img src="{% static 'main/images/blog/default-blog-img.jpg' %}" alt="{{ obj.title }}" class="img-fluid">
+                                            {% endif %}
                                             <div class="bg-overlay"></div>
                                             <div class="card-img-overlay">
-                                            <a href="" class="text-white"><h5 class="card-title">Manage white space in responsive layouts ?</h5></a>
-                                            <p class="card-text text-white-50"> <a href="#" class="text-white-50">Rebecca Swartz</a> - 5 mins ago</p>
+                                            <a href="" class="text-white"><h5 class="card-title">{{ obj.title }}</h5></a>
+                                            <p class="card-text text-white-50">{{ obj.created_date|date:"M d, Y" }}</p>
                                             </div>
                                         </div>
-                                    </div><!--end blogSlider-->
-                                    <div class="swiper-slide">
-                                        <div class="card blog-modern-box overflow-hidden border-0">
-                                            <img src="{% static 'main/images/blog/img-05.jpg' %}" alt="" class="img-fluid">
-                                            <div class="bg-overlay"></div>
-                                            <div class="card-img-overlay">
-                                            <a href="" class="text-white"><h5 class="card-title">A day in the of a professional fashion designer</h5></a>
-                                            <p class="card-text text-white-50"> <a href="#" class="text-white-50">Rebecca Swartz</a> - 5 mins ago</p>
-                                            </div>
-                                        </div>
-                                    </div><!--end blogSlider-->
-                                    <div class="swiper-slide">
-                                        <div class="card blog-modern-box overflow-hidden border-0">
-                                            <img src="{% static 'main/images/blog/img-06.jpg' %}" alt="" class="img-fluid">
-                                            <div class="bg-overlay"></div>
-                                            <div class="card-img-overlay">
-                                            <a href="" class="text-white"><h5 class="card-title">Design your apps in your own way</h5></a>
-                                            <p class="card-text text-white-50"> <a href="#" class="text-white-50">Rebecca Swartz</a> - 5 mins ago</p>
-                                            </div>
-                                        </div>
-                                    </div><!--swiper-slide-->
+                                    </div>
+                                    {% endfor %}
                                 </div>
                                 <div class="swiper-pagination"></div>
                             </div><!--end blogSlider-->
