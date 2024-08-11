@@ -31,6 +31,7 @@
 {% block content %}
     {% get_site_content 'HOME' as home %}
     {% get_site_content 'HOW_IT_WORK' as how_it_work %}
+    {% get_site_content 'QUICK_CAREER_TIPS' as quick_career_tips_content %}
 
     <div class="page-content">
 
@@ -205,9 +206,8 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-6">
                         <div class="section-title text-center mb-5">
-                            <h3 class="title mb-3">Quick Career Tips</h3>
-                            <p class="text-muted">Post a job to tell us about your project. We'll quickly match you with the
-                                right freelancers.</p>
+                            <h3 class="title mb-3">{{ quick_career_tips_content.title }}</h3>
+                            <p class="text-muted">{{ quick_career_tips_content.content }}</p>
                         </div>
                     </div>
                     <!--end col-->

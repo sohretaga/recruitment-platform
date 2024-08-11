@@ -19,6 +19,7 @@ class SiteContent(models.Model):
         ('SERVICES', 'Services'),
         ('HOME', 'Home'),
         ('TEAM', 'Team'),
+        ('QUICK_CAREER_TIPS', 'Quick Career Tips'),
     )
 
     page = models.CharField(max_length=30, choices=PAGE_CHOICES, unique=True)
