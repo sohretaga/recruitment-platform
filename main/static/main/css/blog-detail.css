@@ -1,0 +1,8 @@
+.uil-thumbs-up {
+    color: gray;
+    cursor: pointer;
+}
+
+.uil-thumbs-up.liked {
+    color: #766df4;
+}

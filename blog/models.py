@@ -6,6 +6,7 @@ from froala_editor.fields import FroalaField
 from django.conf import settings
 
 from recruitment_cp.models import ParameterCommonFields
+from user.models import CustomUser
 
 # Create your models here.
 
@@ -68,3 +69,12 @@ class Blog(models.Model):
                     language = Value(value=language, output_field=CharField())
                 )
         return blogs.all()
+    
+class Like(models.Model):
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name='likes')
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True)
+    session_id = models.CharField(max_length=40, null=True, blank=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = (('blog', 'user'), ('blog', 'session_id'))

@@ -1,10 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from django.core.paginator import Paginator
 from django.http import Http404
 
-from .models import Blog, Category
+from .models import Blog, Like, Category
 from recruitment_cp.utils import is_ajax
 
 import json
@@ -54,11 +54,22 @@ def detail(request, slug):
     pobular_blogs = Blog.translation().filter(status='published').order_by('-views')[:4]
     all_blogs = Blog.translation().filter(status='published').exclude(slug=slug)
 
+    # Blog Like
+    session_id = request.session.session_key
+    
+    if request.user.is_authenticated:
+        user = request.user
+        like_exists = Like.objects.filter(blog=blog, user=user).exists()
+    else:
+        user = None
+        like_exists = Like.objects.filter(blog=blog, session_id=session_id).exists()
+
     context = {
         'blog': blog,
         'categories': categories,
         'pobular_blogs': pobular_blogs,
-        'all_blogs': all_blogs
+        'all_blogs': all_blogs,
+        'like': like_exists
     }
 
     return render(request, 'blog/detail.html', context)
@@ -100,3 +111,47 @@ def ajax_filter_blog(request):
         return JsonResponse(context, safe=False)
 
     return JsonResponse({'error': 'Invalid request'}, status=400)
+
+@require_POST
+def ajax_like_blog(request):
+    blog_id = request.POST.get('blog_id')
+    blog = get_object_or_404(Blog, id=blog_id)
+    session_id = request.session.session_key
+
+    def like_manager(params):
+        global action
+
+        if like_exists:
+            Like.objects.filter(**params).delete()
+            action = 'dislike'
+        else:
+            Like.objects.create(**params)
+            action = 'like'
+
+    if not session_id:
+        request.session.create()
+        session_id = request.session.session_key
+    
+    if request.user.is_authenticated:
+        user = request.user
+        like_exists = Like.objects.filter(blog=blog, user=user).exists()
+
+        like_manager({
+            'blog': blog,
+            'user': user
+        })
+    else:
+        like_exists = Like.objects.filter(blog=blog, session_id=session_id).exists()
+
+        like_manager({
+            'blog': blog,
+            'session_id': session_id
+        })
+
+
+    count = blog.likes.count()
+
+    return JsonResponse({
+        "action": action,
+        'count': count
+    })

@@ -73,7 +73,10 @@
                                     <div class="card-body">
                                         <ul class="list-inline d-flex justify-content-between mb-3">
                                             <li class="list-inline-item">
-                                                <p class="text-muted mb-0"><a href="#" class="text-muted fw-medium">{% if blog.category %}{{ blog.category.name }} - {% endif %}</a>{{ blog.created_date|date:"M d, Y" }}</p>
+                                                <p class="text-muted mb-0"><a href="#" class="text-muted fw-medium">{% if blog.category %}{{ blog.category_name }} - {% endif %}</a>{{ blog.created_date|date:"M d, Y" }}</p>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <p class="text-muted mb-0"><i class="mdi mdi-thumb-up"></i> {{ blog.likes.count }}</p>
                                             </li>
                                             <li class="list-inline-item">
                                                 <p class="text-muted mb-0"><i class="mdi mdi-eye"></i> {{ blog.views }}</p>

@@ -9,4 +9,5 @@ urlpatterns = [
 
     # ajax
     path('ajax/filters', views.ajax_filter_blog, name='ajax_filter_blog'),
+    path('ajax/like-blog', views.ajax_like_blog, name='ajax_like_blog'),
 ]
