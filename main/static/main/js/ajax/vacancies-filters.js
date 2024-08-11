@@ -19,6 +19,7 @@ var workExperiencesCheckboxes = '#experience input[type="checkbox"]';
 var employmentTypeCheckboxes = '#jobtype input[type="checkbox"]';
 var workPreferenceCheckboxes = '#preference input[type="checkbox"]';
 var departmentCheckboxes = '#department input[type="checkbox"]';
+var careerTypeCheckboxes = '#careertype input[type="checkbox"]';
 var datePostedRadios = '#dateposted input[type="radio"]';
 
 noUiSlider.create(slider, {
@@ -89,6 +90,7 @@ class DataCollector {
             employment_type: this.getSelectedValues(employmentTypeCheckboxes, 'employment-type'),
             work_preference: this.getSelectedValues(workPreferenceCheckboxes, 'work-preference'),
             department: this.getSelectedValues(departmentCheckboxes, 'department'),
+            career_type: this.getSelectedValues(careerTypeCheckboxes, 'career-type'),
             date_posted: this.getSelectedValues(datePostedRadios, 'date')[0],
             sector: this.getSelectedSectorValue(),
             location: locationFilter.getValue(true),
@@ -325,6 +327,7 @@ const setFilterCheckboxes = (selector, values) => {
 addCheckboxListener(workExperiencesCheckboxes, filterRequest); // Work Experiences Listener
 addCheckboxListener(employmentTypeCheckboxes, filterRequest); // Type of Employment Listener
 addCheckboxListener(workPreferenceCheckboxes, filterRequest); // Work Preference Listener
+addCheckboxListener(careerTypeCheckboxes, filterRequest); // Career Type Listener
 addCheckboxListener(departmentCheckboxes, filterRequest); // Department Listener
 addCheckboxListener(datePostedRadios, filterRequest); // Date Posted Listener
 
@@ -332,6 +335,7 @@ addCheckboxListener(datePostedRadios, filterRequest); // Date Posted Listener
 setFilterCheckboxes(workExperiencesCheckboxes, getUrlParameterValue('work-experience')); // Set work experience
 setFilterCheckboxes(employmentTypeCheckboxes, getUrlParameterValue('employment-type')); // Set type of employment
 setFilterCheckboxes(workPreferenceCheckboxes, getUrlParameterValue('work-preference')); // Set work preference
+setFilterCheckboxes(careerTypeCheckboxes, getUrlParameterValue('career-type')); // Set career type
 setFilterCheckboxes(departmentCheckboxes, getUrlParameterValue('department')); // Set department
 setFilterCheckboxes(datePostedRadios, getUrlParameterValue('date')); // Set date posted
 

@@ -24,24 +24,44 @@
                     <div class="accordion" id="accordionLeft">
 
                         <div class="accordion-item">
-                        <h2 class="accordion-header" id="preferenceOne">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#preference" aria-expanded="true" aria-controls="preference">
-                                Work Preference
-                            </button>
-                        </h2>
-                        <div id="preference" class="accordion-collapse collapse show" aria-labelledby="preferenceOne">
-                            <div class="accordion-body">
-                                <div class="side-title">
-                                    {% for preference in work_preferences %}
-                                        <div class="form-check mt-2">
-                                            <input class="form-check-input" type="checkbox" value="{{ preference.name }}" id="flexCheckChecked-preference{{ preference.id }}" />
-                                            <label class="form-check-label ms-2 text-muted" for="flexCheckChecked-preference{{ preference.id }}">{{ preference.name }}</label>
-                                        </div>
-                                    {% endfor %}
+                            <h2 class="accordion-header" id="preferenceOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#preference" aria-expanded="true" aria-controls="preference">
+                                    Work Preference
+                                </button>
+                            </h2>
+                            <div id="preference" class="accordion-collapse collapse show" aria-labelledby="preferenceOne">
+                                <div class="accordion-body">
+                                    <div class="side-title">
+                                        {% for preference in work_preferences %}
+                                            <div class="form-check mt-2">
+                                                <input class="form-check-input" type="checkbox" value="{{ preference.name }}" id="flexCheckChecked-preference{{ preference.id }}" />
+                                                <label class="form-check-label ms-2 text-muted" for="flexCheckChecked-preference{{ preference.id }}">{{ preference.name }}</label>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        </div><!-- end accordion-item -->
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="careerTypeOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#careertype" aria-expanded="true" aria-controls="careertype">
+                                    Career Type
+                                </button>
+                            </h2>
+                            <div id="careertype" class="accordion-collapse collapse show" aria-labelledby="careerTypeOne">
+                                <div class="accordion-body">
+                                    <div class="side-title">
+                                        {% for type in career_types %}
+                                            <div class="form-check mt-2">
+                                                <input class="form-check-input" type="checkbox" value="{{ type.name }}" id="flexCheckChecked-careertype{{ type.id }}" />
+                                                <label class="form-check-label ms-2 text-muted" for="flexCheckChecked-careertype{{ type.id }}">{{ type.name }}</label>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="accordion-item mt-3">
                             <h2 class="accordion-header" id="departmentOne">

@@ -255,6 +255,9 @@ def ajax_filter_vacancies(request):
         if work_preference := data.get('work_preference'):
             params.update({'work_preference_name__in': work_preference})
 
+        if career_type := data.get('career_type'):
+            params.update({'career_type_name__in': career_type})
+
         if date := data.get('date_posted'):
             params.update({'created_date__gte': timezone.now() - timedelta(hours=int(date))})
 

@@ -82,11 +82,11 @@ def fetch_vacancies(request) -> dict:
 
     if work_experience := request.GET.get('work-experience'):
         url += f'&work-experience={work_experience}'
-        params.update({'work_experience_name__in': work_experience.split(',')})
+        params.update({'work_experience_name__in': work_experience})
     
     if employment_type := request.GET.get('employment-type'):
         url += f'&employment-type={employment_type}'
-        params.update({'employment_type_name__in': employment_type.split(',')})
+        params.update({'employment_type_name__in': employment_type})
     
     if sector := request.GET.get('sector'):
         url += f'&sector={sector}'
@@ -94,11 +94,15 @@ def fetch_vacancies(request) -> dict:
 
     if department := request.GET.get('department'):
         url += f'&department={department}'
-        params.update({'department_name__in': department.split(',')})
+        params.update({'department_name__in': department})
 
     if work_preference := request.GET.get('work-preference'):
         url += f'&work-preference={work_preference}'
-        params.update({'work_preference_name__in': work_preference.split(',')})
+        params.update({'work_preference_name__in': work_preference})
+
+    if career_type := request.GET.get('career-type'):
+        url += f'&career-type={career_type}'
+        params.update({'career_type_name__in': career_type})
 
     if date := request.GET.get('date'):
         url += f'&date={date}'
@@ -147,6 +151,7 @@ def fetch_vacancies(request) -> dict:
     work_preferences = models.ParameterWorkPreference.translation().values('id', 'name')
     job_family = models.ParameterJobFamily.translation().values('id', 'name')
     date_posted = models.ParameterDatePosted.translation().values('hours', 'name')
+    career_types = models.ParameterCareerType.translation().values('id', 'name')
 
     popular_job_titles = Vacancy.translation().values('job_title_name').annotate(count=Count('job_title_name')).order_by('-count')[:6]
     keyword_list = list(models.ParameterKeyword.translation().values('id', 'name'))
@@ -166,5 +171,6 @@ def fetch_vacancies(request) -> dict:
         'popular_job_titles': popular_job_titles,
         'keywords': keywords,
         'job_family': job_family,
-        'date_posted': date_posted
+        'date_posted': date_posted,
+        'career_types': career_types
     }
