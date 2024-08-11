@@ -220,21 +220,21 @@
                                     <div class="swiper-slide">
                                         <div class="blog-box card p-2 mt-3">
                                             <div class="blog-img position-relative overflow-hidden">
-                                                <img src="{% if blog.cover_photo %} {{ blog.cover_photo.url }} {% else %} {% static 'main/images/blog/default-blog-img.jpg' %} {% endif %}" alt="{{ blog.title }}" style="height: 200px; width: 100%;" class="img-fluid">
+                                                <img src="{% if obj.cover_photo %} {{ obj.cover_photo.url }} {% else %} {% static 'main/images/blog/default-blog-img.jpg' %} {% endif %}" alt="{{ obj.title }}" style="height: 200px; width: 100%;" class="img-fluid">
                                                 <div class="bg-overlay"></div>
                                                 <div class="author">
-                                                    <p class="text-light mb-0 date"><i class="mdi mdi-calendar-check"></i> {{ blog.created_date|date:"M d, Y" }}</p>
+                                                    <p class="text-light mb-0 date"><i class="mdi mdi-calendar-check"></i> {{ obj.created_date|date:"M d, Y" }}</p>
                                                 </div>
                                                 <div class="likes">
                                                     <ul class="list-unstyled mb-0">
-                                                        <li class="list-inline-item"><a href="javascript:void(0)" class="text-white"><i class="mdi mdi-eye me-1"></i> {{ blog.views }}</a></li>
+                                                        <li class="list-inline-item"><a href="javascript:void(0)" class="text-white"><i class="mdi mdi-eye me-1"></i> {{ obj.views }}</a></li>
                                                     </ul>
                                                 </div>
                                             </div>
                                             <div class="card-body">
-                                                <a href="{% url 'blog:detail' blog.slug %}" class="primary-link"> <h5 class="fs-17">{{ blog.title }}</h5>
+                                                <a href="{% url 'blog:detail' obj.slug %}" class="primary-link"> <h5 class="fs-17">{{ obj.title }}</h5>
                                                 </a>
-                                                <a href="{% url 'blog:detail' blog.slug %}" class="form-text text-primary">Read more <i class="mdi mdi-chevron-right align-middle"></i></a>
+                                                <a href="{% url 'blog:detail' obj.slug %}" class="form-text text-primary">Read more <i class="mdi mdi-chevron-right align-middle"></i></a>
                                             </div>
                                         </div>
                                     </div>
