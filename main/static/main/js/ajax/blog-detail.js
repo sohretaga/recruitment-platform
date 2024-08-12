@@ -70,7 +70,7 @@ const sendComment = (id) => {
                                 <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
                                     <i class="uil uil-edit" onclick="editComment('${response.id}')"></i>
                                 </a>
-                                <a href="javascript:void(0)" class="ms-2" style="color: #da3746 !important;" onclick="deleteRequest('${response.id}')" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Delete">
+                                <a href="javascript:void(0)" class="ms-2" style="color: #da3746 !important;" onclick="deleteRequest('${response.id}')" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
                                     <i class="uil uil-trash-alt"></i>
                                 </a>
                             </div>
