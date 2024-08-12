@@ -190,3 +190,19 @@ def ajax_delete_comment(request):
     }
     
     return JsonResponse(context)
+
+@require_POST
+def ajax_edit_comment(request):
+    comment_id = request.POST.get('comment_id')
+    edited_comment = request.POST.get('edited_comment')
+    comment = get_object_or_404(Comment, id=comment_id)
+
+    if comment.user == request.user:
+        comment.comment = edited_comment
+        comment.save()
+
+    context = {
+        "edited_comment": edited_comment
+    }
+    
+    return JsonResponse(context)

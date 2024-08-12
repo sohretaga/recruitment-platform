@@ -154,7 +154,7 @@
                                             </div>
                                             {% endif %}
                                         </div>
-                                        <p class="text-muted fst-italic mb-0">{{ comment.comment }}</p>
+                                        <p class="text-muted fst-italic mb-0" id="comment-text-{{ comment.id }}">{{ comment.comment }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -171,8 +171,12 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-12 text-end">
-                                <button type="submit" id="submit" class="btn btn-primary btn-hover" onclick="sendComment('{{ blog.id }}')">
+                                <button type="button" id="send-comment-btn" class="btn btn-primary btn-hover" onclick="sendComment('{{ blog.id }}')">
                                     Send Comment <i class="uil uil-message ms-1"></i>
+                                </button>
+
+                                <button type="button" id="edit-comment-btn" class="btn btn-primary btn-hover" style="display: none;">
+                                    Edit Comment <i class="uil uil-message ms-1"></i>
                                 </button>
                             </div>
                         </div>

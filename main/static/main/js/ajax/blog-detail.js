@@ -38,9 +38,9 @@ const likeBlog = (id) => {
 
 const commentBox = document.getElementById('comments-box');
 const blogCommentCount = document.getElementById('blog-comment-count');
+const commentInput = document.getElementById('comment-input');
 
 const sendComment = (id) => {
-    let commentInput = document.getElementById('comment-input');
 
     $.ajax({
         url: '/blog/ajax/send-comment',
@@ -53,7 +53,7 @@ const sendComment = (id) => {
             commentInput.value = '';
             blogCommentCount.innerText = response.comment_count;
 
-            commentBox.insertAdjacentHTML('beforebegin', `
+            commentBox.insertAdjacentHTML('afterbegin', `
             <div id="comment-${response.id}" class="mt-5">
                 <div class="d-sm-flex align-items-top">
                     <div class="flex-shrink-0">
@@ -63,7 +63,7 @@ const sendComment = (id) => {
                         <small class="float-end fs-12 text-muted"><i class="uil uil-clock"></i> ${response.timestamp}</small>
                         <a href="javascript:(0)" class="primary-link"><h6 class="fs-16 mt-sm-0 mt-3 mb-2"></h6></a>
                         <div class="d-flex">
-                            <a href="{% url 'user:candidate' comment.user.username %}" class="primary-link">
+                            <a href="/candidate/${response.username}" class="primary-link">
                                 <h6 class="fs-16 mt-sm-0 mt-3 mb-2">${response.user_full_name}</h6>
                             </a>
                             <div class="ms-3">
@@ -75,10 +75,45 @@ const sendComment = (id) => {
                                 </a>
                             </div>
                         </div>
-                        <p class="text-muted fst-italic mb-0">${response.comment}</p>
+                        <p class="text-muted fst-italic mb-0" id="comment-text-${response.id}">${response.comment}</p>
                     </div>
                 </div>
             </div>`);
+        }
+    })
+}
+
+const sendCommentBtn = document.getElementById('send-comment-btn');
+const editCommentBtn = document.getElementById('edit-comment-btn');
+
+const editComment = (id) => {
+    let commentText = document.getElementById(`comment-text-${id}`).innerText;
+    commentInput.value = commentText;
+    
+    sendCommentBtn.style.display = 'none';
+    editCommentBtn.style.display = 'inline';
+
+    editCommentBtn.setAttribute('onclick', `sendEditRequest('${id}')`);
+
+}
+
+const sendEditRequest = (id) => {
+    $.ajax({
+        url: '/blog/ajax/edit-comment',
+        type: 'POST',
+        data: {
+            comment_id: id,
+            edited_comment: commentInput.value
+        },
+        success: (response) => {
+            let commentText = document.getElementById(`comment-text-${id}`);
+            commentText.innerText = response.edited_comment;
+            commentInput.value = '';
+
+            sendCommentBtn.style.display = 'inline';
+            editCommentBtn.style.display = 'none';
+
+            editCommentBtn.removeAttribute('onclick');
         }
     })
 }
