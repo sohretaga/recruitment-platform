@@ -1,0 +1,131 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block title %}Comments{% endblock title %}
+
+{% block head %}
+    <!-- DataTables -->
+    <link href="{% static 'dashboard/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'dashboard/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'dashboard/libs/datatables.net-select-bs4/css/select.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <!-- Responsive datatable examples -->
+    <link href="{% static 'dashboard/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <!-- Sweet Alert-->
+    <link href="{% static 'dashboard/libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <!-- Bootstrap Css -->
+    <link href="{% static 'dashboard/css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="{% static 'dashboard/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="{% static 'dashboard/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
+{% endblock head %}
+
+{% block content %}
+<div class="page-content">
+    <div class="container-fluid">
+
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
+                    <a href="{% url 'dashboard:post-blog' %}"><button class="btn btn-info" type="button"><i class="mdi mdi-plus"></i>Add Blog</button></a>
+
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Blog</a></li>
+                            <li class="breadcrumb-item active">Comments</li>
+                        </ol>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+
+        <div class="row">
+            <div class="col-lg">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="dropdown float-right">
+                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
+                                <i class="mdi mdi-dots-vertical"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item">Sales Report</a>
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item">Export Report</a>
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item">Profit</a>
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item">Action</a>
+                            </div>
+                        </div>
+
+                        <h4 class="card-title mb-4">All Blogs</h4>
+
+                        <div class="table-responsive">
+                            <table class="table table-centered datatable dt-responsive nowrap" data-page-length="10" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Blog Title</th>
+                                        <th>Comment</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for comment in comments %}
+                                    <tr>
+                                        <td><a href="{% url 'blog:detail' comment.blog.slug %}" class="text-dark font-weight-bold" target='_blank'>{{ comment.blog_title }}</a></td>
+                                        <td>{{ comment.comment }}</td>
+                                        <td>
+                                            <div class="badge badge-soft-success font-size-12">Published</div>
+                                            <div class="badge badge-soft-warning font-size-12">Draft</div>
+                                            <div class="badge badge-soft-danger font-size-12">Deactivated</div>
+                                        </td>
+                                        <td>
+                                            <a href="javascript:void(0);" data-id="{{ comment.id }}" class="text-danger delete-row" data-toggle="tooltip" data-placement="top"><i class="mdi mdi-trash-can font-size-18"></i></a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}                  
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end row-->
+        
+    </div> <!-- container-fluid -->
+</div>
+<!-- End Page-content -->
+{% endblock content %}
+
+{% block script %}
+    <!-- JAVASCRIPT -->
+    <script src="{% static 'dashboard/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'dashboard/libs/metismenu/metisMenu.min.js' %}"></script>
+    <script src="{% static 'dashboard/libs/node-waves/waves.min.js' %}"></script>
+
+    <!-- Required datatable js -->
+    <script src="{% static 'dashboard/libs/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'dashboard/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+
+    <!-- Responsive examples -->
+    <script src="{% static 'dashboard/libs/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'dashboard/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js' %}"></script>
+
+    <!-- Sweet Alerts js -->
+    <script src="{% static 'dashboard/libs/sweetalert2/sweetalert2.min.js' %}"></script>
+
+    <script src="{% static 'dashboard/js/app.js' %}"></script>
+
+    <!-- Custom JS -->
+    <script src="{% static 'dashboard/js/ajax/blogs-table.js' %}"></script>
+
+{% endblock script %}

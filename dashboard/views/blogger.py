@@ -5,7 +5,7 @@ from django.core.files.storage import FileSystemStorage
 from django.views.decorators.http import require_POST
 
 from recruitment import settings
-from blog.models import Blog, Category
+from blog.models import Blog, Comment, Category
 
 from dashboard.decorators import is_blogger
 from dashboard.forms import PostBlogForm
@@ -38,6 +38,16 @@ def all_blog(request):
     }
 
     return render(request, 'dashboard/blogger/all-blog.html', context)
+
+@is_blogger
+def comments(request):
+    comments = Comment.translation()
+
+    context = {
+        'comments': comments,
+    }
+
+    return render(request, 'dashboard/blogger/comments.html', context)
 
 @is_blogger
 def edit_blog(request, id):

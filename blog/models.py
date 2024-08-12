@@ -86,3 +86,17 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ['-id']
+
+    @classmethod
+    def translation(cls):
+        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
+        match language:
+            case 'en':
+                comments = cls.objects.annotate(
+                    blog_title = F('blog__title_en'),
+                )
+            case 'tr':
+                comments = cls.objects.annotate(
+                    blog_title = F('blog__title_tr'),
+                )
+        return comments.all()

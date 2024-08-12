@@ -32,6 +32,7 @@ urlpatterns = [
     # Blog URL's
     path('blog/post', blogger.post_blog, name='post-blog'),
     path('blog/all', blogger.all_blog, name='all-blog'),
+    path('blog/comments', blogger.comments, name='comments'),
     path('blog/edit/<int:id>', blogger.edit_blog, name='edit-blog'),
     path('ajax/delete-blog', blogger.ajax_delete_blog, name='ajax-delete-blog'),
 
