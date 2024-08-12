@@ -69,3 +69,27 @@ const sendComment = (id) => {
         }
     })
 }
+
+const deleteCommentModal = new bootstrap.Modal(document.getElementById('deleteCommentModal'));
+const deleteCommentBtn = document.getElementById('delete-comment-btn');
+
+$('#deleteCommentModal').on('hidden.bs.modal', function(e) {
+    deleteCommentBtn.removeAttribute('onclick');
+});
+
+const deleteRequest = (id) => {
+    deleteCommentBtn.setAttribute('onclick', `deleteComment(${id})`);
+    deleteCommentModal.show();
+};
+
+const deleteComment = (id) => {
+    $.ajax({
+        url:'/blog/ajax/delete-comment',
+        type: 'POST',
+        data: {comment_id: id},
+        success: () => {
+            document.getElementById(`comment-${id}`).remove();
+            deleteCommentModal.hide();
+        }
+    });
+};

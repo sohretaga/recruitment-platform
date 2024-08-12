@@ -172,3 +172,13 @@ def ajax_send_comment(request):
     }
     
     return JsonResponse(context, safe=False)
+
+@require_POST
+def ajax_delete_comment(request):
+    comment_id = request.POST.get('comment_id')
+    comment = get_object_or_404(Comment, id=comment_id)
+
+    if comment.user == request.user:
+        comment.delete()
+    
+    return JsonResponse({'status': 200})
