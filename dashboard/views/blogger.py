@@ -49,6 +49,24 @@ def comments(request):
 
     return render(request, 'dashboard/blogger/comments.html', context)
 
+@require_POST
+def ajax_delete_comment(request):
+    comment_id = request.POST.get('comment_id')
+    comment = Comment.objects.filter(id=comment_id)
+    comment.delete()
+
+    return JsonResponse({'status':200})
+
+@require_POST
+def ajax_edit_comment(request):
+    comment_id = request.POST.get('comment_id')
+    edited_comment = request.POST.get('edited_comment')
+    comment = get_object_or_404(Comment, id=comment_id)
+    comment.comment = edited_comment
+    comment.save()
+
+    return JsonResponse({'status':200})
+
 @is_blogger
 def ajax_manage_comment_status(request):
     comment_id = request.POST.get('comment_id')

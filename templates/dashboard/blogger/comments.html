@@ -81,7 +81,7 @@
                                     {% for comment in comments %}
                                     <tr>
                                         <td><a href="{% url 'blog:detail' comment.blog.slug %}" class="text-dark font-weight-bold" target='_blank'>{{ comment.blog_title }}</a></td>
-                                        <td style="max-width: 100%; white-space: normal;">{{ comment.comment }}</td>
+                                        <td style="max-width: 100%; white-space: normal;" id="comment-text-{{ comment.id }}">{{ comment.comment }}</td>
                                         <td>
                                             <select onchange="setStatus(this, '{{ comment.id }}')"
                                                 class="badge {% if comment.status == 'PUBLISHED' %}badge-soft-success{% elif comment.status == 'PENDING' %}badge-soft-warning{% else %}badge-soft-danger{% endif %} font-size-12 btn dropdown-toggle" >
@@ -97,10 +97,11 @@
                                             </select>
                                         </td>
                                         <td>
+                                            <a href="javascript:void(0);" data-id="{{ comment.id }}" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" onclick="editComment('{{ comment.id }}')"><i class="mdi mdi-pencil font-size-18"></i></a>
                                             <a href="javascript:void(0);" data-id="{{ comment.id }}" class="text-danger delete-row" data-toggle="tooltip" data-placement="top"><i class="mdi mdi-trash-can font-size-18"></i></a>
                                         </td>
                                     </tr>
-                                    {% endfor %}                  
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>
@@ -108,7 +109,28 @@
                 </div>
             </div>
         </div>
-        <!-- end row-->
+        <!-- end row-->            
+            
+        <!-- Modal -->
+        <div class="modal fade" id="editCommentModal" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Comment</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <textarea class="form-control" rows="4" id="edit-comment-area"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary waves-effect waves-light" id="save-comment-btn">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         
     </div> <!-- container-fluid -->
 </div>

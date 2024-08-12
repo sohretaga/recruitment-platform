@@ -38,9 +38,9 @@ $(document).ready(function() {
           }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: '/dashboard/ajax/delete-blog',
+                    url: '/dashboard/ajax/delete-comment',
                     method: 'POST',
-                    data: { blog_id: dataId },
+                    data: { comment_id: dataId },
                     success: function(response) {
                         dataTable.row(row).remove().draw();
                     },
@@ -83,3 +83,45 @@ const setStatus = (event, id) => {
         }
     });
 }
+
+
+
+
+
+
+
+
+
+const saveCommentBtn = document.getElementById('save-comment-btn');
+const editCommentModal = new bootstrap.Modal(document.getElementById('editCommentModal'));
+const editCommentArea = document.getElementById('edit-comment-area')
+
+$('#editCommentModal').on('hidden.bs.modal', function(e) {
+    saveCommentBtn.removeAttribute('onclick');
+});
+
+const editComment = (id) => {
+    let commentText = document.getElementById(`comment-text-${id}`);
+    editCommentArea.innerText = commentText.innerText;
+
+    saveCommentBtn.setAttribute('onclick', `editRequest(${id})`);
+    editCommentModal.show();
+};
+
+const editRequest = (id) => {
+    $.ajax({
+        url:'/dashboard/ajax/edit-comment',
+        type: 'POST',
+        data: {
+            comment_id: id,
+            edited_comment: editCommentArea.value
+        },
+        success: () => {
+            let commentText = document.getElementById(`comment-text-${id}`);
+            commentText.innerText = editCommentArea.value;
+
+            editCommentArea.innerText = '';
+            editCommentModal.hide();
+        }
+    });
+};
