@@ -182,11 +182,10 @@ def ajax_delete_comment(request):
     comment_id = request.POST.get('comment_id')
     comment = get_object_or_404(Comment, id=comment_id)
 
-    blog_comment_count = comment.blog.comments.filter(status='PUBLISHED').count()
-
     if comment.user == request.user:
         comment.delete()
-        blog_comment_count -= 1
+
+    blog_comment_count = comment.blog.comments.filter(status='PUBLISHED').count()
 
     context = {
         "comment_count": blog_comment_count
@@ -202,10 +201,14 @@ def ajax_edit_comment(request):
 
     if comment.user == request.user:
         comment.comment = edited_comment
+        comment.status = 'PENDING'
         comment.save()
+    
+    blog_comment_count = comment.blog.comments.filter(status='PUBLISHED').count()
 
     context = {
-        "edited_comment": edited_comment
+        "edited_comment": edited_comment,
+        "comment_count": blog_comment_count
     }
     
     return JsonResponse(context)

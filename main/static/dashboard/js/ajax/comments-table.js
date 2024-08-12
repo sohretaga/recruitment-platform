@@ -84,14 +84,6 @@ const setStatus = (event, id) => {
     });
 }
 
-
-
-
-
-
-
-
-
 const saveCommentBtn = document.getElementById('save-comment-btn');
 const editCommentModal = new bootstrap.Modal(document.getElementById('editCommentModal'));
 const editCommentArea = document.getElementById('edit-comment-area')

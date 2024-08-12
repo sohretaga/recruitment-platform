@@ -93,11 +93,11 @@ const editComment = (id) => {
     sendCommentBtn.style.display = 'none';
     editCommentBtn.style.display = 'inline';
 
-    editCommentBtn.setAttribute('onclick', `sendEditRequest('${id}')`);
+    editCommentBtn.setAttribute('onclick', `editRequest('${id}')`);
 
 }
 
-const sendEditRequest = (id) => {
+const editRequest = (id) => {
     $.ajax({
         url: '/blog/ajax/edit-comment',
         type: 'POST',
@@ -114,6 +114,8 @@ const sendEditRequest = (id) => {
             editCommentBtn.style.display = 'none';
 
             editCommentBtn.removeAttribute('onclick');
+
+            blogCommentCount.innerText = response.comment_count;
         }
     })
 }
