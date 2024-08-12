@@ -163,6 +163,7 @@ def ajax_send_comment(request):
     )
 
     context = {
+        "id": comment.id,
         "user_full_name": comment.user.get_full_name(),
         "username": comment.user.username,
         "user_profile_photo": comment.user.profile_photo.url if comment.user.profile_photo else None,
@@ -178,7 +179,14 @@ def ajax_delete_comment(request):
     comment_id = request.POST.get('comment_id')
     comment = get_object_or_404(Comment, id=comment_id)
 
+    blog_comment_count = comment.blog.comments.count()
+
     if comment.user == request.user:
         comment.delete()
+        blog_comment_count -= 1
+
+    context = {
+        "comment_count": blog_comment_count
+    }
     
-    return JsonResponse({'status': 200})
+    return JsonResponse(context)
