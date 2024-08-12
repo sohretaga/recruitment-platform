@@ -81,7 +81,7 @@
                                     {% for comment in comments %}
                                     <tr>
                                         <td><a href="{% url 'blog:detail' comment.blog.slug %}" class="text-dark font-weight-bold" target='_blank'>{{ comment.blog_title }}</a></td>
-                                        <td>{{ comment.comment }}</td>
+                                        <td style="max-width: 100%; white-space: normal;">{{ comment.comment }}</td>
                                         <td>
                                             <select onchange="setStatus(this, '{{ comment.id }}')"
                                                 class="badge {% if comment.status == 'PUBLISHED' %}badge-soft-success{% elif comment.status == 'PENDING' %}badge-soft-warning{% else %}badge-soft-danger{% endif %} font-size-12 btn dropdown-toggle" >
