@@ -67,8 +67,12 @@ const sendComment = (id) => {
                                 <h6 class="fs-16 mt-sm-0 mt-3 mb-2">${response.user_full_name}</h6>
                             </a>
                             <div class="ms-3">
-                                <a href="javascript:void(0)"><i class="uil uil-edit" onclick="editComment('${response.id}')"></i> Edit</a>
-                                <a href="javascript:void(0)" class="ms-2" style="color: #da3746 !important;" onclick="deleteRequest('${response.id}')"><i class="uil uil-trash-alt"></i> Delete</a>
+                                <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                                    <i class="uil uil-edit" onclick="editComment('${response.id}')"></i>
+                                </a>
+                                <a href="javascript:void(0)" class="ms-2" style="color: #da3746 !important;" onclick="deleteRequest('${response.id}')" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+                                    <i class="uil uil-trash-alt"></i>
+                                </a>
                             </div>
                         </div>
                         <p class="text-muted fst-italic mb-0">${response.comment}</p>
