@@ -79,10 +79,17 @@ class Like(models.Model):
         unique_together = (('blog', 'user'), ('blog', 'session_id'))
 
 class Comment(models.Model):
+    STATUS_CHOICES = [
+        ('PUBLISHED', 'Published'),
+        ('PENDING', 'Pending'),
+        ('DEACTIVATED', 'Deactivated')
+    ]
+
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name='comments')
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     comment = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=12, choices=STATUS_CHOICES, default='PENDING')
 
     class Meta:
         ordering = ['-id']

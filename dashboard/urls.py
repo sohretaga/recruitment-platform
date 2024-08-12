@@ -35,6 +35,7 @@ urlpatterns = [
     path('blog/comments', blogger.comments, name='comments'),
     path('blog/edit/<int:id>', blogger.edit_blog, name='edit-blog'),
     path('ajax/delete-blog', blogger.ajax_delete_blog, name='ajax-delete-blog'),
+    path('ajax/manage-comment-status', blogger.ajax_manage_comment_status, name='ajax-manage-comment-status'),
 
     path('blog/editor/upload-image', blogger.upload_editor_image, name='upload-editor-image'),
     path('blog/editor/delete-image', blogger.delete_editor_image, name='delete-editor-image')

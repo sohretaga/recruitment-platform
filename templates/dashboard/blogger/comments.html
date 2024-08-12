@@ -83,9 +83,18 @@
                                         <td><a href="{% url 'blog:detail' comment.blog.slug %}" class="text-dark font-weight-bold" target='_blank'>{{ comment.blog_title }}</a></td>
                                         <td>{{ comment.comment }}</td>
                                         <td>
-                                            <div class="badge badge-soft-success font-size-12">Published</div>
-                                            <div class="badge badge-soft-warning font-size-12">Draft</div>
-                                            <div class="badge badge-soft-danger font-size-12">Deactivated</div>
+                                            <select onchange="setStatus(this, '{{ comment.id }}')"
+                                                class="badge {% if comment.status == 'PUBLISHED' %}badge-soft-success{% elif comment.status == 'PENDING' %}badge-soft-warning{% else %}badge-soft-danger{% endif %} font-size-12 btn dropdown-toggle" >
+                                                <option value="PUBLISHED" {% if comment.status == 'PUBLISHED' %}selected{% endif %}>
+                                                    <div class="badge badge-soft-success font-size-12">Published</div>
+                                                </option>
+                                                <option value="PENDING" {% if comment.status == 'PENDING' %}selected{% endif %}>
+                                                    <div class="badge badge-soft-warning font-size-12">Pending</div>
+                                                </option>
+                                                <option value="DEACTIVATED" {% if comment.status == 'DEACTIVATED' %}selected{% endif %}>
+                                                    <div class="badge badge-soft-danger font-size-12">Deactivated</div>
+                                                </option>
+                                            </select>
                                         </td>
                                         <td>
                                             <a href="javascript:void(0);" data-id="{{ comment.id }}" class="text-danger delete-row" data-toggle="tooltip" data-placement="top"><i class="mdi mdi-trash-can font-size-18"></i></a>
@@ -126,6 +135,6 @@
     <script src="{% static 'dashboard/js/app.js' %}"></script>
 
     <!-- Custom JS -->
-    <script src="{% static 'dashboard/js/ajax/blogs-table.js' %}"></script>
+    <script src="{% static 'dashboard/js/ajax/comments-table.js' %}"></script>
 
 {% endblock script %}

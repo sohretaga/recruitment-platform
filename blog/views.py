@@ -3,6 +3,7 @@ from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from django.core.paginator import Paginator
 from django.http import Http404
+from django.db.models import Q
 
 from .models import Blog, Like, Comment, Category
 from recruitment_cp.utils import is_ajax
@@ -56,14 +57,16 @@ def detail(request, slug):
     all_blogs = Blog.translation().filter(status='published').exclude(slug=slug)
 
     # Comments
-    comments = blog.comments.all()
+    comments = blog.comments.filter(Q(status='PUBLISHED') | Q(user=request.user))
+    comments_count = blog.comments.filter(status='PUBLISHED').count()
 
     context = {
         'blog': blog,
         'categories': categories,
         'pobular_blogs': pobular_blogs,
         'all_blogs': all_blogs,
-        'comments': comments
+        'comments': comments,
+        'comments_count': comments_count
     }
 
     return render(request, 'blog/detail.html', context)
@@ -169,7 +172,7 @@ def ajax_send_comment(request):
         "user_profile_photo": comment.user.profile_photo.url if comment.user.profile_photo else None,
         "comment": comment.comment,
         "timestamp": humanize_time(comment.timestamp),
-        "comment_count": blog.comments.count()
+        "comment_count": blog.comments.filter(status='PUBLISHED').count()
     }
     
     return JsonResponse(context, safe=False)
@@ -179,7 +182,7 @@ def ajax_delete_comment(request):
     comment_id = request.POST.get('comment_id')
     comment = get_object_or_404(Comment, id=comment_id)
 
-    blog_comment_count = comment.blog.comments.count()
+    blog_comment_count = comment.blog.comments.filter(status='PUBLISHED').count()
 
     if comment.user == request.user:
         comment.delete()

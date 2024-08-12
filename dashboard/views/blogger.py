@@ -50,6 +50,16 @@ def comments(request):
     return render(request, 'dashboard/blogger/comments.html', context)
 
 @is_blogger
+def ajax_manage_comment_status(request):
+    comment_id = request.POST.get('comment_id')
+    status = request.POST.get('status')
+    comment = get_object_or_404(Comment, id=comment_id)
+    comment.status = status
+    comment.save()
+
+    return JsonResponse({'status': 200})
+
+@is_blogger
 def edit_blog(request, id):
     blog = get_object_or_404(Blog, id=id)
     categories = Category.translation()
