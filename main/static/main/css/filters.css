@@ -53,12 +53,12 @@ body[data-layout-mode="dark"] .sectors-btn {
       flex-direction: column-reverse;
   }
 
-  .col-lg-6 {
+  .middle-bar {
       order: -1;
       margin-top: 1rem !important;
   }
 
-  .col-lg-3 .mt-5 {
+  .side-bar {
       margin-top: 1rem !important;
   }
 }

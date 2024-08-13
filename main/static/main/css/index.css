@@ -1,4 +1,15 @@
+.hiw-mobile {
+    display: none;
+}
+
 @media only screen and (max-width: 992px) {
+    .hiw-mobile {
+        display: inline;
+    }
+    .hiw-desktop {
+        display: none;
+    }
+
     #how-it-work-content {
         width: 70%;
     }
