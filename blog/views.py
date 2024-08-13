@@ -57,7 +57,11 @@ def detail(request, slug):
     all_blogs = Blog.translation().filter(status='published').exclude(slug=slug)
 
     # Comments
-    comments = blog.comments.filter(Q(status='PUBLISHED') | Q(user=request.user))
+    if request.user.is_authenticated:
+        comments = blog.comments.filter(Q(status='PUBLISHED') | Q(user=request.user))
+    else:
+        comments = blog.comments.filter(Q(status='PUBLISHED'))
+
     comments_count = blog.comments.filter(status='PUBLISHED').count()
 
     context = {
