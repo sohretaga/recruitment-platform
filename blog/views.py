@@ -53,7 +53,7 @@ def detail(request, slug):
         raise Http404
 
     # Blogs
-    pobular_blogs = Blog.translation().filter(status='published').order_by('-views')[:4]
+    pobular_blogs = Blog.translation().filter(status='published').exclude(slug=slug).order_by('-views')[:4]
     all_blogs = Blog.translation().filter(status='published').exclude(slug=slug)
 
     # Comments

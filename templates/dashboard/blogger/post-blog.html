@@ -19,6 +19,8 @@
     <link href="{% static 'dashboard/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
     <!-- App Css-->
     <link href="{% static 'dashboard/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.css">
 {% endblock head %}
 
 {% block content %}
@@ -122,6 +124,10 @@
                                 <textarea id="froala-editor" name="content_tr" style="display: none;">{{ blog.content_tr }}</textarea>
                             </div>
 
+                            <div id="editor">
+
+                            </div>
+
                             {% if blog %}
                                 <button style='display: none;' class="btn btn-success" id='save' type="submit">Save</button>
                             {% else %}
@@ -151,15 +157,63 @@
     <script src="{% static 'dashboard/js/pages/form-element.init.js' %}"></script>
 
     <!-- Froala js -->
-    <script type="text/javascript" src="{% static 'dashboard/libs/froala/froala_editor.pkgd.min.js' %}"></script>
+    <!-- <script type="text/javascript" src="{% static 'dashboard/libs/froala/froala_editor.pkgd.min.js' %}"></script> -->
 
     <!-- init js -->
     <script src="{% static 'dashboard/js/app.js' %}"></script>
 
     <!-- Custom js -->
     <script src="{% static 'dashboard/js/ajax/post-blog.js' %}"></script>
-    
+
+
+
+
+    <script type="importmap">
+        {
+            "imports": {
+                "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.js",
+                "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/43.0.0/"
+            }
+        }
+    </script>
+    <script type="module">
+        import {
+            ClassicEditor,
+            Essentials,
+            Paragraph,
+            Bold,
+            Italic,
+            Font
+        } from 'ckeditor5';
+
+        ClassicEditor
+            .create( document.querySelector( '#editor' ), {
+                plugins: [ Essentials, Paragraph, Bold, Italic, Font ],
+                toolbar: [
+                    'undo', 'redo', '|', 'bold', 'italic', '|',
+                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
+                ]
+            } )
+            .then( editor => {
+                window.editor = editor;
+            } )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+    <!-- A friendly reminder to run on a server, remove this during the integration. -->
     <script>
+            window.onload = function() {
+                if ( window.location.protocol === "file:" ) {
+                    alert( "This sample requires an HTTP server. Please serve this file with a web server." );
+                }
+            };
+    </script>
+
+
+
+    
+    <!-- <script>
         var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
         var editor = new FroalaEditor('#froala-editor', {
@@ -193,6 +247,6 @@
                 }
             }
         });
-    </script>
+    </script> -->
 
 {% endblock script %}
