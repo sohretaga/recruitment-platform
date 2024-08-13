@@ -3,7 +3,7 @@ from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from django.core.paginator import Paginator
 from django.http import Http404
-from django.db.models import Q
+from django.db.models import Q, Count, Value, Case, When, BooleanField, Exists, OuterRef
 
 from .models import Blog, Like, Comment, Category
 from recruitment_cp.utils import is_ajax
@@ -83,11 +83,31 @@ def ajax_filter_blog(request):
 
         params = {'status':'published'} # only get pusblised blogs
 
+        user_id = request.user.id if request.user.is_authenticated else None
+        session_id = request.session.session_key
+
+        user_liked_blog = Like.objects.filter(
+            blog=OuterRef('pk'),
+            user_id=user_id
+        )
+
+        session_liked_blog = Like.objects.filter(
+            blog=OuterRef('pk'),
+            session_id=session_id
+        )
+
         if categories:
             params.update({'category_name__in':categories})        
 
-        filtered_blogs = Blog.translation().filter(**params).order_by('created_date')\
-        .values('title', 'category_name', 'cover_photo', 'views', 'slug', 'created_date')
+        filtered_blogs = Blog.translation().filter(**params).annotate(
+            like_count=Count('likes'),
+            is_liked=Case(
+                When(Exists(user_liked_blog), then=Value(True)),
+                When(Exists(session_liked_blog), then=Value(True)),
+                default=Value(False),
+                output_field=BooleanField()
+            )
+        ).order_by('created_date').values('id', 'title', 'category_name', 'cover_photo', 'views', 'slug', 'created_date', 'like_count', 'is_liked')
         
         # Set up Paginator
         paginator = Paginator(filtered_blogs, 8)
@@ -163,7 +183,7 @@ def ajax_send_comment(request):
     new_comment = request.POST.get('comment')
     blog = get_object_or_404(Blog, id=blog_id)
 
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and new_comment:
         comment = Comment.objects.create(
             blog=blog,
             user=request.user,

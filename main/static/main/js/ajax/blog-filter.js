@@ -106,11 +106,11 @@ const generatePagination = (paginationInfo) => {
     };
 };
 
-const listBlogs = (vacanciesInfo) => {
+const listBlogs = (blogsInfo) => {
     const container = document.getElementById('blog-list-container');
     container.innerHTML = ''; // Clear existing content
 
-    for (const [key, blog] of Object.entries(vacanciesInfo)) {
+    for (const [key, blog] of Object.entries(blogsInfo)) {
         container.innerHTML += `
         <div class="col-lg-6 mb-4">
             <div class="card blog-grid-box p-2">
@@ -118,7 +118,14 @@ const listBlogs = (vacanciesInfo) => {
                 <div class="card-body">
                     <ul class="list-inline d-flex justify-content-between mb-3">
                         <li class="list-inline-item">
-                            <p class="text-muted mb-0"><a href="#" class="text-muted fw-medium">${blog.category ? `${blog.category} - `:''}</a>${dateFormat(blog.created_date)}</p>
+                            <p class="text-muted mb-0"><a href="#" class="text-muted fw-medium">${blog.category_name ? `${blog.category_name} - `:''}</a>${dateFormat(blog.created_date)}</p>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="javascript:void(0)" onclick="likeBlog('${blog.id}')">
+                                <p class="text-muted mb-0">
+                                    <i class="uil uil-thumbs-up ${blog.is_liked ? 'liked':''}" id="like-icon-${blog.id}"></i> <span id="like-count-${blog.id}">${blog.like_count}</span>
+                                </p>
+                            </a>
                         </li>
                         <li class="list-inline-item">
                             <p class="text-muted mb-0"><i class="mdi mdi-eye"></i> ${blog.views}</p>
