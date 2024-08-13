@@ -163,23 +163,26 @@ def ajax_send_comment(request):
     new_comment = request.POST.get('comment')
     blog = get_object_or_404(Blog, id=blog_id)
 
-    comment = Comment.objects.create(
-        blog=blog,
-        user=request.user,
-        comment=new_comment
-    )
+    if request.user.is_authenticated:
+        comment = Comment.objects.create(
+            blog=blog,
+            user=request.user,
+            comment=new_comment
+        )
 
-    context = {
-        "id": comment.id,
-        "user_full_name": comment.user.get_full_name(),
-        "username": comment.user.username,
-        "user_profile_photo": comment.user.profile_photo.url if comment.user.profile_photo else None,
-        "comment": comment.comment,
-        "timestamp": humanize_time(comment.timestamp),
-        "comment_count": blog.comments.filter(status='PUBLISHED').count()
-    }
+        context = {
+            "id": comment.id,
+            "user_full_name": comment.user.get_full_name(),
+            "username": comment.user.username,
+            "user_profile_photo": comment.user.profile_photo.url if comment.user.profile_photo else None,
+            "comment": comment.comment,
+            "timestamp": humanize_time(comment.timestamp),
+            "comment_count": blog.comments.filter(status='PUBLISHED').count()
+        }
     
-    return JsonResponse(context, safe=False)
+        return JsonResponse(context, safe=False)
+    else:
+        return JsonResponse({'status':500})
 
 @require_POST
 def ajax_delete_comment(request):
