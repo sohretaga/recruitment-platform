@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.http import JsonResponse
 from django.core.files.storage import FileSystemStorage
 from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
 
 from recruitment import settings
 from blog.models import Blog, Comment, Category
@@ -104,37 +105,35 @@ def ajax_delete_blog(request):
 
     return JsonResponse({'status':200})
 
+@csrf_exempt
 def upload_editor_image(request):
-    if request.POST and request.FILES.get('file'):
-        file = request.FILES['file']
-        upload_path = os.path.join(settings.MEDIA_ROOT, settings.FROALA_UPLOAD_PATH)
+    if request.method == 'POST' and request.FILES.get('upload'):
+        file = request.FILES['upload']
+        upload_path = os.path.join(settings.MEDIA_ROOT, settings.CKEDITOR_UPLOAD_PATH)
 
-        # Check path
+        # Check and create the upload path if it does not exist
         if not os.path.exists(upload_path):
             os.makedirs(upload_path)
 
-        # Save image to path
+        # Save the image to the path
         storage = FileSystemStorage(location=upload_path)
         image = storage.save(file.name, file)
 
-        # Make image url
-        protocol = 'https://' if request.is_secure() else 'http://'
-        domain_url = protocol + request.META.get('HTTP_HOST', '')
-        image_url = domain_url + settings.MEDIA_URL + settings.FROALA_UPLOAD_PATH + f'/{image}'
+        # Make the image URL
+        image_url = settings.MEDIA_URL + settings.CKEDITOR_UPLOAD_PATH + '/' + file.name
+        
+        response = {
+            'uploaded': True,
+            'fileName': file.name,
+            'url': image_url
+        }
 
-        return JsonResponse({'link': image_url})
-    
-def delete_editor_image(request):
-    if request.POST:
-        src = request.POST.get('src', None)
-        if src:
-            image_url = src.split('/media/')[-1]
-            image_path = os.path.join(settings.MEDIA_ROOT, image_url)
-
-            if os.path.exists(image_path):
-                os.remove(image_path)
-                return JsonResponse({'message': 'The image has been deleted successfully.'})
-            else:
-                return JsonResponse({'error': 'The specified image was not found.'}, status=404)
-
-    return HttpResponse()
+        return JsonResponse(response)
+    else:
+        response = {
+            'uploaded': False,
+            'error': {
+                'message': 'No file uploaded or invalid request method.'
+            }
+        }
+        return JsonResponse(response, status=400)

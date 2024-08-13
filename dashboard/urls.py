@@ -40,5 +40,4 @@ urlpatterns = [
     path('ajax/edit-comment', blogger.ajax_edit_comment, name='ajax-edit-comment'),
 
     path('blog/editor/upload-image', blogger.upload_editor_image, name='upload-editor-image'),
-    path('blog/editor/delete-image', blogger.delete_editor_image, name='delete-editor-image')
 ]

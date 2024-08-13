@@ -2,11 +2,11 @@ from django.db import models
 from django.utils.text import slugify
 from django.core.cache import cache
 from django.db.models import F, Value, CharField
-from froala_editor.fields import FroalaField
 from django.conf import settings
 
 from recruitment_cp.models import ParameterCommonFields
 from user.models import CustomUser
+from ckeditor_uploader.fields import RichTextUploadingField
 
 # Create your models here.
 
@@ -24,8 +24,8 @@ class Blog(models.Model):
     title_en = models.CharField(max_length=255, blank=True, null=True, verbose_name='Title EN')
     title_tr = models.CharField(max_length=255, blank=True, null=True, verbose_name='Title TR')
 
-    content_en = FroalaField(blank=True, null=True)
-    content_tr = FroalaField(blank=True, null=True)
+    content_en = RichTextUploadingField(blank=True, null=True)
+    content_tr = RichTextUploadingField(blank=True, null=True)
 
     category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL)
     cover_photo = models.ImageField(upload_to='blog/cover', null=True, blank=True)

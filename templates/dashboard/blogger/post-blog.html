@@ -10,17 +10,12 @@
 {% endblock title %}
 
 {% block head %}
-    <!-- Froala css -->
-    <link href="{% static 'dashboard/libs/froala/froala_editor.pkgd.min.css' %}" rel="stylesheet" type="text/css" />
-
     <!-- Bootstrap Css -->
     <link href="{% static 'dashboard/css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->
     <link href="{% static 'dashboard/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
     <!-- App Css-->
     <link href="{% static 'dashboard/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
-
-    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.css">
 {% endblock head %}
 
 {% block content %}
@@ -118,13 +113,11 @@
                             </div>
 
                             <div id="content-en">
-                                <textarea id="froala-editor" name="content_en" style="display: none;">{{ blog.content_en }}</textarea>
+                                <textarea id="editor-en" name="content_en" style="display: none;">{{ blog.content_en }}</textarea>
                             </div>
                             <div id="content-tr" style="display: none;">
-                                <textarea id="froala-editor" name="content_tr" style="display: none;">{{ blog.content_tr }}</textarea>
+                                <textarea id="editor-tr" name="content_tr" style="display: none;">{{ blog.content_tr }}</textarea>
                             </div>
-
-                            <div id="editor">
 
                             </div>
 
@@ -156,9 +149,6 @@
 
     <script src="{% static 'dashboard/js/pages/form-element.init.js' %}"></script>
 
-    <!-- Froala js -->
-    <!-- <script type="text/javascript" src="{% static 'dashboard/libs/froala/froala_editor.pkgd.min.js' %}"></script> -->
-
     <!-- init js -->
     <script src="{% static 'dashboard/js/app.js' %}"></script>
 
@@ -166,87 +156,15 @@
     <script src="{% static 'dashboard/js/ajax/post-blog.js' %}"></script>
 
 
+    <script src="{% static 'dashboard/libs/ckeditor/ckeditor.js' %}"></script>
 
-
-    <script type="importmap">
-        {
-            "imports": {
-                "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.js",
-                "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/43.0.0/"
-            }
-        }
-    </script>
-    <script type="module">
-        import {
-            ClassicEditor,
-            Essentials,
-            Paragraph,
-            Bold,
-            Italic,
-            Font
-        } from 'ckeditor5';
-
-        ClassicEditor
-            .create( document.querySelector( '#editor' ), {
-                plugins: [ Essentials, Paragraph, Bold, Italic, Font ],
-                toolbar: [
-                    'undo', 'redo', '|', 'bold', 'italic', '|',
-                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
-                ]
-            } )
-            .then( editor => {
-                window.editor = editor;
-            } )
-            .catch( error => {
-                console.error( error );
-            } );
-    </script>
-    <!-- A friendly reminder to run on a server, remove this during the integration. -->
     <script>
-            window.onload = function() {
-                if ( window.location.protocol === "file:" ) {
-                    alert( "This sample requires an HTTP server. Please serve this file with a web server." );
-                }
-            };
-    </script>
-
-
-
-    
-    <!-- <script>
-        var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-
-        var editor = new FroalaEditor('#froala-editor', {
-            requestWithCredentials: true,
-            key: 'e74e3180-2a66-4c1b-9e4f-480cc623552c',
-
-            // Upload Image
-            imageUploadURL: "{% url 'dashboard:upload-editor-image' %}",
-            imageUploadParams: {
-                csrfmiddlewaretoken: csrftoken,
-            },
-
-            // Delete Uploaded Image
-            events: {
-                'image.removed': function ($img) {
-                    $.ajax({
-                        headers: {"X-CSRFToken": csrftoken},
-                        data: {src: $img.attr('src')}, 
-                        url: "{% url 'dashboard:delete-editor-image' %}",
-                        type: 'POST',
-
-                        // on success
-                        success: function (response) {
-                            console.log(response.message)
-                        },
-                        // on error
-                        error: function (response) {
-                            console.log(response.error)
-                        }
-                    });
-                }
-            }
+        CKEDITOR.replace( 'content_en', {
+            filebrowserImageUploadUrl: "{% url 'dashboard:upload-editor-image' %}",
+            extraPlugins: 'uploadimage',
+            height: 200
         });
-    </script> -->
+        CKEDITOR.replace( 'content_tr' );
+    </script>
 
 {% endblock script %}
