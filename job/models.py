@@ -10,6 +10,13 @@ from recruitment_cp import models as cp_models
 # Create your models here.
 
 class Vacancy(models.Model):
+
+    STATUS_CHOICES = [
+        ('PUBLISHED', 'Published'),
+        ('PENDING', 'Pending'),
+        ('DEACTIVATED', 'Deactivated')
+    ]
+
     no = models.IntegerField(blank=True, null=True)
     language = models.CharField(max_length=5)
 
@@ -38,6 +45,8 @@ class Vacancy(models.Model):
     views = models.IntegerField(default=0)
     slug = models.SlugField(null=True)
     created_date = models.DateTimeField(auto_now_add=True)
+
+    approval_level = models.CharField(max_length=12, choices=STATUS_CHOICES, default='PUBLISHED')
 
     class Meta:
         ordering = ['-created_date']
