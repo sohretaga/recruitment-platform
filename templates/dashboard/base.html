@@ -264,14 +264,14 @@
 
                                 <li>
                                     <a href="{% url 'dashboard:all-vacancy' %}" class="waves-effect">
-                                        <i class="ri-list-settings-fill"></i>
-                                        <span>All Vacancy</span>
+                                        <i class="ri-briefcase-line"></i>
+                                        <span>My Vacancies</span>
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="{% url 'dashboard:post-vacancy' %}" class="waves-effect">
-                                        <i class="dripicons-suitcase"></i>
+                                        <i class="ri-file-add-line"></i>
                                         <span>Post Vacancy</span>
                                     </a>
                                 </li>
@@ -287,8 +287,8 @@
 
                                 <li>
                                     <a href="{% url 'dashboard:applications' %}" class="waves-effect">
-                                        <i class="ri-list-settings-fill"></i>
-                                        <span>Your Applies</span>
+                                        <i class="ri-file-list-line"></i>
+                                        <span>My Applies</span>
                                     </a>
                                 </li>
 
@@ -325,14 +325,14 @@
                             {% elif request.user.user_type == 'employer' %}
                                 <li>
                                     <a href="{% url 'dashboard:all-vacancy' %}" class="waves-effect">
-                                        <i class="ri-list-settings-fill"></i>
-                                        <span>All Vacancy</span>
+                                        <i class="ri-briefcase-line"></i>
+                                        <span>My Vacancies</span>
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="{% url 'dashboard:post-vacancy' %}" class="waves-effect">
-                                        <i class="ri-calendar-2-line"></i>
+                                        <i class="ri-file-add-line"></i>
                                         <span>Post Vacancy</span>
                                     </a>
                                 </li>
