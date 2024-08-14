@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.decorators.http import require_POST
-from django.db.models import F
+from django.core.cache import cache
+from django.conf import settings
+from django.db.models import F, Case, When, CharField, Value
 from django.http import JsonResponse
 
 from dashboard.decorators import is_candidate
@@ -11,12 +13,24 @@ from job.models import Apply
 
 @is_candidate
 def your_applies(request):
+    cache.delete("site_language")
+    language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
     applications = request.user.candidate.applications.select_related('vacancy', 'candidate').annotate(
         company_name=F('candidate__user__first_name'),
         position_title=F('vacancy__position_title'),
-        job_title=F('vacancy__job_title__name'),
-        career_level=F('vacancy__career_level__name'),
         slug=F('vacancy__slug'),
+        career_level=Case(
+            When(**{f"vacancy__career_level__name_{language}__isnull": False},
+                 then=F(f'vacancy__career_level__name_{language}')),
+                 default=Value(''),
+                 output_field=CharField()
+        ),
+        job_title=Case(
+             When(**{f"vacancy__job_title__name_{language}__isnull": False},
+                 then=F(f'vacancy__job_title__name_{language}')),
+                 default=Value(''),
+                 output_field=CharField()
+        )
     ).values('id', 'company_name', 'position_title', 'job_title', 'career_level', 'slug').order_by('-created_date')
 
     context = {
