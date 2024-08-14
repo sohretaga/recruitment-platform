@@ -57,7 +57,7 @@ $(document).ready(function() {
                 "data": null,
                 "render": function (data, type, row) {
                     return `
-                        <a href="/dashboard/vacancy/edit/${row[9]}" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top"><i class="mdi mdi-pencil font-size-18"></i></a>
+                        <a href="/dashboard/employer/vacancy/edit/${row[9]}" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top"><i class="mdi mdi-pencil font-size-18"></i></a>
                         <a href="javascript:void(0);" data-id="${row[9]}" class="text-danger delete-row" data-toggle="tooltip" data-placement="top"><i class="mdi mdi-trash-can font-size-18"></i></a>
                     `;
                 }
