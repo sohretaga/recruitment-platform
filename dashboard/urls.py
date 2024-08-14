@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import main, employer, candidate, blogger
+from .views import main, employer, candidate, blogger, controller
 
 app_name = 'dashboard'
 
@@ -16,9 +16,9 @@ urlpatterns = [
 
     # Employer URL's
     path('employer/complete-register', employer.manage_account, name='employer-complete-register'),
-    path('vacnacy/post', employer.post_vacancy, name='post-vacancy'),
-    path('vacancy/all', employer.all_vacancy, name='all-vacancy'),
-    path('vacancy/edit/<int:id>', employer.edit_vacancy, name='edit-vacancy'),
+    path('employer/vacnacy/post', employer.post_vacancy, name='post-vacancy'),
+    path('employer/vacancy/all', employer.all_vacancy, name='all-vacancy'),
+    path('employer/vacancy/edit/<int:id>', employer.edit_vacancy, name='edit-vacancy'),
     path('employer/edit-account', employer.manage_account, name='employer-edit-account'),
     path('ajax/vacancies', employer.ajax_all_vacancy, name='ajax-all-vacancy'),
     path('ajax/delete-vacancy', employer.ajax_delete_vacancy, name='ajax-delete-vacancy'),
@@ -38,6 +38,9 @@ urlpatterns = [
     path('ajax/delete-comment', blogger.ajax_delete_comment, name='ajax-delete-comment'),
     path('ajax/manage-comment-status', blogger.ajax_manage_comment_status, name='ajax-manage-comment-status'),
     path('ajax/edit-comment', blogger.ajax_edit_comment, name='ajax-edit-comment'),
-
     path('blog/editor/upload-image', blogger.upload_editor_image, name='upload-editor-image'),
+
+    # Controller URL's
+    path('controller/vacancy/all', controller.all_vacancies, name='controller-all-vacancies'),
+    path('controller/ajax/vacancies', controller.ajax_all_vacancies, name='ajax-controller-all-vacancies'),
 ]

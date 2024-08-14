@@ -41,3 +41,13 @@ def is_superuser(function):
             raise Http404
     
     return wrap
+
+def is_controller(function):
+    @login_required
+    def wrap(request, *args, **kwargs):
+        if request.user.user_type == 'blogger' or request.user.is_superuser:
+            return function(request, *args, **kwargs)
+        else:
+            raise Http404
+    
+    return wrap

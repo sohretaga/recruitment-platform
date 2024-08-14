@@ -1,7 +1,7 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
 
-{% block title %}My Vacancy{% endblock title %}
+{% block title %}All Vacancy{% endblock title %}
 
 {% block head %}
     <!-- DataTables -->
@@ -31,12 +31,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-flex align-items-center justify-content-between">
-                    <a href="{% url 'dashboard:post-vacancy' %}"><button class="btn btn-info" type="button"><i class="mdi mdi-plus"></i>Add Vacancy</button></a>
+                    <h4 class="mb-0">All Vacancies</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Vacancies</a></li>
-                            <li class="breadcrumb-item active">My Vacancy</li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">General</a></li>
+                            <li class="breadcrumb-item active">All Vacancies</li>
                         </ol>
                     </div>
 
@@ -121,5 +121,5 @@
     <script src="{% static 'dashboard/js/pages/sweet-alerts.init.js' %}"></script>
 
     <!-- Custom JS -->
-    <script src="{% static 'dashboard/js/ajax/my-vacancies-table.js' %}"></script>
+    <script src="{% static 'dashboard/js/ajax/all-vacancies-table.js' %}"></script>
 {% endblock script %}

@@ -14,6 +14,7 @@ class CustomUser(AbstractUser):
         ('employer', 'Employer'),
         ('candidate', 'Candidate'),
         ('blogger', 'Content'),
+        ('controller', 'Controller'),
     )
 
     profile_photo = models.ImageField(upload_to='profile-photos/', null=True, blank=True)
