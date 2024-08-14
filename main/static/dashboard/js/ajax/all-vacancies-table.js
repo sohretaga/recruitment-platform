@@ -3,7 +3,14 @@ $(document).ready(function() {
     var dataTable = $(".datatable").DataTable({
         lengthMenu: [10, 25, 50, 100],
         pageLength: 10,
-        columnDefs: [{ width: '200px', targets: 0 }],
+        columnDefs: [
+            { width: '200px', targets: 0 },
+            { width: '70px', targets: 4 },
+            { width: '70px', targets: 5 },
+            { width: '80px', targets: 6 },
+            { width: '50px', targets: 7 },
+            { width: '50px', targets: 8 },
+        ],
         columns: columns = [
             { orderable: false },
             { orderable: false },
