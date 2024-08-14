@@ -75,7 +75,7 @@ def ajax_all_vacancy(request):
     length:str = int(request.GET.get('length', 10))
     search_value:str = request.GET.get('search[value]', '')
 
-    vacancies = vacancy_with_related_info(request.user.employer.vacancies.filter(delete=False))
+    vacancies = vacancy_with_related_info(Vacancy.translation().filter(employer=request.user.employer, delete=False))
 
     if search_value:
         vacancies = vacancies.filter(position_title__icontains=search_value)
