@@ -6,8 +6,6 @@
 {% block head %}
     <link href="{% static 'dashboard/libs/select2/css/select2.min.css' %}" rel="stylesheet" type="text/css" />
     
-    <!-- Froala css -->
-    <link href="{% static 'dashboard/libs/froala/froala_editor.pkgd.min.css' %}" rel="stylesheet" type="text/css" />
     <!-- twitter-bootstrap-wizard css -->
     <link rel="stylesheet" href="{% static 'dashboard/libs/twitter-bootstrap-wizard/prettify.css' %}">
     <!-- Bootstrap Css -->
@@ -16,6 +14,8 @@
     <link href="{% static 'dashboard/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
     <!-- App Css-->
     <link href="{% static 'dashboard/css/app.css' %}" rel="stylesheet" type="text/css" />
+    <!-- Ckeditor Css-->
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.css">
 
 {% endblock head %}
 
@@ -290,7 +290,7 @@
                                                 <div class="col-12">
                                                     <div class="card">
                                                         <div class="card-body">
-                                                            <textarea id="froala-editor" name="definition">{{ vacancy.definition }}</textarea>
+                                                            <textarea id="editor" name="definition">{{ vacancy.definition }}</textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -358,43 +358,43 @@
     <!-- custom javascript -->
     <script src="{% static 'dashboard/js/pages/post-vacancy.js' %}"></script>
 
-    <!-- Froala js -->
-    <script type="text/javascript" src="{% static 'dashboard/libs/froala/froala_editor.pkgd.min.js' %}"></script>
-
-    <script>
-        var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-
-        var editor = new FroalaEditor('#froala-editor', {
-            requestWithCredentials: true,
-            key: 'e74e3180-2a66-4c1b-9e4f-480cc623552c',
-
-            // Upload Image
-            imageUploadURL: "{% url 'dashboard:upload-editor-image' %}",
-            imageUploadParams: {
-                csrfmiddlewaretoken: csrftoken,
-            },
-
-            // Delete Uploaded Image
-            events: {
-                'image.removed': function ($img) {
-                    $.ajax({
-                        headers: {"X-CSRFToken": csrftoken},
-                        data: {src: $img.attr('src')}, 
-                        url: "{% url 'dashboard:delete-editor-image' %}",
-                        type: 'POST',
-
-                        // on success
-                        success: function (response) {
-                            console.log(response.message)
-                        },
-                        // on error
-                        error: function (response) {
-                            console.log(response.error)
-                        }
-                    });
-                }
+    <!-- Ckeditor js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.js",
+                "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/43.0.0/"
             }
-        });
+        }
     </script>
+    <script type="module">
+        import {
+            ClassicEditor,
+            Essentials,
+            Paragraph,
+            Bold,
+            Italic,
+            Font
+        } from 'ckeditor5';
+
+        ClassicEditor
+            .create( document.querySelector( '#editor' ), {
+                plugins: [ Essentials, Paragraph, Bold, Italic, Font ],
+                toolbar: [
+                    'undo', 'redo', '|', 'bold', 'italic', '|',
+                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
+                ]
+            } )
+            .then( editor => {
+                window.editor = editor;
+                editor.editing.view.change(writer => {
+                    writer.setStyle('height', '400px', editor.editing.view.document.getRoot());
+                });
+            } )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+
 
 {% endblock script %}
