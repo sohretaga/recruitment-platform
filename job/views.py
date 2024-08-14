@@ -4,9 +4,11 @@ from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q, F, Value, Count
+from django.db.models import Q, F, Value, Count, Case, When, CharField
 from django.db.models.functions import Concat
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.cache import cache
+from django.conf import settings
 from datetime import timedelta
 
 from job.models import Vacancy, Bookmark, Apply, EmployerAction, CandidateAction
@@ -80,14 +82,20 @@ def vacancy_applications(request, slug):
 
 @is_candidate
 def applications(request):
+    language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
     applications = request.user.candidate.applications.select_related('vacancy', 'candidate').annotate(
         username=F('candidate__user__username'),
         company_name=F('vacancy__employer__user__first_name'),
         position_title=F('vacancy__position_title'),
-        location=F('vacancy__location__name'),
         salary_minimum=F('vacancy__salary_minimum'),
         salary_maximum=F('vacancy__salary_maximum'),
         slug=F('vacancy__slug'),
+        location=Case(
+            When(**{f"vacancy__location__name_{language}__isnull":False},
+                then=F(f'vacancy__location__name_{language}')),
+                default=Value(''),
+                output_field=CharField()
+            )
     ).order_by('-created_date')
 
     paginator = Paginator(applications, 30)
