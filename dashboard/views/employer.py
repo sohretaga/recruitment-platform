@@ -26,6 +26,8 @@ from recruitment_cp.models import (
     ParameterKeyword
 )
 
+import json
+
 
 @is_employer
 def post_vacancy(request):
@@ -33,9 +35,9 @@ def post_vacancy(request):
         form = PostVacancyForm(request.POST)
 
         if form.is_valid():
-
             instance = form.save(commit=False)
             instance.employer = request.user.employer
+
             instance.save()
             return redirect(reverse('dashboard:all-vacancy'))
 
@@ -120,6 +122,8 @@ def edit_vacancy(request, id):
         if form.is_valid():
             keywords = form.cleaned_data.get('keywords')
             instance = form.save(commit=False)
+            if isinstance(keywords, str):
+                keywords = json.loads(keywords)
             instance.keywords = keywords
             instance.save()
             return redirect(reverse('dashboard:all-vacancy'))
