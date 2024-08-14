@@ -8,7 +8,13 @@ from job.utils import vacancy_with_related_info
 
 @is_controller
 def all_vacancies(request):
-    return render(request, 'dashboard/controller/all-vacancies.html')
+    all_vacancies_count = Vacancy.objects.count()
+
+    context = {
+        'all_vacancies_count': all_vacancies_count
+    }
+
+    return render(request, 'dashboard/controller/all-vacancies.html', context)
 
 @is_controller
 def ajax_all_vacancies(request):
