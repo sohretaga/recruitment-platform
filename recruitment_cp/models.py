@@ -138,7 +138,7 @@ class ParameterCommonFields(models.Model):
                     )
                 )
 
-        return objects.all()
+        return objects
     
     @classmethod
     def language_filter(cls, language_code):

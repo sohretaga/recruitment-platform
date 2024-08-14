@@ -148,8 +148,8 @@ def candidate_details(request, username):
     params = manage_user_type_for_details(request, username, user_type='candidate')
 
     user = get_object_or_404(CustomUser, **params)
-    citizenships = ParameterCountry.objects.values('id', 'name')
-    competencies = ParameterCompetence.objects.values('id', 'name')
+    citizenships = ParameterCountry.translation().values('id', 'name')
+    competencies = ParameterCompetence.translation().values('id', 'name')
 
     context = {
         'candidate': user.candidate,
