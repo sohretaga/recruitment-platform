@@ -64,7 +64,11 @@ def vacancy_with_related_info(objects):
 
 def fetch_vacancies(request) -> dict:
     # URL parameters are taken for filtering and used for the same filtering on the following pages.
-    params = {'status': True, 'delete': False}
+    params = {
+        'status': True,
+        'delete': False,
+        'approval_level': 'PUBLISHED'
+    }
     url:str = '' # Creating URL for Pagination
 
     if salary_range := request.GET.get('salary-range'):

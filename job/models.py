@@ -46,7 +46,7 @@ class Vacancy(models.Model):
     slug = models.SlugField(null=True)
     created_date = models.DateTimeField(auto_now_add=True)
 
-    approval_level = models.CharField(max_length=12, choices=STATUS_CHOICES, default='PUBLISHED')
+    approval_level = models.CharField(max_length=12, choices=STATUS_CHOICES, default='PENDING')
 
     class Meta:
         ordering = ['-created_date']

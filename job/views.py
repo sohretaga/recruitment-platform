@@ -32,13 +32,18 @@ def vacancies(request):
     return render(request, 'job/vacancies.html', context)
 
 def vacancy(request, slug):
-    vacancy = get_object_or_404(vacancy_with_related_info(Vacancy.objects), slug=slug, status=True, delete=False)
+    common_params = {
+        'status': True,
+        'delete': False,
+        'approval_level': 'PUBLISHED'
+    }
+    vacancy = get_object_or_404(vacancy_with_related_info(Vacancy.objects), slug=slug, **common_params)
     vacancy.views += 1
     vacancy.save()
 
     # get related vacancies
     related_vacancies = vacancy_with_related_info(
-        Vacancy.translation().filter(job_title=vacancy.job_title, status=True, delete=False).exclude(slug=slug)[:5]
+        Vacancy.translation().filter(job_title=vacancy.job_title, **common_params).exclude(slug=slug)[:5]
     )
 
     keyword_list = ParameterKeyword.translation().values('id', 'name')
@@ -57,7 +62,7 @@ def categories(request):
 
 @is_employer
 def vacancy_applications(request, slug):
-    vacancy = get_object_or_404(Vacancy, slug=slug)
+    vacancy = get_object_or_404(Vacancy, slug=slug, approval_level='PUBLISHED')
     applicants = vacancy.applications.select_related('candidate__user').annotate(
         full_name=Concat(
             F('candidate__user__first_name'),
@@ -114,7 +119,7 @@ def ajax_apply(request):
     vacancy = request.POST.get('vacancy')
     message = request.POST.get('message')
     cv = request.FILES.get('cv')
-    vacancy = Vacancy.objects.get(id=vacancy)
+    vacancy = Vacancy.objects.get(id=vacancy, approval_level='PUBLISHED')
 
     apply_exists = Apply.objects.filter(candidate=request.user.candidate, vacancy=vacancy).exists()
 
@@ -239,7 +244,11 @@ def bookmarks(request):
 def ajax_filter_vacancies(request):
     if is_ajax:
         data = json.loads(request.body.decode('utf-8'))
-        params = {'status': True, 'delete': False}
+        params = {
+            'status': True, 
+            'delete': False,
+            'approval_level': 'PUBLISHED'
+        }
 
         if salary_range_lower := data.get('salary_range_lower'):
             params.update({'salary__gte': salary_range_lower})
@@ -298,7 +307,9 @@ def ajax_search_vacancy(request):
             Q(position_title__icontains=query) |
             Q(job_title_name__icontains=query) |
             Q(employer__user__first_name__icontains=query),
-            status=True, delete=False
+            status=True,
+            delete=False,
+            approval_level='PUBLISHED'
         )
     )
 

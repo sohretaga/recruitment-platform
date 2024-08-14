@@ -13,9 +13,7 @@ $(document).ready(function() {
             { orderable: true },
             { orderable: true },
             { orderable: true },
-            { orderable: true },
-            { orderable: true },
-            { orderable: false }
+            { orderable: true }
         ],
         order: [[1, "asc"]],
         language: {
@@ -27,7 +25,7 @@ $(document).ready(function() {
         "processing": true,
         "serverSide": true,
         "ajax": {
-            "url": "/dashboard/ajax/vacancies",
+            "url": "/dashboard/controller/ajax/vacancies",
             "type": "GET"
         },
         "columns": [
@@ -44,21 +42,21 @@ $(document).ready(function() {
             { "data": 6 },
             { "data": 7 },
             { "data": 8 },
-            {   "data": null,
-                "render": function (data, type, row) {
-                    if (row[11]){
-                        return `<div class="badge badge-soft-success font-size-12">Active</div>`;
-                    };
-
-                    return `<div class="badge badge-soft-danger font-size-12">Deactivate</div>`;
-                },
-            },
-            {
-                "data": null,
+            { "data": null,
                 "render": function (data, type, row) {
                     return `
-                        <a href="/dashboard/vacancy/edit/${row[9]}" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top"><i class="mdi mdi-pencil font-size-18"></i></a>
-                        <a href="javascript:void(0);" data-id="${row[9]}" class="text-danger delete-row" data-toggle="tooltip" data-placement="top"><i class="mdi mdi-trash-can font-size-18"></i></a>
+                        <select onchange="setApprovalLevel(this, ${row[9]})"
+                            class="badge ${row[12] == 'PUBLISHED' ? 'badge-soft-success': row[12] == 'PENDING' ? 'badge-soft-warning': 'badge-soft-danger'} font-size-12 btn dropdown-toggle" >
+                            <option value="PUBLISHED" ${row[12] == 'PUBLISHED' ? 'selected':''}>
+                                <div class="badge badge-soft-success font-size-12">Published</div>
+                            </option>
+                            <option value="PENDING" ${row[12] == 'PENDING' ? 'selected':''}>
+                                <div class="badge badge-soft-warning font-size-12">Pending</div>
+                            </option>
+                            <option value="DEACTIVATED" ${row[12] == 'DEACTIVATED' ? 'selected':''}>
+                                <div class="badge badge-soft-danger font-size-12">Deactivated</div>
+                            </option>
+                        </select>
                     `;
                 }
             }
@@ -70,3 +68,27 @@ $(document).ready(function() {
     });
 
 });
+
+
+const setApprovalLevel = (event, id) => {
+    let value = event.value;
+    $.ajax({
+        url: '/dashboard/controller/ajax/manage-approval-level',
+        type: 'POST',
+        data: {
+            vacancy_id: id,
+            approval_level: value
+        },
+        success: () => {
+            event.className = '';
+
+            if (value == 'PUBLISHED') {
+                event.className = 'badge badge-soft-success font-size-12 btn dropdown-toggle';
+            }else if (value == 'PENDING') {
+                event.className = 'badge badge-soft-warning font-size-12 btn dropdown-toggle';
+            }else if (value == 'DEACTIVATED') {
+                event.className = 'badge badge-soft-danger font-size-12 btn dropdown-toggle';
+            };
+        }
+    });
+}

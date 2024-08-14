@@ -10,7 +10,7 @@ from main.models import Notification, ContactEmail
 import math
 
 def get_vacancy_in_sublists(objects_per_list=5) -> list:
-    objects = list(Vacancy.translation().filter(status=True, delete=False).order_by('?')[:10])
+    objects = list(Vacancy.translation().filter(status=True, delete=False, approval_level='PUBLISHED').order_by('?')[:10])
     
     total_objects = len(objects)
     

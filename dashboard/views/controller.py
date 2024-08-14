@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.core.paginator import Paginator
 
@@ -16,7 +16,7 @@ def ajax_all_vacancies(request):
     length:str = int(request.GET.get('length', 10))
     search_value:str = request.GET.get('search[value]', '')
 
-    vacancies = vacancy_with_related_info(Vacancy.translation().filter(employer=request.user.employer, delete=False))
+    vacancies = vacancy_with_related_info(Vacancy.translation().all())
 
     if search_value:
         vacancies = vacancies.filter(position_title__icontains=search_value)
@@ -40,6 +40,7 @@ def ajax_all_vacancies(request):
             obj.id,
             obj.slug,
             obj.status,
+            obj.approval_level
         ])
 
     response = {
@@ -50,3 +51,13 @@ def ajax_all_vacancies(request):
     }
 
     return JsonResponse(response)
+
+@is_controller
+def ajax_manage_approval_level(request):
+    vacancy_id = request.POST.get('vacancy_id')
+    approval_level = request.POST.get('approval_level')
+    vacancy = get_object_or_404(Vacancy, id=vacancy_id)
+    vacancy.approval_level = approval_level
+    vacancy.save()
+
+    return JsonResponse({'status': 200})
