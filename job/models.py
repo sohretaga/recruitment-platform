@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
-from django.db.models import F
+from django.db.models import F, Case, When, CharField, Value
 from django.core.cache import cache
 from django.conf import settings
 
@@ -93,6 +93,26 @@ class Vacancy(models.Model):
 class Bookmark(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='bookmarks')
     vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE)
+
+    @classmethod
+    def translation(cls):
+        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
+        bookmarks = cls.objects.annotate(
+            location=Case(
+                When(**{f"vacancy__location__name_{language}__isnull":False},
+                    then=F(f'vacancy__location__name_{language}')),
+                    default=Value(''),
+                    output_field=CharField()
+            ),
+            work_experience=Case(
+                When(**{f"vacancy__work_experience__name_{language}__isnull": False},
+                    then=F(f"vacancy__work_experience__name_{language}")),
+                    default=Value(''),
+                    output_field=CharField()
+            )
+        )
+
+        return bookmarks
 
 class Apply(models.Model):
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, related_name='applications')

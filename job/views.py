@@ -211,16 +211,15 @@ def ajax_filter_job_postings(request):
 
 @login_required
 def bookmarks(request):
-    bookmarks = Bookmark.objects.filter(user=request.user).select_related('user', 'vacancy').annotate(
+    bookmarks = Bookmark.translation().filter(user=request.user).select_related('user', 'vacancy').annotate(
         username=F('vacancy__employer__user__username'),
         profile_photo=F('vacancy__employer__user__profile_photo'),
         company_name=F('vacancy__employer__user__first_name'),
         position_title=F('vacancy__position_title'),
-        work_experience=F('vacancy__work_experience__name'),
-        location=F('vacancy__location__name'),
         salary_minimum=F('vacancy__salary_minimum'),
         salary_maximum=F('vacancy__salary_maximum'),
-        slug=F('vacancy__slug')
+        slug=F('vacancy__slug'),
+
     ).order_by('id')
 
     bookmark_count = bookmarks.count()
