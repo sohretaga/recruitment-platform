@@ -4,8 +4,8 @@ $(document).ready(function() {
         lengthMenu: [10, 25, 50, 100],
         pageLength: 10,
         columnDefs: [
-            { width: '250px', targets: 0 },
-            { width: '200px', targets: 1 },
+            { width: '200px', targets: 0 },
+            { width: '150px', targets: 1 },
             { width: '100px', targets: 2 },
             { width: '100px', targets: 3 },
             { width: '70px', targets: 4 },
