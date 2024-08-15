@@ -6,7 +6,7 @@ $(document).ready(function() {
         columnDefs: [
             { width: '200px', targets: 0 },
             { width: '150px', targets: 1 },
-            // { width: '100px', targets: 2 },
+            { width: '100px', targets: 2 },
             { width: '100px', targets: 3 },
             { width: '70px', targets: 4 },
             { width: '70px', targets: 5 },
