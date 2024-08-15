@@ -22,7 +22,7 @@ $(document).ready(function() {
             { orderable: true },
             { orderable: true },
             { orderable: true },
-            { orderable: true },
+            // { orderable: true },
             { orderable: true }
         ],
         order: [[1, "asc"]],
@@ -51,7 +51,7 @@ $(document).ready(function() {
             { "data": 5 },
             { "data": 6 },
             { "data": 7 },
-            { "data": 8 },
+            // { "data": 8 },
             { "data": null,
                 "render": function (data, type, row) {
                     return `
