@@ -6,7 +6,7 @@ $(document).ready(function() {
         columnDefs: [
             { width: '200px', targets: 0 },
             { width: '150px', targets: 1 },
-            { width: '100px', targets: 2 },
+            // { width: '100px', targets: 2 },
             { width: '100px', targets: 3 },
             { width: '70px', targets: 4 },
             { width: '70px', targets: 5 },
@@ -46,13 +46,6 @@ $(document).ready(function() {
                 }
             },
             { "data": 1 },
-            { "data": 2 },
-            { "data": 3 },
-            { "data": 4 },
-            { "data": 5 },
-            { "data": 6 },
-            { "data": 7 },
-            { "data": 8 },
             { "data": null,
                 "render": function (data, type, row) {
                     return `
@@ -70,7 +63,14 @@ $(document).ready(function() {
                         </select>
                     `;
                 }
-            }
+            },
+            { "data": 2 },
+            { "data": 3 },
+            { "data": 4 },
+            { "data": 5 },
+            { "data": 6 },
+            { "data": 7 },
+            { "data": 8 },
         ],
         
         drawCallback: function() {
