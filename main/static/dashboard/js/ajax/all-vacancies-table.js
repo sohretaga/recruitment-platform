@@ -4,7 +4,8 @@ $(document).ready(function() {
         lengthMenu: [10, 25, 50, 100],
         pageLength: 10,
         columnDefs: [
-            { width: '200px', targets: 0 },
+            { width: '250px', targets: 0 },
+            { width: '200px', targets: 1 },
             { width: '100px', targets: 2 },
             { width: '100px', targets: 3 },
             { width: '70px', targets: 4 },
@@ -22,7 +23,7 @@ $(document).ready(function() {
             { orderable: true },
             { orderable: true },
             { orderable: true },
-            // { orderable: true },
+            { orderable: true },
             { orderable: true }
         ],
         order: [[1, "asc"]],
@@ -51,7 +52,7 @@ $(document).ready(function() {
             { "data": 5 },
             { "data": 6 },
             { "data": 7 },
-            // { "data": 8 },
+            { "data": 8 },
             { "data": null,
                 "render": function (data, type, row) {
                     return `
