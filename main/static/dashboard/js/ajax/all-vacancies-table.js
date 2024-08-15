@@ -5,6 +5,8 @@ $(document).ready(function() {
         pageLength: 10,
         columnDefs: [
             { width: '200px', targets: 0 },
+            { width: '100px', targets: 2 },
+            { width: '100px', targets: 3 },
             { width: '70px', targets: 4 },
             { width: '70px', targets: 5 },
             { width: '80px', targets: 6 },
