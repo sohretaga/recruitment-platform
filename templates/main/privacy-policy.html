@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load site_content %}
+{% load translate %}
 
-{% block title %}Privacy & Policy{% endblock title %}
+{% block title %}{% tr 'Privacy & Policy' %}{% endblock title %}
 
 {% block head %}
 <!-- Bootstrap Css -->
@@ -24,13 +25,13 @@
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="text-center text-white">
-                        <h3 class="mb-4">Privacy & Policy</h3>
+                        <h3 class="mb-4">{% tr 'Privacy & Policy' %}</h3>
                         <div class="page-next">
                             <nav class="d-inline-block" aria-label="breadcrumb text-center">
                                 <ol class="breadcrumb justify-content-center">
-                                    <li class="breadcrumb-item"><a href="{% url 'main:main-index' %}">Home</a></li>
-                                    {% comment %} <li class="breadcrumb-item"><a href="javascript:void(0)">Pages</a></li> {% endcomment %}
-                                    <li class="breadcrumb-item active" aria-current="page"> Privacy & Policy </li>
+                                    <li class="breadcrumb-item"><a href="{% url 'main:main-index' %}">{% tr 'Home' %}</a></li>
+                                    {% comment %} <li class="breadcrumb-item"><a href="javascript:void(0)">{% tr 'Pages' %}</a></li> {% endcomment %}
+                                    <li class="breadcrumb-item active" aria-current="page"> {% tr 'Privacy & Policy' %} </li>
                                 </ol>
                             </nav>
                         </div>
@@ -63,7 +64,7 @@
                 <div class="col-lg-12">
                     {{ terms.content|safe }}
                     <div class="text-end">
-                        <a href="javascript:void(0)" class="btn btn-primary"><i class="uil uil-print"></i> Print</a>
+                        <a href="javascript:void(0)" class="btn btn-primary"><i class="uil uil-print"></i> {% tr 'Print' %}</a>
                     </div>
                 </div><!--end col-->
             </div><!--end row-->

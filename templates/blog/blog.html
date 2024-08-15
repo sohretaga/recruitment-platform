@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load blog_actions %}
+{% load translate %}
 
-{% block title %}Blog Grid{% endblock title %}
+{% block title %}{% tr 'All Blogs' %}{% endblock title %}
 
 {% block head %}
 <!-- Choise Css -->
@@ -28,13 +29,13 @@
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="text-center text-white">
-                        <h3 class="mb-4">Blog Grid</h3>
+                        <h3 class="mb-4">{% tr 'All Blogs' %}</h3>
                         <div class="page-next">
                             <nav class="d-inline-block" aria-label="breadcrumb text-center">
                                 <ol class="breadcrumb justify-content-center">
-                                    <li class="breadcrumb-item"><a href="{% url 'main:main-index' %}">Home</a></li>
-                                    <li class="breadcrumb-item"><a href="{% url 'blog:blog' %}">Blog</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page"> Blog Grid </li>
+                                    <li class="breadcrumb-item"><a href="{% url 'main:main-index' %}">{% tr 'Home' %}</a></li>
+                                    <li class="breadcrumb-item"><a href="{% url 'blog:blog' %}">{% tr 'Blog' %}</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page"> {% tr 'All Blogs' %} </li>
                                 </ol>
                             </nav>
                         </div>
@@ -90,7 +91,7 @@
                                         <a href="{% url 'blog:detail' blog.slug %}" class="primary-link"><h6 class="fs-17">{{ blog.title }}</h6></a>
                                         <!-- <p class="text-muted">Description</p> -->
                                         <div class="d-flex justify-content-between">
-                                            <a href="{% url 'blog:detail' blog.slug %}" class="form-text text-primary">Read More <i class="uil uil-angle-right-b"></i></a>
+                                            <a href="{% url 'blog:detail' blog.slug %}" class="form-text text-primary">{% tr 'Read More' %} <i class="uil uil-angle-right-b"></i></a>
                                         </div>
                                     </div>
                                 </div><!--end blog-grid-box-->
@@ -162,94 +163,7 @@
 
                     </div><!--end blog-post-->
                 </div><!--end col-->
-
-                <div class="col-lg-4 col-md-5">
-                    <div class="sidebar ms-lg-4 ps-lg-4 mt-5 mt-lg-0">
-                        <!-- Search widget-->
-                        <aside class="widget widget_search">
-                            <form class="position-relative">
-                                <input class="form-control" type="search" placeholder="Search...">
-                                <button class="bg-transparent border-0 position-absolute top-50 end-0 translate-middle-y me-2" type="submit"><span class="mdi mdi-magnify text-muted"></span></button>
-                            </form>
-                        </aside>
-                        <div class="mt-4 pt-2">
-                            <div class="sd-title">
-                                <h6 class="fs-16 mb-3">Categories</h6>
-                            </div>
-                            <div id="blog-categories" class="my-3">
-                                {% for category in categories %}
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" value="{{ category.name }}" id="category{{ category.id }}" />
-                                        <label class="form-check-label ms-2" for="category{{ category.id }}">{{ category.name }}</label>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div><!--end Categories-->
-
-                        <div class="mt-4 pt-2">
-                            <div class="sd-title">
-                                <h6 class="fs-16 mb-3">Popular Post</h6>
-                            </div>
-                            <ul class="widget-popular-post list-unstyled my-4">
-                                {% for blog in pobular_blogs %}
-                                    <li class="d-flex mb-3 align-items-center pb-3 border-bottom">
-                                        <img src="{% if blog.cover_photo %}{{ blog.cover_photo.url }}{% else %} {% static 'main/images/blog/img-05.jpg' %} {% endif %}" alt="{{ blog.title|title }}" class="widget-popular-post-img rounded" style="min-width: 85px; min-height: 60px;" />
-                                        <div class="flex-grow-1 text-truncate ms-3">
-                                            <a href="{% url 'blog:detail' blog.slug %}" class="text-dark">{{ blog.title|title }}</a>
-                                            <span class="d-block text-muted fs-14">{{ blog.created_date|date:"M d, Y" }}</span>
-                                        </div>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </div><!--end Polular Post-->
-
-                        <div class="mt-4 pt-2">
-                            <div class="sd-title">
-                                <h6 class="fs-16 mb-3">Latest Tags</h6>
-                            </div>
-                            <div class="tagcloud mt-3">
-                                <a class="badge tag-cloud fs-12 mt-2"
-                                    href="javascript:void(0)">Fashion</a>
-                                <a class="badge tag-cloud fs-12 mt-2"
-                                    href="javascript:void(0)">Jobs</a>
-                                <a class="badge tag-cloud fs-12 mt-2"
-                                    href="javascript:void(0)">Business</a>
-                                <a class="badge tag-cloud fs-12 mt-2"
-                                    href="javascript:void(0)">Corporate</a>
-                                <a class="badge tag-cloud fs-12 mt-2"
-                                    href="javascript:void(0)">E-commerce</a>
-                                <a class="badge tag-cloud fs-12 mt-2"
-                                    href="javascript:void(0)">Agency</a>
-                                <a class="badge tag-cloud fs-12 mt-2"
-                                    href="javascript:void(0)">Responsive</a>
-                            </div>
-                        </div><!--end Latest Tags-->
-
-                        <div class="mt-4 pt-2">
-                            <div class="sd-title">
-                                <h6 class="fs-16 mb-3">Follow & Connect</h6>
-                            </div>
-                            <ul class="widget-social-menu list-inline mb-0 mt-3">
-                                <li class="list-inline-item">
-                                    <a href="javascript:void(0)"><i class="uil uil-facebook-f"></i></a>
-                                </li>
-                                <li class="list-inline-item">
-                                    <a href="javascript:void(0)"><i class="uil uil-whatsapp"></i></a>
-                                </li>
-                                <li class="list-inline-item">
-                                    <a href="javascript:void(0)"><i class="uil uil-linkedin"></i></a>
-                                </li>
-                                <li class="list-inline-item">
-                                    <a href="javascript:void(0)"><i class="uil uil-youtube"></i></a>
-                                </li>
-                                <li class="list-inline-item">
-                                    <a href="javascript:void(0)"><i class="uil uil-envelope"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!--end sidebar-->
-                </div><!--end col-->
+                {% include 'blog/partials/side-bar.html' %}
             </div><!--end row-->
         </div><!--end container-->
     </section>

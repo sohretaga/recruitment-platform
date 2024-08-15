@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load actions %}
+{% load translate %}
 
-{% block title %}Candidate List{% endblock title %}
+{% block title %}{% tr 'Candidate List' %}{% endblock title %}
 
 {% block head %}
      <!-- Choise Css -->
@@ -28,12 +29,12 @@
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="text-center text-white">
-                        <h3 class="mb-4">Candidate List</h3>
+                        <h3 class="mb-4">{% tr 'Candidate List' %}</h3>
                         <div class="page-next">
                             <nav class="d-inline-block" aria-label="breadcrumb text-center">
                                 <ol class="breadcrumb justify-content-center">
-                                    <li class="breadcrumb-item"><a href="{% url 'main:main-index' %}">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page"> Candidate List </li>
+                                    <li class="breadcrumb-item"><a href="{% url 'main:main-index' %}">{% tr 'Home' %}</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page"> {% tr 'Candidate List' %} </li>
                                 </ol>
                             </nav>
                         </div>
@@ -70,7 +71,7 @@
                                 <div class="col-lg-3">
                                     <div class="filler-job-form">
                                         <i class="uil uil-briefcase-alt"></i>
-                                        <input type="search" class="form-control filter-job-input-box" id="exampleFormControlInput1" placeholder="Job, Company name... ">
+                                        <input type="search" class="form-control filter-job-input-box" id="exampleFormControlInput1" placeholder="{% tr 'Job, Company name' %}... ">
                                     </div>
                                 </div><!--end col-->
                                 <div class="col-lg-3">
@@ -339,8 +340,8 @@
                                 </div><!--end col-->
                                 <div class="col-lg-3">
                                     <div>
-                                        <a href="javascript:void(0)" class="btn btn-primary"><i class="uil uil-filter"></i> Filter</a>
-                                        <a href="javascript:void(0)" class="btn btn-success ms-2"><i class="uil uil-cog"></i> Advance</a>
+                                        <a href="javascript:void(0)" class="btn btn-primary"><i class="uil uil-filter"></i> {% tr 'Filter' %}</a>
+                                        <a href="javascript:void(0)" class="btn btn-success ms-2"><i class="uil uil-cog"></i> {% tr 'Advance' %}</a>
                                     </div>
                                 </div>
                             </div><!--end row-->

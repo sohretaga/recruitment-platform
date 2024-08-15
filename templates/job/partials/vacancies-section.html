@@ -1,4 +1,6 @@
 {% load static %}
+{% load translate %}
+
 <section id="job-list" class="section">
     <div class="container">
         <div class="row justify-content-center">
@@ -26,7 +28,7 @@
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="preferenceOne">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#preference" aria-expanded="true" aria-controls="preference">
-                                    Work Preference
+                                    {% tr 'Work Preference' %}
                                 </button>
                             </h2>
                             <div id="preference" class="accordion-collapse collapse show" aria-labelledby="preferenceOne">
@@ -46,7 +48,7 @@
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="careerTypeOne">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#careertype" aria-expanded="true" aria-controls="careertype">
-                                    Career Type
+                                    {% tr 'Career Type' %}
                                 </button>
                             </h2>
                             <div id="careertype" class="accordion-collapse collapse show" aria-labelledby="careerTypeOne">
@@ -66,14 +68,14 @@
                         <div class="accordion-item mt-3">
                             <h2 class="accordion-header" id="departmentOne">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#department" aria-expanded="true" aria-controls="department">
-                                Department
+                                {% tr 'Department' %}
                             </button>
                             </h2>
                             <div id="department" class="accordion-collapse collapse show" aria-labelledby="departmentOne">
                                 <div class="accordion-body">
                                     <div class="side-title">
                                         <form class="position-relative mb-2">
-                                            <input class="form-control" type="search" placeholder="Search...">
+                                            <input class="form-control" type="search" placeholder="{% tr 'Search' %}...">
                                             <button class="bg-transparent border-0 position-absolute top-50 end-0 translate-middle-y me-2" type="submit"><span class="mdi mdi-magnify text-muted"></span></button>
                                         </form>
 
@@ -105,7 +107,7 @@
                                     <div class="filler-job-form">
                                         <i class="uil uil-location-point"></i>
                                         <select class="form-select" data-trigger name="location" id="location">
-                                            <option value="">Location</option>
+                                            <option value="">{% tr 'Location' %}</option>
                                             {% for location in locations %}
                                                 <option value="{{ location.name }}">{{ location.name }}</option>
                                             {% endfor %}
@@ -116,7 +118,7 @@
                                     <div class="filler-job-form">
                                         <i class="uil uil-clipboard-notes"></i>
                                         <select class="form-select " data-trigger name="job_family" id="job-family">
-                                            <option value="">Job Family</option>
+                                            <option value="">{% tr 'Job Family' %}</option>
                                             {% for family in job_family %}
                                                 <option value="{{ family.name }}">{{ family.name }}</option>
                                             {% endfor %}
@@ -124,7 +126,7 @@
                                     </div>
                                 </div><!--end col-->
                                 <div class="col-lg-4 col-md-6">
-                                    <a href="javascript:void(0)" class="btn btn-primary w-100"><i class="uil uil-filter"></i> Filter</a>
+                                    <a href="javascript:void(0)" class="btn btn-primary w-100"><i class="uil uil-filter"></i> {% tr 'Filter' %}</a>
                                 </div><!--end col-->
                             </div><!--end row-->
                         </form>
@@ -135,7 +137,7 @@
                             <ul class="list-inline">
                                 {% for popular in popular_job_titles %}
                                 <li class="list-inline-item" style="width: calc(50% - 1rem);">
-                                    <div class="popular-box d-flex align-items-center"  style="height: 50px;">
+                                    <div class="popular-box d-flex align-items-center" style="height: 50px;">
                                         <div class="number flex-shrink-0 me-2">{{ popular.count }}</div>
                                         <a href="javascript:void(0)" class="primary-link stretched-link trending {% if popular.job_title_name in url %}active-trend{% endif %}"><h6 class="fs-14 mb-0">{{ popular.job_title_name }}</h6></a>
                                     </div>
@@ -222,20 +224,20 @@
                             <div class="mb-3">
                                 <div class="filler-job-form position-relative">
                                     <i class="uil uil-briefcase-alt"></i>
-                                    <input type="search" class="form-control filter-job-input-box" id="search-vacancy" placeholder="Job, Company... ">
+                                    <input type="search" class="form-control filter-job-input-box" id="search-vacancy" placeholder="{% tr 'Job, Company' %}... ">
                                 </div>
                             </div>
                         </div>
 
                         <div class="area-range">
-                            <div class="form-label mb-3">Salary Range: <span class="example-val mt-2" id="slider1-span">0</span> AZN</div>
+                            <div class="form-label mb-3">{% tr 'Salary Range' %}: <span class="example-val mt-2" id="slider1-span">0</span> AZN</div>
                             <div id="slider1"></div>
                         </div>
                 
                         <div class="accordion-item mt-4">   
                         <h2 class="accordion-header" id="experienceOne">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#experience" aria-expanded="true" aria-controls="experience">
-                                Work Experience
+                                {% tr 'Work Experience' %}
                             </button>
                         </h2>
                         <div id="experience" class="accordion-collapse collapse show" aria-labelledby="experienceOne">
@@ -255,7 +257,7 @@
                         <div class="accordion-item mt-3">
                             <h2 class="accordion-header" id="jobType">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#jobtype" aria-expanded="false" aria-controls="jobtype">
-                                    Type of Employment
+                                    {% tr 'Type of Employment' %}
                                 </button>
                             </h2>
                             <div id="jobtype" class="accordion-collapse collapse show" aria-labelledby="jobType">
@@ -275,7 +277,7 @@
                         <div class="accordion-item mt-3">
                             <h2 class="accordion-header" id="datePosted">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#dateposted" aria-expanded="false" aria-controls="dateposted">
-                                    Date Posted
+                                    {% tr 'Date Posted' %}
                                 </button>
                             </h2>
                             <div id="dateposted" class="accordion-collapse collapse show" aria-labelledby="datePosted">

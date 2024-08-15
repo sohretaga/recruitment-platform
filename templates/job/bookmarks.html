@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load translate %}
 
-{% block title %}Manage Jobs{% endblock title %}
+{% block title %}{% tr 'Bookmarks Jobs' %}{% endblock title %}
 
 {% block head %}
     <!-- Choise Css -->
@@ -27,13 +28,13 @@
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="text-center text-white">
-                        <h3 class="mb-4">Bookmarks Jobs</h3>
+                        <h3 class="mb-4">{% tr 'Bookmarks Jobs' %}</h3>
                         <div class="page-next">
                             <nav class="d-inline-block" aria-label="breadcrumb text-center">
                                 <ol class="breadcrumb justify-content-center">
-                                    <li class="breadcrumb-item"><a href="{% url 'main:main-index' %}">Home</a></li>
-                                    <li class="breadcrumb-item"><a href="javascript:void(0)">Profile</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page"> Bookmarks Jobs </li>
+                                    <li class="breadcrumb-item"><a href="{% url 'main:main-index' %}">{% tr 'Home' %}</a></li>
+                                    <li class="breadcrumb-item"><a href="javascript:void(0)">{% tr 'Profile' %}</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page"> {% tr 'Bookmarks Jobs' %} </li>
                                 </ol>
                             </nav>
                         </div>
@@ -65,7 +66,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-8">
                     <div>
-                        <h6 class="fs-16 mb-0">{{ bookmark_count }} Bookmarked Vacancies </h6>
+                        <h6 class="fs-16 mb-0">{{ bookmark_count }} {% tr 'Bookmarked Vacancies' %} </h6>
                     </div>
                 </div><!--end col-->
                 <div class="col-lg-4">
@@ -73,22 +74,22 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="selection-widget mt-3 mt-lg-0">
-                                    <select class="form-select" data-trigger name="choices-single-filter-orderby" id="choices-single-filter-orderby" aria-label="Default select example">
-                                        <option value="df">Default</option>
-                                        <option value="ne">Newest</option>
-                                        <option value="od">Oldest</option>
-                                        <option value="rd">Random</option>
+                                    <select class="form-select" data-trigger name="choices-single-filter-orderby" id="choices-single-filter-orderby">
+                                        <option value="df">{% tr 'Default' %}</option>
+                                        <option value="ne">{% tr 'Newest' %}</option>
+                                        <option value="od">{% tr 'Oldest' %}</option>
+                                        <option value="rd">{% tr 'Random' %}</option>
                                     </select>
                                 </div>
                             </div><!--end col-->
                             <div class="col-lg-6">
                                 <div class="selection-widget mt-3 mt-lg-0">
-                                    <select class="form-select" data-trigger name="choices-candidate-page" id="choices-candidate-page" aria-label="Default select example">
-                                        <option value="df">All</option>
-                                        <option value="ne">Last 2 Month</option>
-                                        <option value="ne">Last 6 Month</option>
-                                        <option value="ne">Last 12 Month</option>
-                                        <option value="ne">Last 2 Year</option>
+                                    <select class="form-select" data-trigger name="choices-candidate-page" id="choices-candidate-page">
+                                        <option value="df">{% tr 'All' %}</option>
+                                        <option value="ne">{% tr 'Last 2 Month' %}</option>
+                                        <option value="ne">{% tr 'Last 6 Month' %}</option>
+                                        <option value="ne">{% tr 'Last 12 Month' %}</option>
+                                        <option value="ne">{% tr 'Last 2 Year' %}</option>
                                     </select>
                                 </div>
                             </div><!--end col-->
@@ -214,18 +215,18 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Delete Bookmark ?</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">{% tr 'Delete Bookmark ?' %}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div>
-                        <h6 class="text-danger"><i class="uil uil-exclamation-triangle"></i>Warning: Are you sure you want to delete bookmark ?</h6>
-                        <p class="text-muted"> Your bookmarks will be permanently removed and you will never see them in your bookmark list again.</p>
+                        <h6 class="text-danger"><i class="uil uil-exclamation-triangle"></i> {% tr 'Warning: Are you sure you want to delete bookmark ?' %}</h6>
+                        <p class="text-muted"> {% tr 'Your bookmarks will be permanently removed and you will never see them in your bookmark list again.' %}</p>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" id="delete-yes" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Yes, delete</button>
+                    <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal">{% tr 'Cancel' %}</button>
+                    <button type="button" id="delete-yes" class="btn btn-danger btn-sm" data-bs-dismiss="modal">{% tr 'Yes, delete' %}</button>
                 </div>
             </div>
         </div>

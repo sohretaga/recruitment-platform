@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load translate %}
 
 {% block title %}{{ service.title }}{% endblock title %}
 
@@ -28,13 +29,13 @@
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="text-center text-white">
-                        <h3 class="mb-4">Service Detail</h3>
+                        <h3 class="mb-4">{% tr 'Service Detail' %}</h3>
                         <div class="page-next">
                             <nav class="d-inline-block" aria-label="breadcrumb text-center">
                                 <ol class="breadcrumb justify-content-center">
-                                    <li class="breadcrumb-item"><a href="{% url 'main:main-index' %}">Home</a></li>
-                                    <li class="breadcrumb-item"><a href="{% url 'main:services' %}">Services</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page"> Service Detail </li>
+                                    <li class="breadcrumb-item"><a href="{% url 'main:main-index' %}">{% tr 'Home' %}</a></li>
+                                    <li class="breadcrumb-item"><a href="{% url 'main:services' %}">{% tr 'Services' %}</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page"> {% tr 'Service Detail' %} </li>
                                 </ol>
                             </nav>
                         </div>
@@ -82,7 +83,7 @@
                     <div class="sidebar ms-lg-4 ps-lg-4 mt-5 mt-lg-0">
                         <div class="mt-4 pt-2">
                             <div class="sd-title">
-                                <h6 class="fs-16 mb-3">Services</h6>
+                                <h6 class="fs-16 mb-3">{% tr 'Services' %}</h6>
                             </div>
                             <ul class="widget-popular-post list-unstyled my-4">
                                 {% for obj in services %}

@@ -1,5 +1,6 @@
 {% load static %}
 {% load actions %}
+{% load translate %}
 
 {% for vacancy in vacancies %}
     <div id="vacancy-{{ vacancy.id }}" class="job-box card mt-5 {% bookmarks request vacancy.id %}">
@@ -27,9 +28,9 @@
                     <p class="text-muted fs-14 mb-0"><i class="uil uil-wallet"></i> {{ vacancy.salary_minimum }} ₼ - {{ vacancy.salary_maximum }} ₼ / month</p>
                     <small class="text-muted fw-normal mb-0">({{ vacancy.work_experience_name }})</small>
                     <div class="mt-2">
-                        <span class="badge bg-soft-success mt-1">Full Time</span>
-                        <span class="badge bg-soft-warning mt-1">Urgent</span>
-                        <span class="badge bg-soft-info mt-1">Private</span>
+                        <span class="badge bg-soft-success mt-1">{% tr 'Full Time' %}</span>
+                        <span class="badge bg-soft-warning mt-1">{% tr 'Urgent' %}</span>
+                        <span class="badge bg-soft-info mt-1">{% tr 'Private' %}</span>
                     </div>
                 </div>
             </div><!--end row-->
@@ -43,7 +44,7 @@
                     {% if vacancy.keywords %}
                     <div>
                         <ul class="list-inline mb-0">
-                            <li class="list-inline-item"><i class="uil uil-tag"></i> Keywords :</li>
+                            <li class="list-inline-item"><i class="uil uil-tag"></i> {% tr 'Keywords' %} :</li>
                             {% for key in vacancy.keywords %}
                             <li class="list-inline-item"><a href="javascript:void(0)" class="primary-link text-muted" onclick="filterByKeyword('{{ key }}')">{{ keywords|get_item:key }}{% if not forloop.last %},{% endif %}</a></li>
                             {% endfor %}
@@ -56,9 +57,9 @@
                     <div class="text-md-end">
                         {% applications request vacancy.id as apply %}
                         {% if not apply %}
-                        <a href="javascript:void(0);" id="apply-now-{{ vacancy.id }}" class="primary-link" onclick="apply('{{ vacancy.id }}')">Apply Now <i class="mdi mdi-chevron-double-right"></i></a>
+                        <a href="javascript:void(0);" id="apply-now-{{ vacancy.id }}" class="primary-link" onclick="apply('{{ vacancy.id }}')">{% tr 'Apply Now' %} <i class="mdi mdi-chevron-double-right"></i></a>
                         {% else %}
-                        <a href="javascript:void(0);" id="delete-apply-{{ vacancy.id }}" class="primary-link" onclick="apply('{{ vacancy.id }}')">Delete Apply <i class="mdi mdi-chevron-double-right"></i></a>
+                        <a href="javascript:void(0);" id="delete-apply-{{ vacancy.id }}" class="primary-link" onclick="apply('{{ vacancy.id }}')">{% tr 'Delete Apply' %} <i class="mdi mdi-chevron-double-right"></i></a>
                         {% endif %}
                     </div>
                 </div>

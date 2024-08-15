@@ -1,0 +1,90 @@
+{% load static %}
+{% load translate %}
+
+<div class="col-lg-4 col-md-5">
+    <div class="sidebar ms-lg-4 ps-lg-4 mt-5 mt-lg-0">
+        <!-- Search widget-->
+        <aside class="widget widget_search">
+            <form class="position-relative">
+                <input class="form-control" type="search" placeholder="{% tr 'Search' %}...">
+                <button class="bg-transparent border-0 position-absolute top-50 end-0 translate-middle-y me-2" type="submit"><span class="mdi mdi-magnify text-muted"></span></button>
+            </form>
+        </aside>
+        <div class="mt-4 pt-2">
+            <div class="sd-title">
+                <h6 class="fs-16 mb-3">{% tr 'Categories' %}</h6>
+            </div>
+            <div id="blog-categories" class="my-3">
+                {% for category in categories %}
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" value="{{ category.name }}" id="category{{ category.id }}" />
+                        <label class="form-check-label ms-2" for="category{{ category.id }}">{{ category.name }}</label>
+                    </div>
+                {% endfor %}
+            </div>
+        </div><!--end Categories-->
+
+        <div class="mt-4 pt-2">
+            <div class="sd-title">
+                <h6 class="fs-16 mb-3">{% tr 'Popular Post' %}</h6>
+            </div>
+            <ul class="widget-popular-post list-unstyled my-4">
+                {% for blog in pobular_blogs %}
+                    <li class="d-flex mb-3 align-items-center pb-3 border-bottom">
+                        <img src="{% if blog.cover_photo %}{{ blog.cover_photo.url }}{% else %} {% static 'main/images/blog/img-05.jpg' %} {% endif %}" alt="{{ blog.title|title }}" class="widget-popular-post-img rounded" style="min-width: 85px; min-height: 60px;" />
+                        <div class="flex-grow-1 text-truncate ms-3">
+                            <a href="{% url 'blog:detail' blog.slug %}" class="text-dark">{{ blog.title|title }}</a>
+                            <span class="d-block text-muted fs-14">{{ blog.created_date|date:"M d, Y" }}</span>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div><!--end Polular Post-->
+
+        <div class="mt-4 pt-2">
+            <div class="sd-title">
+                <h6 class="fs-16 mb-3">{% tr 'Latest Tags' %}</h6>
+            </div>
+            <div class="tagcloud mt-3">
+                <a class="badge tag-cloud fs-12 mt-2"
+                    href="javascript:void(0)">Fashion</a>
+                <a class="badge tag-cloud fs-12 mt-2"
+                    href="javascript:void(0)">Jobs</a>
+                <a class="badge tag-cloud fs-12 mt-2"
+                    href="javascript:void(0)">Business</a>
+                <a class="badge tag-cloud fs-12 mt-2"
+                    href="javascript:void(0)">Corporate</a>
+                <a class="badge tag-cloud fs-12 mt-2"
+                    href="javascript:void(0)">E-commerce</a>
+                <a class="badge tag-cloud fs-12 mt-2"
+                    href="javascript:void(0)">Agency</a>
+                <a class="badge tag-cloud fs-12 mt-2"
+                    href="javascript:void(0)">Responsive</a>
+            </div>
+        </div><!--end Latest Tags-->
+
+        <div class="mt-4 pt-2">
+            <div class="sd-title">
+                <h6 class="fs-16 mb-3">{% tr 'Follow' %}</h6>
+            </div>
+            <ul class="widget-social-menu list-inline mb-0 mt-3">
+                <li class="list-inline-item">
+                    <a href="javascript:void(0)"><i class="uil uil-facebook-f"></i></a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="javascript:void(0)"><i class="uil uil-whatsapp"></i></a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="javascript:void(0)"><i class="uil uil-linkedin"></i></a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="javascript:void(0)"><i class="uil uil-youtube"></i></a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="javascript:void(0)"><i class="uil uil-envelope"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--end sidebar-->
+</div><!--end col-->

@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load site_content %}
+{% load translate %}
 
-{% block title %}Home{% endblock title %}
+{% block title %}{% tr 'Home' %}{% endblock title %}
 
 {% block head %}
     <!-- Nouislider Css -->
@@ -54,7 +55,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <ul class="treding-keywords list-inline mb-0 text-white-50 mt-4 mt-lg-3 text-center">
-                            <li class="list-inline-item text-white"><i class="mdi mdi-tag-multiple-outline text-warning fs-18"></i> Trending Keywords:</li>
+                            <li class="list-inline-item text-white"><i class="mdi mdi-tag-multiple-outline text-warning fs-18"></i> {% tr 'Trending Keywords' %}:</li>
                             {% for keyword in trending_keywords %}
                             <li class="list-inline-item"><a href="/?keyword={{ keyword.id }}#job-list">{{ keyword.name }}{% if not forloop.last %},{% endif %}</a></li>
                             {% endfor %}
@@ -96,7 +97,7 @@
                 <div class="row justify-content-center">
                     <!-- Swiper -->
                     <div class="swiper mySwiper">
-                        <h4 class="title">FEATURED VACANCIES</h4>
+                        <h4 class="title">{% tr 'FEATURED VACANCIES' %}</h4>
                         <div class="swiper-wrapper">
                             {% for featured in featured_slider %}
                                 <div class="swiper-slide">
@@ -132,7 +133,7 @@
         <!--START TODAY-->
         <section class="section bg-light today-section">
             <div class="container">
-                <h4 class="title">TODAY RELEASES</h4>
+                <h4 class="title">{% tr 'TODAY RELEASES' %}</h4>
                 <div class="row justify-content-center">
                     {% for vacancy in today_releases %}
                         <div class="card">
@@ -153,7 +154,7 @@
                             </div>
                             <div class="card-bottom">
                                 <p>{{ vacancy.fte_name }}</p>
-                                <p>Today</p>
+                                <p>{% tr 'Today' %}</p>
                             </div>
                         </div>
                     {% endfor %}
@@ -240,7 +241,7 @@
                             <div class="card-body">
                                 <a href="{% url 'blog:detail' blog.slug %}" class="primary-link"> <h5 class="fs-17">{{ blog.title }}</h5>
                                 </a>
-                                <a href="{% url 'blog:detail' blog.slug %}" class="form-text text-primary">Read more <i class="mdi mdi-chevron-right align-middle"></i></a>
+                                <a href="{% url 'blog:detail' blog.slug %}" class="form-text text-primary">{% tr 'Read more' %} <i class="mdi mdi-chevron-right align-middle"></i></a>
                             </div>
                         </div><!--end blog-box-->
                     </div><!--end col-->

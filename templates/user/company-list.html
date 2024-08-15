@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load translate %}
 
-{% block title %}Company List{% endblock title %}
+{% block title %}{% tr 'Company List' %}{% endblock title %}
 
 {% block head %}
      <!-- Choise Css -->
@@ -25,13 +26,13 @@
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="text-center text-white">
-                        <h3 class="mb-4">Company List</h3>
+                        <h3 class="mb-4">{% tr 'Company List' %}</h3>
                         <div class="page-next">
                             <nav class="d-inline-block" aria-label="breadcrumb text-center">
                                 <ol class="breadcrumb justify-content-center">
-                                    <li class="breadcrumb-item"><a href="{% url 'main:main-index' %}">Home</a></li>
-                                    <li class="breadcrumb-item"><a href="javascript:void(0)">Pages</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page"> Company List </li>
+                                    <li class="breadcrumb-item"><a href="{% url 'main:main-index' %}">{% tr 'Home' %}</a></li>
+                                    <li class="breadcrumb-item"><a href="javascript:void(0)">{% tr 'Pages' %}</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page"> {% tr 'Company List' %} </li>
                                 </ol>
                             </nav>
                         </div>

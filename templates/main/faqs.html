@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load translate %}
 
-{% block title %}FAQ's{% endblock title %}
+{% block title %}{% tr 'FAQs' %}{% endblock title %}
 
 {% block head %}
 <!-- Bootstrap Css -->
@@ -22,13 +23,13 @@
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="text-center text-white">
-                        <h3 class="mb-4">FAQ'S</h3>
+                        <h3 class="mb-4">{% tr 'FAQS' %}</h3>
                         <div class="page-next">
                             <nav class="d-inline-block" aria-label="breadcrumb text-center">
                                 <ol class="breadcrumb justify-content-center">
-                                    <li class="breadcrumb-item"><a href="{% url 'main:main-index' %}">Home</a></li>
-                                    <li class="breadcrumb-item"><a href="javascript:void(0)">Company</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page"> FAQ'S </li>
+                                    <li class="breadcrumb-item"><a href="{% url 'main:main-index' %}">{% tr 'Home' %}</a></li>
+                                    <li class="breadcrumb-item"><a href="javascript:void(0)">{% tr 'Company' %}</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page"> {% tr 'FAQs' %} </li>
                                 </ol>
                             </nav>
                         </div>
@@ -119,8 +120,8 @@
                 </div><!--end col-->
                 <div class="col-lg-12">
                     <div class="text-center mt-5">
-                        <a href="{% url 'main:contact' %}" class="btn btn-primary btn-hover mt-2"><i class="uil uil-phone"></i> Contact Us</a>
-                        <a href="javascript:void(0)" class="btn btn-warning btn-hover mt-2 ms-md-2"><i class="uil uil-envelope"></i> Email Now</a>
+                        <a href="{% url 'main:contact' %}" class="btn btn-primary btn-hover mt-2"><i class="uil uil-phone"></i> {% tr 'Contact Us' %}</a>
+                        <a href="javascript:void(0)" class="btn btn-warning btn-hover mt-2 ms-md-2"><i class="uil uil-envelope"></i> {% tr 'Email Now' %}</a>
                     </div>
                 </div>
             </div><!--end row-->

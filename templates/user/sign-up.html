@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load site_content %}
+{% load translate %}
 
-{% block title %}Sign Up{% endblock title %}
+{% block title %}{% tr 'Sign Up' %}{% endblock title %}
 
 {% block head %}
     <!-- Bootstrap Css -->
@@ -56,17 +57,17 @@
                                                 <ul class="job-list-menu nav nav-pills nav-justified flex-sm-row mb-4" id="pills-tab" role="tablist">
                                                     {% if user_type %}
                                                         <li class="nav-item" role="presentation">
-                                                            <button class="nav-link {% if user_type == 'employer' %}active{% endif %}" data-bs-toggle="pill" type="button" role="tab" onclick="changeUserType(this)" value="employer">Employer</button>
+                                                            <button class="nav-link {% if user_type == 'employer' %}active{% endif %}" data-bs-toggle="pill" type="button" role="tab" onclick="changeUserType(this)" value="employer">{% tr 'Employer' %}</button>
                                                         </li>
                                                         <li class="nav-item" role="presentation">
-                                                            <button class="nav-link {% if user_type == 'candidate' %}active{% endif %}" data-bs-toggle="pill" type="button" role="tab" onclick="changeUserType(this)" value="candidate">Candidate</button>
+                                                            <button class="nav-link {% if user_type == 'candidate' %}active{% endif %}" data-bs-toggle="pill" type="button" role="tab" onclick="changeUserType(this)" value="candidate">{% tr 'Candidate' %}</button>
                                                         </li>
                                                     {% else %}
                                                         <li class="nav-item" role="presentation">
-                                                            <button class="nav-link active" data-bs-toggle="pill" type="button" role="tab" onclick="changeUserType(this)" value="employer">Employer</button>
+                                                            <button class="nav-link active" data-bs-toggle="pill" type="button" role="tab" onclick="changeUserType(this)" value="employer">{% tr 'Employer' %}</button>
                                                         </li>
                                                         <li class="nav-item" role="presentation">
-                                                            <button class="nav-link" data-bs-toggle="pill" type="button" role="tab" onclick="changeUserType(this)" value="candidate">Candidate</button>
+                                                            <button class="nav-link" data-bs-toggle="pill" type="button" role="tab" onclick="changeUserType(this)" value="candidate">{% tr 'Candidate' %}</button>
                                                         </li>
                                                     {% endif %}
                                                 </ul>
@@ -78,32 +79,32 @@
                                                 value="{% if user_type %}{{ user_type }}{% else %}employer{% endif %}">
 
                                             <div class="mb-3">
-                                                <label for="usernameInput" class="form-label">Username</label>
-                                                <input type="text" name="username" class="form-control" required id="usernameInput" placeholder="Enter your username"
+                                                <label for="usernameInput" class="form-label">{% tr 'Username' %}</label>
+                                                <input type="text" name="username" class="form-control" required id="usernameInput" placeholder="{% tr 'Enter your username' %}"
                                                     value="{% if username %}{{ username }}{% endif %}">
                                             </div>
                                             <div class="mb-3">
-                                                <label for="passwordInput" class="form-label">Email</label>
-                                                <input type="email" name="email" class="form-control" required id="emailInput" placeholder="Enter your email"
+                                                <label for="passwordInput" class="form-label">{% tr 'Email' %}</label>
+                                                <input type="email" name="email" class="form-control" required id="emailInput" placeholder="{% tr 'Enter your email' %}"
                                                     value="{% if email %}{{ email }}{% endif %}">
                                             </div>
                                             <div class="mb-3">
-                                                <label for="emailInput" class="form-label">Password</label>
-                                                <input type="password" name="password" class="form-control" id="passwordInput" placeholder="Enter your password">
+                                                <label for="emailInput" class="form-label">{% tr 'Password' %}</label>
+                                                <input type="password" name="password" class="form-control" id="passwordInput" placeholder="{% tr 'Enter your password' %}">
                                             </div>
                                             <div class="mb-4">
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox" name="terms" id="flexCheckDefault"
                                                         {% if terms %}checked{% endif %}>
-                                                    <label class="form-check-label" for="flexCheckDefault">I agree to the <a href="{% url 'main:privacy-policy' %}" class="text-white text-decoration-underline">Terms and conditions</a></label>
+                                                    <label class="form-check-label" for="flexCheckDefault">{% tr 'I agree to the' %} <a href="{% url 'main:privacy-policy' %}" class="text-white text-decoration-underline">{% tr 'Terms and conditions' %}</a></label>
                                                 </div>
                                             </div>
                                             <div class="text-center">
-                                                <button type="submit" class="btn btn-white btn-hover w-100">Sign Up</buttom>
+                                                <button type="submit" class="btn btn-white btn-hover w-100">{% tr 'Sign Up' %}</buttom>
                                             </div>
                                         </form>
                                         <div class="mt-3 text-center">
-                                            <p class="mb-0">Already a member ? <a href="{% url 'user:sign-in' %}" class="fw-medium text-white text-decoration-underline"> Sign In </a></p>
+                                            <p class="mb-0">{% tr 'Already a member ?' %} <a href="{% url 'user:sign-in' %}" class="fw-medium text-white text-decoration-underline"> {% tr 'Sign In' %} </a></p>
                                         </div>
                                     </div>
                                 </div>

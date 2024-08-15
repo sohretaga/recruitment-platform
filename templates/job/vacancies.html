@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load translate %}
 
 {% block title %}
     {% if related_vacancies_title %}
@@ -49,9 +50,9 @@
                         <div class="page-next">
                             <nav class="d-inline-block" aria-label="breadcrumb text-center">
                                 <ol class="breadcrumb justify-content-center">
-                                    <li class="breadcrumb-item"><a href="{% url 'main:main-index' %}">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="{% url 'main:main-index' %}">{% tr 'Home' %}</a></li>
                                     <!-- <li class="breadcrumb-item"><a href="javascript:void(0)">Pages</a></li> -->
-                                    <li class="breadcrumb-item active" aria-current="page"> Vacancies </li>
+                                    <li class="breadcrumb-item active" aria-current="page"> {% tr 'Vacancies' %} </li>
                                 </ol>
                             </nav>
                         </div>

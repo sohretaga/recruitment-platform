@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load translate %}
 
-{% block title %}Candidate List{% endblock title %}
+{% block title %}{% tr 'Candidate List' %}{% endblock title %}
 
 {% block head %}
      <!-- Choise Css -->
@@ -30,12 +31,12 @@
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="text-center text-white">
-                        <h3 class="mb-4">Candidate List</h3>
+                        <h3 class="mb-4">{% tr 'Candidate List' %}</h3>
                         <div class="page-next">
                             <nav class="d-inline-block" aria-label="breadcrumb text-center">
                                 <ol class="breadcrumb justify-content-center">
-                                    <li class="breadcrumb-item"><a href="{% url 'main:main-index' %}">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page"> Candidate List </li>
+                                    <li class="breadcrumb-item"><a href="{% url 'main:main-index' %}">{% tr 'Home' %}</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page"> {% tr 'Candidate List' %} </li>
                                 </ol>
                             </nav>
                         </div>
@@ -70,7 +71,7 @@
                         <form action="#">
                             <div class="row g-2">
                                 <div class="col-lg-2">
-                                    <a href="{% url 'job:job-postings' %}" class="btn btn-primary"><i class="uil uil-arrow-left"></i> All Postings</a>
+                                    <a href="{% url 'job:job-postings' %}" class="btn btn-primary"><i class="uil uil-arrow-left"></i> {% tr 'All Postings' %}</a>
                                 </div>
 
                                 <div class="col-lg-3">
@@ -328,8 +329,8 @@
                                 </div><!--end col-->
                                 <div class="col-lg-7 d-flex justify-content-end">
                                     <div>
-                                        <a href="javascript:void(0)" class="btn btn-primary"><i class="uil uil-filter"></i> Filter</a>
-                                        <a href="javascript:void(0)" class="btn btn-success ms-2"><i class="uil uil-cog"></i> Advance</a>
+                                        <a href="javascript:void(0)" class="btn btn-primary"><i class="uil uil-filter"></i> {% tr 'Filter' %}</a>
+                                        <a href="javascript:void(0)" class="btn btn-success ms-2"><i class="uil uil-cog"></i> {% tr 'Advance' %}</a>
                                     </div>
                                 </div>
                             </div><!--end row-->
@@ -341,7 +342,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-8">
                     <div class="mb-3 mb-lg-0">
-                        <h6 class="fs-16 mb-0"> {{ applicants_count }} Applicants </h6>
+                        <h6 class="fs-16 mb-0"> {{ applicants_count }} {% tr 'Applicants' %} </h6>
                     </div>
                 </div><!--end col-->
 
@@ -351,10 +352,10 @@
                             <div class="col-lg-12">
                                 <div class="selection-widget">
                                     <select class="form-select" data-trigger name="choices-single-filter-orderby" id="choices-single-filter-orderby" aria-label="Default select example">
-                                        <option value="df">Default</option>
-                                        <option value="ne">Newest</option>
-                                        <option value="od">Oldest</option>
-                                        <option value="rd">Random</option>
+                                        <option value="df">{% tr 'Default' %}</option>
+                                        <option value="ne">{% tr 'Newest' %}</option>
+                                        <option value="od">{% tr 'Oldest' %}</option>
+                                        <option value="rd">{% tr 'Random' %}</option>
                                     </select>
                                 </div>
                             </div>
@@ -404,30 +405,30 @@
                                                     {% elif applicant.candidate_action.action == 'REJECT' %}
                                                         <button class="btn btn-danger"><span>Invitation Rejected<br>{{ applicant.employer_action.invite_date }}</span> <i class="uil uil-times-circle"></i></button>
                                                     {% elif applicant.candidate_action.action == 'REQUEST_OTHER_DATE' %}
-                                                        <button id="action-status-{{ applicant.id }}" class="btn btn-success" onclick="action('{{ applicant.id }}')"><span>Requested Another Date<br>{{ applicant.candidate_action.request_other_date }}</span> <i class="uil uil-clock-eight"></i></button>
+                                                        <button id="action-status-{{ applicant.id }}" class="btn btn-success" onclick="action('{{ applicant.id }}')"><span>{% tr 'Requested Another Date' %}<br>{{ applicant.candidate_action.request_other_date }}</span> <i class="uil uil-clock-eight"></i></button>
                                                     {% endif %}
                                                 {% else %}
                                                     {% if applicant.employer_action.action == 'SHORTLIST' %}
-                                                        <button id="action-status-{{ applicant.id }}" class="btn btn-primary" onclick="action('{{ applicant.id }}')">Shortlisted <i class="uil uil-user-check"></i></button>
+                                                        <button id="action-status-{{ applicant.id }}" class="btn btn-primary" onclick="action('{{ applicant.id }}')">{% tr 'Shortlisted' %} <i class="uil uil-user-check"></i></button>
                                                     {% elif applicant.employer_action.action == 'DELIST' %}
-                                                        <button id="action-status-{{ applicant.id }}" class="btn btn-danger" onclick="action('{{ applicant.id }}')">Delisted <i class="uil uil-times-circle"></i></button>
+                                                        <button id="action-status-{{ applicant.id }}" class="btn btn-danger" onclick="action('{{ applicant.id }}')">{% tr 'Delisted' %} <i class="uil uil-times-circle"></i></button>
                                                     {% elif applicant.employer_action.action == 'INVITE' %}
-                                                        <button id="action-status-{{ applicant.id }}" class="btn btn-success" onclick="action('{{ applicant.id }}')"><span>Invited Date<br>{{ applicant.employer_action.invite_date }}</span> <i class="uil uil-clock-eight"></i></button>
+                                                        <button id="action-status-{{ applicant.id }}" class="btn btn-success" onclick="action('{{ applicant.id }}')"><span>{% tr 'Invited Date' %}<br>{{ applicant.employer_action.invite_date }}</span> <i class="uil uil-clock-eight"></i></button>
                                                     {% elif applicant.employer_action.action == 'SUGGEST_OTHER_DATE' %}
-                                                        <button id="action-status-{{ applicant.id }}" class="btn btn-success" onclick="action('{{ applicant.id }}')"><span>Another Date Suggested<br>{{ applicant.employer_action.invite_date }}</span> <i class="uil uil-clock-eight"></i></button>
+                                                        <button id="action-status-{{ applicant.id }}" class="btn btn-success" onclick="action('{{ applicant.id }}')"><span>{% tr 'Another Date Suggested' %}<br>{{ applicant.employer_action.invite_date }}</span> <i class="uil uil-clock-eight"></i></button>
                                                     {% elif applicant.candidate_action and applicant.employer_action.action == 'ACCEPT_REQUEST_OTHER_DATE' %}
-                                                        <button id="action-status-{{ applicant.id }}" class="btn btn-success" onclick="action('{{ applicant.id }}')"><span>Requested Date Accepted<br>{{ applicant.candidate_action.request_other_date }}</span> <i class="uil uil-clock-eight"></i></button>
+                                                        <button id="action-status-{{ applicant.id }}" class="btn btn-success" onclick="action('{{ applicant.id }}')"><span>{% tr 'Requested Date Accepted' %}<br>{{ applicant.candidate_action.request_other_date }}</span> <i class="uil uil-clock-eight"></i></button>
                                                     {% else %}
-                                                        <button id="action-status-{{ applicant.id }}" class="btn btn-primary" onclick="action('{{ applicant.id }}')">Actions <i class="uil uil-user-check"></i></button>
+                                                        <button id="action-status-{{ applicant.id }}" class="btn btn-primary" onclick="action('{{ applicant.id }}')">{% tr 'Actions' %} <i class="uil uil-user-check"></i></button>
                                                     {% endif %}
                                                 {% endif %}
                                             </li>
-                                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Message">
+                                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top" title="{% tr 'Message' %}">
                                                 <a href="javascript:void(0)" class="avatar-sm bg-soft-success d-inline-block text-center rounded-circle fs-18" onclick="message('{{ applicant.id }}')">
                                                     <i class="uil uil-envelope-download"></i>
                                                 </a>
                                             </li>
-                                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top" title="{% if applicant.cv %}CV{% else %}No CV{% endif %}">
+                                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top" title="{% if applicant.cv %}{% tr 'CV' %}{% else %}{% tr 'No CV' %}{% endif %}">
                                                 <a {% if applicant.cv %}href="{{ applicant.cv.url }}" target="_blank" {% else %}href="javascript:void(0)"{% endif %} class="avatar-sm bg-soft-success d-inline-block text-center rounded-circle fs-18">
                                                     <i class="uil uil-file-download-alt"></i>
                                                 </a>
@@ -526,7 +527,7 @@
             </div>
             <div id="applicant-message" class="modal-body"></div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal">OK</button>
+                <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal">{% tr 'OK' %}</button>
             </div>
             </div>
         </div>
@@ -545,28 +546,28 @@
                         <div class="w-100">
                             <div class="text-center mb-4">
                                 <h5 id="modal-title"></h5>
-                                <p class="text-muted">Select your actions for this applicant.</p>
+                                <p class="text-muted">{% tr 'Select your actions for this applicant.' %}</p>
                             </div>
                             <div class="mb-3">
-                                <label for="usernameInput" class="form-label">Action</label>
+                                <label for="usernameInput" class="form-label">{% tr 'Action' %}</label>
                                 <div class="selection-widget mt-2 mt-lg-0">
                                     <select class="form-select" data-trigger id="action">
-                                        <option value="SHORTLIST">Shortlist</option>
-                                        <option value="DELIST">Delist</option>
-                                        <option value="INVITE">Invite</option>
-                                        <option value="SUGGEST_OTHER_DATE">Suggest Another Date</option>
-                                        <option value="ACCEPT_REQUEST_OTHER_DATE">Accept</option>
+                                        <option value="SHORTLIST">{% tr 'Shortlist' %}</option>
+                                        <option value="DELIST">{% tr 'Delist' %}</option>
+                                        <option value="INVITE">{% tr 'Invite' %}</option>
+                                        <option value="SUGGEST_OTHER_DATE">{% tr 'Suggest Another Date' %}</option>
+                                        <option value="ACCEPT_REQUEST_OTHER_DATE">{% tr 'Accept' %}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <div style="display: none;">
-                                    <label for="invite-date" class="form-label">Invite Date</label>
+                                    <label for="invite-date" class="form-label">{% tr 'Invite Date' %}</label>
                                     <input type="text" class="form-control" id="invite-date" placeholder="Enter the Invitation Date">
                                 </div>
                             </div>
                             <div class="text-center">
-                                <button type="button" id="send-action-btn" class="btn btn-primary w-100">Select Action</button>
+                                <button type="button" id="send-action-btn" class="btn btn-primary w-100">{% tr 'Select Action' %}</button>
                             </div>
                         </div>
                     </div>
