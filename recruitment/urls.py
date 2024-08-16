@@ -23,6 +23,8 @@ urlpatterns = [
     path('', include('main.urls')),
     path('', include('job.urls')),
     path('', include('user.urls')),
+    path('', include('user.reset_password_urls')),
+
     path('froala_editor/', include('froala_editor.urls')),
     path('admin/', admin.site.urls),
     path('cp/', include('recruitment_cp.urls')),
