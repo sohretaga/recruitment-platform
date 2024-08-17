@@ -23,6 +23,22 @@
     <link href="{% static 'dashboard/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
 {% endblock head %}
 
+<style>
+    table.dataTable {
+        table-layout: fixed;
+    }
+
+    td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    option {
+        text-align: left;
+    }
+</style>
+
 {% block content %}
 <div class="page-content">
     <div class="container-fluid">
@@ -44,18 +60,6 @@
             </div>
         </div>
         <!-- end page title -->
-
-        <style>
-            table.dataTable {
-                table-layout: fixed;
-            }
-
-            td {
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-        </style>
 
         <div class="row">
             <div class="col-lg">
