@@ -7,12 +7,15 @@ from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import F, Value, Case, When, CharField, OuterRef, Exists, BooleanField
+from django.db.models.functions import Concat
+from django.conf import settings
 
 from . import forms
 from .models import Gallery, GalleryImage, CandidateBookmark
 from job.models import Vacancy
 from .decorators import logout_required
-from user.models import CustomUser, Candidate, Employer, Education, Experience
+from user.models import CustomUser, Candidate, Employer, Education, Experience, CandidateBookmark
 from job.utils import vacancy_with_related_info
 from .utils import manage_user_type_for_details
 from dashboard.forms import ManageEmployerAccountForm, ManageCandidateAccountForm
@@ -23,7 +26,7 @@ from recruitment_cp.models import(
         ParameterOrganizationOwnership,
         ParameterNumberOfEmployee,
         ParameterCountry,
-        ParameterCompetence
+        ParameterCompetence,
     )
 
 import os
@@ -89,26 +92,95 @@ def sign_out(request):
         logout(request)
     return render(request, 'user/sign-out.html')
 
-@logout_required
-def reset_password(request):
-    if request.POST:
-        ...
-
-    return render(request, 'user/reset-password.html')
-
 @login_required
 def profile(request):
     return render(request, 'user/profile.html')
 
 
 def candidate_list(request):
-    candidates = Candidate.objects.all()
+    params = {}
+    url = ''
+
+    if job_family := request.POST.get('job-family'):
+        ...
+    
+    if citizenship := request.GET.get('citizenship'):
+        params['citizenship_name'] = citizenship
+        url += f'&citizenship={citizenship}'
+
+    candidates = Candidate.translation().filter(**params)
+    citizenships = ParameterCountry.translation().values('name')
+
+    paginator = Paginator(candidates, 10)
+    current_page_number = request.POST.get('page', 1)
+    candidates = paginator.get_page(current_page_number)
 
     context = {
-        'candidates': candidates
+        'candidates': candidates,
+        'citizenships': citizenships,
+        'url': url
     }
 
     return render(request, 'user/candidate-list.html', context)
+
+@require_POST
+def ajax_filter_candidate(request):
+    params = {}
+
+    employer_id = request.user.employer.id if request.user.is_authenticated and request.user.user_type == 'employer' else None
+
+    employer_bookmarked_candidate = CandidateBookmark.objects.filter(
+        candidate=OuterRef('pk'),
+        employer_id=employer_id
+    )
+
+    if job_family := request.POST.get('job-family'):
+        ...
+    
+    if citizenship := request.POST.get('citizenship'):
+        params['citizenship_name'] = citizenship
+
+    candidates = Candidate.translation().filter(**params)
+
+    # Set up Paginator
+    paginator = Paginator(candidates, 10)
+    current_page_number = request.POST.get('page', 1)
+    candidates_page = paginator.get_page(current_page_number)
+
+    # Serialize the data
+    candidate_list = list(candidates_page.object_list.annotate(
+        full_name=Concat(
+            F('user__first_name'), Value(' '),
+            F('user__last_name')
+        ),
+
+        profile_photo=Case(
+            When(user__profile_photo__icontains='profile-photos',
+                 then=Concat(Value(settings.MEDIA_URL), F('user__profile_photo'))),
+                 default=Value(''),
+                 output_field=CharField()
+        ),
+
+        is_bookmark=Case(
+            When(Exists(employer_bookmarked_candidate), then=Value(True)),
+            default=Value(False),
+            output_field=BooleanField()
+        )
+    ).values('id', 'full_name', 'profile_photo', 'is_bookmark'))
+
+    pagination_info = {
+        'has_next': candidates_page.has_next(),
+        'has_previous': candidates_page.has_previous(),
+        'num_pages': candidates_page.paginator.num_pages,
+        'current_page': candidates_page.number,
+    }
+
+    context = {
+        'candidates': candidate_list,
+        'pagination': pagination_info,
+    }
+
+    return JsonResponse(context, safe=False)
 
 
 def candidate_details(request, username):

@@ -39,4 +39,5 @@ urlpatterns = [
     path('ajax/delete-education', views.delete_education, name='ajax-delete-education'),
     path('ajax/delete-experience', views.delete_experience, name='ajax-delete-experience'),
     path('ajax/add-candidate-bookmark', views.ajax_candidate_bookmarks, name='ajax-add-candidate-bookmark'),
+    path('ajax/filter-candidate', views.ajax_filter_candidate, name='ajax-filter-candidate'),
 ]

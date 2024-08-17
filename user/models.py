@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db.models import F, Case, When, Value, CharField
+from django.conf import settings
+from django.core.cache import cache
 
 from recruitment_cp.models import (
     ParameterSector,
@@ -71,6 +74,21 @@ class Candidate(models.Model):
 
     def __str__(self) -> str:
         return self.user.get_full_name()
+    
+    @classmethod
+    def translation(cls):
+        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
+
+        candidates = cls.objects.annotate(
+            citizenship_name = Case(
+                When(**{f'citizenship__name_{language}__isnull':False},
+                     then=F(f'citizenship__name_{language}')),
+                     default=Value(''),
+                     output_field=CharField()
+            )
+        )
+
+        return candidates
 
 class Gallery(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='gallery')
