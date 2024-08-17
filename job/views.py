@@ -37,7 +37,7 @@ def vacancy(request, slug):
         'delete': False,
         'approval_level': 'PUBLISHED'
     }
-    vacancy = get_object_or_404(vacancy_with_related_info(Vacancy.objects), slug=slug, **common_params)
+    vacancy = get_object_or_404(vacancy_with_related_info(Vacancy.translation()), slug=slug, **common_params)
     vacancy.views += 1
     vacancy.save()
 
