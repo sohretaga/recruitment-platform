@@ -230,7 +230,7 @@
 
                     {% if vacancies.count == 5 %}
                     <div class="text-center mt-4">
-                            <a href="{% url 'job:vacancies' %}?job-title={{ vacancy.job_title_name }}" class="primary-link form-text">{% tr 'View More' %} <i class="mdi mdi-arrow-right"></i></a>
+                            <a href="{% url 'job:vacancies' %}?job-title={{ vacancy.job_title_name|urlencode }}" class="primary-link form-text">{% tr 'View More' %} <i class="mdi mdi-arrow-right"></i></a>
                     </div>
                     {% endif %}
 
