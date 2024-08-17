@@ -40,19 +40,20 @@
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="text-center text-white">
-                        <h3 class="mb-4">
-                            {% if related_vacancies_title %}
-                                All Related Jobs For "{{ related_vacancies_title }}"
-                            {% elif company %}
-                                Vacancies of {{ company }} company
-                            {% else %}Vacancies{% endif %}
-                        </h3>
+                        <h3 class="mb-4">{% tr 'Vacancies' %}</h3>
                         <div class="page-next">
                             <nav class="d-inline-block" aria-label="breadcrumb text-center">
                                 <ol class="breadcrumb justify-content-center">
                                     <li class="breadcrumb-item"><a href="{% url 'main:main-index' %}">{% tr 'Home' %}</a></li>
-                                    <!-- <li class="breadcrumb-item"><a href="javascript:void(0)">Pages</a></li> -->
+                                    {% if related_vacancies_title %}
+                                    <li class="breadcrumb-item"><a href="{% url 'job:vacancies' %}">{% tr 'Vacancies' %}</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page"> {% tr 'Related Jobs' %}: "{{ related_vacancies_title }}" </li>
+                                    {% elif company %}
+                                    <li class="breadcrumb-item"><a href="{% url 'job:vacancies' %}">{% tr 'Vacancies' %}</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page"> {{ company }} </li>
+                                    {% else %}
                                     <li class="breadcrumb-item active" aria-current="page"> {% tr 'Vacancies' %} </li>
+                                    {% endif %}
                                 </ol>
                             </nav>
                         </div>
