@@ -101,7 +101,7 @@ const listCandidate = (candidateInfo) => {
     container.innerHTML = ''; // Clear existing content
 
     for (const [key, candidate] of Object.entries(candidateInfo)) {
-        container.insertAdjacentHTML('afterend' ,`
+        container.innerHTML += `
             <div id="candidate-${candidate.id}" class="candidate-list-box card mt-4  ${candidate.is_bookmark ? 'bookmark-post':''}">
                 <div class="card-body p-4">
                     <div class="row align-items-center candidate-row">
@@ -138,7 +138,7 @@ const listCandidate = (candidateInfo) => {
                     </div>
                 </div>
             </div>`
-    )};
+    };
 };
 
 // Filter Request
