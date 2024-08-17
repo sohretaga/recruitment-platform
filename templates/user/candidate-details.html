@@ -450,7 +450,7 @@
                                                 <!--end col-->
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
-                                                        <label for="citizenship" class="form-label">{ tr 'Citizenship' %}</label>
+                                                        <label for="citizenship" class="form-label">{% tr 'Citizenship' %}</label>
                                                         <select class="form-select" data-trigger name="citizenship" id="citizenship" >
                                                             {% for citizenship in citizenships %}
                                                             {% if citizenship.id == user.candidate.citizenship.id %}

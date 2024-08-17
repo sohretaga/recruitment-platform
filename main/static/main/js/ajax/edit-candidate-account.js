@@ -10,11 +10,11 @@ selects.forEach(select => {
 
 
 // Collects the values ​​selected from the Language selection into an input and prepares it for recording.
-const languages = document.getElementById('languages');
+const languageSkils = document.getElementById('languages');
 const languageValuesInput = document.getElementById('langauge-values');
-languages.addEventListener('change', function() {
+languageSkils.addEventListener('change', function() {
     let values = new Array();
-    languages.querySelectorAll('option').forEach((option) => {
+    languageSkils.querySelectorAll('option').forEach((option) => {
         values.push(option.value);
     });
     languageValuesInput.value = values;
