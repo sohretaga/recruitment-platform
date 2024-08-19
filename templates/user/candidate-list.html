@@ -68,24 +68,13 @@
                     <div class="candidate-list-widgets mb-4">
                         <form action="#">
                             <div class="row g-2">
-                                <div class="col-lg-3">
+                                <div class="col-lg-4">
                                     <div class="filler-job-form">
                                         <i class="uil uil-briefcase-alt"></i>
                                         <input type="search" class="form-control filter-job-input-box" id="exampleFormControlInput1" placeholder="{% tr 'Job, Company name' %}... ">
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
-                                    <div class="filler-job-form">
-                                        <i class="uil uil-location-point"></i>
-                                        <select class="form-select" data-trigger name="citizenship" id="citizenship">
-                                            {% for citizenship in citizenships %}
-                                                <option value="{{ citizenship.name }}">{{ citizenship.name }}</option>
-                                            {% endfor %}
-                                            
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-4">
                                     <div class="filler-job-form">
                                         <i class="uil uil-clipboard-notes"></i>
                                         <select class="form-select " data-trigger name="job-family" id="job-family">
@@ -96,7 +85,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-4">
                                     <div>
                                         <a href="javascript:void(0)" class="btn btn-primary"><i class="uil uil-filter"></i> {% tr 'Filter' %}</a>
                                         <a href="javascript:void(0)" class="btn btn-success ms-2"><i class="uil uil-cog"></i> {% tr 'Advance' %}</a>

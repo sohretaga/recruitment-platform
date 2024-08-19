@@ -1,4 +1,3 @@
-const citizenshipFilter = new Choices('#citizenship');
 const candidateCount = document.getElementById('candidate-count');
 const url = new URL(window.location);
 
