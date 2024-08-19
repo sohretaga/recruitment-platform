@@ -678,7 +678,7 @@ def candidate_load(request):
                 output_field=CharField()
             )
             
-            candidate = Candidate.objects.select_related('user').annotate(
+            candidate = Candidate.translation().select_related('user').annotate(
                 first_name=F('user__first_name'),
                 last_name=F('user__last_name'),
                 username=F('user__username'),
