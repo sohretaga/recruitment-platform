@@ -108,7 +108,13 @@ def candidate_list(request):
         params['citizenship_name'] = citizenship
         url += f'&citizenship={citizenship}'
 
+    if gender := request.GET.get('gender'):
+        params['gender'] = gender
+        url += f'&gender={gender}'
+
     candidates = Candidate.translation().filter(**params)
+    candidate_count = candidates.count()
+
     citizenships = ParameterCountry.translation().values('name')
 
     paginator = Paginator(candidates, 10)
@@ -118,6 +124,7 @@ def candidate_list(request):
     context = {
         'candidates': candidates,
         'citizenships': citizenships,
+        'candidate_count': candidate_count,
         'url': url
     }
 
@@ -127,7 +134,9 @@ def candidate_list(request):
 def ajax_filter_candidate(request):
     params = {}
 
-    employer_id = request.user.employer.id if request.user.is_authenticated and request.user.user_type == 'employer' else None
+    employer_id = request.user.employer.id \
+        if request.user.is_authenticated and \
+            request.user.user_type == 'employer' else None
 
     employer_bookmarked_candidate = CandidateBookmark.objects.filter(
         candidate=OuterRef('pk'),
@@ -140,7 +149,11 @@ def ajax_filter_candidate(request):
     if citizenship := request.POST.get('citizenship'):
         params['citizenship_name'] = citizenship
 
+    if gender := request.POST.get('gender'):
+        params['gender'] = gender
+
     candidates = Candidate.translation().filter(**params)
+    candidate_count = candidates.count()
 
     # Set up Paginator
     paginator = Paginator(candidates, 10)
@@ -178,6 +191,7 @@ def ajax_filter_candidate(request):
     context = {
         'candidates': candidate_list,
         'pagination': pagination_info,
+        'candidate_count': candidate_count
     }
 
     return JsonResponse(context, safe=False)

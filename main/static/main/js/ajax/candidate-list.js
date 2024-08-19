@@ -1,7 +1,11 @@
 const citizenshipFilter = new Choices('#citizenship');
 const jobFamilyFilter = new Choices('#job-family');
-const choicesSingleFilterOrderby = new Choices('#choices-single-filter-orderby');
+const genderFilter = new Choices('#gender', {
+    shouldSort: false,
+    shouldSortItems: false,
+});
 const choicesCandidatePage = new Choices('#choices-candidate-page');
+const candidateCount = document.getElementById('candidate-count');
 const url = new URL(window.location);
 
 const userInfoElement = document.getElementById('user-info');
@@ -154,6 +158,7 @@ const filterRequest = () => {
         type: 'POST',
         data: jsonData,
         success: (response) => {
+            candidateCount.innerText = response.candidate_count;
             generatePagination(
                 response.pagination
             );
@@ -174,5 +179,10 @@ jobFamilyFilter.passedElement.element.addEventListener('change', function(event)
 
 citizenshipFilter.passedElement.element.addEventListener('change', function(event) {
     setUrl('citizenship', event.target.value);
+    filterRequest();
+});
+
+genderFilter.passedElement.element.addEventListener('change', function(event) {
+    setUrl('gender', event.target.value);
     filterRequest();
 });
