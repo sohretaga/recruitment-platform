@@ -1306,3 +1306,56 @@ def date_posted_save(request):
             raise PermissionError
     else:
         raise Http404
+    
+#======================================================================================================
+def age_group_index(request):
+    if request.user.is_superuser:
+        return render(request, 'cp/parameters/age_group.html')
+    
+    raise Http404
+
+def age_group_load(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            language = request.POST.get('language')
+            
+            age_group = cp_models.ParameterAgeGroup.language_filter(language).values(
+                'id', 'no', 'name', 'definition', 'note'
+            )
+            json_data = json.dumps(list(age_group))
+
+            return JsonResponse(json_data, safe=False)
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+
+def age_group_save(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            hot = json.loads(request.POST.get('hot'))
+            language = request.POST.get('language')
+            index = 0
+
+            while index < len(hot):
+                pk = hot[index].pop('id', None)
+                name = hot[index].get('name', None)
+
+                if name or language != 'en':
+                    if pk:
+                        age_group = cp_models.ParameterAgeGroup.objects.filter(pk=pk)
+                        age_group.custom_update(language, **hot[index])
+                    else:
+                        age_group = cp_models.ParameterAgeGroup()
+                        age_group.save(language, **hot[index])
+                else:
+                    age_group = cp_models.ParameterAgeGroup.objects.filter(pk = pk)
+                    age_group.delete()
+                
+                index += 1
+
+            return JsonResponse({'status': 200})
+        else:
+            raise PermissionError
+    else:
+        raise Http404

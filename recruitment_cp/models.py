@@ -235,3 +235,6 @@ class ParameterJobFamily(ParameterCommonFields):
 
 class ParameterDatePosted(ParameterCommonFields):
     hours = models.PositiveIntegerField()
+
+class ParameterAgeGroup(ParameterCommonFields):
+    ...

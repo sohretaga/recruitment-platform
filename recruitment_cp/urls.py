@@ -106,6 +106,10 @@ urlpatterns = [
     path('parameters/date-posted-load', parameters.date_posted_load, name='date_posted_load'),
     path('parameters/date-posted-save', parameters.date_posted_save, name='date_posted_save'),
 
+    path('parameters/age-group', parameters.age_group_index, name='age_group'),
+    path('parameters/age-group-load', parameters.age_group_load, name='age_group_load'),
+    path('parameters/age-group-save', parameters.age_group_save, name='age_group_save'),
+
     #LANGUAGE URLS
     path('translation/contents', languages.contents, name='contents'),
     path('translation/contents-load', languages.contents_load, name='contents_load'),
