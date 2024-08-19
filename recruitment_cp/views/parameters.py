@@ -703,18 +703,13 @@ def candidate_save(request):
 
             while index < len(hot):
                 pk = hot[index].pop('id', None)
-                name = hot[index].get('name', None)
 
-                if name:
-                    if pk:
-                        candidate = Candidate.objects.filter(pk=pk)
-                        candidate.update(**hot[index])
-                    else:
-                        candidate = Candidate(**hot[index])
-                        candidate.save()
+                if pk:
+                    candidate = Candidate.objects.filter(pk=pk)
+                    candidate.update(**hot[index])
                 else:
-                    candidate = Candidate.objects.filter(pk = pk)
-                    candidate.delete()
+                    candidate = Candidate(**hot[index])
+                    candidate.save()
                 
                 index += 1
 
