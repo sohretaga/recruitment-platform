@@ -4,7 +4,10 @@ const genderFilter = new Choices('#gender', {
     shouldSort: false,
     shouldSortItems: false,
 });
-const choicesCandidatePage = new Choices('#choices-candidate-page');
+const ageGroupFilter = new Choices('#age-group', {
+    shouldSort: false,
+    shouldSortItems: false,
+});
 const candidateCount = document.getElementById('candidate-count');
 const url = new URL(window.location);
 
@@ -184,5 +187,10 @@ citizenshipFilter.passedElement.element.addEventListener('change', function(even
 
 genderFilter.passedElement.element.addEventListener('change', function(event) {
     setUrl('gender', event.target.value);
+    filterRequest();
+});
+
+ageGroupFilter.passedElement.element.addEventListener('change', function(event) {
+    setUrl('age-group', event.target.value);
     filterRequest();
 });

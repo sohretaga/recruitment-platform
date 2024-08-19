@@ -27,6 +27,7 @@ from recruitment_cp.models import(
         ParameterNumberOfEmployee,
         ParameterCountry,
         ParameterCompetence,
+        ParameterAgeGroup
     )
 
 import os
@@ -112,10 +113,15 @@ def candidate_list(request):
         params['gender'] = gender
         url += f'&gender={gender}'
 
+    if age_group := request.GET.get('age-group'):
+        params['age_group'] = age_group
+        url += f'&age-group={age_group}'
+
     candidates = Candidate.translation().filter(**params)
     candidate_count = candidates.count()
 
     citizenships = ParameterCountry.translation().values('name')
+    age_groups = ParameterAgeGroup.translation().values('name')
 
     paginator = Paginator(candidates, 10)
     current_page_number = request.POST.get('page', 1)
@@ -124,6 +130,7 @@ def candidate_list(request):
     context = {
         'candidates': candidates,
         'citizenships': citizenships,
+        'age_groups': age_groups,
         'candidate_count': candidate_count,
         'url': url
     }
@@ -151,6 +158,9 @@ def ajax_filter_candidate(request):
 
     if gender := request.POST.get('gender'):
         params['gender'] = gender
+
+    if age_group := request.POST.get('age-group'):
+        params['age_group'] = age_group
 
     candidates = Candidate.translation().filter(**params)
     candidate_count = candidates.count()

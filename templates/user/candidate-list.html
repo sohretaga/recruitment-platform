@@ -129,10 +129,11 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="selection-widget mt-2 mt-lg-0">
-                                    <select class="form-select" data-trigger name="choices-candidate-page" id="choices-candidate-page">
-                                        <option value="df">All</option>
-                                        <option value="ne">8 per Page</option>
-                                        <option value="ne">12 per Page</option>
+                                    <select class="form-select" data-trigger name="age-group" id="age-group">
+                                        <option value="">{% tr 'Age Group' %}</option>
+                                        {% for age in age_groups %}
+                                        <option value="{{ age.name }}">{{ age.name }}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                             </div>

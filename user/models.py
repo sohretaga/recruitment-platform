@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.db.models import F, Case, When, Value, CharField, IntegerField
+from django.db.models import F, Case, When, Value, CharField
 from django.db.models.functions import ExtractYear
 from django.conf import settings
 from django.core.cache import cache
@@ -12,6 +12,7 @@ from recruitment_cp.models import (
     ParameterOrganizationOwnership,
     ParameterNumberOfEmployee,
     ParameterCountry,
+    ParameterAgeGroup
 )
 
 class CustomUser(AbstractUser):
@@ -81,9 +82,24 @@ class Candidate(models.Model):
     def translation(cls):
         language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
         current_year = datetime.now().year
+        age_groups = ParameterAgeGroup.translation().values('minimum', 'maximum', 'name')
+
+        age_group_cases = [
+            When(
+                age__gte=age_group.get('minimum'),
+                age__lte=age_group.get('maximum'),
+                then=Value(age_group.get('name'))
+            )
+            for age_group in age_groups
+        ]
 
         candidates = cls.objects.annotate(
             age=current_year-ExtractYear(F('birthday')),
+            age_group=Case(
+                *age_group_cases,
+                default=Value(''),
+                output_field=CharField()
+            ),
             citizenship_name=Case(
                 When(**{f'citizenship__name_{language}__isnull':False},
                      then=F(f'citizenship__name_{language}')),
