@@ -237,4 +237,5 @@ class ParameterDatePosted(ParameterCommonFields):
     hours = models.PositiveIntegerField()
 
 class ParameterAgeGroup(ParameterCommonFields):
-    ...
+    minimum = models.PositiveIntegerField()
+    maximum = models.PositiveIntegerField()
