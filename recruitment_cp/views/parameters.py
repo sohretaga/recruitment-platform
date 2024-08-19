@@ -1,8 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse, Http404
 from django.db.models import F, Case, When, Value, CharField
-from django.conf import settings
-from django.core.cache import cache
 
 from recruitment_cp import models as cp_models
 from blog.models import Category as BlogCategory
@@ -674,8 +672,6 @@ def candidate_index(request):
 def candidate_load(request):
     if request.user.is_superuser:
         if is_ajax(request) and request.POST:
-            language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
-
             gender_case = Case(
                 When(gender='male', then=Value('Male')),
                 When(gender='female', then=Value('Female')),
@@ -688,7 +684,7 @@ def candidate_load(request):
                 username=F('user__username'),
                 email=F('user__email'),
                 gender_name=gender_case,
-                citizenship_name = F(f'citizenship__name_{language}')
+                citizenship_name = F(f'citizenship__name_en')
             ).values()
             
             json_data = json.dumps(list(candidate), default=date_to_string)
