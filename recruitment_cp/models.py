@@ -58,25 +58,15 @@ class Language(models.Model):
         super().save(*args, **kwargs)
 
 class ParameterCommonFieldsQuerySet(models.QuerySet):
-    def custom_update(self, language, **kwargs):
-        match language:
-            case 'en':
-                if 'name' in kwargs:
-                    kwargs['name_en'] = kwargs.pop('name')
-                if 'definition' in kwargs:
-                    kwargs['definition_en'] = kwargs.pop('definition')
-                if 'note' in kwargs:
-                    kwargs['note_en'] = kwargs.pop('note')
+    def custom_update(self, language, *args, **kwargs):
+        if 'name' in kwargs:
+            kwargs[f'name_{language}'] = kwargs.pop('name')
+        if 'definition' in kwargs:
+            kwargs[f'definition_{language}'] = kwargs.pop('definition')
+        if 'note' in kwargs:
+            kwargs[f'note_{language}'] = kwargs.pop('note')
 
-            case 'tr':
-                if 'name' in kwargs:
-                    kwargs['name_tr'] = kwargs.pop('name')
-                if 'definition' in kwargs:
-                    kwargs['definition_tr'] = kwargs.pop('definition')
-                if 'note' in kwargs:
-                    kwargs['note_tr'] = kwargs.pop('note')
-
-        return super().update(**kwargs)
+        super().update(*args, **kwargs)
 
 class ParameterCommonFieldsManager(models.Manager):
     def get_queryset(self):

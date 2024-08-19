@@ -1339,8 +1339,8 @@ def age_group_save(request):
 
             while index < len(hot):
                 pk = hot[index].pop('id', None)
-                minimum = hot[index].pop('minimum', 0)
-                maximum = hot[index].pop('maximum', 0)
+                minimum = hot[index].get('minimum', 0)
+                maximum = hot[index].get('maximum', 0)
                 name = hot[index].get('name', None)
 
                 if name or language != 'en':
