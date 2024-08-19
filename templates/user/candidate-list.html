@@ -119,31 +119,33 @@
                     <div class="candidate-list-widgets">
                         <div class="row">
                             <div class="col-lg-6">
-                                <div class="selection-widget">
-                                    <select class="form-select" data-trigger name="gender" id="gender">
-                                        <option value="">{% tr 'Gender' %}</option>
-                                        <option value="male">{% tr 'Male' %}</option>
-                                        <option value="female">{% tr 'Female' %}</option>
+                                <div class="selection-widget mt-3 mt-lg-0">
+                                    <select class="form-select" data-trigger name="choices-single-filter-orderby" id="choices-single-filter-orderby">
+                                        <option value="df">{% tr 'Default' %}</option>
+                                        <option value="ne">{% tr 'Newest' %}</option>
+                                        <option value="od">{% tr 'Oldest' %}</option>
+                                        <option value="rd">{% tr 'Random' %}</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div><!--end col-->
                             <div class="col-lg-6">
-                                <div class="selection-widget mt-2 mt-lg-0">
-                                    <select class="form-select" data-trigger name="age-group" id="age-group">
-                                        <option value="">{% tr 'Age Group' %}</option>
-                                        {% for age in age_groups %}
-                                        <option value="{{ age.name }}">{{ age.name }}</option>
-                                        {% endfor %}
+                                <div class="selection-widget mt-3 mt-lg-0">
+                                    <select class="form-select" data-trigger name="choices-candidate-page" id="choices-candidate-page">
+                                        <option value="df">{% tr 'All' %}</option>
+                                        <option value="ne">{% tr 'Last 2 Month' %}</option>
+                                        <option value="ne">{% tr 'Last 6 Month' %}</option>
+                                        <option value="ne">{% tr 'Last 12 Month' %}</option>
+                                        <option value="ne">{% tr 'Last 2 Year' %}</option>
                                     </select>
                                 </div>
-                            </div>
-                        </div>
+                            </div><!--end col-->
+                        </div><!--end row-->
                     </div><!--end candidate-list-widgets-->
                 </div>
             </div><!--end row-->
 
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-9">
                     <div id="candidate-container" class="candidate-list">
                         {% for candidate in candidates %}
                         <div id="candidate-{{ candidate.id }}" class="candidate-list-box card mt-4  {% candidate_bookmarks request candidate.id %}">
@@ -190,6 +192,89 @@
                         
                     </div>
                 </div>
+
+
+                <!-- START RIGHT SIDE-BAR -->
+                <div class="col-lg-3">
+                    <div class="side-bar mt-5 mt-lg-0">
+                        <div class="accordion" id="accordionRight">
+
+                            <div class="accordion-item mt-4">   
+                            <h2 class="accordion-header" id="citizenshipOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#citizenship" aria-expanded="false" aria-controls="citizenship">
+                                    {% tr 'Citizenship' %}
+                                </button>
+                            </h2>
+                            <div id="citizenship" class="accordion-collapse collapse" aria-labelledby="citizenshipOne">
+                                <div class="accordion-body">
+                                    <div class="side-title">
+                                        <form class="position-relative mb-2">
+                                            <input class="form-control" type="search" placeholder="{% tr 'Search' %}...">
+                                            <button class="bg-transparent border-0 position-absolute top-50 end-0 translate-middle-y me-2" type="submit"><span class="mdi mdi-magnify text-muted"></span></button>
+                                        </form>
+
+                                        <div style="max-height: 250px; overflow: auto;">
+                                            {% for citizenship in citizenships %}
+                                            <div class="form-check mt-2" >
+                                                <input class="form-check-input" type="checkbox" value="{{ citizenship.name }}" id="citizenship-{{ citizenship.id }}" />
+                                                <label class="form-check-label ms-2 text-muted" for="citizenship-{{ citizenship.id }}">{{ citizenship.name }}</label>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div><!-- end accordion-item -->
+                    
+                            <div class="accordion-item mt-3">
+                                <h2 class="accordion-header" id="ageGroup">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#agegroup" aria-expanded="false" aria-controls="agegroup">
+                                        {% tr 'Age Group' %}
+                                    </button>
+                                </h2>
+                                <div id="agegroup" class="accordion-collapse collapse" aria-labelledby="ageGroup">
+                                    <div class="accordion-body">
+                                        <div class="side-title">
+                                            {% for group in age_groups %}
+                                                <div class="form-check mt-2">
+                                                    <input class="form-check-input" type="checkbox" value="{{ group.name }}" id="age-group-{{ group.id }}" />
+                                                    <label class="form-check-label ms-2 text-muted" for="age-group-{{ group.id }}">{{ group.name }}</label>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- end accordion-item -->
+                    
+                            <div class="accordion-item mt-3">
+                                <h2 class="accordion-header" id="genderTitle">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#gender" aria-expanded="false" aria-controls="gender">
+                                        {% tr 'Gender' %}
+                                    </button>
+                                </h2>
+                                <div id="gender" class="accordion-collapse collapse" aria-labelledby="genderTitle">
+                                    <div class="accordion-body">
+                                        <div class="side-title form-check-all">
+                                            <div class="form-check mt-2">
+                                                <input class="form-check-input" type="checkbox"  value="male" id="gender-male" />
+                                                <label class="form-check-label ms-2 text-muted" for="gender-male">{% tr 'Male' %}</label>
+                                            </div>
+
+                                            <div class="form-check mt-2">
+                                                <input class="form-check-input" type="checkbox"  value="female" id="gender-female" />
+                                                <label class="form-check-label ms-2 text-muted" for="gender-female">{% tr 'Female' %}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- end accordion-item -->
+                            
+                        </div><!--end accordion-->
+                        
+                    </div><!--end side-bar-->
+                </div>
+                <!-- END RIGHT SIDE-BAR -->
+                
             </div>
 
             <div class="row">

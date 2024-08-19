@@ -1,19 +1,18 @@
 const citizenshipFilter = new Choices('#citizenship');
-const jobFamilyFilter = new Choices('#job-family');
-const genderFilter = new Choices('#gender', {
-    shouldSort: false,
-    shouldSortItems: false,
-});
-const ageGroupFilter = new Choices('#age-group', {
-    shouldSort: false,
-    shouldSortItems: false,
-});
 const candidateCount = document.getElementById('candidate-count');
 const url = new URL(window.location);
 
 const userInfoElement = document.getElementById('user-info');
 const isAuthenticated = userInfoElement.getAttribute('data-is-authenticated');
 const signInModal = new bootstrap.Modal(document.getElementById('signinModal'));
+
+const citizenshipCheckboxes = '#citizenship input[type="checkbox"]';
+const ageGroypCheckboxes = '#agegroup input[type="checkbox"]';
+const genderCheckboxes = '#gender input[type="checkbox"]';
+
+const filterOrderby = new Choices('#choices-single-filter-orderby');
+const candidatePage = new Choices('#choices-candidate-page');
+const jobFamily = new Choices('#job-family');
 
 const setUrl = (parameter, value) => {
     const queryParameter = url.searchParams.has(parameter);
@@ -174,23 +173,69 @@ const filterRequest = () => {
     });
 };
 
+const getUrlParameterValue = (parameterName) => {
+    try {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const parameterValue = urlParams.get(parameterName);
+        return parameterValue.split(',');
 
-jobFamilyFilter.passedElement.element.addEventListener('change', function(event) {
-    setUrl('job-family', event.target.value);
-    filterRequest();
-});
+    } catch (error) {
+        return [];
+     };
+};
 
-citizenshipFilter.passedElement.element.addEventListener('change', function(event) {
-    setUrl('citizenship', event.target.value);
-    filterRequest();
-});
+const setUrlWithSelectedCheckboxes = (selector, query_key) => {
+    const checkboxes = document.querySelectorAll(selector);
+    const selectedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
+    const selectedValues = selectedCheckboxes.map(checkbox => checkbox.value);
+    setUrl(query_key, selectedValues.join(','));
+}
 
-genderFilter.passedElement.element.addEventListener('change', function(event) {
-    setUrl('gender', event.target.value);
-    filterRequest();
-});
+const addCheckboxListener = (selector, query_key, callback) => {
+    const checkboxes = document.querySelectorAll(selector);
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            setUrlWithSelectedCheckboxes(selector, query_key);
+            callback();
+        });
+    });
 
-ageGroupFilter.passedElement.element.addEventListener('change', function(event) {
-    setUrl('age-group', event.target.value);
-    filterRequest();
+};
+
+const setFilterCheckboxes = (selector, values) => {
+    const checkboxes = document.querySelectorAll(selector);
+    checkboxes.forEach(checkbox => {
+        if (values.includes(checkbox.value)) {
+            checkbox.checked = true;
+        };
+    });
+};
+
+addCheckboxListener(citizenshipCheckboxes, 'citizenship', filterRequest); // Citizenship Listener
+addCheckboxListener(ageGroypCheckboxes, 'age-group', filterRequest); // Age Group Listener
+addCheckboxListener(genderCheckboxes, 'gender', filterRequest); // Gender Listener
+
+
+// Set filter inputs from url parameters
+setFilterCheckboxes(citizenshipCheckboxes, getUrlParameterValue('citizenship')); // Set citizenship
+setFilterCheckboxes(ageGroypCheckboxes, getUrlParameterValue('age-group')); // Set age group
+setFilterCheckboxes(genderCheckboxes, getUrlParameterValue('gender')); // Set gender
+
+// Citizenship items searcher
+const citizenshipSearchInput = document.querySelector('#citizenship input[type="search"]');
+const citizenshipItems = document.querySelectorAll(citizenshipCheckboxes);
+
+citizenshipSearchInput.addEventListener('input', function() {
+    let searchValue = this.value.toLowerCase();
+
+    Array.prototype.forEach.call(citizenshipItems, function(item) {
+        const label = item.parentElement;
+
+        if (label.textContent.toLowerCase().includes(searchValue)) {
+            label.style.display = 'block';
+        }else {
+            label.style.display = 'none';
+        }
+    });
 });

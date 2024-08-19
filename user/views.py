@@ -106,22 +106,22 @@ def candidate_list(request):
         ...
     
     if citizenship := request.GET.get('citizenship'):
-        params['citizenship_name'] = citizenship
+        params['citizenship_name__in'] = citizenship.split(',')
         url += f'&citizenship={citizenship}'
 
     if gender := request.GET.get('gender'):
-        params['gender'] = gender
+        params['gender__in'] = gender.split(',')
         url += f'&gender={gender}'
 
     if age_group := request.GET.get('age-group'):
-        params['age_group'] = age_group
+        params['age_group__in'] = age_group.split(',')
         url += f'&age-group={age_group}'
 
     candidates = Candidate.translation().filter(**params)
     candidate_count = candidates.count()
 
-    citizenships = ParameterCountry.translation().values('name')
-    age_groups = ParameterAgeGroup.translation().values('name')
+    citizenships = ParameterCountry.translation().values('id', 'name')
+    age_groups = ParameterAgeGroup.translation().values('id', 'name')
 
     paginator = Paginator(candidates, 10)
     current_page_number = request.POST.get('page', 1)
@@ -154,13 +154,13 @@ def ajax_filter_candidate(request):
         ...
     
     if citizenship := request.POST.get('citizenship'):
-        params['citizenship_name'] = citizenship
+        params['citizenship_name__in'] = citizenship.split(',')
 
     if gender := request.POST.get('gender'):
-        params['gender'] = gender
+        params['gender__in'] = gender.split(',')
 
     if age_group := request.POST.get('age-group'):
-        params['age_group'] = age_group
+        params['age_group__in'] = age_group.split(',')
 
     candidates = Candidate.translation().filter(**params)
     candidate_count = candidates.count()
