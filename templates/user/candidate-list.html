@@ -143,16 +143,16 @@
                                     <div class="col-auto">
                                         <div class="candidate-list-images">
                                             {% if candidate.user.profile_photo %}
-                                                <a href="javascript:void(0)"><img src="{{ candidate.user.profile_photo.url }}" alt="{{ candidate.user.first_name }}" class="avatar-md img-thumbnail rounded-circle"></a>
+                                                <a href="{% url 'user:candidate' candidate.user.username %}"><img src="{{ candidate.user.profile_photo.url }}" alt="{{ candidate.user.first_name }}" class="avatar-md img-thumbnail rounded-circle"></a>
                                             {% else %}
-                                                <a href="javascript:void(0)"><img src="{% static 'main/images/user/default-profile.jpg' %}" alt="{{ candidate.user.first_name }}" class="avatar-md img-thumbnail rounded-circle"></a>
+                                                <a href="{% url 'user:candidate' candidate.user.username %}"><img src="{% static 'main/images/user/default-profile.jpg' %}" alt="{{ candidate.user.first_name }}" class="avatar-md img-thumbnail rounded-circle"></a>
                                             {% endif %}
                                         </div>
                                     </div>
                                     
                                     <div class="col-lg-5 candidate-content">
                                         <div class="candidate-list-content mt-3 mt-lg-0">
-                                            <h5 class="fs-19 mb-0"><a href="#" class="primary-link">{{ candidate.user.get_full_name }}</a> <span class="badge bg-success ms-1"><i class="mdi mdi-star align-middle"></i> 4.8</span></h5>
+                                            <h5 class="fs-19 mb-0"><a href="{% url 'user:candidate' candidate.user.username %}" class="primary-link">{{ candidate.user.get_full_name }}</a> <span class="badge bg-success ms-1"><i class="mdi mdi-star align-middle"></i> 4.8</span></h5>
                                             <p class="text-muted mb-2"> Project Manager</p>
                                             <ul class="list-inline mb-0 text-muted">
                                                 <li class="list-inline-item">

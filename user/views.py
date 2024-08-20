@@ -193,6 +193,7 @@ def ajax_filter_candidate(request):
 
     # Serialize the data
     candidate_list = list(candidates_page.object_list.annotate(
+        username=F('user__username'),
         full_name=Concat(
             F('user__first_name'), Value(' '),
             F('user__last_name')
@@ -209,8 +210,8 @@ def ajax_filter_candidate(request):
             When(Exists(employer_bookmarked_candidate), then=Value(True)),
             default=Value(False),
             output_field=BooleanField()
-        )
-    ).values('id', 'full_name', 'profile_photo', 'is_bookmark'))
+        ),
+    ).values('id', 'full_name', 'profile_photo', 'is_bookmark', 'username'))
 
     pagination_info = {
         'has_next': candidates_page.has_next(),

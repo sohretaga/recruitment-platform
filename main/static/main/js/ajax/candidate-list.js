@@ -114,13 +114,13 @@ const listCandidate = (candidateInfo) => {
                     <div class="row align-items-center candidate-row">
                         <div class="col-auto">
                             <div class="candidate-list-images">
-                                    <a href="javascript:void(0)"><img src="${candidate.profile_photo ? candidate.profile_photo:'/static/main/images/user/default-profile.jpg'}" alt="${candidate.full_name}" class="avatar-md img-thumbnail rounded-circle"></a>
+                                    <a href="/candidate/${candidate.username}"><img src="${candidate.profile_photo ? candidate.profile_photo:'/static/main/images/user/default-profile.jpg'}" alt="${candidate.full_name}" class="avatar-md img-thumbnail rounded-circle"></a>
                             </div>
                         </div>
                         
                         <div class="col-lg-5 candidate-content">
                             <div class="candidate-list-content mt-3 mt-lg-0">
-                                <h5 class="fs-19 mb-0"><a href="#" class="primary-link">${candidate.full_name}</a> <span class="badge bg-success ms-1"><i class="mdi mdi-star align-middle"></i> 4.8</span></h5>
+                                <h5 class="fs-19 mb-0"><a href="/candidate/${candidate.username}" class="primary-link">${candidate.full_name}</a> <span class="badge bg-success ms-1"><i class="mdi mdi-star align-middle"></i> 4.8</span></h5>
                                 <p class="text-muted mb-2"> Project Manager</p>
                                 <ul class="list-inline mb-0 text-muted">
                                     <li class="list-inline-item">
