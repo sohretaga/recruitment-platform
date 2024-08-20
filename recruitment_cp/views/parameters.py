@@ -684,8 +684,10 @@ def candidate_load(request):
                 username=F('user__username'),
                 email=F('user__email'),
                 gender_name=gender_case,
-                citizenship_name = F(f'citizenship__name_en')
-            ).values()
+            ).values(
+                'id', 'first_name', 'last_name', 'username', 'gender_name', 'citizenship_name',
+                'birthday', 'age', 'email', 'work_experience_name', 'education_level_name'
+            )
             
             json_data = json.dumps(list(candidate), default=date_to_string)
 
@@ -1343,11 +1345,64 @@ def age_group_save(request):
                         age_group = cp_models.ParameterAgeGroup.objects.filter(pk=pk)
                         age_group.custom_update(language, **hot[index])
                     else:
-                        age_group = cp_models.ParameterAgeGroup(minimum=minimum, maximum=maximum )
+                        age_group = cp_models.ParameterAgeGroup(minimum=minimum, maximum=maximum)
                         age_group.save(language, **hot[index])
                 else:
                     age_group = cp_models.ParameterAgeGroup.objects.filter(pk = pk)
                     age_group.delete()
+                
+                index += 1
+
+            return JsonResponse({'status': 200})
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+    
+#======================================================================================================
+def education_level_index(request):
+    if request.user.is_superuser:
+        return render(request, 'cp/parameters/education_level.html')
+    
+    raise Http404
+
+def education_level_load(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            language = request.POST.get('language')
+            
+            education_level = cp_models.ParameterEducationLevel.language_filter(language).values(
+                'id', 'no', 'name', 'definition', 'note',
+            )
+            json_data = json.dumps(list(education_level))
+
+            return JsonResponse(json_data, safe=False)
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+
+def education_level_save(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            hot = json.loads(request.POST.get('hot'))
+            language = request.POST.get('language')
+            index = 0
+
+            while index < len(hot):
+                pk = hot[index].pop('id', None)
+                name = hot[index].get('name', None)
+
+                if name or language != 'en':
+                    if pk:
+                        education_level = cp_models.ParameterEducationLevel.objects.filter(pk=pk)
+                        education_level.custom_update(language, **hot[index])
+                    else:
+                        education_level = cp_models.ParameterEducationLevel()
+                        education_level.save(language, **hot[index])
+                else:
+                    education_level = cp_models.ParameterEducationLevel.objects.filter(pk = pk)
+                    education_level.delete()
                 
                 index += 1
 

@@ -27,7 +27,9 @@ from recruitment_cp.models import(
         ParameterNumberOfEmployee,
         ParameterCountry,
         ParameterCompetence,
-        ParameterAgeGroup
+        ParameterAgeGroup,
+        ParameterWorkExperience,
+        ParameterEducationLevel
     )
 
 import os
@@ -117,11 +119,22 @@ def candidate_list(request):
         params['age_group__in'] = age_group.split(',')
         url += f'&age-group={age_group}'
 
+    if work_experience := request.GET.get('work-experience'):
+        params['work_experience_name__in'] = work_experience.split(',')
+        url += f'&work-experience={work_experience}'
+
+    if education_level := request.GET.get('education-level'):
+        params['education_level_name__in'] = education_level.split(',')
+        url += f'&education-level={education_level}'
+
     candidates = Candidate.translation().filter(**params)
     candidate_count = candidates.count()
 
-    citizenships = ParameterCountry.translation().values('id', 'name')
-    age_groups = ParameterAgeGroup.translation().values('id', 'name')
+    common_filter_args = ('id', 'name')
+    citizenships = ParameterCountry.translation().values(*common_filter_args)
+    age_groups = ParameterAgeGroup.translation().values(*common_filter_args)
+    work_experiences = ParameterWorkExperience.translation().values(*common_filter_args)
+    education_levels = ParameterEducationLevel.translation().values(*common_filter_args)
 
     paginator = Paginator(candidates, 10)
     current_page_number = request.POST.get('page', 1)
@@ -131,8 +144,10 @@ def candidate_list(request):
         'candidates': candidates,
         'citizenships': citizenships,
         'age_groups': age_groups,
+        'work_experiences': work_experiences,
+        'education_levels': education_levels,
         'candidate_count': candidate_count,
-        'url': url
+        'url': url,
     }
 
     return render(request, 'user/candidate-list.html', context)
@@ -161,6 +176,12 @@ def ajax_filter_candidate(request):
 
     if age_group := request.POST.get('age-group'):
         params['age_group__in'] = age_group.split(',')
+
+    if work_experience := request.POST.get('work-experience'):
+        params['work_experience_name__in'] = work_experience.split(',')
+
+    if education_level := request.POST.get('education-level'):
+        params['education_level_name__in'] = education_level.split(',')
 
     candidates = Candidate.translation().filter(**params)
     candidate_count = candidates.count()

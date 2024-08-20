@@ -110,6 +110,10 @@ urlpatterns = [
     path('parameters/age-group-load', parameters.age_group_load, name='age_group_load'),
     path('parameters/age-group-save', parameters.age_group_save, name='age_group_save'),
 
+    path('parameters/education-level', parameters.education_level_index, name='education_level'),
+    path('parameters/education-level-load', parameters.education_level_load, name='education_level_load'),
+    path('parameters/education-level-save', parameters.education_level_save, name='education_level_save'),
+
     #LANGUAGE URLS
     path('translation/contents', languages.contents, name='contents'),
     path('translation/contents-load', languages.contents_load, name='contents_load'),

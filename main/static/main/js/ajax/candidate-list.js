@@ -6,8 +6,10 @@ const isAuthenticated = userInfoElement.getAttribute('data-is-authenticated');
 const signInModal = new bootstrap.Modal(document.getElementById('signinModal'));
 
 const citizenshipCheckboxes = '#citizenship input[type="checkbox"]';
-const ageGroypCheckboxes = '#agegroup input[type="checkbox"]';
+const ageGroypCheckboxes = '#age-group input[type="checkbox"]';
 const genderCheckboxes = '#gender input[type="checkbox"]';
+const workExperienceCheckboxes = '#work-experience input[type="checkbox"]';
+const educationLevelCheckboxes = '#education-level input[type="checkbox"]';
 
 const filterOrderby = new Choices('#choices-single-filter-orderby');
 const candidatePage = new Choices('#choices-candidate-page');
@@ -214,12 +216,15 @@ const setFilterCheckboxes = (selector, values) => {
 addCheckboxListener(citizenshipCheckboxes, 'citizenship', filterRequest); // Citizenship Listener
 addCheckboxListener(ageGroypCheckboxes, 'age-group', filterRequest); // Age Group Listener
 addCheckboxListener(genderCheckboxes, 'gender', filterRequest); // Gender Listener
-
+addCheckboxListener(workExperienceCheckboxes, 'work-experience', filterRequest); // Work Experience Listener
+addCheckboxListener(educationLevelCheckboxes, 'education-level', filterRequest); // Education Level Listener
 
 // Set filter inputs from url parameters
 setFilterCheckboxes(citizenshipCheckboxes, getUrlParameterValue('citizenship')); // Set citizenship
 setFilterCheckboxes(ageGroypCheckboxes, getUrlParameterValue('age-group')); // Set age group
 setFilterCheckboxes(genderCheckboxes, getUrlParameterValue('gender')); // Set gender
+setFilterCheckboxes(workExperienceCheckboxes, getUrlParameterValue('work-experience')); // Set work experience
+setFilterCheckboxes(educationLevelCheckboxes, getUrlParameterValue('education-level')); // Set education level
 
 // Citizenship items searcher
 const citizenshipSearchInput = document.querySelector('#citizenship input[type="search"]');

@@ -116,43 +116,39 @@ class ParameterCommonFields(models.Model):
     @classmethod
     def translation(cls):
         language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
-        match language:
-            case 'en':
-                objects = cls.objects.annotate(
-                    name = F('name_en'),
-                )
-            case 'tr':
-                objects = cls.objects.annotate(
-                    name = Case(
-                         When(name_tr__isnull=False, then=F('name_tr')),
-                         default=F('name_en'),
-                         output_field=CharField()
-                    )
-                )
-
+        objects = cls.objects.annotate(
+            name = Case(
+                    When(**{f'name_{language}__isnull':False}, then=F(f'name_{language}')),
+                    default=F('name_en'),
+                    output_field=CharField()
+            )
+        )
         return objects
     
     @classmethod
     def language_filter(cls, language_code):
-        match language_code:
-            case 'en':
-                objects = cls.objects.annotate(
-                    name = F('name_en'),
-                    definition = F('definition_en'),
-                    note = F('note_en')
-                )
-            case 'tr':
-                objects = cls.objects.annotate(
-                    name = F('name_tr'),
-                    definition = F('definition_tr'),
-                    note = F('note_tr')
-                )
-            case _:
-                objects = cls.objects.annotate(
-                    name = Value(value='', output_field=CharField()),
-                    definition = Value(value='', output_field=CharField()),
-                    note = Value(value='', output_field=CharField())
-                )
+        objects = cls.objects.annotate(
+            name = Case(
+                When(**{f'name_{language_code}__isnull':False},
+                     then=F(f'name_{language_code}')),
+                     default=Value(''),
+                     output_field=CharField()
+            ),
+
+            definition = Case(
+                When(**{f'definition_{language_code}__isnull':False},
+                     then=F(f'definition_{language_code}')),
+                     default=Value(''),
+                     output_field=CharField()
+            ),
+
+            note = Case(
+                When(**{f'note_{language_code}__isnull':False},
+                     then=F(f'note_{language_code}')),
+                     default=Value(''),
+                     output_field=CharField()
+            )
+        )
         return objects
 
 class ParameterCareerType(ParameterCommonFields):
@@ -229,3 +225,6 @@ class ParameterDatePosted(ParameterCommonFields):
 class ParameterAgeGroup(ParameterCommonFields):
     minimum = models.PositiveIntegerField()
     maximum = models.PositiveIntegerField()
+
+class ParameterEducationLevel(ParameterCommonFields):
+    ...

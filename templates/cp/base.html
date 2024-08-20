@@ -85,6 +85,7 @@
                     <li {% if 'job-family' in request.path %} class="active" {% endif %}><a href="{% url 'cp:job_family' %}">Job Family</a></li>
                     <li {% if 'date-posted' in request.path %} class="active" {% endif %}><a href="{% url 'cp:date_posted' %}">Date Posted</a></li>
                     <li {% if 'age-group' in request.path %} class="active" {% endif %}><a href="{% url 'cp:age_group' %}">Age Group</a></li>
+                    <li {% if 'education-level' in request.path %} class="active" {% endif %}><a href="{% url 'cp:education_level' %}">Education Level</a></li>
                 {% elif 'translation' in request.path %}
                     <li {% if 'languages' in request.path %} class="active" {% endif %}><a href="{% url 'cp:languages' %}">Language</a></li>
                     <li {% if 'contents' in request.path %} class="active" {% endif %}><a href="{% url 'cp:contents' %}">Contents</a></li>

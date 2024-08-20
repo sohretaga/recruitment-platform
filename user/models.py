@@ -12,7 +12,9 @@ from recruitment_cp.models import (
     ParameterOrganizationOwnership,
     ParameterNumberOfEmployee,
     ParameterCountry,
-    ParameterAgeGroup
+    ParameterAgeGroup,
+    ParameterWorkExperience,
+    ParameterEducationLevel
 )
 
 class CustomUser(AbstractUser):
@@ -68,12 +70,15 @@ class Candidate(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='candidate')
     id_card_number = models.CharField(max_length=20, null=True)
     birthday = models.DateField(null=True)
-    citizenship = models.ForeignKey(ParameterCountry, on_delete=models.SET_NULL, null=True)
     languages = models.JSONField(blank=True, null=True)
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES, null=True)
     whatsapp = models.CharField(max_length=15, blank=True, null=True)
     linkedin_url = models.URLField(blank=True, null=True)
     cv = models.FileField(upload_to='cvs/', blank=True, null=True)
+
+    citizenship = models.ForeignKey(ParameterCountry, on_delete=models.SET_NULL, null=True)
+    work_experience = models.ForeignKey(ParameterWorkExperience, on_delete=models.SET_NULL, null=True)
+    education_level = models.ForeignKey(ParameterEducationLevel, on_delete=models.SET_NULL, null=True)
 
     def __str__(self) -> str:
         return self.user.get_full_name()
@@ -103,6 +108,18 @@ class Candidate(models.Model):
             citizenship_name=Case(
                 When(**{f'citizenship__name_{language}__isnull':False},
                      then=F(f'citizenship__name_{language}')),
+                     default=Value(''),
+                     output_field=CharField()
+            ),
+            work_experience_name=Case(
+                When(**{f'work_experience__name_{language}__isnull':False},
+                     then=F(f'work_experience__name_{language}')),
+                     default=Value(''),
+                     output_field=CharField()
+            ),
+            education_level_name=Case(
+                When(**{f'education_level__name_{language}__isnull':False},
+                     then=F(f'education_level__name_{language}')),
                      default=Value(''),
                      output_field=CharField()
             ),

@@ -189,39 +189,39 @@
                         <div class="accordion" id="accordionRight">
 
                             <div class="accordion-item mt-4">   
-                            <h2 class="accordion-header" id="citizenshipOne">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#citizenship" aria-expanded="false" aria-controls="citizenship">
-                                    {% tr 'Citizenship' %}
-                                </button>
-                            </h2>
-                            <div id="citizenship" class="accordion-collapse collapse" aria-labelledby="citizenshipOne">
-                                <div class="accordion-body">
-                                    <div class="side-title">
-                                        <form class="position-relative mb-2">
-                                            <input class="form-control" type="search" placeholder="{% tr 'Search' %}...">
-                                            <button class="bg-transparent border-0 position-absolute top-50 end-0 translate-middle-y me-2" type="submit"><span class="mdi mdi-magnify text-muted"></span></button>
-                                        </form>
+                                <h2 class="accordion-header" id="citizenshipOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#citizenship" aria-expanded="false" aria-controls="citizenship">
+                                        {% tr 'Citizenship' %}
+                                    </button>
+                                </h2>
+                                <div id="citizenship" class="accordion-collapse collapse" aria-labelledby="citizenshipOne">
+                                    <div class="accordion-body">
+                                        <div class="side-title">
+                                            <form class="position-relative mb-2">
+                                                <input class="form-control" type="search" placeholder="{% tr 'Search' %}...">
+                                                <button class="bg-transparent border-0 position-absolute top-50 end-0 translate-middle-y me-2" type="submit"><span class="mdi mdi-magnify text-muted"></span></button>
+                                            </form>
 
-                                        <div style="max-height: 250px; overflow: auto;">
-                                            {% for citizenship in citizenships %}
-                                            <div class="form-check mt-2" >
-                                                <input class="form-check-input" type="checkbox" value="{{ citizenship.name }}" id="citizenship-{{ citizenship.id }}" />
-                                                <label class="form-check-label ms-2 text-muted" for="citizenship-{{ citizenship.id }}">{{ citizenship.name }}</label>
+                                            <div style="max-height: 250px; overflow: auto;">
+                                                {% for citizenship in citizenships %}
+                                                <div class="form-check mt-2" >
+                                                    <input class="form-check-input" type="checkbox" value="{{ citizenship.name }}" id="citizenship-{{ citizenship.id }}" />
+                                                    <label class="form-check-label ms-2 text-muted" for="citizenship-{{ citizenship.id }}">{{ citizenship.name }}</label>
+                                                </div>
+                                                {% endfor %}
                                             </div>
-                                            {% endfor %}
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            </div><!-- end accordion-item -->
                     
                             <div class="accordion-item mt-3">
                                 <h2 class="accordion-header" id="ageGroup">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#agegroup" aria-expanded="false" aria-controls="agegroup">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#age-group" aria-expanded="false" aria-controls="age-group">
                                         {% tr 'Age Group' %}
                                     </button>
                                 </h2>
-                                <div id="agegroup" class="accordion-collapse collapse" aria-labelledby="ageGroup">
+                                <div id="age-group" class="accordion-collapse collapse" aria-labelledby="ageGroup">
                                     <div class="accordion-body">
                                         <div class="side-title">
                                             {% for group in age_groups %}
@@ -233,7 +233,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div><!-- end accordion-item -->
+                            </div>
                     
                             <div class="accordion-item mt-3">
                                 <h2 class="accordion-header" id="genderTitle">
@@ -256,7 +256,47 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div><!-- end accordion-item -->
+                            </div>
+
+                            <div class="accordion-item mt-3">
+                                <h2 class="accordion-header" id="workExperience">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#work-experience" aria-expanded="false" aria-controls="work-experience">
+                                        {% tr 'Work Experience' %}
+                                    </button>
+                                </h2>
+                                <div id="work-experience" class="accordion-collapse collapse" aria-labelledby="workExperience">
+                                    <div class="accordion-body">
+                                        <div class="side-title">
+                                            {% for experience in work_experiences %}
+                                                <div class="form-check mt-2">
+                                                    <input class="form-check-input" type="checkbox" value="{{ experience.name }}" id="experience-{{ experience.id }}" />
+                                                    <label class="form-check-label ms-2 text-muted" for="experience-{{ experience.id }}">{{ experience.name }}</label>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item mt-3">
+                                <h2 class="accordion-header" id="educationLevel">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#education-level" aria-expanded="false" aria-controls="education-level">
+                                        {% tr 'Education Level' %}
+                                    </button>
+                                </h2>
+                                <div id="education-level" class="accordion-collapse collapse" aria-labelledby="educationLevel">
+                                    <div class="accordion-body">
+                                        <div class="side-title">
+                                            {% for level in education_levels %}
+                                                <div class="form-check mt-2">
+                                                    <input class="form-check-input" type="checkbox" value="{{ level.name }}" id="level-{{ level.id }}" />
+                                                    <label class="form-check-label ms-2 text-muted" for="level-{{ level.id }}">{{ level.name }}</label>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             
                         </div><!--end accordion-->
                         
