@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.db.models import F, Case, When, Value, CharField
-from django.db.models.functions import ExtractYear
+from django.db.models import F, Case, When, Value, CharField, Subquery, OuterRef, FloatField, IntegerField
+from django.db.models.functions import ExtractYear, Cast
 from django.conf import settings
 from django.core.cache import cache
 from datetime import datetime
@@ -13,8 +13,7 @@ from recruitment_cp.models import (
     ParameterNumberOfEmployee,
     ParameterCountry,
     ParameterAgeGroup,
-    ParameterWorkExperience,
-    ParameterEducationLevel
+    ParameterWorkExperience
 )
 
 class CustomUser(AbstractUser):
@@ -77,8 +76,6 @@ class Candidate(models.Model):
     cv = models.FileField(upload_to='cvs/', blank=True, null=True)
 
     citizenship = models.ForeignKey(ParameterCountry, on_delete=models.SET_NULL, null=True)
-    work_experience = models.ForeignKey(ParameterWorkExperience, on_delete=models.SET_NULL, null=True)
-    education_level = models.ForeignKey(ParameterEducationLevel, on_delete=models.SET_NULL, null=True)
 
     def __str__(self) -> str:
         return self.user.get_full_name()
@@ -87,7 +84,29 @@ class Candidate(models.Model):
     def translation(cls):
         language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
         current_year = datetime.now().year
+        current_month = datetime.now().month
+        month_mapping = {
+            'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4, 'May': 5, 'Jun': 6,
+            'Jul': 7, 'Aug': 8, 'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12
+        }
+
         age_groups = ParameterAgeGroup.translation().values('minimum', 'maximum', 'name')
+        work_experiences = ParameterWorkExperience.translation().values('minimum', 'maximum', 'name')
+        
+        latest_experience = Experience.objects.filter(
+            candidate=OuterRef('pk')
+        ).order_by('start_date_year', 'start_date_month').annotate(
+            start_year_int=Cast(F('start_date_year'), output_field=IntegerField()),
+            start_month_int=Case(
+                *[When(start_date_month=month, then=Value(num)) for month, num in month_mapping.items()],
+                output_field=IntegerField()
+            )
+        ).annotate(
+            years_diff=Value(current_year, output_field=IntegerField()) - F('start_year_int'),
+            months_diff=Value(current_month, output_field=IntegerField()) - F('start_month_int')
+        ).annotate(
+            total_diff=F('years_diff') + (F('months_diff') / 12.0)
+        ).values('total_diff')[:1]
 
         age_group_cases = [
             When(
@@ -96,6 +115,15 @@ class Candidate(models.Model):
                 then=Value(age_group.get('name'))
             )
             for age_group in age_groups
+        ]
+
+        work_experience_case = [
+            When(
+                experience_duration_years__gte=experience.get('minimum'),
+                experience_duration_years__lte=experience.get('maximum'),
+                then=Value(experience.get('name'))
+            )
+            for experience in work_experiences
         ]
 
         candidates = cls.objects.annotate(
@@ -111,18 +139,13 @@ class Candidate(models.Model):
                      default=Value(''),
                      output_field=CharField()
             ),
+            experience_duration_years=Subquery(latest_experience, output_field=FloatField()),
             work_experience_name=Case(
-                When(**{f'work_experience__name_{language}__isnull':False},
-                     then=F(f'work_experience__name_{language}')),
-                     default=Value(''),
-                     output_field=CharField()
+                *work_experience_case,
+                default=Value(''),
+                output_field=CharField()
             ),
-            education_level_name=Case(
-                When(**{f'education_level__name_{language}__isnull':False},
-                     then=F(f'education_level__name_{language}')),
-                     default=Value(''),
-                     output_field=CharField()
-            ),
+            education_level_name=Value('')
         )
 
         return candidates

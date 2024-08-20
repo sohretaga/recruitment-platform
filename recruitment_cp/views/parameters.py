@@ -290,7 +290,7 @@ def work_experience_load(request):
             language = request.POST.get('language')
             
             work_experience = cp_models.ParameterWorkExperience.language_filter(language).values(
-                'id', 'no', 'name', 'definition', 'note'
+                'id', 'no', 'name', 'definition', 'note', 'minimum', 'maximum'
             )
             json_data = json.dumps(list(work_experience))
 
@@ -309,6 +309,8 @@ def work_experience_save(request):
 
             while index < len(hot):
                 pk = hot[index].pop('id', None)
+                minimum = hot[index].get('minimum', 0)
+                maximum = hot[index].get('maximum', 0)
                 name = hot[index].get('name', None)
 
                 if name or language != 'en':
@@ -316,7 +318,7 @@ def work_experience_save(request):
                         work_experience = cp_models.ParameterWorkExperience.objects.filter(pk=pk)
                         work_experience.custom_update(language, **hot[index])
                     else:
-                        work_experience = cp_models.ParameterWorkExperience()
+                        work_experience = cp_models.ParameterWorkExperience(minimum=minimum, maximum=maximum)
                         work_experience.save(language, **hot[index])
                 else:
                     work_experience = cp_models.ParameterWorkExperience.objects.filter(pk = pk)

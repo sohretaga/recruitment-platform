@@ -167,7 +167,8 @@ class ParameterLocation(ParameterCommonFields):
     ...
 
 class ParameterWorkExperience(ParameterCommonFields):
-    ...
+    minimum = models.FloatField()
+    maximum = models.FloatField()
 
 class ParameterFTE(ParameterCommonFields):
     ...
