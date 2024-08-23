@@ -1360,7 +1360,7 @@ def age_group_save(request):
             raise PermissionError
     else:
         raise Http404
-    
+
 #======================================================================================================
 def education_level_index(request):
     if request.user.is_superuser:
@@ -1374,7 +1374,7 @@ def education_level_load(request):
             language = request.POST.get('language')
             
             education_level = cp_models.ParameterEducationLevel.language_filter(language).values(
-                'id', 'no', 'name', 'definition', 'note',
+                'id', 'no', 'name', 'definition', 'note', 'level_order'
             )
             json_data = json.dumps(list(education_level))
 
@@ -1393,6 +1393,7 @@ def education_level_save(request):
 
             while index < len(hot):
                 pk = hot[index].pop('id', None)
+                level_order = hot[index].pop('level_order', 0)
                 name = hot[index].get('name', None)
 
                 if name or language != 'en':
@@ -1400,7 +1401,7 @@ def education_level_save(request):
                         education_level = cp_models.ParameterEducationLevel.objects.filter(pk=pk)
                         education_level.custom_update(language, **hot[index])
                     else:
-                        education_level = cp_models.ParameterEducationLevel()
+                        education_level = cp_models.ParameterEducationLevel(level_order=level_order)
                         education_level.save(language, **hot[index])
                 else:
                     education_level = cp_models.ParameterEducationLevel.objects.filter(pk = pk)

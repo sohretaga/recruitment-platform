@@ -13,8 +13,10 @@ from recruitment_cp.models import (
     ParameterNumberOfEmployee,
     ParameterCountry,
     ParameterAgeGroup,
-    ParameterWorkExperience
+    ParameterWorkExperience,
+    ParameterEducationLevel
 )
+from .utils import calculate_recent_duration
 
 class CustomUser(AbstractUser):
     USER_TYPE_CHOICES = (
@@ -84,29 +86,14 @@ class Candidate(models.Model):
     def translation(cls):
         language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
         current_year = datetime.now().year
-        current_month = datetime.now().month
-        month_mapping = {
-            'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4, 'May': 5, 'Jun': 6,
-            'Jul': 7, 'Aug': 8, 'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12
-        }
 
         age_groups = ParameterAgeGroup.translation().values('minimum', 'maximum', 'name')
         work_experiences = ParameterWorkExperience.translation().values('minimum', 'maximum', 'name')
         
-        latest_experience = Experience.objects.filter(
+        latest_experience = calculate_recent_duration(Experience)
+        education_level = Education.objects.filter(
             candidate=OuterRef('pk')
-        ).order_by('start_date_year', 'start_date_month').annotate(
-            start_year_int=Cast(F('start_date_year'), output_field=IntegerField()),
-            start_month_int=Case(
-                *[When(start_date_month=month, then=Value(num)) for month, num in month_mapping.items()],
-                output_field=IntegerField()
-            )
-        ).annotate(
-            years_diff=Value(current_year, output_field=IntegerField()) - F('start_year_int'),
-            months_diff=Value(current_month, output_field=IntegerField()) - F('start_month_int')
-        ).annotate(
-            total_diff=F('years_diff') + (F('months_diff') / 12.0)
-        ).values('total_diff')[:1]
+        ).order_by('level_order').values('school')[:1]
 
         age_group_cases = [
             When(
@@ -145,7 +132,10 @@ class Candidate(models.Model):
                 default=Value(''),
                 output_field=CharField()
             ),
-            education_level_name=Value('')
+            education_level_name=Subquery(
+                education_level,
+                output_field=CharField(),
+            )
         )
 
         return candidates
@@ -163,6 +153,7 @@ class Education(models.Model):
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, related_name='educations')
     school = models.CharField(max_length=255)
     speciality = models.CharField(max_length=500)
+    education_level = models.ForeignKey(ParameterEducationLevel, on_delete=models.SET_NULL, null=True)
 
     start_date_month = models.CharField(max_length=15)
     start_date_year = models.IntegerField()

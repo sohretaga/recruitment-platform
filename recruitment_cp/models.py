@@ -228,4 +228,4 @@ class ParameterAgeGroup(ParameterCommonFields):
     maximum = models.PositiveIntegerField()
 
 class ParameterEducationLevel(ParameterCommonFields):
-    ...
+    level_order = models.PositiveIntegerField()

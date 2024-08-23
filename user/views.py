@@ -268,11 +268,13 @@ def candidate_details(request, username):
     user = get_object_or_404(CustomUser, **params)
     citizenships = ParameterCountry.translation().values('id', 'name')
     competencies = ParameterCompetence.translation().values('id', 'name')
+    education_levels = ParameterEducationLevel.translation().values('id', 'name')
 
     context = {
         'candidate': user.candidate,
         'citizenships': citizenships,
         'competencies': competencies,
+        'education_levels': education_levels,
         'educations': user.candidate.educations.all(),
         'experiences': user.candidate.experiences.all()
     }
@@ -400,14 +402,16 @@ def delete_gallery_image(request):
 @require_POST
 def manage_education(request):
     education_ids = request.POST.getlist('education_id')
+    education_level_ids = request.POST.getlist('education_level')
     schools = request.POST.getlist('school')
     specialties = request.POST.getlist('speciality')
     start_dates = request.POST.getlist('start_date')
     end_dates = request.POST.getlist('end_date')
     descriptions = request.POST.getlist('description')
 
-    for edu_id, school, speciality, start_date, end_date, description in zip(
+    for edu_id, education_level_id, school, speciality, start_date, end_date, description in zip(
         education_ids,
+        education_level_ids,
         schools,
         specialties,
         start_dates,
@@ -421,12 +425,14 @@ def manage_education(request):
         end_date = end_date.split(',')
         end_date_month = end_date[0]
         end_date_year = end_date[1]
+        education_level = ParameterEducationLevel.objects.get(id=education_level_id)
 
         if edu_id:
             education_exists = Education.objects.filter(id=edu_id).exists()
             if education_exists:
                 Education.objects.filter(id=edu_id).update(
                     school=school,
+                    education_level=education_level,
                     speciality=speciality,
                     start_date_month=start_date_month,
                     start_date_year=start_date_year,
@@ -438,6 +444,7 @@ def manage_education(request):
             Education.objects.create(
                 candidate=request.user.candidate,
                 school=school,
+                education_level=education_level,
                 speciality=speciality,
                 start_date_month=start_date_month,
                 start_date_year=start_date_year,
