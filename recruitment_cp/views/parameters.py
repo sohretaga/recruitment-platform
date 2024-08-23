@@ -1393,7 +1393,7 @@ def education_level_save(request):
 
             while index < len(hot):
                 pk = hot[index].pop('id', None)
-                level_order = hot[index].pop('level_order', 0)
+                level_order = hot[index].get('level_order', 0)
                 name = hot[index].get('name', None)
 
                 if name or language != 'en':
