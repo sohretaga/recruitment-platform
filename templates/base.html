@@ -178,19 +178,19 @@
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <ul class="navbar-nav mx-auto navbar-center">
                             <li class="nav-item">
-                                <a href="{% url 'main:main-index' %}" class="nav-link">{% tr 'Home' %}</a>
+                                <a href="{% url 'main:main-index' %}" class="nav-link">{% tr 'Home - NAVBAR' %}</a>
                             </li>
                             <li class="nav-item dropdown dropdown-hover">
                                 <a class="nav-link" href="javascript:void(0)" id="jobsdropdown" role="button" data-bs-toggle="dropdown">
                                     {% tr 'Company' %} <div class="arrow-down"></div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="jobsdropdown">
-                                    <li><a class="dropdown-item" href="{% url 'main:about' %}">{% tr 'About Us' %}</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'main:services' %}">{% tr 'Services' %}</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'main:team' %}">{% tr 'Team' %}</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'main:pricing' %}">{% tr 'Pricing' %}</a></li>
-                                    <a class="dropdown-item" href="{% url 'main:privacy-policy' %}">{% tr 'Privacy & Policy' %}</a>
-                                    <li><a class="dropdown-item" href="{% url 'main:faqs' %}">{% tr 'FAQs' %}</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'main:about' %}">{% tr 'About Us - NAVBAR' %}</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'main:services' %}">{% tr 'Services - NAVBAR' %}</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'main:team' %}">{% tr 'Team - NAVBAR' %}</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'main:pricing' %}">{% tr 'Pricing - NAVBAR' %}</a></li>
+                                    <a class="dropdown-item" href="{% url 'main:privacy-policy' %}">{% tr 'Privacy & Policy - NAVBAR' %}</a>
+                                    <li><a class="dropdown-item" href="{% url 'main:faqs' %}">{% tr 'FAQs - NAVBAR' %}</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown dropdown-hover">
@@ -203,27 +203,27 @@
                                         <div class="col-lg-4">
                                             <span class="dropdown-header">{% tr 'Candidates / Companies' %}</span>
                                             <div>
-                                                <a class="dropdown-item" href="{% url 'user:candidate-list' %}">{% tr 'Candidate List' %}</a>
-                                                <a class="dropdown-item" href="{% url 'user:company-list' %}">{% tr 'Company List' %}</a>
+                                                <a class="dropdown-item" href="{% url 'user:candidate-list' %}">{% tr 'Candidate List - NAVBAR' %}</a>
+                                                <a class="dropdown-item" href="{% url 'user:company-list' %}">{% tr 'Company List - NAVBAR' %}</a>
                                             </div>
                                         </div><!--end col-->
                                         <div class="col-lg-4">
-                                            <span class="dropdown-header">{% tr 'Extra Pages' %}</span>
+                                            <span class="dropdown-header">{% tr 'Extra Pages - NAVBAR' %}</span>
                                             <div>
-                                                <a class="dropdown-item" href="{% url 'main:coming-soon' %}">{% tr 'Coming Soon' %}</a>
+                                                <a class="dropdown-item" href="{% url 'main:coming-soon' %}">{% tr 'Coming Soon - NAVBAR' %}</a>
                                             </div>
                                         </div><!--end col-->
                                     </div>
                                 </div>
                             </li><!--end dropdown-->
                             <li class="nav-item">
-                                <a href="{% url 'job:vacancies' %}" class="nav-link">{% tr 'Vacancies' %}</a>
+                                <a href="{% url 'job:vacancies' %}" class="nav-link">{% tr 'Vacancies - NAVBAR' %}</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{% url 'blog:blog' %}" class="nav-link">{% tr 'Blog' %}</a>
+                                <a href="{% url 'blog:blog' %}" class="nav-link">{% tr 'Blog - NAVBAR' %}</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{% url 'main:contact' %}" class="nav-link">{% tr 'Contact' %}</a>
+                                <a href="{% url 'main:contact' %}" class="nav-link">{% tr 'Contact - NAVBAR' %}</a>
                             </li>
                         </ul><!--end navbar-nav-->
                     </div>
