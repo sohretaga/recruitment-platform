@@ -714,7 +714,7 @@
                                                     </div>
                                                     <div class="d-flex mb-2">
                                                         <div class="w-100 me-2">
-                                                            <select class="form-select" data-trigger name="education_level" id="education-level" >
+                                                            <select class="form-select" data-trigger name="education_level" id="education-level-{{ edu.id }}">
                                                                 <option value="">{% tr 'Education Level' %}</option>
                                                                 {% for level in education_levels %}
                                                                 {% if level.id == edu.education_level.id %}
@@ -748,7 +748,7 @@
                                                     </div>
                                                     <div class="d-flex mb-2">
                                                         <div class="w-100 me-2">
-                                                            <select class="form-select" data-trigger name="education_level" id="education-level" >
+                                                            <select class="form-select" data-trigger name="education_level" id="education-level-0" >
                                                                 <option value="">{% tr 'Education Level' %}</option>
                                                                 {% for level in education_levels %}
                                                                 <option value="{{ level.id }}">{{ level.name }}</option>
@@ -768,6 +768,15 @@
                                                 </div>
                                             </div>
                                             {% endif %}
+                                        </div>
+                                        <!-- This select is created for the Education Level options,
+                                        which are among the new inputs created when the Add education button is clicked. -->
+
+                                        <div id="option-container" style="display: none;">
+                                            <option value="">{% tr 'Education Level' %}</option>
+                                            {% for level in education_levels %}
+                                            <option value="{{ level.id }}">{{ level.name }}</option>
+                                            {% endfor %}
                                         </div>
     
                                         <div class="col-lg-3">

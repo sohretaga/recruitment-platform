@@ -84,16 +84,14 @@ class Candidate(models.Model):
     
     @classmethod
     def translation(cls):
-        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
         current_year = datetime.now().year
-
         age_groups = ParameterAgeGroup.translation().values('minimum', 'maximum', 'name')
         work_experiences = ParameterWorkExperience.translation().values('minimum', 'maximum', 'name')
-        
         latest_experience = calculate_recent_duration(Experience)
-        education_level = Education.objects.filter(
+
+        education_level_case = Education.translation().filter(
             candidate=OuterRef('pk')
-        ).order_by('level_order').values('school')[:1]
+        ).order_by('-education_level__level_order').values('education_level_name')[:1]
 
         age_group_cases = [
             When(
@@ -121,8 +119,8 @@ class Candidate(models.Model):
                 output_field=CharField()
             ),
             citizenship_name=Case(
-                When(**{f'citizenship__name_{language}__isnull':False},
-                     then=F(f'citizenship__name_{language}')),
+                When(**{f'citizenship__name_{settings.SITE_LANGUAGE_CODE}__isnull':False},
+                     then=F(f'citizenship__name_{settings.SITE_LANGUAGE_CODE}')),
                      default=Value(''),
                      output_field=CharField()
             ),
@@ -133,7 +131,7 @@ class Candidate(models.Model):
                 output_field=CharField()
             ),
             education_level_name=Subquery(
-                education_level,
+                education_level_case,
                 output_field=CharField(),
             )
         )
@@ -162,6 +160,19 @@ class Education(models.Model):
     end_date_year = models.IntegerField()
 
     description = models.TextField()
+
+    @classmethod
+    def translation(cls):
+        educations = cls.objects.annotate(
+            education_level_name=Case(
+                When(**{f'education_level__name_{settings.SITE_LANGUAGE_CODE}__isnull':False},
+                     then=F(f'education_level__name_{settings.SITE_LANGUAGE_CODE}')),
+                     default=Value(''),
+                     output_field=CharField()
+            )
+        )
+
+        return educations
 
 class Experience(models.Model):
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, related_name='experiences')

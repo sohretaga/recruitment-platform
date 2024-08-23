@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from dotenv import load_dotenv
+from django.core.cache import cache
 import os
 
 load_dotenv()
@@ -153,7 +154,7 @@ USE_TZ = True
 # It is used to set the default language code of the site.
 # If there is no language code in the cache, the site uses this language code by default.
 
-SITE_LANGUAGE_CODE = 'tr'
+SITE_LANGUAGE_CODE = cache.get('site_language', 'tr')
 
 
 # Static files (CSS, JavaScript, Images)

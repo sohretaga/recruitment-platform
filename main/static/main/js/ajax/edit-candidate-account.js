@@ -5,7 +5,7 @@ const menus = document.querySelectorAll('.edit-menu');
 var tempPresentId = 1;
 
 selects.forEach(select => {
-    new Choices(`#${select.id}`)
+    new Choices(`#${select.id}`);
 });
 
 
@@ -46,6 +46,8 @@ const deleteEducation = (button) => {
 };
 
 const addEducation = () => {
+    let index = educations.childElementCount
+
     educations.insertAdjacentHTML('beforeend', `
     <div class="d-flex justify-content-between mb-5">
         <div class="w-100">
@@ -54,7 +56,25 @@ const addEducation = () => {
                 <input name="school" type="text" class="form-control mb-2" placeholder="School*" required>
                 <button class="btn btn-danger fs-17 mb-2 ms-2" onclick="deleteEducation(this)"><i class="uil uil-trash-alt"></i></button>
             </div>
-            <input name="speciality" type="text" class="form-control mb-2" placeholder="Speciality*" required>
+
+            <div class="d-flex mb-2">
+                <div class="w-100 me-2">
+                    <select class="form-select" data-trigger name="education_level" id="education-level-new-${index}" >
+                        ${(() => {
+                            let optionContainer = document.getElementById('option-container');
+                            let options = optionContainer.querySelectorAll('option');
+                            let optionList;
+                            options.forEach(option => {
+                                optionList += `<option value="${option.value}">${option.text}</option>`;
+                            });
+
+                            return optionList
+                        })()}
+                    </select>
+                </div>
+                <input name="speciality" type="text" class="form-control" placeholder="Speciality*" required>
+            </div>
+
             <div class="d-flex mb-2">
                 <input type="text" class="form-control" data-provide="datepicker" data-date-format="M, yyyy"
                     name="start_date" placeholder="Start date*" required>
@@ -65,8 +85,9 @@ const addEducation = () => {
             <textarea name="description" class="form-control" rows="3" placeholder="Description*" required></textarea>
         </div>
     </div>`);
-};
 
+    new Choices(`#education-level-new-${index}`);
+};
 
 const deleteExperience = (button) => {
     const parentDiv = button.closest('.d-flex.justify-content-between');
