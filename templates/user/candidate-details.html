@@ -260,6 +260,13 @@
                                     {% tr 'Education' %}
                                 </button>
                             </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="preference-tab" data-bs-toggle="pill"
+                                    data-bs-target="#preference" type="button" role="tab" aria-controls="preference"
+                                    aria-selected="false">
+                                    {% tr 'Preference' %}
+                                </button>
+                            </li>
                         </ul>
                         <!--end profile-content-nav-->
                         {% endif %}
@@ -769,21 +776,23 @@
                                             </div>
                                             {% endif %}
                                         </div>
-                                        <!-- This select is created for the Education Level options,
-                                        which are among the new inputs created when the Add education button is clicked. -->
-
-                                        <div id="option-container" style="display: none;">
-                                            <option value="">{% tr 'Education Level' %}</option>
-                                            {% for level in education_levels %}
-                                            <option value="{{ level.id }}">{{ level.name }}</option>
-                                            {% endfor %}
-                                        </div>
-    
                                         <div class="col-lg-3">
                                             <button class="btn btn-primary mb-2" type="button" onclick="addEducation()">{% tr 'Add Education' %} <i class="uil uil-plus-circle"></i></button>
                                             <button class="btn btn-success" type="submit">{% tr 'Save' %} <i class="uil uil-save"></i></button>
                                         </div>
                                     </form>
+
+                                    <!-- This select is created for the Education Level options,
+                                    which are among the new inputs created when the Add education button is clicked. -->
+                                    <div id="option-container" style="display: none;">
+                                        <option value="">{% tr 'Education Level' %}</option>
+                                        {% for level in education_levels %}
+                                        <option value="{{ level.id }}">{{ level.name }}</option>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="preference" role="tabpanel" aria-labelledby="preference-tab">
+
                                 </div>
                                 {% endif %}
                                 <!--end tab-pane-->
