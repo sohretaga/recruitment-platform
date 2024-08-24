@@ -18,6 +18,9 @@
      <link href="{% static 'main/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
      <!-- App Css-->
      <link href="{% static 'main/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
+     <!--Multi Select Dropdown Css-->
+    <link rel="stylesheet" href="{% static 'main/libs/multi-select-dropdown/MultiSelect.css' %}">
+
      <!--Custom Css-->
     <link rel="stylesheet" href="{% static 'main/css/company-details.css' %}">
 {% endblock head %}
@@ -803,7 +806,7 @@
                                                         value="{% for company in candidate.preference.companies %}{{ company }}{% if not forloop.last %},{% endif %}{% endfor %}"
                                                     {% endif %}>
                                                 <label for="preference-companies" class="form-label">{% tr 'Companies' %}</label>
-                                                <select class="form-select" data-trigger id="preference-companies" multiple>
+                                                <select class="form-select" data-trigger id="preference-companies" data-placeholder="{% tr 'Select company options' %}" multiple data-multi-select>
                                                     {% for company in companies %}
                                                     {% if company.id|stringformat:"s" in candidate.preference.companies %}
                                                     <option value="{{ company.id }}" selected>{{ company.user__first_name }}</option>
@@ -822,7 +825,7 @@
                                                         value="{% for career in candidate.preference.career_types %}{{ career }}{% if not forloop.last %},{% endif %}{% endfor %}"
                                                     {% endif %}>
                                                 <label for="preference-career-types" class="form-label">{% tr 'Career Types' %}</label>
-                                                <select class="form-select" data-trigger id="preference-career-types" multiple>
+                                                <select class="form-select" data-trigger id="preference-career-types" data-placeholder="{% tr 'Select career type options' %}" multiple data-multi-select>
                                                     {% for career in career_types %}
                                                     {% if career.id|stringformat:"s" in candidate.preference.career_types %}
                                                     <option value="{{ career.id }}" selected>{{ career.name }}</option>
@@ -885,6 +888,9 @@
 <script src="{% static 'main/js/pages/switcher.init.js' %}"></script>
 
 <script src="{% static 'main/js/app.js' %}"></script>
+
+<!-- Multi Select Dropdown Js -->
+<script src="{% static 'main/libs/multi-select-dropdown/MultiSelect.js' %}"></script>
 
 <!-- Custom Js -->
 <script src="{% static 'main/js/ajax/edit-candidate-account.js' %}"></script>
