@@ -14,7 +14,8 @@ from recruitment_cp.models import (
     ParameterCountry,
     ParameterAgeGroup,
     ParameterWorkExperience,
-    ParameterEducationLevel
+    ParameterEducationLevel,
+    ParameterCareerType
 )
 from .utils import calculate_recent_duration
 
@@ -166,12 +167,12 @@ class Education(models.Model):
         educations = cls.objects.annotate(
             education_level_name=Case(
                 When(**{f'education_level__name_{settings.SITE_LANGUAGE_CODE}__isnull':False},
-                     then=F(f'education_level__name_{settings.SITE_LANGUAGE_CODE}')),
-                     default=Value(''),
-                     output_field=CharField()
+                     then=F(f'education_level__name_{settings.SITE_LANGUAGE_CODE}')
+                ),
+                default=Value(''),
+                output_field=CharField()
             )
         )
-
         return educations
 
 class Experience(models.Model):
@@ -189,5 +190,13 @@ class Experience(models.Model):
     description = models.TextField()
 
 class CandidateBookmark(models.Model):
+    # Employers bookmark candidates
     employer = models.ForeignKey(Employer, on_delete=models.CASCADE, related_name='bookmarks')
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
+
+class CandidatePreference(models.Model):
+    candidate = models.OneToOneField(Candidate, on_delete=models.CASCADE, related_name='preference')
+    companies = models.ManyToManyField(Employer, related_name='preferred_by_candidates')
+    career_types = models.ManyToManyField(ParameterCareerType, related_name='preferred_by_candidates')
+    min_salary = models.PositiveIntegerField()
+    max_salary = models.PositiveIntegerField()

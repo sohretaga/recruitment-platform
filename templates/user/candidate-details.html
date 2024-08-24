@@ -792,7 +792,64 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="preference" role="tabpanel" aria-labelledby="preference-tab">
+                                    <form method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <p class="text-muted"><i class="uil uil-info-circle"></i> {% tr 'You will receive notifications when new job postings are posted according to the preferences you have selected.' %}</p>
 
+                                        <div class="col-lg-12">
+                                            <div class="mb-3">
+                                                <input type="hidden" id="company-values" name="companies"
+                                                    {% if candidate.languages %}
+                                                        value="{% for company in candidate.preference.companies %}{{ company }}{% if not forloop.last %},{% endif %}{% endfor %}"
+                                                    {% endif %}>
+                                                <label for="preference-companies" class="form-label">{% tr 'Companies' %}</label>
+                                                <select class="form-select" data-trigger id="preference-companies" multiple>
+                                                    {% for company in companies %}
+                                                    {% if company.id|stringformat:"s" in candidate.preference.companies %}
+                                                    <option value="{{ company.id }}" selected>{{ company.user__first_name }}</option>
+                                                    {% else %}
+                                                    <option value="{{ company.id }}">{{ company.user__first_name }}</option>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12">
+                                            <div class="mb-3">
+                                                <input type="hidden" id="career-type-values" name="career-types"
+                                                    {% if candidate.languages %}
+                                                        value="{% for career in candidate.preference.career_types %}{{ career }}{% if not forloop.last %},{% endif %}{% endfor %}"
+                                                    {% endif %}>
+                                                <label for="preference-career-types" class="form-label">{% tr 'Career Types' %}</label>
+                                                <select class="form-select" data-trigger id="preference-career-types" multiple>
+                                                    {% for career in career_types %}
+                                                    {% if career.id|stringformat:"s" in candidate.preference.career_types %}
+                                                    <option value="{{ career.id }}" selected>{{ career.name }}</option>
+                                                    {% else %}
+                                                    <option value="{{ career.id }}">{{ career.name }}</option>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <h5 class="fs-17 fw-semibold mb-3 mb-0">{% tr 'Salary Range' %}</h5>
+
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label for="minimum-salary" class="form-label">{% tr 'Minimum Salary' %}</label>
+                                                    <input type="text" name="min_salary" class="form-control" id="minimum-salary" value="{{ candidate.preference.min_salary }}" required/>
+                                                </div>
+                                            </div>
+                                            <!--end col-->
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label for="maximum-salary" class="form-label">{% tr 'Maximum Salary' %}</label>
+                                                    <input type="text" name="max_salary" class="form-control" id="maximum-salary" value="{{ candidate.preference.max_salary }}" required/>
+                                                </div>
+                                            </div>
+                                        </div>
                                 </div>
                                 {% endif %}
                                 <!--end tab-pane-->

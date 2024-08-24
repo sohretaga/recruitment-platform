@@ -21,6 +21,30 @@ languageSkils.addEventListener('change', function() {
 });
 // End
 
+// Collects the values ​​selected from the Preference Companies selection into an input and prepares it for recording.
+const preferenceCompanies = document.getElementById('preference-companies');
+const companyValuesInput = document.getElementById('company-values');
+preferenceCompanies.addEventListener('change', function() {
+    let values = new Array();
+    preferenceCompanies.querySelectorAll('option').forEach((option) => {
+        values.push(option.value);
+    });
+    companyValuesInput.value = values;
+});
+// End
+
+// Collects the values ​​selected from the Preference Companies selection into an input and prepares it for recording.
+const preferenceCareerType = document.getElementById('preference-career-types');
+const careerTypeValuesInput = document.getElementById('career-type-values');
+preferenceCareerType.addEventListener('change', function() {
+    let values = new Array();
+    preferenceCareerType.querySelectorAll('option').forEach((option) => {
+        values.push(option.value);
+    });
+    careerTypeValuesInput.value = values;
+});
+// End
+
 const previewImg = (input) => {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
