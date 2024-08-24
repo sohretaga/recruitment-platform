@@ -15,7 +15,9 @@ from recruitment_cp.models import (
     ParameterAgeGroup,
     ParameterWorkExperience,
     ParameterEducationLevel,
-    ParameterCareerType
+    ParameterCareerType,
+    ParameterLocation,
+    ParameterEmployeeType
 )
 from .utils import calculate_recent_duration
 
@@ -197,6 +199,8 @@ class CandidateBookmark(models.Model):
 class CandidatePreference(models.Model):
     candidate = models.OneToOneField(Candidate, on_delete=models.CASCADE, related_name='preference')
     companies = models.ManyToManyField(Employer, related_name='preferred_by_candidates')
-    career_types = models.ManyToManyField(ParameterCareerType, related_name='preferred_by_candidates')
+    career_types = models.ManyToManyField(ParameterCareerType, related_name='preferred_by_candidates'),
+    locations = models.ManyToManyField(ParameterCareerType, related_name='preferred_by_candidates'),
+    types_of_employment = models.ManyToManyField(ParameterCareerType, related_name='preferred_by_candidates'),
     min_salary = models.PositiveIntegerField()
     max_salary = models.PositiveIntegerField()

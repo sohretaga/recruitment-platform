@@ -30,7 +30,9 @@ from recruitment_cp.models import(
         ParameterAgeGroup,
         ParameterWorkExperience,
         ParameterEducationLevel,
-        ParameterCareerType
+        ParameterCareerType,
+        ParameterLocation,
+        ParameterEmployeeType
     )
 
 import os
@@ -272,6 +274,8 @@ def candidate_details(request, username):
     education_levels = ParameterEducationLevel.translation().values('id', 'name')
     companies = Employer.objects.values('id', 'user__first_name')
     career_types = ParameterCareerType.translation().values('id', 'name')
+    locations = ParameterLocation.translation().values('id', 'name')
+    types_of_employment = ParameterEmployeeType.translation().values('id', 'name')
 
     context = {
         'candidate': user.candidate,
@@ -280,6 +284,8 @@ def candidate_details(request, username):
         'education_levels': education_levels,
         'companies': companies,
         'career_types': career_types,
+        'locations': locations,
+        'types_of_employment': types_of_employment,
         'educations': user.candidate.educations.all(),
         'experiences': user.candidate.experiences.all()
     }

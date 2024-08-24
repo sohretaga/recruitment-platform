@@ -796,14 +796,14 @@
                                     <p class="text-muted"><i class="uil uil-info-circle"></i> {% tr 'You will receive notifications when new job postings are posted according to the preferences you have selected.' %}</p>
 
                                     <div class="side-bar">
-                                        <div class="accordion">
-                                            <div class="accordion-item mb-3">
+                                        <div class="accordion row">
+                                            <div class="accordion-item mb-3 col-lg-6">
                                                 <h2 class="accordion-header" id="companiesOne">
-                                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#preference-companies" aria-expanded="true" aria-controls="preference-companies">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#preference-companies" aria-expanded="false" aria-controls="preference-companies">
                                                     {% tr 'Company' %}
                                                 </button>
                                                 </h2>
-                                                <div id="preference-companies" class="accordion-collapse collapse show" aria-labelledby="companiesOne">
+                                                <div id="preference-companies" class="accordion-collapse collapse" aria-labelledby="companiesOne">
                                                     <div class="accordion-body">
                                                         <div class="side-title">
                                                             <form class="position-relative mb-2">
@@ -824,16 +824,63 @@
                                                 </div>
                                             </div>
 
-                                            <div class="accordion-item mb-3">
+                                            <div class="accordion-item mb-3 col-lg-6">
+                                                <h2 class="accordion-header" id="locationOne">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#preference-location" aria-expanded="false" aria-controls="preference-location">
+                                                    {% tr 'Location' %}
+                                                </button>
+                                                </h2>
+                                                <div id="preference-location" class="accordion-collapse collapse" aria-labelledby="locationOne">
+                                                    <div class="accordion-body">
+                                                        <div class="side-title">
+                                                            <form class="position-relative mb-2">
+                                                                <input class="form-control" type="search" placeholder="{% tr 'Search' %}...">
+                                                                <button class="bg-transparent border-0 position-absolute top-50 end-0 translate-middle-y me-2" type="submit"><span class="mdi mdi-magnify text-muted"></span></button>
+                                                            </form>
+                    
+                                                            <div class="mb-3" style="max-height: 250px; overflow: auto;">
+                                                                {% for location in locations %}
+                                                                    <div class="form-check mt-2">
+                                                                        <input class="form-check-input" type="checkbox" value="{{ location.name}}" id="flexCheckChecked-location{{ location.id }}" />
+                                                                        <label class="form-check-label ms-2 text-muted" for="flexCheckChecked-location{{ location.id }}">{{ location.name}}</label>
+                                                                    </div>
+                                                                {% endfor %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="accordion-item mb-3 col-lg-6">
                                                 <h2 class="accordion-header" id="careerTypeOne">
-                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#careertype" aria-expanded="true" aria-controls="careertype">
+                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#careertype" aria-expanded="false" aria-controls="careertype">
                                                         {% tr 'Career Type' %}
                                                     </button>
                                                 </h2>
-                                                <div id="careertype" class="accordion-collapse collapse show" aria-labelledby="careerTypeOne">
+                                                <div id="careertype" class="accordion-collapse collapse" aria-labelledby="careerTypeOne">
                                                     <div class="accordion-body">
                                                         <div class="side-title">
                                                             {% for type in career_types %}
+                                                                <div class="form-check mt-2">
+                                                                    <input class="form-check-input" type="checkbox" value="{{ type.name }}" id="flexCheckChecked-careertype{{ type.id }}" />
+                                                                    <label class="form-check-label ms-2 text-muted" for="flexCheckChecked-careertype{{ type.id }}">{{ type.name }}</label>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="accordion-item mb-3 col-lg-6">
+                                                <h2 class="accordion-header" id="typeOfEmploymentOne">
+                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#preference-type-of-employment" aria-expanded="false" aria-controls="preference-type-of-employment">
+                                                        {% tr 'Type of Employment' %}
+                                                    </button>
+                                                </h2>
+                                                <div id="preference-type-of-employment" class="accordion-collapse collapse" aria-labelledby="typeOfEmploymentOne">
+                                                    <div class="accordion-body">
+                                                        <div class="side-title">
+                                                            {% for type in types_of_employment %}
                                                                 <div class="form-check mt-2">
                                                                     <input class="form-check-input" type="checkbox" value="{{ type.name }}" id="flexCheckChecked-careertype{{ type.id }}" />
                                                                     <label class="form-check-label ms-2 text-muted" for="flexCheckChecked-careertype{{ type.id }}">{{ type.name }}</label>

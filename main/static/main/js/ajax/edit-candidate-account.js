@@ -3,6 +3,7 @@ const educations = document.getElementById('educations');
 const experiences = document.getElementById('experiences');
 const menus = document.querySelectorAll('.edit-menu');
 const companiesCheckboxes = '#preference-companies input[type="checkbox"]';
+const locationCheckboxes = '#preference-location input[type="checkbox"]';
 
 var tempPresentId = 1;
 
@@ -190,20 +191,28 @@ document.addEventListener('click', function(event) {
     }
 });
 
+const itemSearcher = (searchInput, items) => {
+    searchInput.addEventListener('input', function() {
+        let searchValue = this.value.toLowerCase();
+    
+        Array.prototype.forEach.call(items, function(item) {
+            const label = item.parentElement;
+    
+            if (label.textContent.toLowerCase().includes(searchValue)) {
+                label.style.display = 'block';
+            }else {
+                label.style.display = 'none';
+            }
+        });
+    });
+}
+
 // Companies items searcher
 const companiesSearchInput = document.querySelector('#preference-companies input[type="search"]');
 const companiesItems = document.querySelectorAll(companiesCheckboxes);
+itemSearcher(companiesSearchInput, companiesItems);
 
-companiesSearchInput.addEventListener('input', function() {
-    let searchValue = this.value.toLowerCase();
-
-    Array.prototype.forEach.call(companiesItems, function(item) {
-        const label = item.parentElement;
-
-        if (label.textContent.toLowerCase().includes(searchValue)) {
-            label.style.display = 'block';
-        }else {
-            label.style.display = 'none';
-        }
-    });
-});
+// Type of Employment items searcher
+const locationSearchInput = document.querySelector('#preference-location input[type="search"]');
+const locationItems = document.querySelectorAll(locationCheckboxes);
+itemSearcher(locationSearchInput, locationItems);
