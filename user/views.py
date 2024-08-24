@@ -294,7 +294,6 @@ def candidate_details(request, username):
         except AttributeError: preference = {}
 
         logged_user_context = {
-            'candidate': candidate,
             'citizenships': citizenships,
             'competencies': competencies,
             'education_levels': education_levels,
@@ -307,6 +306,7 @@ def candidate_details(request, username):
     
 
     context = {
+        'candidate': candidate,
         'educations': user.candidate.educations.all(),
         'experiences': user.candidate.experiences.all(),
         **logged_user_context
