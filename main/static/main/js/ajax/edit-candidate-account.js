@@ -2,6 +2,8 @@ const selects = document.querySelectorAll('select');
 const educations = document.getElementById('educations');
 const experiences = document.getElementById('experiences');
 const menus = document.querySelectorAll('.edit-menu');
+const companiesCheckboxes = '#preference-companies input[type="checkbox"]';
+
 var tempPresentId = 1;
 
 selects.forEach(select => {
@@ -19,30 +21,6 @@ languageSkils.addEventListener('change', function() {
     });
     languageValuesInput.value = values;
 });
-// End
-
-// Collects the values ​​selected from the Preference Companies selection into an input and prepares it for recording.
-// const preferenceCompanies = document.getElementById('preference-companies');
-// const companyValuesInput = document.getElementById('company-values');
-// preferenceCompanies.addEventListener('change', function() {
-//     let values = new Array();
-//     preferenceCompanies.querySelectorAll('option').forEach((option) => {
-//         values.push(option.value);
-//     });
-//     companyValuesInput.value = values;
-// });
-// End
-
-// Collects the values ​​selected from the Preference Companies selection into an input and prepares it for recording.
-// const preferenceCareerType = document.getElementById('preference-career-types');
-// const careerTypeValuesInput = document.getElementById('career-type-values');
-// preferenceCareerType.addEventListener('change', function() {
-//     let values = new Array();
-//     preferenceCareerType.querySelectorAll('option').forEach((option) => {
-//         values.push(option.value);
-//     });
-//     careerTypeValuesInput.value = values;
-// });
 // End
 
 const previewImg = (input) => {
@@ -210,4 +188,22 @@ document.addEventListener('click', function(event) {
     if (!isClickInsideMenu) {
         closeAllMenus();
     }
+});
+
+// Companies items searcher
+const companiesSearchInput = document.querySelector('#preference-companies input[type="search"]');
+const companiesItems = document.querySelectorAll(companiesCheckboxes);
+
+companiesSearchInput.addEventListener('input', function() {
+    let searchValue = this.value.toLowerCase();
+
+    Array.prototype.forEach.call(companiesItems, function(item) {
+        const label = item.parentElement;
+
+        if (label.textContent.toLowerCase().includes(searchValue)) {
+            label.style.display = 'block';
+        }else {
+            label.style.display = 'none';
+        }
+    });
 });

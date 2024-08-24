@@ -18,8 +18,6 @@
      <link href="{% static 'main/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
      <!-- App Css-->
      <link href="{% static 'main/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
-     <!--Multi Select Dropdown Css-->
-    <link rel="stylesheet" href="{% static 'main/libs/multi-select-dropdown/MultiSelect.css' %}">
 
      <!--Custom Css-->
     <link rel="stylesheet" href="{% static 'main/css/company-details.css' %}">
@@ -795,64 +793,75 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="preference" role="tabpanel" aria-labelledby="preference-tab">
-                                    <form method="post" enctype="multipart/form-data">
-                                        {% csrf_token %}
-                                        <p class="text-muted"><i class="uil uil-info-circle"></i> {% tr 'You will receive notifications when new job postings are posted according to the preferences you have selected.' %}</p>
+                                    <p class="text-muted"><i class="uil uil-info-circle"></i> {% tr 'You will receive notifications when new job postings are posted according to the preferences you have selected.' %}</p>
 
-                                        <div class="col-lg-12">
-                                            <div class="mb-3">
-                                                <input type="hidden" id="company-values" name="companies"
-                                                    {% if candidate.languages %}
-                                                        value="{% for company in candidate.preference.companies %}{{ company }}{% if not forloop.last %},{% endif %}{% endfor %}"
-                                                    {% endif %}>
-                                                <label for="preference-companies" class="form-label">{% tr 'Companies' %}</label>
-                                                <select class="form-select" data-trigger id="preference-companies" data-placeholder="{% tr 'Select company options' %}" multiple data-multi-select>
-                                                    {% for company in companies %}
-                                                    {% if company.id|stringformat:"s" in candidate.preference.companies %}
-                                                    <option value="{{ company.id }}" selected>{{ company.user__first_name }}</option>
-                                                    {% else %}
-                                                    <option value="{{ company.id }}">{{ company.user__first_name }}</option>
-                                                    {% endif %}
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-12">
-                                            <div class="mb-3">
-                                                <input type="hidden" id="career-type-values" name="career-types"
-                                                    {% if candidate.languages %}
-                                                        value="{% for career in candidate.preference.career_types %}{{ career }}{% if not forloop.last %},{% endif %}{% endfor %}"
-                                                    {% endif %}>
-                                                <label for="preference-career-types" class="form-label">{% tr 'Career Types' %}</label>
-                                                <select class="form-select" data-trigger id="preference-career-types" data-placeholder="{% tr 'Select career type options' %}" multiple data-multi-select>
-                                                    {% for career in career_types %}
-                                                    {% if career.id|stringformat:"s" in candidate.preference.career_types %}
-                                                    <option value="{{ career.id }}" selected>{{ career.name }}</option>
-                                                    {% else %}
-                                                    <option value="{{ career.id }}">{{ career.name }}</option>
-                                                    {% endif %}
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <h5 class="fs-17 fw-semibold mb-3 mb-0">{% tr 'Salary Range' %}</h5>
-
-                                            <div class="col-lg-6">
-                                                <div class="mb-3">
-                                                    <label for="minimum-salary" class="form-label">{% tr 'Minimum Salary' %}</label>
-                                                    <input type="text" name="min_salary" class="form-control" id="minimum-salary" value="{{ candidate.preference.min_salary }}" required/>
+                                    <div class="side-bar">
+                                        <div class="accordion">
+                                            <div class="accordion-item mb-3">
+                                                <h2 class="accordion-header" id="companiesOne">
+                                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#preference-companies" aria-expanded="true" aria-controls="preference-companies">
+                                                    {% tr 'Company' %}
+                                                </button>
+                                                </h2>
+                                                <div id="preference-companies" class="accordion-collapse collapse show" aria-labelledby="companiesOne">
+                                                    <div class="accordion-body">
+                                                        <div class="side-title">
+                                                            <form class="position-relative mb-2">
+                                                                <input class="form-control" type="search" placeholder="{% tr 'Search' %}...">
+                                                                <button class="bg-transparent border-0 position-absolute top-50 end-0 translate-middle-y me-2" type="submit"><span class="mdi mdi-magnify text-muted"></span></button>
+                                                            </form>
+                    
+                                                            <div class="mb-3" style="max-height: 250px; overflow: auto;">
+                                                                {% for company in companies %}
+                                                                    <div class="form-check mt-2">
+                                                                        <input class="form-check-input" type="checkbox" value="{{ company.user__first_name}}" id="flexCheckChecked-company{{ company.id }}" />
+                                                                        <label class="form-check-label ms-2 text-muted" for="flexCheckChecked-company{{ company.id }}">{{ company.user__first_name}}</label>
+                                                                    </div>
+                                                                {% endfor %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <!--end col-->
-                                            <div class="col-lg-6">
-                                                <div class="mb-3">
-                                                    <label for="maximum-salary" class="form-label">{% tr 'Maximum Salary' %}</label>
-                                                    <input type="text" name="max_salary" class="form-control" id="maximum-salary" value="{{ candidate.preference.max_salary }}" required/>
+
+                                            <div class="accordion-item mb-3">
+                                                <h2 class="accordion-header" id="careerTypeOne">
+                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#careertype" aria-expanded="true" aria-controls="careertype">
+                                                        {% tr 'Career Type' %}
+                                                    </button>
+                                                </h2>
+                                                <div id="careertype" class="accordion-collapse collapse show" aria-labelledby="careerTypeOne">
+                                                    <div class="accordion-body">
+                                                        <div class="side-title">
+                                                            {% for type in career_types %}
+                                                                <div class="form-check mt-2">
+                                                                    <input class="form-check-input" type="checkbox" value="{{ type.name }}" id="flexCheckChecked-careertype{{ type.id }}" />
+                                                                    <label class="form-check-label ms-2 text-muted" for="flexCheckChecked-careertype{{ type.id }}">{{ type.name }}</label>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="row">
+                                        <h5 class="fs-17 fw-semibold mb-3 mb-0">{% tr 'Salary Range' %}</h5>
+
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label for="minimum-salary" class="form-label">{% tr 'Minimum Salary' %}</label>
+                                                <input type="text" name="min_salary" class="form-control" id="minimum-salary" value="{{ candidate.preference.min_salary }}" required/>
+                                            </div>
+                                        </div>
+                                        <!--end col-->
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label for="maximum-salary" class="form-label">{% tr 'Maximum Salary' %}</label>
+                                                <input type="text" name="max_salary" class="form-control" id="maximum-salary" value="{{ candidate.preference.max_salary }}" required/>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 {% endif %}
                                 <!--end tab-pane-->
@@ -888,9 +897,6 @@
 <script src="{% static 'main/js/pages/switcher.init.js' %}"></script>
 
 <script src="{% static 'main/js/app.js' %}"></script>
-
-<!-- Multi Select Dropdown Js -->
-<script src="{% static 'main/libs/multi-select-dropdown/MultiSelect.js' %}"></script>
 
 <!-- Custom Js -->
 <script src="{% static 'main/js/ajax/edit-candidate-account.js' %}"></script>
