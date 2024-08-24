@@ -148,7 +148,7 @@
                                     <div class="d-flex">
                                         <label class="text-dark">{% tr 'Views' %}</label>
                                         <div>
-                                            <p class="text-muted mb-0">2574</p>
+                                            <p class="text-muted mb-0">{{ candidate.views }}</p>
                                         </div>
                                     </div>
                                 </li>
@@ -902,14 +902,14 @@
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="minimum-salary" class="form-label">{% tr 'Minimum Salary' %}</label>
-                                                <input type="text" class="form-control" id="preference-minimum-salary" value="{{ candidate.preference.min_salary }}" required/>
+                                                <input type="text" class="form-control" id="preference-minimum-salary" value="{% if candidate.preference.min_salary %}{{ candidate.preference.min_salary }}{% endif %}" required/>
                                             </div>
                                         </div>
                                         <!--end col-->
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="maximum-salary" class="form-label">{% tr 'Maximum Salary' %}</label>
-                                                <input type="text" class="form-control" id="preference-maximum-salary" value="{{ candidate.preference.max_salary }}" required/>
+                                                <input type="text" class="form-control" id="preference-maximum-salary" value="{% if candidate.preference.max_salary %}{{ candidate.preference.max_salary }}{% endif %}" required/>
                                             </div>
                                         </div>
                                     </div>

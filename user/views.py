@@ -267,10 +267,13 @@ def candidate_details(request, username):
             user.save()
 
             return redirect(reverse('user:candidate', args=[user.username]))
-        
+    
     params = manage_user_type_for_details(request, username, user_type='candidate')
     user = get_object_or_404(CustomUser, **params)
     logged_user_context = {}
+    candidate = user.candidate
+    candidate.views += 1
+    candidate.save()
 
     if username == request.user.username:
         citizenships = ParameterCountry.translation().values('id', 'name')
@@ -291,7 +294,7 @@ def candidate_details(request, username):
         except AttributeError: preference = {}
 
         logged_user_context = {
-            'candidate': user.candidate,
+            'candidate': candidate,
             'citizenships': citizenships,
             'competencies': competencies,
             'education_levels': education_levels,

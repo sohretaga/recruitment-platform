@@ -79,7 +79,7 @@ class Candidate(models.Model):
     whatsapp = models.CharField(max_length=15, blank=True, null=True)
     linkedin_url = models.URLField(blank=True, null=True)
     cv = models.FileField(upload_to='cvs/', blank=True, null=True)
-
+    views = models.PositiveIntegerField(default=0)
     citizenship = models.ForeignKey(ParameterCountry, on_delete=models.SET_NULL, null=True)
 
     def __str__(self) -> str:

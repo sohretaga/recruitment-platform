@@ -241,6 +241,7 @@ const savePreference = () => {
         type: 'POST',
         data: dataJson,
         success: () => {
+            window.location.reload()
         }
     });
 }
