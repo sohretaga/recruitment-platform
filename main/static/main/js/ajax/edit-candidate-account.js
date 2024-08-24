@@ -4,6 +4,8 @@ const experiences = document.getElementById('experiences');
 const menus = document.querySelectorAll('.edit-menu');
 const companiesCheckboxes = '#preference-companies input[type="checkbox"]';
 const locationCheckboxes = '#preference-location input[type="checkbox"]';
+const careerTypeCheckboxes = '#preference-career-type input[type="checkbox"]';
+const typeOfEmploymentCheckboxes = '#preference-type-of-employment input[type="checkbox"]';
 
 var tempPresentId = 1;
 
@@ -216,3 +218,29 @@ itemSearcher(companiesSearchInput, companiesItems);
 const locationSearchInput = document.querySelector('#preference-location input[type="search"]');
 const locationItems = document.querySelectorAll(locationCheckboxes);
 itemSearcher(locationSearchInput, locationItems);
+
+const savePreference = () => {
+    let selectedCompanies = Array.from(document.querySelectorAll(`${companiesCheckboxes}:checked`)).map(checkbox => checkbox.value);
+    let selectedLocations = Array.from(document.querySelectorAll(`${locationCheckboxes}:checked`)).map(checkbox => checkbox.value);
+    let selectedCareerTypes = Array.from(document.querySelectorAll(`${careerTypeCheckboxes}:checked`)).map(checkbox => checkbox.value);
+    let selectedTypesOfEmployment = Array.from(document.querySelectorAll(`${typeOfEmploymentCheckboxes}:checked`)).map(checkbox => checkbox.value);
+    let minimumSalary = document.getElementById('preference-minimum-salary').value ;
+    let maximumSalary = document.getElementById('preference-maximum-salary').value;
+
+    let dataJson = {
+        companies: JSON.stringify(selectedCompanies),
+        locations: JSON.stringify(selectedLocations),
+        career_types: JSON.stringify(selectedCareerTypes),
+        types_of_employment: JSON.stringify(selectedTypesOfEmployment),
+        minimum_salary: minimumSalary,
+        maximum_salary: maximumSalary
+    }
+
+    $.ajax({
+        url: '/ajax/manage-candidate-preference',
+        type: 'POST',
+        data: dataJson,
+        success: () => {
+        }
+    });
+}

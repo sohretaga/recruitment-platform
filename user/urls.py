@@ -28,4 +28,5 @@ urlpatterns = [
     path('ajax/delete-experience', views.delete_experience, name='ajax-delete-experience'),
     path('ajax/add-candidate-bookmark', views.ajax_candidate_bookmarks, name='ajax-add-candidate-bookmark'),
     path('ajax/filter-candidate', views.ajax_filter_candidate, name='ajax-filter-candidate'),
+    path('ajax/manage-candidate-preference', views.ajax_manage_candidate_preference, name='manage-candidate-preference'),
 ]

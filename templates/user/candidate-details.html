@@ -814,7 +814,8 @@
                                                             <div class="mb-3" style="max-height: 250px; overflow: auto;">
                                                                 {% for company in companies %}
                                                                     <div class="form-check mt-2">
-                                                                        <input class="form-check-input" type="checkbox" value="{{ company.user__first_name}}" id="flexCheckChecked-company{{ company.id }}" />
+                                                                        <input class="form-check-input" type="checkbox" value="{{ company.id}}" id="flexCheckChecked-company{{ company.id }}"
+                                                                            {% if company.id in preference.companies %}checked='true'{% endif %}/>
                                                                         <label class="form-check-label ms-2 text-muted" for="flexCheckChecked-company{{ company.id }}">{{ company.user__first_name}}</label>
                                                                     </div>
                                                                 {% endfor %}
@@ -841,7 +842,8 @@
                                                             <div class="mb-3" style="max-height: 250px; overflow: auto;">
                                                                 {% for location in locations %}
                                                                     <div class="form-check mt-2">
-                                                                        <input class="form-check-input" type="checkbox" value="{{ location.name}}" id="flexCheckChecked-location{{ location.id }}" />
+                                                                        <input class="form-check-input" type="checkbox" value="{{ location.id }}" id="flexCheckChecked-location{{ location.id }}" 
+                                                                            {% if location.id in preference.locations %}checked='true'{% endif %}/>
                                                                         <label class="form-check-label ms-2 text-muted" for="flexCheckChecked-location{{ location.id }}">{{ location.name}}</label>
                                                                     </div>
                                                                 {% endfor %}
@@ -853,16 +855,17 @@
 
                                             <div class="accordion-item mb-3 col-lg-6">
                                                 <h2 class="accordion-header" id="careerTypeOne">
-                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#careertype" aria-expanded="false" aria-controls="careertype">
+                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#preference-career-type" aria-expanded="false" aria-controls="preference-career-type">
                                                         {% tr 'Career Type' %}
                                                     </button>
                                                 </h2>
-                                                <div id="careertype" class="accordion-collapse collapse" aria-labelledby="careerTypeOne">
+                                                <div id="preference-career-type" class="accordion-collapse collapse" aria-labelledby="careerTypeOne">
                                                     <div class="accordion-body">
                                                         <div class="side-title">
                                                             {% for type in career_types %}
                                                                 <div class="form-check mt-2">
-                                                                    <input class="form-check-input" type="checkbox" value="{{ type.name }}" id="flexCheckChecked-careertype{{ type.id }}" />
+                                                                    <input class="form-check-input" type="checkbox" value="{{ type.id }}" id="flexCheckChecked-careertype{{ type.id }}" 
+                                                                        {% if type.id in preference.career_types %}checked='true'{% endif %}/>
                                                                     <label class="form-check-label ms-2 text-muted" for="flexCheckChecked-careertype{{ type.id }}">{{ type.name }}</label>
                                                                 </div>
                                                             {% endfor %}
@@ -882,7 +885,8 @@
                                                         <div class="side-title">
                                                             {% for type in types_of_employment %}
                                                                 <div class="form-check mt-2">
-                                                                    <input class="form-check-input" type="checkbox" value="{{ type.name }}" id="flexCheckChecked-careertype{{ type.id }}" />
+                                                                    <input class="form-check-input" type="checkbox" value="{{ type.id }}" id="flexCheckChecked-careertype{{ type.id }}" 
+                                                                        {% if type.id in preference.types_of_employment %}checked='true'{% endif %}/>
                                                                     <label class="form-check-label ms-2 text-muted" for="flexCheckChecked-careertype{{ type.id }}">{{ type.name }}</label>
                                                                 </div>
                                                             {% endfor %}
@@ -898,16 +902,20 @@
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="minimum-salary" class="form-label">{% tr 'Minimum Salary' %}</label>
-                                                <input type="text" name="min_salary" class="form-control" id="minimum-salary" value="{{ candidate.preference.min_salary }}" required/>
+                                                <input type="text" class="form-control" id="preference-minimum-salary" value="{{ candidate.preference.min_salary }}" required/>
                                             </div>
                                         </div>
                                         <!--end col-->
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="maximum-salary" class="form-label">{% tr 'Maximum Salary' %}</label>
-                                                <input type="text" name="max_salary" class="form-control" id="maximum-salary" value="{{ candidate.preference.max_salary }}" required/>
+                                                <input type="text" class="form-control" id="preference-maximum-salary" value="{{ candidate.preference.max_salary }}" required/>
                                             </div>
                                         </div>
+                                    </div>
+
+                                    <div class="mt-4 text-end">
+                                        <button type="submit" class="btn btn-primary" onclick="savePreference()">{% tr 'Save' %}</button>
                                     </div>
                                 </div>
                                 {% endif %}

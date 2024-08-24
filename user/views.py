@@ -12,13 +12,14 @@ from django.db.models.functions import Concat
 from django.conf import settings
 
 from . import forms
-from .models import Gallery, GalleryImage, CandidateBookmark
+from .models import Gallery, GalleryImage, CandidateBookmark, CandidatePreference
 from job.models import Vacancy
 from .decorators import logout_required
 from user.models import CustomUser, Candidate, Employer, Education, Experience, CandidateBookmark
 from job.utils import vacancy_with_related_info
 from .utils import manage_user_type_for_details
 from dashboard.forms import ManageEmployerAccountForm, ManageCandidateAccountForm
+from dashboard.decorators import is_candidate
 from recruitment_cp.models import(
         ParameterKeyword,
         ParameterSector,
@@ -36,6 +37,7 @@ from recruitment_cp.models import(
     )
 
 import os
+import json
 
 @logout_required
 def sign_in(request):
@@ -267,27 +269,44 @@ def candidate_details(request, username):
             return redirect(reverse('user:candidate', args=[user.username]))
         
     params = manage_user_type_for_details(request, username, user_type='candidate')
-
     user = get_object_or_404(CustomUser, **params)
-    citizenships = ParameterCountry.translation().values('id', 'name')
-    competencies = ParameterCompetence.translation().values('id', 'name')
-    education_levels = ParameterEducationLevel.translation().values('id', 'name')
-    companies = Employer.objects.values('id', 'user__first_name')
-    career_types = ParameterCareerType.translation().values('id', 'name')
-    locations = ParameterLocation.translation().values('id', 'name')
-    types_of_employment = ParameterEmployeeType.translation().values('id', 'name')
+    logged_user_context = {}
+
+    if username == request.user.username:
+        citizenships = ParameterCountry.translation().values('id', 'name')
+        competencies = ParameterCompetence.translation().values('id', 'name')
+        education_levels = ParameterEducationLevel.translation().values('id', 'name')
+        companies = Employer.objects.values('id', 'user__first_name')
+        career_types = ParameterCareerType.translation().values('id', 'name')
+        locations = ParameterLocation.translation().values('id', 'name')
+        types_of_employment = ParameterEmployeeType.translation().values('id', 'name')
+
+        try:
+            preference = {
+                'companies': user.candidate.preference.companies.values_list('id', flat=True),
+                'career_types': user.candidate.preference.career_types.values_list('id', flat=True),
+                'locations': user.candidate.preference.locations.values_list('id', flat=True),
+                'types_of_employment': user.candidate.preference.types_of_employment.values_list('id', flat=True),
+            }
+        except AttributeError: preference = {}
+
+        logged_user_context = {
+            'candidate': user.candidate,
+            'citizenships': citizenships,
+            'competencies': competencies,
+            'education_levels': education_levels,
+            'companies': companies,
+            'career_types': career_types,
+            'locations': locations,
+            'types_of_employment': types_of_employment,
+            'preference': preference
+        }
+    
 
     context = {
-        'candidate': user.candidate,
-        'citizenships': citizenships,
-        'competencies': competencies,
-        'education_levels': education_levels,
-        'companies': companies,
-        'career_types': career_types,
-        'locations': locations,
-        'types_of_employment': types_of_employment,
         'educations': user.candidate.educations.all(),
-        'experiences': user.candidate.experiences.all()
+        'experiences': user.candidate.experiences.all(),
+        **logged_user_context
     }
 
     return render(request, 'user/candidate-details.html', context)
@@ -592,3 +611,39 @@ def ajax_candidate_bookmarks(request):
     else:
         CandidateBookmark.objects.create(**params)
         return JsonResponse({'status': 'success', 'message': 'Bookmark added'})
+    
+
+@is_candidate
+def ajax_manage_candidate_preference(request):
+    candidate = request.user.candidate
+    companies = json.loads(request.POST.get('companies'))
+    locations = json.loads(request.POST.get('locations'))
+    career_types = json.loads(request.POST.get('career_types'))
+    types_of_employment = json.loads(request.POST.get('types_of_employment'))
+    minimum_salary = request.POST.get('minimum_salary')
+    maximum_salary = request.POST.get('maximum_salary')
+
+    preference_exists = CandidatePreference.objects.filter(candidate=candidate).exists()
+    if preference_exists:
+        preference = candidate.preference
+    else:
+        preference = CandidatePreference.objects.create(candidate=candidate)
+
+    new_companies = Employer.objects.filter(id__in=companies)
+    preference.companies.set(new_companies)
+
+    new_career_types = ParameterCareerType.objects.filter(id__in=career_types)
+    preference.career_types.set(new_career_types)
+
+    new_locations = ParameterLocation.objects.filter(id__in=locations)
+    preference.locations.set(new_locations)
+
+    new_employment_types = ParameterEmployeeType.objects.filter(id__in=types_of_employment)
+    preference.types_of_employment.set(new_employment_types)
+
+    if minimum_salary: preference.min_salary = minimum_salary
+    if maximum_salary: preference.max_salary = maximum_salary
+
+    preference.save()
+    
+    return JsonResponse({'status': 200})
