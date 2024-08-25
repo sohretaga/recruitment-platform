@@ -289,7 +289,7 @@ def candidate_details(request, username):
             max_salary = user.candidate.preference.max_salary
 
             if min_salary and max_salary:
-                offered_salary = (int(min_salary) + int(max_salary)) / 2
+                offered_salary = int((int(min_salary) + int(max_salary)) / 2)
             else:
                 offered_salary = False
 
