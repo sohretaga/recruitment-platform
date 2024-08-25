@@ -112,14 +112,16 @@
                                         </div>
                                     </div>
                                 </li>
+                                {% if preference.offered_salary %}
                                 <li>
                                     <div class="d-flex">
                                         <label class="text-dark">{% tr 'Offered Salary' %}</label>
                                         <div>
-                                            <p class="text-muted mb-0">$450 per hour</p>
+                                            <p class="text-muted mb-0">{{ preference.offered_salary }} AZN</p>
                                         </div>
                                     </div>
                                 </li>
+                                {% endif %}
                                 <li>
                                     <div class="d-flex">
                                         <label class="text-dark">{% tr 'Languages' %}</label>

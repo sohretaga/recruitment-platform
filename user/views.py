@@ -284,12 +284,20 @@ def candidate_details(request, username):
         locations = ParameterLocation.translation().values('id', 'name')
         types_of_employment = ParameterEmployeeType.translation().values('id', 'name')
 
+        min_salary = user.candidate.preference.min_salary
+        max_salary = user.candidate.preference.max_salary
+
+        if min_salary and max_salary:
+            offered_salary = (int(min_salary) + int(max_salary)) / 2
+
         try:
+
             preference = {
                 'companies': user.candidate.preference.companies.values_list('id', flat=True),
                 'career_types': user.candidate.preference.career_types.values_list('id', flat=True),
                 'locations': user.candidate.preference.locations.values_list('id', flat=True),
                 'types_of_employment': user.candidate.preference.types_of_employment.values_list('id', flat=True),
+                'offered_salary': offered_salary
             }
         except AttributeError: preference = {}
 
