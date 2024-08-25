@@ -284,13 +284,14 @@ def candidate_details(request, username):
         locations = ParameterLocation.translation().values('id', 'name')
         types_of_employment = ParameterEmployeeType.translation().values('id', 'name')
 
-        min_salary = user.candidate.preference.min_salary
-        max_salary = user.candidate.preference.max_salary
-
-        if min_salary and max_salary:
-            offered_salary = (int(min_salary) + int(max_salary)) / 2
-
         try:
+            min_salary = user.candidate.preference.min_salary
+            max_salary = user.candidate.preference.max_salary
+
+            if min_salary and max_salary:
+                offered_salary = (int(min_salary) + int(max_salary)) / 2
+            else:
+                offered_salary = False
 
             preference = {
                 'companies': user.candidate.preference.companies.values_list('id', flat=True),
