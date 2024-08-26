@@ -887,9 +887,9 @@
                                                         <div class="side-title">
                                                             {% for type in types_of_employment %}
                                                                 <div class="form-check mt-2">
-                                                                    <input class="form-check-input" type="checkbox" value="{{ type.id }}" id="flexCheckChecked-careertype{{ type.id }}" 
+                                                                    <input class="form-check-input" type="checkbox" value="{{ type.id }}" id="flexCheckChecked-employment-type{{ type.id }}" 
                                                                         {% if type.id in preference.types_of_employment %}checked='true'{% endif %}/>
-                                                                    <label class="form-check-label ms-2 text-muted" for="flexCheckChecked-careertype{{ type.id }}">{{ type.name }}</label>
+                                                                    <label class="form-check-label ms-2 text-muted" for="flexCheckChecked-employment-type{{ type.id }}">{{ type.name }}</label>
                                                                 </div>
                                                             {% endfor %}
                                                         </div>
