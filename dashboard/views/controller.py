@@ -5,6 +5,7 @@ from django.core.paginator import Paginator
 from dashboard.decorators import is_controller
 from job.models import Vacancy
 from job.utils import vacancy_with_related_info
+from user.tasks import send_notification_to_preferred_candidates
 
 @is_controller
 def all_vacancies(request):
@@ -65,5 +66,10 @@ def ajax_manage_approval_level(request):
     vacancy = get_object_or_404(Vacancy, id=vacancy_id)
     vacancy.approval_level = approval_level
     vacancy.save()
+
+    if approval_level == 'PUBLISHED':
+        ws_protocol = 'wss://' if request.is_secure() else 'ws://'
+        host = request.get_host()
+        send_notification_to_preferred_candidates.delay(vacancy.id, ws_protocol, host)
 
     return JsonResponse({'status': 200})

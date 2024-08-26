@@ -77,7 +77,7 @@ const sendApplication = (id) => {
                 message.style.borderColor = '';
 
                 sendNotification(targetUserId, {
-                    content: `Candidate has applied for your vacant position`,
+                    content: 'APPLY',
                     related_data: response['apply_id']
                 });
             }
@@ -102,7 +102,7 @@ const deleteApplication = (id) => {
             deleteApplyBtn.innerHTML = 'Apply Now  <i class="mdi mdi-chevron-double-right">';
 
             sendNotification(targetUserId, {
-                content: `Candidate deleted application for your vacancy`,
+                content: 'DELETE_APPLY',
                 related_data: response['apply_id']
             });
         }

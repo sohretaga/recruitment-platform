@@ -37,28 +37,49 @@ class NotificationConsumer(WebsocketConsumer):
     @database_sync_to_async
     def create_notification(self, text_data) -> None:
         from django.contrib.contenttypes.models import ContentType
-        from job.models import Apply
         from main.models import Notification
         from user.models import CustomUser
 
         text_data_json = json.loads(text_data)
         related_data = text_data_json['related_data']
         content = text_data_json['content']
+        from_user = self.user
 
         related_object = dict()
         to_user = CustomUser.objects.get(id=self.target_user_id)
+        """
+        Currently, only the "Apply" object is needed when "content=PREFERRED" is not present. 
+        The "Vacancy" object is only required when "PREFERRED" is the content, so the checks are 
+        made solely based on "if content == PREFERRED". If the "Notification" object is developed 
+        to hold different types of objects in the future, this code should be updated accordingly.
+        """
 
-        if Apply.objects.filter(id=related_data).exists():
-            apply = Apply.objects.get(id=related_data)
-            apply_content_type = ContentType.objects.get_for_model(apply)
+        if content == 'PREFERRED':
+            from job.models import Vacancy
 
-            related_object = {
-                'content_type': apply_content_type,
-                'object_id': apply.id
-            }
+            if Vacancy.objects.filter(id=related_data).exists():
+                vacancy = Vacancy.objects.get(id=related_data)
+                vacancy_content_type = ContentType.objects.get_for_model(vacancy)
+                from_user = vacancy.employer.user
+
+                related_object = {
+                    'content_type': vacancy_content_type,
+                    'object_id': vacancy.id
+                }
+        else:
+            from job.models import Apply
+
+            if Apply.objects.filter(id=related_data).exists():
+                apply = Apply.objects.get(id=related_data)
+                apply_content_type = ContentType.objects.get_for_model(apply)
+
+                related_object = {
+                    'content_type': apply_content_type,
+                    'object_id': apply.id
+                }
 
         Notification.objects.create(
-            from_user=self.user,
+            from_user=from_user,
             to_user=to_user,
             content=content,
             read=False,

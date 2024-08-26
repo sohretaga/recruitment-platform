@@ -197,7 +197,7 @@ const sendAction = (id) => {
             }
             
             sendNotification(targetUserId, {
-                content: `The employer has processed your application! - ${selectedActionValue}`,
+                content: selectedActionValue,
                 related_data: relatedData
             });
         }

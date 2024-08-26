@@ -133,11 +133,11 @@ class Apply(models.Model):
 
 class EmployerAction(models.Model):
     ACTION_CHOICES = [
-        ('INVITE', 'Invite'),
-        ('SHORTLIST', 'Shortlist'),
-        ('DELIST', 'Delist'),
-        ('SUGGEST_OTHER_DATE', 'Suggest Another Date'),
-        ('ACCEPT_REQUEST_OTHER_DATE', 'Accept'),
+        ('INVITE', 'The employer has invited you to an interview.'),
+        ('SHORTLIST', 'The employer has shortlisted your application'),
+        ('DELIST', 'The employer has delisted your application'),
+        ('SUGGEST_OTHER_DATE', 'The employer has suggested another date'),
+        ('ACCEPT_REQUEST_OTHER_DATE', 'Accepted the request for another date'),
     ]
     apply = models.OneToOneField(Apply, on_delete=models.CASCADE, related_name='employer_action')
     action = models.CharField(max_length=25, choices=ACTION_CHOICES)
@@ -149,9 +149,9 @@ class EmployerAction(models.Model):
 
 class CandidateAction(models.Model):
     ACTION_CHOICES = [
-        ('ACCEPT', 'Accept'),
-        ('REJECT', 'Reject'),
-        ('REQUEST_OTHER_DATE', 'Request Other Date'),
+        ('ACCEPT', 'Accepted your offer'),
+        ('REJECT', 'Rejected your offer'),
+        ('REQUEST_OTHER_DATE', 'Requested another date'),
     ]
     apply = models.OneToOneField(Apply, on_delete=models.CASCADE, related_name='candidate_action')
     action = models.CharField(max_length=20, choices=ACTION_CHOICES)

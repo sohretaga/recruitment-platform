@@ -73,26 +73,35 @@ def fetch_notifications(objects):
         user_type = n.to_user.user_type
         profile_photo = n.from_user.profile_photo
         content_object = n.content_object
+        content = n.content
+        related_data = False
 
         if profile_photo:
             profile_photo = profile_photo.url
-        
-        if user_type == 'employer' and content_object:
-            related_data = reverse('job:applicants', args=[content_object.vacancy.slug])
 
-        elif user_type == 'candidate' and content_object:
-            related_data = reverse('job:applications')
+        if content == 'PREFERRED' and content_object:
+            related_data = reverse('job:vacancy', args=[content_object.slug])
+            title = content_object.position_title
+        else:        
+            if user_type == 'employer' and content_object:
+                related_data = reverse('job:applicants', args=[content_object.vacancy.slug])
 
-        else:
-            related_data = False
+            elif user_type == 'candidate' and content_object:
+                related_data = reverse('job:applications')
+
+            if user_type == 'employer':
+                title = n.from_user.first_name
+
+            elif user_type == 'candidate':
+                title = f'{n.from_user.first_name} {n.from_user.last_name}'
 
         notifications.append({
             'id': n.id,
             'user_type': n.to_user.user_type,
             'profile_photo': profile_photo,
-            'full_name': n.from_user.get_full_name(),
+            'title': title,
             'related_data': related_data,
-            'content': n.content,
+            'content': n.get_content_display(),
             'timestamp': humanize_time(n.timestamp)
         })
 

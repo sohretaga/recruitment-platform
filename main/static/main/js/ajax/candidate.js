@@ -119,7 +119,7 @@ const sendAction = (id) => {
             };
 
             sendNotification(targetUserId, {
-                content: `The candidate has processed your action! - ${selectedActionValue}`,
+                content: selectedActionValue,
                 related_data: relatedData,
             });
         }
@@ -148,7 +148,7 @@ const deleteApplication = (id) => {
             deleteApplicationModal.hide();
 
             sendNotification(targetUserId, {
-                content: `Candidate deleted application for your vacancy`,
+                content: 'DELETE_APPLY',
                 related_data: relatedData
             });
         }

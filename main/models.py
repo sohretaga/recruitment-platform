@@ -3,11 +3,13 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.utils.text import slugify
 from django.core.cache import cache
+from django.conf import settings
 from django.db.models import F
 from ckeditor_uploader.fields import RichTextUploadingField
+
 from recruitment_cp.models import ParameterFAQ
 from user.models import CustomUser
-from django.conf import settings
+from job.models import CandidateAction, EmployerAction
 
 # Create your models here.
 
@@ -16,18 +18,31 @@ class FAQ(models.Model):
     question = models.TextField()
     answer = models.TextField()
 
+
 class Notification(models.Model):
+    CONTENT_CHOICES = [
+        # Types of notifications from candidates
+        ('APPLY', 'Applied to your vacancy'),
+        ('DELETE_APPLY', 'Deleted application for your vacancy'),
+        *CandidateAction.ACTION_CHOICES,
+
+        # Types of notifications from employers
+        ('PREFERRED', 'New vacancy that match your preferences are available'),
+        *EmployerAction.ACTION_CHOICES,
+    ]
+
     from_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='notifications_sent')
     to_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='notifications_received')
     content_type = models.ForeignKey(ContentType, on_delete=models.SET_NULL, null=True, blank=True)
     object_id = models.PositiveIntegerField(null=True, blank=True)
     content_object = GenericForeignKey("content_type", "object_id")
-    content = models.CharField(max_length=100)
+    content = models.CharField(max_length=25, choices=CONTENT_CHOICES)
     read = models.BooleanField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ['-id']
+
 
 class Contact(models.Model):
     name = models.CharField(max_length=150)
