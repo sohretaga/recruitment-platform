@@ -80,7 +80,15 @@ def fetch_notifications(objects):
             profile_photo = profile_photo.url
 
         if content == 'PREFERRED' and content_object:
-            related_data = reverse('job:vacancy', args=[content_object.slug])
+
+            # If the vacancy is not published for any reason (status, delete, approval level),
+            # it cannot be clicked on the notification bar.
+            if content_object.status == True and\
+                content_object.delete == False and\
+                content_object.approval_level == 'PUBLISHED':
+
+                related_data = reverse('job:vacancy', args=[content_object.slug])
+            
             title = content_object.position_title
         else:        
             if user_type == 'employer' and content_object:
