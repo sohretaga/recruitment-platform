@@ -70,7 +70,7 @@ def fetch_notifications(objects):
     notifications = list()
 
     for n in objects:
-        user_type = n.to_user.user_type
+        user_type = n.from_user.user_type
         profile_photo = n.from_user.profile_photo
         content_object = n.content_object
         content = n.content
