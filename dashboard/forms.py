@@ -9,13 +9,12 @@ class PostVacancyForm(forms.ModelForm):
     definition = forms.CharField(widget=forms.Textarea, required=False)
     salary = forms.IntegerField(required=False)
     salary_minimum = forms.IntegerField(required=False)
-    salary_midpoint = forms.IntegerField(required=False)
     salary_maximum = forms.IntegerField(required=False)
     keywords = forms.JSONField(required=False)
     
     class Meta:
         model = Vacancy
-        fields = ('language', 'career_type', 'career_level', 'location', 'fte', 'salary', 'salary_minimum', 'salary_midpoint', 'salary_maximum',
+        fields = ('language', 'career_type', 'career_level', 'location', 'fte', 'salary', 'salary_minimum', 'salary_maximum',
                   'position_title', 'job_title', 'employment_type', 'definition', 'work_preference', 'department', 'status', 'keywords')
 
 class PostBlogForm(forms.ModelForm):

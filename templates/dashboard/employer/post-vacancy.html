@@ -108,8 +108,16 @@
 
                                             <div class="col-lg-4">
                                                 <div class="form-group">
-                                                    <label for="input-currency">Salary</label>
-                                                    <input id="input-currency" name="salary" class="form-control input-mask text-left" value="{{ vacancy.salary }}" data-inputmask="'alias': 'numeric', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
+                                                    <label>Career Level</label>
+                                                    <select class="custom-select select2" name="career_level">
+                                                        {% for level in career_levels %}
+                                                            {% if level.id == vacancy.career_level.id %}
+                                                                <option value="{{ level.id }}" selected>{{ level.name }}</option>
+                                                            {% else %}
+                                                                <option value="{{ level.id }}">{{ level.name }}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -143,15 +151,12 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    <label>Career Level</label>
-                                                    <select class="custom-select select2" name="career_level">
-                                                        {% for level in career_levels %}
-                                                            {% if level.id == vacancy.career_level.id %}
-                                                                <option value="{{ level.id }}" selected>{{ level.name }}</option>
-                                                            {% else %}
-                                                                <option value="{{ level.id }}">{{ level.name }}</option>
-                                                            {% endif %}
+                                                <div class="form-group mb-0">
+                                                    <label class="control-label">Keywords</label>
+                                                    <input type="hidden" name="keywords" id="keywordsInput" {% if vacancy.keywords %}value="{{ vacancy.keywords }}"{% endif %}>
+                                                    <select id="keywordsSelect" class="select2 form-control select2-multiple" multiple="multiple" data-placeholder="Choose ...">
+                                                        {% for key in keywords %}
+                                                            <option value="{{ key.id }}">{{ key.name }}</option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>
@@ -180,17 +185,6 @@
                                                             {% else %}
                                                                 <option value="{{ department.id }}">{{ department.name }}</option>
                                                             {% endif %}
-                                                        {% endfor %}
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group mb-0">
-                                                    <label class="control-label">Keywords</label>
-                                                    <input type="hidden" name="keywords" id="keywordsInput" value="{% if vacancy.keywords %}{{ vacancy.keywords }}{% endif %}">
-                                                    <select id="keywordsSelect" class="select2 form-control select2-multiple" multiple="multiple" data-placeholder="Choose ...">
-                                                        {% for key in keywords %}
-                                                            <option value="{{ key.id }}">{{ key.name }}</option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>
@@ -254,8 +248,8 @@
 
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
-                                                        <label for="input-currency">Salary Midpoint</label>
-                                                        <input id="input-currency" name="salary_midpoint" class="form-control input-mask text-left" value="{{ vacancy.salary_midpoint }}" data-inputmask="'alias': 'numeric', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
+                                                        <label for="input-currency">Salary Maximum</label>
+                                                        <input id="input-currency" name="salary_maximum" class="form-control input-mask text-left" value="{{ vacancy.salary_maximum }}" data-inputmask="'alias': 'numeric', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
                                                     </div>
                                                 </div>
                                             </div>
@@ -277,8 +271,8 @@
 
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
-                                                        <label for="input-currency">Salary Maximum</label>
-                                                        <input id="input-currency" name="salary_maximum" class="form-control input-mask text-left" value="{{ vacancy.salary_maximum }}" data-inputmask="'alias': 'numeric', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
+                                                        <label for="input-currency">Salary</label>
+                                                        <input id="input-currency" name="salary" class="form-control input-mask text-left" value="{{ vacancy.salary }}" data-inputmask="'alias': 'numeric', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
                                                     </div>
                                                 </div>
                                             </div>

@@ -122,7 +122,6 @@ definitions = [
 salary = [100, 250, 500, 950, 1500, 1200, 1800, 2000, 2250, 3000]
 salary_min = [345, 460, 500, 650, 700, 800, 1000, 1200, 1350, 1500]
 salary_max = [1600, 1750, 1800, 1950, 2000, 2450, 2700, 2850, 3000]
-salary_mid = [350, 500, 700, 900, 1200]
 job_titles = models.ParameterJobCatalogue.objects.all()
 career_types = models.ParameterCareerType.objects.all()
 career_levels = models.ParameterCareerLevel.objects.all()
@@ -151,7 +150,6 @@ def run(limit):
             fte = random.choice(ftes),
             salary = random.choice(salary),
             salary_minimum = random.choice(salary_min),
-            salary_midpoint = random.choice(salary_mid),
             salary_maximum = random.choice(salary_max),
             position_title = random.choice(position_titles),
             job_title = random.choice(job_titles),

@@ -52,6 +52,9 @@ class Vacancy(models.Model):
         ordering = ['-created_date']
 
     def save(self, *args, **kwargs) -> None:
+        if self.salary_minimum and self.salary_maximum:
+            self.salary_midpoint = int((self.salary_minimum + self.salary_maximum) / 2)
+
         if not self.slug:
             self.slug = slugify(self.position_title)
             original_slug = self.slug
