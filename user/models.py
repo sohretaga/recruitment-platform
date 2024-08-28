@@ -65,6 +65,43 @@ class Employer(models.Model):
     facebook_url = models.URLField(blank=True, null=True)
     linkedin_url = models.URLField(blank=True, null=True)
 
+    @classmethod
+    def translation(cls):
+        employers = cls.objects.annotate(
+            sector_name=Case(
+                When(**{f'sector__name_{settings.SITE_LANGUAGE_CODE}__isnull':False},
+                     then=F(f'sector__name_{settings.SITE_LANGUAGE_CODE}')),
+                     default=Value(''),
+                     output_field=CharField()
+            ),
+            organization_type_name=Case(
+                When(**{f'organization_type__name_{settings.SITE_LANGUAGE_CODE}__isnull':False},
+                     then=F(f'organization_type__name_{settings.SITE_LANGUAGE_CODE}')),
+                     default=Value(''),
+                     output_field=CharField()
+            ),
+            organization_ownership_name=Case(
+                When(**{f'organization_ownership__name_{settings.SITE_LANGUAGE_CODE}__isnull':False},
+                     then=F(f'organization_ownership__name_{settings.SITE_LANGUAGE_CODE}')),
+                     default=Value(''),
+                     output_field=CharField()
+            ),
+            number_of_employees_name=Case(
+                When(**{f'number_of_employees__name_{settings.SITE_LANGUAGE_CODE}__isnull':False},
+                     then=F(f'number_of_employees__name_{settings.SITE_LANGUAGE_CODE}')),
+                     default=Value(''),
+                     output_field=CharField()
+            ),
+            location_name=Case(
+                When(**{f'location__name_{settings.SITE_LANGUAGE_CODE}__isnull':False},
+                     then=F(f'location__name_{settings.SITE_LANGUAGE_CODE}')),
+                     default=Value(''),
+                     output_field=CharField()
+            ),
+        )
+
+        return employers
+
 class Candidate(models.Model):
     GENDER_CHOICES = [
         ('male', 'Male'),

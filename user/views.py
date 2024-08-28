@@ -382,8 +382,10 @@ def company_details(request, username):
     try: gallery = user.gallery.images.all()
     except ObjectDoesNotExist: gallery = False
 
+    employer_detail = Employer.translation().get(user=user)
+
     context = {
-        'employer': user.employer,
+        'employer': employer_detail,
         'vacancies': vacancies,
         'keywords': keywords,
         'sectors': sectors,
