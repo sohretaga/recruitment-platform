@@ -256,21 +256,27 @@
                                     <img src="{% if user.profile_photo %}{{ user.profile_photo.url }}{% else %}{% static 'main/images/featured-job/default-company-img.jpeg' %}{% endif %}" alt="{{ user.get_full_name }}" width="35" height="35" class="rounded-circle me-1"> <span class="d-none d-md-inline-block fw-medium">{{ user.first_name }}</span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown">
+                                    {% if user.user_type == 'employer' and not user.is_superuser %}
+                                        <li><a class="dropdown-item" href="{% url 'user:company' user.username %}">{% tr 'My Profile' %}</a></li>
+                                    {% elif user.user_type == 'candidate' and not user.is_superuser %}
+                                        <li><a class="dropdown-item" href="{% url 'user:candidate' user.username %}">{% tr 'My Profile' %}</a></li>
+                                    {% endif %}
+
                                     {% if user.is_superuser %}
+                                        <li><a class="dropdown-item" href="{% url 'user:company' user.username %}">{% tr 'My Profile' %} ({% tr 'Employer' %})</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'user:candidate' user.username %}">{% tr 'My Profile' %} ({% tr 'Candidate' %})</a></li>
                                         <li><a class="dropdown-item" href="{% url 'job:job-postings' %}">{% tr 'Job Postings' %}</a></li>
                                         <li><a class="dropdown-item" href="{% url 'job:applications' %}">{% tr 'My Applies' %}</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'user:company' user.username %}">{% tr 'Employer' %}</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'user:candidate' user.username %}">{% tr 'Candidate' %}</a></li>
                                     {% elif user.user_type == 'employer' %}
                                         <li><a class="dropdown-item" href="{% url 'job:job-postings' %}">{% tr 'Job Postings' %}</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'user:company' user.username %}">{% tr 'Employer' %}</a></li>
                                     {% elif user.user_type == 'candidate' %}
                                         <li><a class="dropdown-item" href="{% url 'job:applications' %}">{% tr 'My Applies' %}</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'user:candidate' user.username %}">{% tr 'Candidate' %}</a></li>
                                     {% endif %}
+
                                         <li><a class="dropdown-item" href="{% url 'job:bookmarks' %}">{% tr 'Bookmarks' %}</a></li>
                                         <li><a class="dropdown-item" href="{% url 'dashboard:index' %}">{% tr 'Dashboard' %}</a></li>
                                         <li><a class="dropdown-item" href="{% url 'user:sign-out' %}">{% tr 'Logout' %}</a></li>
+
                                     {% if user.is_superuser  %}
                                         <li><a class="dropdown-item" target="_blank" href="/admin">{% tr 'Admin Panel' %}</a></li>
                                         <li><a class="dropdown-item" target="_blank" href="{% url 'cp:vacancy' %}">{% tr 'Control Panel' %}</a></li>
