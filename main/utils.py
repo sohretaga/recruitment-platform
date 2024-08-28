@@ -92,10 +92,10 @@ def fetch_notifications(objects):
             
             title = content_object.position_title
         else:        
-            if from_user_type == 'employer' and content_object:
+            if to_user_type == 'employer' and content_object:
                 related_data = reverse('job:applicants', args=[content_object.vacancy.slug])
 
-            elif from_user_type == 'candidate' and content_object:
+            elif to_user_type == 'candidate' and content_object:
                 related_data = reverse('job:applications')
 
             if from_user_type == 'employer':
