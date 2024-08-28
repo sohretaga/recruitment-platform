@@ -135,12 +135,13 @@ class Apply(models.Model):
 
 
 class EmployerAction(models.Model):
+    # For translation, the same texts must be written in translation.html
     ACTION_CHOICES = [
-        ('INVITE', 'The employer has invited you to an interview.'),
-        ('SHORTLIST', 'The employer has shortlisted your application'),
-        ('DELIST', 'The employer has delisted your application'),
-        ('SUGGEST_OTHER_DATE', 'The employer has suggested another date'),
-        ('ACCEPT_REQUEST_OTHER_DATE', 'Accepted the request for another date'),
+        ('INVITE', 'The employer has invited you to an interview - NOTIFICATION'),
+        ('SHORTLIST', 'The employer has shortlisted your application - NOTIFICATION'),
+        ('DELIST', 'The employer has delisted your application - NOTIFICATION'),
+        ('SUGGEST_OTHER_DATE', 'The employer has suggested another date - NOTIFICATION'),
+        ('ACCEPT_REQUEST_OTHER_DATE', 'Accepted the request for another date - NOTIFICATION'),
     ]
     apply = models.OneToOneField(Apply, on_delete=models.CASCADE, related_name='employer_action')
     action = models.CharField(max_length=25, choices=ACTION_CHOICES)
@@ -151,10 +152,11 @@ class EmployerAction(models.Model):
 
 
 class CandidateAction(models.Model):
+    # For translation, the same texts must be written in translation.html
     ACTION_CHOICES = [
-        ('ACCEPT', 'Accepted your offer'),
-        ('REJECT', 'Rejected your offer'),
-        ('REQUEST_OTHER_DATE', 'Requested another date'),
+        ('ACCEPT', 'Accepted your offer - NOTIFICATION'),
+        ('REJECT', 'Rejected your offer - NOTIFICATION'),
+        ('REQUEST_OTHER_DATE', 'Requested another date - NOTIFICATION'),
     ]
     apply = models.OneToOneField(Apply, on_delete=models.CASCADE, related_name='candidate_action')
     action = models.CharField(max_length=20, choices=ACTION_CHOICES)

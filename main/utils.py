@@ -7,6 +7,7 @@ from collections import Counter
 from job.models import Vacancy
 from recruitment_cp.models import ParameterKeyword
 from main.models import Notification, ContactEmail
+from language.utils import tr
 import math
 
 def get_vacancy_in_sublists(objects_per_list=5) -> list:
@@ -75,6 +76,7 @@ def fetch_notifications(objects):
         profile_photo = n.from_user.profile_photo
         content_object = n.content_object
         content = n.content
+        content_display = tr(n.get_content_display()) # translation is done with the tr function
         related_data = False
 
         if profile_photo:
@@ -110,7 +112,7 @@ def fetch_notifications(objects):
             'profile_photo': profile_photo,
             'title': title,
             'related_data': related_data,
-            'content': n.get_content_display(),
+            'content': content_display,
             'timestamp': humanize_time(n.timestamp)
         })
 

@@ -20,14 +20,15 @@ class FAQ(models.Model):
 
 
 class Notification(models.Model):
+    # For translation, the same texts must be written in translation.html
     CONTENT_CHOICES = [
         # Types of notifications from candidates
-        ('APPLY', 'Applied to your vacancy'),
-        ('DELETE_APPLY', 'Deleted application for your vacancy'),
+        ('APPLY', 'Applied to your vacancy - NOTIFICATION'),
+        ('DELETE_APPLY', 'Deleted application for your vacancy - NOTIFICATION'),
         *CandidateAction.ACTION_CHOICES,
 
         # Types of notifications from employers
-        ('PREFERRED', 'New vacancy that match your preferences are available'),
+        ('PREFERRED', 'New vacancy that match your preferences are available - NOTIFICATION'),
         *EmployerAction.ACTION_CHOICES,
     ]
 
