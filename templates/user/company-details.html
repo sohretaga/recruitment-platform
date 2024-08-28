@@ -349,10 +349,10 @@
                                                         <label for="organization_ownership" class="form-label">{% tr 'Organization Ownership' %}</label>
                                                         <select class="form-select" data-trigger name="organization_ownership" id="organization_ownership">
                                                             {% for ownership in organization_ownerships %}
-                                                            {% if ownership.name == employer.organization_ownership %}
-                                                                <option value="{{ ownership.name }}" selected>{{ ownership.name }}</option>
+                                                            {% if ownership.id == employer.organization_ownership.id %}
+                                                                <option value="{{ ownership.id }}" selected>{{ ownership.name }}</option>
                                                             {% else %}
-                                                                <option value="{{ ownership.name }}">{{ ownership.name }}</option>
+                                                                <option value="{{ ownership.id }}">{{ ownership.name }}</option>
                                                             {% endif %}
                                                             {% endfor %}
                                                         </select>
@@ -363,10 +363,10 @@
                                                         <label for="sector" class="form-label">{% tr 'Sector' %}</label>
                                                         <select class="form-select" data-trigger name="sector" id="sector">
                                                             {% for sector in sectors %}
-                                                            {% if sector.name == employer.sector %}
-                                                                <option value="{{ sector.name }}" selected>{{ sector.name }}</option>
+                                                            {% if sector.id == employer.sector.id %}
+                                                                <option value="{{ sector.id }}" selected>{{ sector.name }}</option>
                                                             {% else %}
-                                                                <option value="{{ sector.name }}">{{ sector.name }}</option>
+                                                                <option value="{{ sector.id }}">{{ sector.name }}</option>
                                                             {% endif %}
                                                             {% endfor %}
                                                         </select>
@@ -378,10 +378,10 @@
                                                         <label for="number_of_employees" class="form-label">{% tr 'Number of Employees' %}</label>
                                                         <select class="form-select" data-trigger name="number_of_employees" id="number_of_employees">
                                                             {% for number in number_of_employees %}
-                                                            {% if number.name == employer.number_of_employees %}
-                                                                <option value="{{ number.name }}" selected>{{ number.name }}</option>
+                                                            {% if number.id == employer.number_of_employees.id %}
+                                                                <option value="{{ number.id }}" selected>{{ number.name }}</option>
                                                             {% else %}
-                                                                <option value="{{ number.name }}">{{ number.name }}</option>
+                                                                <option value="{{ number.id }}">{{ number.name }}</option>
                                                             {% endif %}
                                                             {% endfor %}
                                                         </select>
@@ -393,10 +393,10 @@
                                                         <label for="organization_type" class="form-label">{% tr 'Organization Type' %}</label>
                                                         <select class="form-select" data-trigger name="organization_type" id="organization_type">
                                                             {% for type in organization_types %}
-                                                            {% if type.name == employer.organization_type %}
-                                                                <option value="{{ type.name }}" selected>{{ type.name }}</option>
+                                                            {% if type.id == employer.organization_type.id %}
+                                                                <option value="{{ type.id }}" selected>{{ type.name }}</option>
                                                             {% else %}
-                                                                <option value="{{ type.name }}">{{ type.name }}</option>
+                                                                <option value="{{ type.id }}">{{ type.name }}</option>
                                                             {% endif %}
                                                             {% endfor %}
                                                         </select>
@@ -422,8 +422,9 @@
                                                 <!--end col-->
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
+                                                        <input type="hidden" name="location" {% if employer.location %}value="{{ employer.location.id }}"{% endif %}>
                                                         <label for="location" class="form-label">{% tr 'Location' %}</label>
-                                                        <select class="form-select" data-trigger name="location" id="location">
+                                                        <select class="form-select" data-trigger id="location">
                                                             {% for location in locations %}
                                                             {% if location.id == employer.location.id %}
                                                             <option value="{{ location.id }}" selected>{{ location.name }}</option>
