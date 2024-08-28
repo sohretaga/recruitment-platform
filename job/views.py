@@ -88,8 +88,8 @@ def vacancy_applications(request, slug):
 @is_candidate
 def applications(request):
     language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
-    applications = request.user.candidate.applications.select_related('vacancy', 'candidate').annotate(
-        username=F('candidate__user__username'),
+    applications = request.user.candidate.applications.select_related('vacancy').annotate(
+        username=F('vacancy__employer__user__username'),
         company_name=F('vacancy__employer__user__first_name'),
         position_title=F('vacancy__position_title'),
         salary_minimum=F('vacancy__salary_minimum'),
