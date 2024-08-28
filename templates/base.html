@@ -269,7 +269,6 @@
                                         <li><a class="dropdown-item" href="{% url 'user:candidate' user.username %}">{% tr 'Candidate' %}</a></li>
                                     {% endif %}
                                         <li><a class="dropdown-item" href="{% url 'job:bookmarks' %}">{% tr 'Bookmarks' %}</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'user:profile' %}">{% tr 'My Profile' %}</a></li>
                                         <li><a class="dropdown-item" href="{% url 'dashboard:index' %}">{% tr 'Dashboard' %}</a></li>
                                         <li><a class="dropdown-item" href="{% url 'user:sign-out' %}">{% tr 'Logout' %}</a></li>
                                     {% if user.is_superuser  %}

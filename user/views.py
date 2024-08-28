@@ -100,10 +100,6 @@ def sign_out(request):
         logout(request)
     return render(request, 'user/sign-out.html')
 
-@login_required
-def profile(request):
-    return render(request, 'user/profile.html')
-
 
 def candidate_list(request):
     params = {}
