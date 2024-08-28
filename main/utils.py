@@ -70,7 +70,8 @@ def fetch_notifications(objects):
     notifications = list()
 
     for n in objects:
-        user_type = n.from_user.user_type
+        from_user_type = n.from_user.user_type
+        to_user_type = n.to_user.user_type
         profile_photo = n.from_user.profile_photo
         content_object = n.content_object
         content = n.content
@@ -91,21 +92,21 @@ def fetch_notifications(objects):
             
             title = content_object.position_title
         else:        
-            if user_type == 'employer' and content_object:
+            if from_user_type == 'employer' and content_object:
                 related_data = reverse('job:applicants', args=[content_object.vacancy.slug])
 
-            elif user_type == 'candidate' and content_object:
+            elif from_user_type == 'candidate' and content_object:
                 related_data = reverse('job:applications')
 
-            if user_type == 'employer':
+            if from_user_type == 'employer':
                 title = n.from_user.first_name
 
-            elif user_type == 'candidate':
+            elif from_user_type == 'candidate':
                 title = f'{n.from_user.first_name} {n.from_user.last_name}'
 
         notifications.append({
             'id': n.id,
-            'user_type': n.to_user.user_type,
+            'user_type': to_user_type,
             'profile_photo': profile_photo,
             'title': title,
             'related_data': related_data,

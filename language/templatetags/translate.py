@@ -7,7 +7,7 @@ from django.conf import settings
 register = template.Library()
 
 @register.simple_tag
-def tr(text) -> str:
+def tr(text: str) -> str:
     language_code = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
     params = {
         'language__code':language_code,
