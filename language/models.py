@@ -13,3 +13,4 @@ class Translation(models.Model):
 
     class Meta:
         unique_together = ('language', 'text')
+        ordering = ('id',)

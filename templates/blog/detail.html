@@ -129,7 +129,7 @@
                                         {% endif %}
                                     </div>
                                     <div class="flex-grow-1 ms-sm-3">
-                                        <small class="float-end fs-12 text-muted"><i class="uil uil-clock"></i> {{ comment.timestamp|humanize_time:False }}</small>
+                                        <small class="float-end fs-12 text-muted"><i class="uil uil-clock"></i> {{ comment.timestamp|humanize_time }}</small>
                                         <div class="d-flex">
                                             <a href="{% url 'user:candidate' comment.user.username %}" class="primary-link">
                                                 <h6 class="fs-16 mt-sm-0 mt-3 mb-2">{{ comment.user.get_full_name }}</h6>

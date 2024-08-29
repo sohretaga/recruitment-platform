@@ -59,13 +59,19 @@ def mark_notifications_as_read(request) -> None:
 from django.utils.timesince import timesince
 import datetime
 
-def humanize_time(value):
+def humanize_time(value) -> str:
     now = datetime.datetime.now(datetime.timezone.utc)
     diff = now - value
     if diff.days >= 1:
-        return value.strftime('%d %b, %Y')
+        translated_month_name = tr(value.strftime('%B'))
+        return f'{value.day} {translated_month_name}, {value.year}'
     
-    return timesince(value)
+    # minute and hour translation is done with the tr function.
+    vavlue_str = timesince(value)\
+        .replace('hours', tr('hours'))\
+        .replace('minutes', tr('minutes'))
+    
+    return vavlue_str
 
 def fetch_notifications(objects):
     notifications = list()

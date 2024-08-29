@@ -1,9 +1,8 @@
 from django import template
-from recruitment_cp.models import Language
-
 from django import template
-from django.utils.timesince import timesince
-import datetime
+
+from main.utils import humanize_time as main_humanize_time
+from recruitment_cp.models import Language
 
 register = template.Library()
 
@@ -13,13 +12,5 @@ def languages():
     return langauges
 
 @register.filter
-def humanize_time(value, as_str=True):
-    now = datetime.datetime.now(datetime.timezone.utc)
-    diff = now - value
-    if diff.days >= 1:
-        return value.strftime('%d %b, %Y')
-
-    if as_str:
-        return f"Posted {timesince(value)} ago"
-    else:
-        return timesince(value)
+def humanize_time(value):
+    return main_humanize_time(value)
