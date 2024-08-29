@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load filters %}
 {% load translate %}
 
 {% block title %}{% tr 'Company Details' %}{% endblock title %}
@@ -78,7 +79,7 @@
                                 <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="{{ employer.user.first_name }}" class="avatar-lg rounded-circle">
                                 {% endif %}
                                 <h6 class="fs-18 mb-1 mt-4">{{ employer.user.first_name }}</h6>
-                                <p class="text-muted mb-4">Since {{ employer.user.date_joined|date:'d M, Y' }}</p>
+                                <p class="text-muted mb-4">{% tr 'Since' %} {{ employer.user.date_joined|humanize_time }}</p>
                                 <ul class="list-inline d-flex justify-content-center align-items-center ">
                                     <li class="list-inline-item text-warning fs-19">
                                         <i class="mdi mdi-star"></i>
