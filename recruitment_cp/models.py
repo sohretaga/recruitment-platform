@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models import F, Value, CharField, When, Case
 from django.core.cache import cache
 from django.conf import settings
+from language.utils import get_cache_key
 
 # Create your models here.
 
@@ -27,21 +28,32 @@ class SiteContent(models.Model):
 
     page = models.CharField(max_length=30, choices=PAGE_CHOICES, unique=True)
 
-    title = models.CharField(max_length=255, blank=True, null=True, verbose_name='Title EN')
+    title_en = models.CharField(max_length=255, blank=True, null=True, verbose_name='Title EN')
     title_tr = models.CharField(max_length=255, blank=True, null=True, verbose_name='Title TR')
 
-    content = models.TextField(blank=True, null=True, verbose_name='Content EN')
+    content_en = models.TextField(blank=True, null=True, verbose_name='Content EN')
     content_tr = models.TextField(blank=True, null=True, verbose_name='Content TR')
 
     image = models.ImageField(upload_to='site-content/', blank=True, null=True)
 
     def short_content(self) -> str:
-        return self.content[:75]+'...' if len(self.content) > 75 else self.content 
+        return self.content_en[:75]+'...' if len(self.content_en) > 75 else self.content_en
 
     short_content.short_description = 'Content'
 
     def __str__(self) -> str:
         return self.page
+    
+    def save(self, *args, **kwargs) -> None:
+        cache.set(get_cache_key(f'title_{self.page}', 'en'), self.title_en, timeout=None)
+        cache.set(get_cache_key(f'title_{self.page}', 'tr'), self.title_tr, timeout=None)
+
+        cache.set(get_cache_key(f'content_{self.page}', 'en'), self.content_en, timeout=None)
+        cache.set(get_cache_key(f'content_{self.page}', 'tr'), self.content_tr, timeout=None)
+
+        cache.set(get_cache_key(f'image_{self.page}', ''), self.image, timeout=None)
+
+        super(SiteContent, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Site Content'
