@@ -1,8 +1,17 @@
 from django.conf import settings
 from django.core.cache import cache
 from language.models import Translation
+
+import hashlib
 import os
 import re
+
+def get_cache_key(text: str, language_code: str) -> str:
+    combined_key = f'{language_code}_{text}'
+    text_hash = hashlib.md5(combined_key.encode('utf-8')).hexdigest()
+    cache_key = f'translation_{text_hash}'
+
+    return cache_key
 
 def create_language_table(language) -> None:
     templates = os.path.join(settings.BASE_DIR, 'templates')
@@ -19,6 +28,7 @@ def create_language_table(language) -> None:
 
                     if matches:
                         for text in matches:
+
                             params = {
                                 'language': language,
                                 'text': text
@@ -27,6 +37,7 @@ def create_language_table(language) -> None:
                             translation_exists = Translation.objects.filter(**params).exists()
                             if not translation_exists:
                                 Translation.objects.create(**params)
+
                 f.close()
 
 def tr(text: str) -> str:
@@ -37,33 +48,16 @@ def tr(text: str) -> str:
     }
 
     try:
-        translation = Translation.objects.get(**params).translation
-        if translation:
-            return translation
-    except Translation.DoesNotExist:
-        pass
+        cache_key = get_cache_key(text, language_code)
+        cached_text = cache.get(cache_key)
+        if cached_text:
+            return cached_text
+        else:
+            translation = Translation.objects.get(**params).translation
+            if translation:
+                cache.set(cache_key, translation, timeout=None)
+                return translation
+
+    except Translation.DoesNotExist: ...
 
     return text
-
-
-
-
-# import hashlib
-
-# def tr(text: str) -> str:
-#     language_code = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
-    
-#     text_hash = hashlib.md5(text.encode('utf-8')).hexdigest()
-#     cache_key = f'translation_{language_code}_{text_hash}'
-    
-#     translation = cache.get(cache_key)
-#     if translation is None:
-#         try:
-#             translation = Translation.objects.get(
-#                 language__code=language_code, text=text
-#             ).translation
-#             cache.set(cache_key, translation)
-#         except Translation.DoesNotExist:
-#             translation = text
-
-#     return translation

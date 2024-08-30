@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from django.http import JsonResponse, Http404
 from django.views.decorators.http import require_POST
+from django.core.cache import cache
 from threading import Thread
 
 from language.models import Language, Translation
-from language.utils import create_language_table
+from language.utils import create_language_table, get_cache_key
 import json
 
 #======================================================================================================
@@ -34,26 +35,32 @@ def contents_load(request):
 
 def contents_save(request):
     if request.user.is_superuser:
-            hot = json.loads(request.POST.get('hot'))
-            index = 0
+        language = request.POST.get('language')
+        hot = json.loads(request.POST.get('hot'))
+        index = 0
 
-            while index < len(hot):
-                pk = hot[index].pop('id', None)
-                delete = hot[index].pop('delete', None)
-                del hot[index]['text']
-                translation = hot[index].get('translation', None)
+        while index < len(hot):
+            pk = hot[index].pop('id', None)
+            delete = hot[index].pop('delete', None)
+            text = hot[index].pop('text', None)
 
-                if delete:
-                    translation = Translation.objects.filter(pk=pk)
-                    translation.delete()
+            if delete:
+                translation = Translation.objects.filter(pk=pk)
+                cache_key = get_cache_key(text, language)
+                cache.delete(cache_key)
+                translation.delete()
 
-                elif pk:
-                    translation = Translation.objects.filter(pk=pk)
-                    translation.update(**hot[index])
+            elif pk:
+                translation = Translation.objects.filter(pk=pk)
+                translation.update(**hot[index])
 
-                index += 1
+                translation_text = hot[index].get('translation', None)
+                if text and translation_text:
+                    cache_key = get_cache_key(text, language)
+                    cache.set(cache_key, translation_text, timeout=None)
 
-            return JsonResponse({'status': 200})
+            index += 1
+        return JsonResponse({'status': 200})
     else:
         raise Http404
     
