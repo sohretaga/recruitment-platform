@@ -257,22 +257,22 @@ def ajax_filter_vacancies(request):
             params.update({'salary__lte': salary_range_upper})
 
         if work_experiences := data.get('work_experiences'):
-            params.update({'work_experience_name__in': work_experiences})
+            params.update({'work_experience__in': work_experiences})
         
         if employment_type := data.get('employment_type'):
-            params.update({'employment_type_name__in': employment_type})    
+            params.update({'employment_type__in': employment_type})    
 
         if sector := data.get('sector'):
             params.update({'employer_sector': sector})
 
         if department := data.get('department'):
-            params.update({'department_name__in': department})
+            params.update({'department__in': department})
 
         if work_preference := data.get('work_preference'):
-            params.update({'work_preference_name__in': work_preference})
+            params.update({'work_preference__in': work_preference})
 
         if career_type := data.get('career_type'):
-            params.update({'career_type_name__in': career_type})
+            params.update({'career_type__in': career_type})
 
         if date := data.get('date_posted'):
             params.update({'created_date__gte': timezone.now() - timedelta(hours=int(date))})
@@ -281,7 +281,7 @@ def ajax_filter_vacancies(request):
             params.update({'keywords__contains': keyword})
 
         if location := data.get('location'):
-            params.update({'location_name': location})
+            params.update({'location': location})
 
         if job_family := data.get('job_family'):
             params.update({'job_title__job_family': job_family})
@@ -289,7 +289,7 @@ def ajax_filter_vacancies(request):
         if trending := data.get('trending'):
             params.update({'job_title_name': trending})
         
-        filtered_vacancies = vacancy_with_related_info(Vacancy.translation().filter(**params))
+        filtered_vacancies = vacancy_with_related_info(Vacancy.objects.filter(**params))
         
         context = get_vacancies_context(request, filtered_vacancies)
 

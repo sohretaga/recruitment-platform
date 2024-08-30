@@ -36,7 +36,7 @@
                                     <div class="side-title">
                                         {% for preference in work_preferences %}
                                             <div class="form-check mt-2">
-                                                <input class="form-check-input" type="checkbox" value="{{ preference.name }}" id="flexCheckChecked-preference{{ preference.id }}" />
+                                                <input class="form-check-input" type="checkbox" value="{{ preference.id }}" id="flexCheckChecked-preference{{ preference.id }}" />
                                                 <label class="form-check-label ms-2 text-muted" for="flexCheckChecked-preference{{ preference.id }}">{{ preference.name }}</label>
                                             </div>
                                         {% endfor %}
@@ -56,7 +56,7 @@
                                     <div class="side-title">
                                         {% for type in career_types %}
                                             <div class="form-check mt-2">
-                                                <input class="form-check-input" type="checkbox" value="{{ type.name }}" id="flexCheckChecked-careertype{{ type.id }}" />
+                                                <input class="form-check-input" type="checkbox" value="{{ type.id }}" id="flexCheckChecked-careertype{{ type.id }}" />
                                                 <label class="form-check-label ms-2 text-muted" for="flexCheckChecked-careertype{{ type.id }}">{{ type.name }}</label>
                                             </div>
                                         {% endfor %}
@@ -82,7 +82,7 @@
                                         <div class="mb-3" style="max-height: 250px; overflow: auto;">
                                             {% for department in departments %}
                                                 <div class="form-check mt-2">
-                                                    <input class="form-check-input" type="checkbox" value="{{ department.name }}" id="flexCheckChecked-department{{ department.id }}" />
+                                                    <input class="form-check-input" type="checkbox" value="{{ department.id }}" id="flexCheckChecked-department{{ department.id }}" />
                                                     <label class="form-check-label ms-2 text-muted" for="flexCheckChecked-department{{ department.id }}">{{ department.name }}</label>
                                                 </div>
                                             {% endfor %}
@@ -109,7 +109,7 @@
                                         <select class="form-select" data-trigger name="location" id="location">
                                             <option value="">{% tr 'Location' %}</option>
                                             {% for location in locations %}
-                                                <option value="{{ location.name }}">{{ location.name }}</option>
+                                                <option value="{{ location.id }}">{{ location.name }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -120,7 +120,7 @@
                                         <select class="form-select " data-trigger name="job_family" id="job-family">
                                             <option value="">{% tr 'Job Family' %}</option>
                                             {% for family in job_family %}
-                                                <option value="{{ family.name }}">{{ family.name }}</option>
+                                                <option value="{{ family.id }}">{{ family.name }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -245,7 +245,7 @@
                                 <div class="side-title">
                                     {% for exp in experiences %}
                                         <div class="form-check mt-2">
-                                            <input class="form-check-input" type="checkbox" value="{{ exp.name }}" id="flexCheckChecked-exp{{ exp.id }}" />
+                                            <input class="form-check-input" type="checkbox" value="{{ exp.id }}" id="flexCheckChecked-exp{{ exp.id }}" />
                                             <label class="form-check-label ms-2 text-muted" for="flexCheckChecked-exp{{ exp.id }}">{{ exp.name }}</label>
                                         </div>
                                     {% endfor %}
@@ -265,7 +265,7 @@
                                     <div class="side-title">
                                         {% for type in employments %}
                                             <div class="form-check mt-2">
-                                                <input class="form-check-input" type="checkbox" value="{{ type.name }}" id="flexCheckChecked-type{{ type.id }}" />
+                                                <input class="form-check-input" type="checkbox" value="{{ type.id }}" id="flexCheckChecked-type{{ type.id }}" />
                                                 <label class="form-check-label ms-2 text-muted" for="flexCheckChecked-type{{ type.id }}">{{ type.name }}</label>
                                             </div>
                                         {% endfor %}

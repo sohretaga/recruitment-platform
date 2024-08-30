@@ -146,7 +146,7 @@ def fetch_vacancies(request) -> dict:
     vacancies = paginator.get_page(current_page)
 
     # Filter Fields
-    locations = models.ParameterLocation.translation().values('name')
+    locations = models.ParameterLocation.translation().values('id', 'name')
     experiences = models.ParameterWorkExperience.translation().values('id', 'name')
     employments = models.ParameterEmployeeType.translation().values('id', 'name')
     sectors = models.ParameterSector.translation().values('id', 'name')
