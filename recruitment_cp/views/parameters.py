@@ -639,23 +639,34 @@ def company_save(request):
 
             while index < len(hot):
                 pk = hot[index].pop('id', None)
-                name = hot[index].get('user__first_name', None)
+                params = {}
 
-                # If they are not deleted, ForeignKey gives an error
-                del hot[index]['user__email']
-                del hot[index]['user__profile_photo']
-                del hot[index]['user__first_name']
+                try:
+                    params['sector'] = cp_models.ParameterSector.objects.get(name_en=hot[index]['sector__name_en'])
+                except cp_models.ParameterSector.DoesNotExist:
+                    pass
 
-                # if name:
+                try:
+                    params['organization_type'] = cp_models.ParameterOrganizationType.objects.get(name_en=hot[index]['organization_type__name_en'])
+                except cp_models.ParameterOrganizationType.DoesNotExist:
+                    pass
+
+                try:
+                    params['organization_ownership'] = cp_models.ParameterOrganizationOwnership.objects.get(name_en=hot[index]['organization_ownership__name_en'])
+                except cp_models.ParameterOrganizationOwnership.DoesNotExist:
+                    pass
+
+                try:
+                    params['number_of_employees'] = cp_models.ParameterNumberOfEmployee.objects.get(name_en=hot[index]['number_of_employees__name_en'])
+                except cp_models.ParameterNumberOfEmployee.DoesNotExist:
+                    pass
+
                 if pk:
                     company = Employer.objects.filter(pk=pk)
-                    company.update(**hot[index])
+                    company.update(**params)
                 else:
                     company = Employer(**hot[index])
                     company.save()
-                # else:
-                #     company = Employer.objects.filter(pk = pk)
-                #     company.delete()
                 
                 index += 1
 
