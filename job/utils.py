@@ -11,7 +11,7 @@ from job.models import Vacancy
 
 def get_vacancies_context(request, vacancies) -> dict:
     # Set up Paginator
-    paginator = Paginator(vacancies, 10)
+    paginator = Paginator(vacancy_with_related_info(vacancies), 10)
     current_page_number = request.POST.get('page', 1)
     vacancies_page = paginator.get_page(current_page_number)
 

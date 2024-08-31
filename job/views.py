@@ -288,10 +288,8 @@ def ajax_filter_vacancies(request):
 
         if trending := data.get('trending'):
             params.update({'job_title_name': trending})
-        
-        filtered_vacancies = vacancy_with_related_info(Vacancy.translation().filter(**params)[:10])
-        
-        context = get_vacancies_context(request, filtered_vacancies)
+
+        context = get_vacancies_context(request, Vacancy.translation().filter(**params))
 
         return JsonResponse(context, safe=False)
 
