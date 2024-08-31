@@ -18,8 +18,10 @@ def load_source(request):
             source_model = request.POST.get('model')
             params = {}
 
-            if language:
-                params.update({'language_code': language})
+            if not language: # set default language if language is not set
+                language = 'en'
+
+            params['language_code'] = language
             
             match source_model:
             
