@@ -86,6 +86,19 @@ class Vacancy(models.Model):
         )
 
         return vacancies
+    
+    @classmethod
+    def translation_for_filter(cls):
+        """This method is used to perform operations only on the fields required
+        for filtering, so that there are no unnecessary operations during filtering."""
+
+        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
+        vacancies = cls.objects.annotate(
+            location_name = F(f'location__name_{language}'),
+            work_experience_name = F(f'work_experience__name_{language}'),
+        )
+
+        return vacancies
 
 class Bookmark(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='bookmarks')
