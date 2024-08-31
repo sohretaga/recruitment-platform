@@ -59,6 +59,23 @@ class SiteContent(models.Model):
         verbose_name = 'Site Content'
         verbose_name_plural = 'Site Contents'
 
+    @classmethod
+    def translation(cls):
+        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
+        objects = cls.objects.annotate(
+            title = Case(
+                When(**{f'title_{language}__isnull':False}, then=F(f'title_{language}')),
+                default=F('title_en'),
+                output_field=CharField()
+            ),
+            content = Case(
+                When(**{f'content_{language}__isnull':False}, then=F(f'content_{language}')),
+                default=F('content_en'),
+                output_field=CharField()
+            )
+        )
+        return objects
+
 class Language(models.Model):
     name = models.CharField(max_length=20)
     code = models.CharField(max_length=5)
