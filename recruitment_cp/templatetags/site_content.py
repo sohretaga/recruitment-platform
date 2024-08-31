@@ -26,8 +26,6 @@ def get_site_content(key):
         if not image:
             image = SiteContent.translation().get(page=key).image
             cache.set(get_cache_key(f'image_{key}', ''), image)
-            print('inn img')
-
         
         contents = {
             'title': title,

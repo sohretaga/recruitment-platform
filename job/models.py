@@ -72,33 +72,18 @@ class Vacancy(models.Model):
     @classmethod
     def translation(cls):
         language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
-        match language:
-            case 'en':
-                vacancies = cls.objects.annotate(
-                    career_type_name = F('career_type__name_en'),
-                    career_level_name = F('career_level__name_en'),
-                    location_name = F('location__name_en'),
-                    fte_name = F('fte__name_en'),
-                    job_title_name = F('job_title__name_en'),
-                    employment_type_name = F('employment_type__name_en'),
-                    work_experience_name = F('work_experience__name_en'),
-                    work_preference_name = F('work_preference__name_en'),
-                    department_name = F('department__name_en'),
-                    employer_sector = F('employer__sector__name_en')
-                )
-            case 'tr':
-                vacancies = cls.objects.annotate(
-                    career_type_name = F('career_type__name_tr'),
-                    career_level_name = F('career_level__name_tr'),
-                    location_name = F('location__name_tr'),
-                    fte_name = F('fte__name_tr'),
-                    job_title_name = F('job_title__name_tr'),
-                    employment_type_name = F('employment_type__name_tr'),
-                    work_experience_name = F('work_experience__name_tr'),
-                    work_preference_name = F('work_preference__name_tr'),
-                    department_name = F('department__name_tr'),
-                    employer_sector = F('employer__sector__name_tr')
-                )
+        vacancies = cls.objects.annotate(
+            career_type_name = F(f'career_type__name_{language}'),
+            career_level_name = F(f'career_level__name_{language}'),
+            location_name = F(f'location__name_{language}'),
+            fte_name = F(f'fte__name_{language}'),
+            job_title_name = F(f'job_title__name_{language}'),
+            employment_type_name = F(f'employment_type__name_{language}'),
+            work_experience_name = F(f'work_experience__name_{language}'),
+            work_preference_name = F(f'work_preference__name_{language}'),
+            department_name = F(f'department__name_{language}'),
+            employer_sector = F(f'employer__sector__name_{language}')
+        )
 
         return vacancies
 

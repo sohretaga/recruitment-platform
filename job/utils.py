@@ -16,7 +16,12 @@ def get_vacancies_context(request, vacancies) -> dict:
     vacancies_page = paginator.get_page(current_page_number)
 
     # Serialize the data
-    vacancies_list = list(vacancies_page.object_list.values())
+    vacancies_list = list(vacancies_page.object_list.values(
+        'id', 'employer_username', 'profile_photo_url', 'company_name',
+        'slug', 'position_title', 'company_name', 'location_name',
+        'salary_minimum', 'salary_maximum', 'work_experience_name',
+        'keywords', 'user_id'
+    ))
     bookmarks, applications = list(), list()
     keyword_list = list(models.ParameterKeyword.translation().values('id', 'name'))
     keywords = {item['id']: item['name'] for item in keyword_list}
