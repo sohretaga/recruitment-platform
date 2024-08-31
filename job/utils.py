@@ -142,11 +142,11 @@ def fetch_vacancies(request) -> dict:
         url += f'&keyword={keyword}'
         params.update({'keywords__contains': keyword})
 
-    filtered_vacancies = vacancy_with_related_info(Vacancy.translation().filter(**params))
+    filtered_vacancies = vacancy_with_related_info(Vacancy.translation_for_filter().filter(**params))
 
     # Set up Paginator
     paginator = Paginator(filtered_vacancies, 10)
-    current_page = request.GET.get('page')
+    current_page = request.GET.get('page', 1)
     vacancies = paginator.get_page(current_page)
 
     # Filter Fields
