@@ -90,11 +90,11 @@ def fetch_vacancies(request) -> dict:
 
     if work_experience := request.GET.get('work-experience'):
         url += f'&work-experience={work_experience}'
-        params.update({'work_experience_name__in': work_experience})
+        params.update({'work_experience_name__in': work_experience.split(',')})
     
     if employment_type := request.GET.get('employment-type'):
         url += f'&employment-type={employment_type}'
-        params.update({'employment_type_name__in': employment_type})
+        params.update({'employment_type_name__in': employment_type.split(',')})
     
     if sector := request.GET.get('sector'):
         url += f'&sector={sector}'
@@ -102,15 +102,15 @@ def fetch_vacancies(request) -> dict:
 
     if department := request.GET.get('department'):
         url += f'&department={department}'
-        params.update({'department_name__in': department})
+        params.update({'department_name__in': department.split(',')})
 
     if work_preference := request.GET.get('work-preference'):
         url += f'&work-preference={work_preference}'
-        params.update({'work_preference_name__in': work_preference})
+        params.update({'work_preference_name__in': work_preference.split(',')})
 
     if career_type := request.GET.get('career-type'):
         url += f'&career-type={career_type}'
-        params.update({'career_type_name__in': career_type})
+        params.update({'career_type_name__in': career_type.split(',')})
 
     if date := request.GET.get('date'):
         url += f'&date={date}'

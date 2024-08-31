@@ -96,8 +96,13 @@ class Vacancy(models.Model):
         vacancies = cls.objects.annotate(
             location_name = F(f'location__name_{language}'),
             work_experience_name = F(f'work_experience__name_{language}'),
-        )
+            employment_type_name = F(f'employment_type__name_{language}'),
+            department_name = F(f'department__name_{language}'),
+            work_preference_name = F(f'work_preference__name_{language}'),
+            career_type_name = F(f'career_type__name_{language}'),
+            job_title_name = F(f'job_title__name_{language}'),
 
+        )
         return vacancies
 
 class Bookmark(models.Model):
