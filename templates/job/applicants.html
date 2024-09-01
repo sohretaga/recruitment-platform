@@ -438,17 +438,16 @@
                                 </div><!--end row-->
                             </div>
                         </div> <!--end card-->
-                        
+
+                        <input type="hidden" id="has-value-action-{{ applicant.id }}" value="{{ applicant.employer_action.action }}">
+                        <input type="hidden" id="has-value-invite-date-{{ applicant.id }}" value="{{ applicant.employer_action.invite_date }}">
+                        <input type="hidden" id="has-value-request-other-date-{{ applicant.id }}" value="{{ applicant.candidate_action.request_other_date }}">
+                        <!-- notification data -->
+                        <input type="hidden" id="target-user-{{ applicant.id }}" value="{{ applicant.candidate.user.id }}">
+                        <input type="hidden" id="related-data-{{ applicant.id }}" value="{{ applicant.id }}">
+
+                        {% endfor %}
                     </div><!--end candidate-list-->
-
-                    <input type="hidden" id="has-value-action-{{ applicant.id }}" value="{{ applicant.employer_action.action }}">
-                    <input type="hidden" id="has-value-invite-date-{{ applicant.id }}" value="{{ applicant.employer_action.invite_date }}">
-                    <input type="hidden" id="has-value-request-other-date-{{ applicant.id }}" value="{{ applicant.candidate_action.request_other_date }}">
-                    <!-- notification data -->
-                    <input type="hidden" id="target-user-{{ applicant.id }}" value="{{ applicant.candidate.user.id }}">
-                    <input type="hidden" id="related-data-{{ applicant.id }}" value="{{ applicant.id }}">
-
-                    {% endfor %}
                 </div><!--end col-->
             </div><!--end row-->
 
