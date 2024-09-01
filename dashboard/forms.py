@@ -19,8 +19,8 @@ class PostVacancyForm(forms.ModelForm):
             'fte', 'salary', 'salary_minimum', 'salary_maximum',
             'position_title', 'job_title', 'employment_type',
             'work_preference', 'department', 'status', 'keywords',
-            'description_editor', 'responsibilities_editor',
-            'qualification_editor', 'skill_experience_editor'
+            'description', 'responsibilities',
+            'qualification', 'skill_experience'
         )
 
 class PostBlogForm(forms.ModelForm):

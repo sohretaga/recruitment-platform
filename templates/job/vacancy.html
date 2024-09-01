@@ -154,57 +154,40 @@
                                 </div>
                             </div><!--end Experience-->
 
+                            {% if vacancy.description %}
                             <div class="mt-4">
-                                <h5 class="mb-3">Job Description</h5>
-                                <div class="job-detail-desc">
-                                    <p class="text-muted mb-0">As a Product Designer, you will work within a Product Delivery Team fused with UX, engineering, product and data talent. You will help the team design beautiful interfaces that solve business challenges for our clients. We work with a number of Tier 1 banks on building web-based applications for AML, KYC and Sanctions List management workflows. This role is ideal if you are looking to segue your career into the FinTech or Big Data arenas.</p>
-                                </div>
+                                <h5 class="mb-3">{% tr 'Job Description' %}</h5>
+                                <div class="job-detail-desc text-muted">{{ vacancy.description|safe }}</div>
                             </div>
+                            {% endif %}
 
+                            {% if vacancy.responsibilities %}
                             <div class="mt-4">
-                                <h5 class="mb-3">Responsibilities</h5>
-                                <div class="job-detail-desc mt-2">
-                                    <p class="text-muted">As a Product Designer, you will work within a Product Delivery Team fused with UX, engineering, product and data talent.</p>
-                                    <ul class="job-detail-list list-unstyled mb-0 text-muted">
-                                        <li><i class="uil uil-circle"></i> Have sound knowledge of commercial activities.</li>
-                                        <li><i class="uil uil-circle"></i> Build next-generation web applications with a focus on the client side</li> 
-                                        <li><i class="uil uil-circle"></i> Work on multiple projects at once, and consistently meet draft deadlines</li> 
-                                        <li><i class="uil uil-circle"></i> have already graduated or are currently in any year of study</li> 
-                                        <li><i class="uil uil-circle"></i> Revise the work of previous designers to create a unified aesthetic for our brand materials</li> 
-                                    </ul>
-                                </div>
+                                <h5 class="mb-3">{% tr 'Responsibilities' %}</h5>
+                                <div class="job-detail-desc mt-2 text-muted">{{ vacancy.responsibilities|safe }}</div>
                             </div>
+                            {% endif %}
                             
+                            {% if vacancy.qualification %}
                             <div class="mt-4">
-                                <h5 class="mb-3">Qualification </h5>
-                                <div class="job-detail-desc mt-2">
-                                    <ul class="job-detail-list list-unstyled mb-0 text-muted">
-                                        <li><i class="uil uil-circle"></i> B.C.A / M.C.A under National University course complete.</li> 
-                                        <li><i class="uil uil-circle"></i> 3 or more years of professional design experience</li> 
-                                        <li><i class="uil uil-circle"></i> have already graduated or are currently in any year of study</li> 
-                                        <li><i class="uil uil-circle"></i> Advanced degree or equivalent experience in graphic and web design</li> 
-                                    </ul>
-                                </div>
+                                <h5 class="mb-3">{% tr 'Qualification' %} </h5>
+                                <div class="job-detail-desc mt-2 text-muted">{{ vacancy.qualification|safe }}</div>
                             </div>
+                            {% endif %}
+
+                            {% if vacancy.skill_experience %}
+                            <div class="mt-4">
+                                <h5 class="mb-3">{% tr 'Skill & Experience' %}</h5>
+                                <div class="job-details-desc text-muted">{{ vacancy.skill_experience|safe }}</div>
+                            </div>
+                            {% endif %}
 
                             <div class="mt-4">
-                                <h5 class="mb-3">Skill & Experience</h5>
-                                <div class="job-details-desc">
-                                    <ul class="job-detail-list list-unstyled mb-0 text-muted">
-                                        <li><i class="uil uil-circle"></i> Understanding of key Design Principal</li>
-                                        <li><i class="uil uil-circle"></i> Proficiency With HTML, CSS, Bootstrap</li> 
-                                        <li><i class="uil uil-circle"></i> Wordpress: 1 year (Required)</li> 
-                                        <li><i class="uil uil-circle"></i> Experience designing and developing responsive design websites</li>
-                                        <li><i class="uil uil-circle"></i> web designing: 1 year (Preferred)</li>
-                                    </ul>
-                                    <div class="mt-4">
-                                        <span class="badge bg-primary">PHP</span>
-                                        <span class="badge bg-primary">JS</span>
-                                        <span class="badge bg-primary">Marketing</span>
-                                        <span class="badge bg-primary">REACT</span>
-                                        <span class="badge bg-primary">PHOTOSHOP</span>
-                                    </div>
-                                </div>
+                                <span class="badge bg-primary">PHP</span>
+                                <span class="badge bg-primary">JS</span>
+                                <span class="badge bg-primary">Marketing</span>
+                                <span class="badge bg-primary">REACT</span>
+                                <span class="badge bg-primary">PHOTOSHOP</span>
                             </div>
 
                             <div class="mt-4 pt-3">

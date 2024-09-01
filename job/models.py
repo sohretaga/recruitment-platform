@@ -48,10 +48,10 @@ class Vacancy(models.Model):
 
     approval_level = models.CharField(max_length=12, choices=STATUS_CHOICES, default='PENDING')
 
-    description_editor = RichTextField(blank=True, null=True)
-    responsibilities_editor = RichTextField(blank=True, null=True)
-    qualification_editor = RichTextField(blank=True, null=True)
-    skill_experience_editor = RichTextField(blank=True, null=True)
+    description = RichTextField(blank=True, null=True)
+    responsibilities = RichTextField(blank=True, null=True)
+    qualification = RichTextField(blank=True, null=True)
+    skill_experience = RichTextField(blank=True, null=True)
 
     class Meta:
         ordering = ['-created_date']
