@@ -70,6 +70,7 @@
             wordWrap: true,
             filters: true,
             data: [{id:''}],
+            fixedColumnsLeft: 3,
             height: $(document).height() - 350,
             fixedColumnsStart: 1,
             dropdownMenu:  ['filter_by_value', 'filter_action_bar'],
@@ -123,6 +124,26 @@
                 {
                     title: 'Common Duties and Responsibilities',
                     data: 'definition',
+                    colWidths: 200
+                },
+                {
+                    title: 'Job Description',
+                    data: 'description',
+                    colWidths: 200
+                },
+                {
+                    title: 'Responsibilities',
+                    data: 'responsibilities',
+                    colWidths: 200
+                },
+                {
+                    title: 'Qualification',
+                    data: 'qualification',
+                    colWidths: 200
+                },
+                {
+                    title: 'Skill & Experience',
+                    data: 'skill_experience',
                     colWidths: 200
                 },
                 {

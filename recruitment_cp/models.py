@@ -212,6 +212,12 @@ class ParameterJobCatalogue(ParameterCommonFields):
     job_sub_family = models.CharField(max_length=100, blank=True, null=True)
     career_type = models.CharField(max_length=100, blank=True, null=True)
     career_level = models.CharField(max_length=100, blank=True, null=True)
+
+    description = models.TextField(blank=True, null=True)
+    responsibilities = models.TextField(blank=True, null=True)
+    qualification = models.TextField(blank=True, null=True)
+    skill_experience = models.TextField(blank=True, null=True)
+
     typical_education = models.CharField(max_length=100, blank=True, null=True)
     relevant_experience = models.CharField(max_length=100, blank=True, null=True)
     job_code = models.CharField(max_length=100, blank=True, null=True)

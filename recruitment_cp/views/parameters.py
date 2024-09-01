@@ -398,8 +398,11 @@ def job_catalogue_load(request):
             language = request.POST.get('language')
             
             job_catalogues = cp_models.ParameterJobCatalogue.language_filter(language)\
-                .values('id', 'no', 'name', 'definition', 'note', 'job_family', 'job_sub_family', 'career_type',
-                        'career_level', 'typical_education', 'relevant_experience', 'job_code')
+                .values(
+                    'id', 'no', 'name', 'definition', 'note', 'job_family', 'job_sub_family',
+                    'career_type', 'career_level', 'typical_education', 'relevant_experience',
+                    'job_code', 'description', 'responsibilities', 'qualification', 'skill_experience'
+                )
             json_data = json.dumps(list(job_catalogues))
 
             return JsonResponse(json_data, safe=False)
