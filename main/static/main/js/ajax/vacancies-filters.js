@@ -178,7 +178,7 @@ const generatePagination = (paginationInfo) => {
 
 };
 
-const listVacancies = (vacanciesInfo, bookmarks, applications, keywords) => {
+const listVacancies = (texts, vacanciesInfo, bookmarks, applications, keywords) => {
     const container = document.getElementById('job-list-container');
     container.innerHTML = ''; // Clear existing content
 
@@ -221,7 +221,7 @@ const listVacancies = (vacanciesInfo, bookmarks, applications, keywords) => {
                     ${vacancy.keywords ? `
                         <div>
                             <ul class="list-inline mb-0">
-                                <li class="list-inline-item"><i class="uil uil-tag"></i> Keywords :</li>
+                                <li class="list-inline-item"><i class="uil uil-tag"></i> ${texts.keywords} :</li>
                                 ${(() => {
                                     let itemsHtml = '';
                                     const lastItem = vacancy.keywords.length-1;
@@ -238,11 +238,11 @@ const listVacancies = (vacanciesInfo, bookmarks, applications, keywords) => {
                         <div class="text-md-end">
                         ${(() => {
                             let applyId = `apply-now-${vacancy.id}`;
-                            let applyText = 'Apply Now';
+                            let applyText = texts.apply_now;
 
                             if (applications.includes(vacancy.id)) {
                                 applyId = `delete-apply-${vacancy.id}`;
-                                applyText = 'Delete Apply';
+                                applyText = texts.delete_application;
                             };
 
                             const apply = `<a href="javascript:void(0);" id="${applyId}" class="primary-link" onclick="apply(${vacancy.id})">${applyText} <i class="mdi mdi-chevron-double-right"></i></a>`;
@@ -273,6 +273,11 @@ const filterRequest = () => {
             );
 
             listVacancies(
+                {
+                    keywords: response.keywords_text,
+                    apply_now: response.apply_now_text,
+                    delete_application: response.delete_application_text
+                },
                 response.vacancies,
                 response.bookmarks,
                 response.applications,

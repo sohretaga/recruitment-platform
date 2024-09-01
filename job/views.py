@@ -17,6 +17,7 @@ from recruitment_cp.utils import is_ajax
 from .utils import fetch_vacancies
 from recruitment_cp.models import ParameterKeyword
 from dashboard.decorators import is_candidate, is_employer
+from language.utils import tr
 
 import json
 
@@ -120,6 +121,7 @@ def ajax_apply(request):
     message = request.POST.get('message')
     cv = request.FILES.get('cv')
     vacancy = Vacancy.objects.get(id=vacancy, approval_level='PUBLISHED')
+    context = dict()
 
     apply_exists = Apply.objects.filter(candidate=request.user.candidate, vacancy=vacancy).exists()
 
@@ -130,6 +132,8 @@ def ajax_apply(request):
         )
         apply_id = apply.id
         apply.delete()
+        
+        context['apply_now_text'] = tr('Apply Now')
 
     else:
         apply = Apply.objects.create(
@@ -139,7 +143,12 @@ def ajax_apply(request):
             cv=cv
         )
         apply_id = apply.id
-    return JsonResponse({'apply_id': apply_id})
+
+        context['delete_application_text'] = tr('Delete Application')
+
+    context['apply_id'] = apply_id
+
+    return JsonResponse(context)
 
 
 @is_employer
@@ -290,6 +299,9 @@ def ajax_filter_vacancies(request):
             params.update({'job_title_name': trending})
 
         context = get_vacancies_context(request, Vacancy.translation_for_filter().filter(**params))
+        context['keywords_text'] = tr('Keywords')
+        context['apply_now_text'] = tr('Apply Now')
+        context['delete_application_text'] = tr('Delete Application')
 
         return JsonResponse(context, safe=False)
 

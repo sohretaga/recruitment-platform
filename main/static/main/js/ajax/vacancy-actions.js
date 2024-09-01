@@ -71,7 +71,7 @@ const sendApplication = (id) => {
                 cv.value = '';
 
                 applyNowBtn.id = `delete-apply-${id}`;
-                applyNowBtn.innerHTML = 'Delete Apply  <i class="mdi mdi-chevron-double-right">';
+                applyNowBtn.innerHTML = `${response.delete_application_text}  <i class="mdi mdi-chevron-double-right">`;
 
                 messageWarning.style.display = 'none';
                 message.style.borderColor = '';
@@ -99,7 +99,7 @@ const deleteApplication = (id) => {
         success: function(response) {
             deleteApply.hide();
             deleteApplyBtn.id = `apply-now-${id}`;
-            deleteApplyBtn.innerHTML = 'Apply Now  <i class="mdi mdi-chevron-double-right">';
+            deleteApplyBtn.innerHTML = `${response.apply_now_text} <i class="mdi mdi-chevron-double-right">`;
 
             sendNotification(targetUserId, {
                 content: 'DELETE_APPLY',
