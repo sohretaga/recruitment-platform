@@ -67,12 +67,14 @@ class Employer(models.Model):
 
     @classmethod
     def translation(cls):
+        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
+
         employers = cls.objects.annotate(
-            sector_name=F(f'sector__name_{settings.SITE_LANGUAGE_CODE}'),
-            organization_type_name=F(f'organization_type__name_{settings.SITE_LANGUAGE_CODE}'),
-            organization_ownership_name=F(f'organization_ownership__name_{settings.SITE_LANGUAGE_CODE}'),
-            number_of_employees_name=F(f'number_of_employees__name_{settings.SITE_LANGUAGE_CODE}'),
-            location_name=F(f'location__name_{settings.SITE_LANGUAGE_CODE}'),
+            sector_name=F(f'sector__name_{language}'),
+            organization_type_name=F(f'organization_type__name_{language}'),
+            organization_ownership_name=F(f'organization_ownership__name_{language}'),
+            number_of_employees_name=F(f'number_of_employees__name_{language}'),
+            location_name=F(f'location__name_{language}'),
         )
 
         return employers
@@ -99,6 +101,7 @@ class Candidate(models.Model):
     
     @classmethod
     def translation(cls):
+        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
         current_year = datetime.now().year
         age_groups = ParameterAgeGroup.translation().values('minimum', 'maximum', 'name')
         work_experiences = ParameterWorkExperience.translation().values('minimum', 'maximum', 'name')
@@ -134,8 +137,8 @@ class Candidate(models.Model):
                 output_field=CharField()
             ),
             citizenship_name=Case(
-                When(**{f'citizenship__name_{settings.SITE_LANGUAGE_CODE}__isnull':False},
-                     then=F(f'citizenship__name_{settings.SITE_LANGUAGE_CODE}')),
+                When(**{f'citizenship__name_{language}__isnull':False},
+                     then=F(f'citizenship__name_{language}')),
                      default=Value(''),
                      output_field=CharField()
             ),
@@ -178,10 +181,11 @@ class Education(models.Model):
 
     @classmethod
     def translation(cls):
+        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
         educations = cls.objects.annotate(
             education_level_name=Case(
-                When(**{f'education_level__name_{settings.SITE_LANGUAGE_CODE}__isnull':False},
-                     then=F(f'education_level__name_{settings.SITE_LANGUAGE_CODE}')
+                When(**{f'education_level__name_{language}__isnull':False},
+                     then=F(f'education_level__name_{language}')
                 ),
                 default=Value(''),
                 output_field=CharField()
