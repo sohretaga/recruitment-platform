@@ -54,7 +54,7 @@ class ManageCandidateAccountForm(forms.ModelForm):
 
     class Meta:
         model = Candidate
-        exclude = ['id', 'user']
+        exclude = ['id', 'user', 'views']
 
 class ManageFaqForm(forms.ModelForm):
 
