@@ -3,6 +3,7 @@ from django.utils.text import slugify
 from django.db.models import F, Case, When, CharField, Value
 from django.core.cache import cache
 from django.conf import settings
+from ckeditor.fields import RichTextField
 
 from user.models import Employer, Candidate, CustomUser
 from recruitment_cp import models as cp_models
@@ -38,7 +39,6 @@ class Vacancy(models.Model):
     salary_midpoint = models.IntegerField(default=0, null=True)
     salary_maximum = models.IntegerField(default=0, null=True)
 
-    definition = models.TextField(blank=True, null=True)
     keywords = models.JSONField(blank=True, null=True) # The keyword id is saving as a list
     status = models.BooleanField()
     delete = models.BooleanField(default=False)
@@ -47,6 +47,11 @@ class Vacancy(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
 
     approval_level = models.CharField(max_length=12, choices=STATUS_CHOICES, default='PENDING')
+
+    description_editor = RichTextField(blank=True, null=True)
+    responsibilities_editor = RichTextField(blank=True, null=True)
+    qualification_editor = RichTextField(blank=True, null=True)
+    skill_experience_editor = RichTextField(blank=True, null=True)
 
     class Meta:
         ordering = ['-created_date']

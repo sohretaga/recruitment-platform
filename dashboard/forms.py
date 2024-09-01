@@ -14,8 +14,14 @@ class PostVacancyForm(forms.ModelForm):
     
     class Meta:
         model = Vacancy
-        fields = ('language', 'career_type', 'career_level', 'location', 'fte', 'salary', 'salary_minimum', 'salary_maximum',
-                  'position_title', 'job_title', 'employment_type', 'definition', 'work_preference', 'department', 'status', 'keywords')
+        fields = (
+            'language', 'career_type', 'career_level', 'location',
+            'fte', 'salary', 'salary_minimum', 'salary_maximum',
+            'position_title', 'job_title', 'employment_type',
+            'work_preference', 'department', 'status', 'keywords',
+            'description_editor', 'responsibilities_editor',
+            'qualification_editor', 'skill_experience_editor'
+        )
 
 class PostBlogForm(forms.ModelForm):
     language = forms.CharField(max_length=2)
