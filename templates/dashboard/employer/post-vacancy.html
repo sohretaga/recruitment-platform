@@ -284,7 +284,17 @@
                                                 <div class="col-12">
                                                     <div class="card">
                                                         <div class="card-body">
-                                                            <textarea id="editor" name="definition">{{ vacancy.definition }}</textarea>
+                                                            <h4>Job Description</h4>
+                                                            <textarea id="description-editor" name="definition">{{ vacancy.definition }}</textarea>
+
+                                                            <h4 class="mt-3">Responsibilities</h4>
+                                                            <textarea id="responsibilities-editor" name="definition">{{ vacancy.definition }}</textarea>
+
+                                                            <h4 class="mt-3">Qualification</h4>
+                                                            <textarea id="qualification-editor" name="definition">{{ vacancy.definition }}</textarea>
+
+                                                            <h4 class="mt-3">Skill & Experience</h4>
+                                                            <textarea id="skill-experience-editor" name="definition">{{ vacancy.definition }}</textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -371,23 +381,32 @@
             Font
         } from 'ckeditor5';
 
-        ClassicEditor
-            .create( document.querySelector( '#editor' ), {
-                plugins: [ Essentials, Paragraph, Bold, Italic, Font ],
-                toolbar: [
-                    'undo', 'redo', '|', 'bold', 'italic', '|',
-                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
-                ]
-            } )
-            .then( editor => {
-                window.editor = editor;
-                editor.editing.view.change(writer => {
-                    writer.setStyle('height', '400px', editor.editing.view.document.getRoot());
+        const editorIdList = ['description-editor', 'responsibilities-editor', 'qualification-editor', 'skill-experience-editor'];
+
+        const initializeEditor = async (id) => {
+            try {
+                const editor = await ClassicEditor.create(document.querySelector(`#${id}`), {
+                    plugins: [Essentials, Paragraph, Bold, Italic, Font],
+                    toolbar: [
+                        'undo', 'redo', '|', 'bold', 'italic', '|',
+                        'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
+                    ]
                 });
-            } )
-            .catch( error => {
-                console.error( error );
-            } );
+
+                editor.editing.view.change(writer => {
+                    writer.setStyle('height', '200px', editor.editing.view.document.getRoot());
+                });
+
+                window.editor = editor;
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        editorIdList.forEach(id => {
+            initializeEditor(id);
+        });
+
     </script>
 
 
