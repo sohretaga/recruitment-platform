@@ -365,7 +365,13 @@ def company_details(request, username):
     params = manage_user_type_for_details(request, username, user_type='employer')
 
     user = get_object_or_404(CustomUser, **params)
-    vacancies = vacancy_with_related_info(Vacancy.translation().filter(employer=user.employer, status=True, delete=False, approval_level='PUBLISHED')[:5])
+    vacancies = vacancy_with_related_info(Vacancy.translation().filter(
+        employer=user.employer,
+        anonium=False,
+        status=True,
+        delete=False,
+        approval_level='PUBLISHED'
+    )[:5])
     sectors = ParameterSector.translation().values('id', 'name')
     organization_types = ParameterOrganizationType.translation().values('id', 'name')
     organization_ownerships = ParameterOrganizationOwnership.translation().values('id', 'name')

@@ -313,7 +313,7 @@ def ajax_search_vacancy(request):
     query = request.POST.get('search_value', '')
 
     filtered_vacancies = vacancy_with_related_info(
-        Vacancy.translation().filter(
+        Vacancy.translation_for_filter().filter(
             Q(position_title__icontains=query) |
             Q(job_title_name__icontains=query) |
             Q(employer__user__first_name__icontains=query),

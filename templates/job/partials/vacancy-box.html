@@ -7,10 +7,14 @@
         <div class="p-4">
             <div class="row">
                 <div class="col-lg-1 company-logo">
-                    {% if vacancy.employer.user.profile_photo %}
-                    <a href="{% url 'user:company' vacancy.employer_username %}"><img src="{{ vacancy.employer.user.profile_photo.url }}" alt="{{ vacancy.company_name }}" class="img-fluid rounded-3"></a>
+                    {% if vacancy.employer.user.profile_photo and not vacancy.anonium %}
+                    <a href="{% url 'user:company' vacancy.employer_username %}">
+                        <img src="{{ vacancy.employer.user.profile_photo.url }}" alt="{{ vacancy.company_name }}" class="img-fluid rounded-3">
+                    </a>
                     {% else %}
-                    <a href="{% url 'user:company' vacancy.employer_username %}"><img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="{{ vacancy.company_name }}" class="img-fluid rounded-3"></a>
+                    <a href="{% if vacancy.anonium %}#{% else %}{% url 'user:company' vacancy.employer_username %}{% endif %}">
+                        <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="{% if vacancy.anonium %}{{ vacancy.employer_sector }}{% else %}{{ vacancy.company_name }}{% endif %}" class="img-fluid rounded-3">
+                    </a>
                     {% endif %}
                 </div><!--end col-->
                 <div class="col-lg-10 vacancy-content">
@@ -18,7 +22,11 @@
                         <h5 class="fs-17 mb-1"><a href="{% url 'job:vacancy' vacancy.slug %}" class="text-dark">{{ vacancy.position_title }}</a></h5>
                         <ul class="list-inline mb-0">
                             <li class="list-inline-item">
+                                {% if vacancy.anonium %}
+                                <p class="text-muted fs-14 mb-0">{{ vacancy.employer_sector }}</p>
+                                {% else %}
                                 <p class="text-muted fs-14 mb-0">{{ vacancy.company_name }}</p>
+                                {% endif %}
                             </li>
                         </ul>
                     </div>

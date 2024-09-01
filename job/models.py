@@ -40,13 +40,14 @@ class Vacancy(models.Model):
     salary_maximum = models.IntegerField(default=0, null=True)
 
     keywords = models.JSONField(blank=True, null=True) # The keyword id is saving as a list
-    status = models.BooleanField()
     delete = models.BooleanField(default=False)
     views = models.IntegerField(default=0)
     slug = models.SlugField(null=True)
     created_date = models.DateTimeField(auto_now_add=True)
 
     approval_level = models.CharField(max_length=12, choices=STATUS_CHOICES, default='PENDING')
+    status = models.BooleanField()
+    anonium = models.BooleanField(default=False)
 
     description = RichTextField(blank=True, null=True)
     responsibilities = RichTextField(blank=True, null=True)
@@ -106,6 +107,7 @@ class Vacancy(models.Model):
             work_preference_name = F(f'work_preference__name_{language}'),
             career_type_name = F(f'career_type__name_{language}'),
             job_title_name = F(f'job_title__name_{language}'),
+            employer_sector = F(f'employer__sector__name_{language}')
 
         )
         return vacancies

@@ -188,14 +188,16 @@ const listVacancies = (texts, vacanciesInfo, bookmarks, applications, keywords) 
             <div class="p-4">
                 <div class="row">
                     <div class="col-lg-1 company-logo">
-                        <a href="/company/${vacancy.employer_username}"><img src="${vacancy.profile_photo_url ? `${vacancy.profile_photo_url}`:'/static/main/images/featured-job/default-company-img.jpeg'}" alt="${vacancy.company_name}" class="img-fluid rounded-3"></a>
+                        <a href="${vacancy.anonium ? '#':`/company/${vacancy.employer_username}`}">
+                            <img src="${vacancy.profile_photo_url && !vacancy.anonium ? `${vacancy.profile_photo_url}`:'/static/main/images/featured-job/default-company-img.jpeg'}" alt="${vacancy.anonium ? vacancy.employer_sector:vacancy.company_name}" class="img-fluid rounded-3">
+                        </a>
                     </div>
                     <div class="col-lg-10 vacancy-content">
                         <div class="mt-lg-0">
                             <h5 class="fs-17 mb-1"><a href="/vacancy/${vacancy.slug}" class="text-dark">${vacancy.position_title}</a></h5>
                             <ul class="list-inline mb-0">
                                 <li class="list-inline-item">
-                                    <p class="text-muted fs-14 mb-0">${vacancy.company_name}</p>
+                                    <p class="text-muted fs-14 mb-0">${vacancy.anonium ? vacancy.employer_sector:vacancy.company_name}</p>
                                 </li>
                             </ul>
                         </div>
@@ -217,7 +219,7 @@ const listVacancies = (texts, vacanciesInfo, bookmarks, applications, keywords) 
             </div>
             <div class="p-3 bg-light">
                 <div class="row justify-content-between">
-                    <div class="col-md-8">
+                    <div class="col-md-7">
                     ${vacancy.keywords ? `
                         <div>
                             <ul class="list-inline mb-0">
@@ -234,7 +236,7 @@ const listVacancies = (texts, vacanciesInfo, bookmarks, applications, keywords) 
                         </div>
                     `:''}
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="text-md-end">
                         ${(() => {
                             let applyId = `apply-now-${vacancy.id}`;

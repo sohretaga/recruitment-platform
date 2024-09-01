@@ -79,16 +79,16 @@
                         <input type="hidden" id="related-data-{{ vacancy.id }}" value="{{ vacancy.slug }}">
                     
                         <div>
-                            {% if vacancy.employer.background_image %}
+                            {% if vacancy.employer.background_image and not vacancy.anonium %}
                                 <img src="{{ vacancy.employer.background_image.url }}" class="background-img" alt="{{ vacancy.company_name }} Background">
                             {% else %}
                                 <img src="{% static 'main/images/featured-job/default-job-bg.jpg' %}" class="background-img" alt="{{ vacancy.company_name }} Background">
                             {% endif %}
                             <div class="job-details-compnay-profile">
-                                {% if vacancy.profile_photo_url %}
+                                {% if vacancy.profile_photo_url and not vacancy.anonium %}
                                 <img src="{{ vacancy.profile_photo_url }}" alt="{{ vacancy.company_name }}" class="img-fluid rounded-3 rounded-3" style="width: 55px; height: 55px;">
                                 {% else %}
-                                <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="{{ vacancy.company_name }}" class="img-fluid rounded-3 rounded-3" style="width: 55px; height: 55px;">
+                                <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="{% if vacancy.anonium %}{{ vacancy.employer_sector }}{% else %}{{ vacancy.company_name }}{% endif %}" class="img-fluid rounded-3 rounded-3" style="width: 55px; height: 55px;">
                                 {% endif %}
                             </div>
                         </div>
@@ -213,7 +213,7 @@
 
                     {% if vacancies.count == 5 %}
                     <div class="text-center mt-4">
-                            <a href="{% url 'job:vacancies' %}?job-title={{ vacancy.job_title_name|urlencode }}" class="primary-link form-text">{% tr 'View More' %} <i class="mdi mdi-arrow-right"></i></a>
+                        <a href="{% url 'job:vacancies' %}?job-title={{ vacancy.job_title_name|urlencode }}" class="primary-link form-text">{% tr 'View More' %} <i class="mdi mdi-arrow-right"></i></a>
                     </div>
                     {% endif %}
 
@@ -306,16 +306,21 @@
                         <div class="card company-profile mt-4">
                             <div class="card-body p-4">
                                 <div class="text-center">
-                                    {% if vacancy.profile_photo_url %}
+                                    {% if vacancy.profile_photo_url and not vacancy.anonium %}
                                     <img src="{{ vacancy.profile_photo_url }}" alt="{{ vacancy.company_name }}" class="img-fluid rounded-3" width="55" height="55">
                                     {% else %}
-                                    <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="{{ vacancy.company_name }}" class="img-fluid rounded-3" width="55" height="55">
+                                    <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="{% if vacancy.anonium %}{{ vacancy.employer_sector }}{% else %}{{ vacancy.company_name }}{% endif %}" class="img-fluid rounded-3" width="55" height="55">
                                     {% endif %}
                                     <div class="mt-4">
+                                        {% if vacancy.anonium %}
+                                        <h6 class="fs-17 mb-1">{{ vacancy.employer_sector }}</h6>
+                                        {% else %}
                                         <h6 class="fs-17 mb-1">{{ vacancy.company_name }}</h6>
                                         <p class="text-muted">{% tr 'Registration Date' %}: {{ vacancy.employer.user.date_joined|humanize_time }}</p>
+                                        {% endif %}
                                     </div>
                                 </div>
+                                {% if not vacancy.anonium %}
                                 <ul class="list-unstyled mt-4">
                                     <li>
                                         <div class="d-flex">
@@ -357,6 +362,7 @@
                                 <div class="mt-4">
                                     <a href="{% url 'user:company' vacancy.employer_username %}" class="btn btn-primary btn-hover w-100 rounded"><i class="mdi mdi-eye"></i> {% tr 'View Profile' %}</a>
                                 </div>
+                                {% endif %}
                             </div>
                         </div>
 

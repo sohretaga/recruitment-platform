@@ -19,7 +19,8 @@ def get_vacancies_context(request, vacancies) -> dict:
     vacancies_list = list(vacancies_page.object_list.values(
         'id', 'employer_username', 'profile_photo_url', 'company_name',
         'slug', 'position_title', 'location_name', 'salary_minimum',
-        'salary_maximum', 'work_experience_name', 'keywords', 'user_id'
+        'salary_maximum', 'work_experience_name', 'keywords', 'user_id',
+        'anonium', 'employer_sector'
     ))
     bookmarks, applications = list(), list()
     keyword_list = list(models.ParameterKeyword.translation().values('id', 'name'))
