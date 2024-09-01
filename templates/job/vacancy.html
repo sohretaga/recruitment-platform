@@ -154,33 +154,41 @@
                                 </div>
                             </div><!--end Experience-->
 
-                            {% if vacancy.description %}
                             <div class="mt-4">
                                 <h5 class="mb-3">{% tr 'Job Description' %}</h5>
+                                {% if vacancy.description %}
                                 <div class="job-detail-desc text-muted">{{ vacancy.description|safe }}</div>
+                                {% else %}
+                                <div class="job-detail-desc text-muted">{% tr 'Job Description of the vacant position should be edited.' %}</div>
+                                {% endif %}
                             </div>
-                            {% endif %}
 
-                            {% if vacancy.responsibilities %}
                             <div class="mt-4">
                                 <h5 class="mb-3">{% tr 'Responsibilities' %}</h5>
+                                {% if vacancy.responsibilities %}
                                 <div class="job-detail-desc mt-2 text-muted">{{ vacancy.responsibilities|safe }}</div>
+                                {% else %}
+                                <div class="job-detail-desc mt-2 text-muted">{% tr 'Responsibilities of the vacant position should be edited.' %}</div>
+                                {% endif %}
                             </div>
-                            {% endif %}
                             
-                            {% if vacancy.qualification %}
                             <div class="mt-4">
                                 <h5 class="mb-3">{% tr 'Qualification' %} </h5>
+                                {% if vacancy.qualification %}
                                 <div class="job-detail-desc mt-2 text-muted">{{ vacancy.qualification|safe }}</div>
+                                {% else %}
+                                <div class="job-detail-desc mt-2 text-muted">{% tr 'Qualification of the vacant position should be edited.' %}</div>
+                                {% endif %}
                             </div>
-                            {% endif %}
 
-                            {% if vacancy.skill_experience %}
                             <div class="mt-4">
                                 <h5 class="mb-3">{% tr 'Skill & Experience' %}</h5>
+                                {% if vacancy.skill_experience %}
                                 <div class="job-details-desc text-muted">{{ vacancy.skill_experience|safe }}</div>
+                                {% else %}
+                                <div class="job-details-desc text-muted">{% tr 'Skill & Experience of the vacant position should be edited.' %}</div>
+                                {% endif %}
                             </div>
-                            {% endif %}
 
                             <div class="mt-4">
                                 <span class="badge bg-primary">PHP</span>
