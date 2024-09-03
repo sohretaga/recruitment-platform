@@ -77,7 +77,9 @@
                                 <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="{{ candidate.user.first_name }}" class="avatar-lg rounded-circle">
                                 {% endif %}
                                 <h6 class="fs-18 mb-0 mt-4">{{ candidate.user.get_full_name }}</h6>
+                                {% if occupation %}
                                 <p class="text-muted mb-4">{{ occupation }}</p>
+                                {% endif %}
                                 <ul class="list-inline d-flex justify-content-center align-items-center ">
                                     <li class="list-inline-item text-warning fs-19">
                                         <i class="mdi mdi-star"></i>
