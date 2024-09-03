@@ -23,7 +23,7 @@ from recruitment_cp.models import (
     ParameterOrganizationType,
     ParameterOrganizationOwnership,
     ParameterNumberOfEmployee,
-    ParameterKeyword
+    ParameterKeyword,
 )
 
 import json
@@ -204,3 +204,28 @@ def ajax_delete_vacancy(request):
         vacancy.update(delete=True)
 
     return JsonResponse({'status': 200})
+
+@is_employer
+@require_POST
+def ajax_fetch_definition(request):
+    requested_field = request.POST.get('requested_field')
+    job_title_id = request.POST.get('job_title_id')
+
+    try:
+        job_catalogue = ParameterJobCatalogue.objects.get(id=job_title_id)
+
+        match requested_field:
+            case 'description':
+                definition = job_catalogue.description
+            case 'responsibilities':
+                definition = job_catalogue.responsibilities
+            case 'qualification':
+                definition = job_catalogue.qualification
+            case 'skill_experience':
+                definition = job_catalogue.skill_experience
+            case _:
+                definition = ''
+    except ParameterJobCatalogue.DoesNotExist:
+        definition = ''
+
+    return JsonResponse({'definition': definition})

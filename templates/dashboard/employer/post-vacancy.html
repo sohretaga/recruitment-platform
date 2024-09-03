@@ -95,7 +95,7 @@
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label>{% tr 'Job Title - DASHBOARD / POST VACANCY' %}</label>
-                                                    <select class="custom-select select2" name="job_title">
+                                                    <select class="custom-select select2" id="job-title" name="job_title">
                                                         {% for catalogue in job_catalogues %}
                                                             {% if catalogue.id == vacancy.job_title.id %}
                                                                 <option value="{{ catalogue.id }}" selected>{{ catalogue.name }}</option>
@@ -293,45 +293,45 @@
                                                             <div class="mb-3">
                                                                 <div class="d-flex justify-content-between align-items-center">
                                                                     <h5>{% tr 'Job Description - DASHBOARD / POST VACANCY' %}</h5>
-                                                                    <button type="button" class="btn btn-primary btn-sm waves-effect waves-light mb-2" data-toggle="tooltip"
+                                                                    <button type="button" class="btn btn-primary btn-sm waves-effect waves-light mb-2" data-toggle="tooltip" onclick="fetchDefinition('description')"
                                                                         data-placement="left" title="{% tr 'Load job description from job title - DASHBOARD / POST VACANCY' %}">
                                                                         {% tr 'Load - DASHBOARD / POST VACANCY' %} <i class="ri-file-copy-2-line align-middle ml-2"></i> 
                                                                     </button>
                                                                 </div>
-                                                                <textarea id="description-editor" name="description">{% if vacancy.description %}{{ vacancy.description }}{% endif %}</textarea>
+                                                                <textarea id="description" name="description">{% if vacancy.description %}{{ vacancy.description }}{% endif %}</textarea>
                                                             </div>
 
                                                             <div class="mb-3">
                                                                 <div class="d-flex justify-content-between align-items-center">
                                                                     <h5 class="mt-3">{% tr 'Responsibilities - DASHBOARD / POST VACANCY' %}</h5>
-                                                                    <button type="button" class="btn btn-primary btn-sm waves-effect waves-light mb-2" data-toggle="tooltip"
+                                                                    <button type="button" class="btn btn-primary btn-sm waves-effect waves-light mb-2" data-toggle="tooltip" onclick="fetchDefinition('responsibilities')"
                                                                         data-placement="left" title="{% tr 'Load responsibilities from job title - DASHBOARD / POST VACANCY' %}">
                                                                         {% tr 'Load - DASHBOARD / POST VACANCY' %} <i class="ri-file-copy-2-line align-middle ml-2"></i> 
                                                                     </button>
                                                                 </div>
-                                                                <textarea id="responsibilities-editor" name="responsibilities">{% if vacancy.responsibilities %}{{ vacancy.responsibilities }}{% endif %}</textarea>    
+                                                                <textarea id="responsibilities" name="responsibilities">{% if vacancy.responsibilities %}{{ vacancy.responsibilities }}{% endif %}</textarea>    
                                                             </div>
 
                                                             <div class="mb-3">
                                                                 <div class="d-flex justify-content-between align-items-center">
                                                                     <h5 class="mt-3">{% tr 'Qualification - DASHBOARD / POST VACANCY' %}</h5>
-                                                                    <button type="button" class="btn btn-primary btn-sm waves-effect waves-light mb-2" data-toggle="tooltip"
+                                                                    <button type="button" class="btn btn-primary btn-sm waves-effect waves-light mb-2" data-toggle="tooltip" onclick="fetchDefinition('qualification')"
                                                                         data-placement="left" title="{% tr 'Load qualification from job title - DASHBOARD / POST VACANCY' %}">
                                                                         {% tr 'Load - DASHBOARD / POST VACANCY' %} <i class="ri-file-copy-2-line align-middle ml-2"></i> 
                                                                     </button>
                                                                 </div>
-                                                                <textarea id="qualification-editor" name="qualification">{% if vacancy.qualification %}{{ vacancy.qualification }}{% endif %}</textarea>    
+                                                                <textarea id="qualification" name="qualification">{% if vacancy.qualification %}{{ vacancy.qualification }}{% endif %}</textarea>    
                                                             </div>
 
                                                             <div class="mb-0">
                                                                 <div class="d-flex justify-content-between align-items-center">
                                                                     <h5 class="mt-3">{% tr 'Skill & Experience - DASHBOARD / POST VACANCY' %}</h5>
-                                                                    <button type="button" class="btn btn-primary btn-sm waves-effect waves-light mb-2" data-toggle="tooltip"
+                                                                    <button type="button" class="btn btn-primary btn-sm waves-effect waves-light mb-2" data-toggle="tooltip" onclick="fetchDefinition('skill_experience')"
                                                                         data-placement="left" title="{% tr 'Load skill & experience from job title - DASHBOARD / POST VACANCY' %}">
                                                                         {% tr 'Load - DASHBOARD / POST VACANCY' %} <i class="ri-file-copy-2-line align-middle ml-2"></i> 
                                                                     </button>
                                                                 </div>
-                                                                <textarea id="skill-experience-editor" name="skill_experience">{% if vacancy.skill_experience %}{{ vacancy.skill_experience }}{% endif %}</textarea>
+                                                                <textarea id="skill_experience" name="skill_experience">{% if vacancy.skill_experience %}{{ vacancy.skill_experience }}{% endif %}</textarea>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -419,11 +419,21 @@
             Font
         } from 'ckeditor5';
 
-        const editorIdList = ['description-editor', 'responsibilities-editor', 'qualification-editor', 'skill-experience-editor'];
+        var descriptionEditor;
+        var responsibilitiesEditor;
+        var qualificationEditor;
+        var skillExperienceEditor;
 
-        const initializeEditor = async (id) => {
+        const editorIdList = {
+            description: descriptionEditor,
+            responsibilities: responsibilitiesEditor,
+            qualification: qualificationEditor,
+            skill_experience: skillExperienceEditor
+        }
+
+        const initializeEditor = async (id, editorVar) => {
             try {
-                const editor = await ClassicEditor.create(document.querySelector(`#${id}`), {
+                editorVar = await ClassicEditor.create(document.querySelector(`#${id}`), {
                     plugins: [Essentials, Paragraph, Bold, Italic, Font],
                     toolbar: [
                         'undo', 'redo', '|', 'bold', 'italic', '|',
@@ -431,19 +441,21 @@
                     ]
                 });
 
-                editor.editing.view.change(writer => {
-                    writer.setStyle('height', '200px', editor.editing.view.document.getRoot());
+                editorVar.editing.view.change(writer => {
+                    writer.setStyle('height', '200px', editorVar.editing.view.document.getRoot());
                 });
 
-                window.editor = editor;
+                window[id + 'Editor'] = editorVar;
             } catch (error) {
                 console.error(error);
             }
         };
 
-        editorIdList.forEach(id => {
-            initializeEditor(id);
-        });
+        for (let id in editorIdList) {
+            if (editorIdList.hasOwnProperty(id)) {
+                initializeEditor(id, editorIdList[id]);
+            }
+        }
 
     </script>
 
