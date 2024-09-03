@@ -642,7 +642,9 @@ def company_save(request):
 
             while index < len(hot):
                 pk = hot[index].pop('id', None)
-                params = {}
+                params = {
+                    "slider": hot[index].get('slider')
+                }
 
                 try:
                     params['sector'] = cp_models.ParameterSector.objects.get(name_en=hot[index]['sector__name_en'])
