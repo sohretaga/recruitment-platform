@@ -493,7 +493,7 @@
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label for="occupation" class="form-label">{% tr 'Your Occupation' %}</label>
-                                                            <option value="" selected>{% tr 'Your Occupation' %}</option>
+                                                        <select class="form-select" data-trigger name="occupation" id="occupation" required>
                                                             {% for job_title in job_catalogue %}
                                                             {% if job_title.id == user.candidate.occupation.id %}
                                                             <option value="{{ job_title.id }}" selected>{{ job_title.name }}</option>
