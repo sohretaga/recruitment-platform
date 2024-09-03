@@ -43,7 +43,7 @@
                         </div>
                     </div>
                 </div>
-                <!--end col-->
+                
             </div>
             <!--end row-->
         </div>
@@ -77,7 +77,7 @@
                                 <img src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="{{ candidate.user.first_name }}" class="avatar-lg rounded-circle">
                                 {% endif %}
                                 <h6 class="fs-18 mb-0 mt-4">{{ candidate.user.get_full_name }}</h6>
-                                <p class="text-muted mb-4">Creative Designer</p>
+                                <p class="text-muted mb-4">{{ occupation }}</p>
                                 <ul class="list-inline d-flex justify-content-center align-items-center ">
                                     <li class="list-inline-item text-warning fs-19">
                                         <i class="mdi mdi-star"></i>
@@ -246,7 +246,7 @@
                             </ul>
                         </div><!--end candidate-overview-->
                     </div><!--end card-->
-                </div><!--end col-->
+                </div>
                 
                 <div class="col-lg-8">
                     <div class="card profile-content-page mt-4 mt-lg-0">
@@ -410,25 +410,25 @@
                                                     <label for="inputname" class="form-label">{% tr 'Your Name' %}</label>
                                                     <input type="text" class="form-control" id="inputname" placeholder="{% tr 'Enter your name' %}">
                                                 </div>
-                                            </div><!--end col-->
+                                            </div>
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
                                                     <label for="inputemail" class="form-label">{% tr 'Email' %}</label>
                                                     <input type="email" class="form-control" id="inputemail" placeholder="{% tr 'Enter your email' %}">
                                                 </div>
-                                            </div><!--end col-->
+                                            </div>
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
                                                     <label for="inputsubject" class="form-label">{% tr 'Subject' %}</label>
                                                     <input type="text" class="form-control" id="inputsubject" placeholder="{% tr 'Subject' %}">
                                                 </div>
-                                            </div><!--end col-->
+                                            </div>
                                             <div class="col-lg-12">
                                                 <div class="mb-3">
                                                     <label for="inputcoment" class="form-label">{% tr 'Review' %}</label>
                                                     <textarea class="form-control" id="inputcoment" rows="3" placeholder="{% tr 'Add your review' %}"></textarea>
                                                 </div>
-                                            </div><!--end col-->
+                                            </div>
                                         </div><!--end row-->
                                         <div class="text-end">
                                             <button type="submit" class="btn btn-primary btn-hover">{% tr 'Submit Review' %} <i class="uil uil-angle-right-b"></i></button>
@@ -467,14 +467,14 @@
                                                         <input type="text" name="first_name" class="form-control" id="first-name" value="{{ candidate.user.first_name }}" required/>
                                                     </div>
                                                 </div>
-                                                <!--end col-->
+                                                
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label for="last-name" class="form-label">{% tr 'Last Name' %}</label>
                                                         <input type="text" name="last_name" class="form-control" id="last-name" value="{{ candidate.user.last_name }}" required/>
                                                     </div>
                                                 </div>
-                                                <!--end col-->
+                                                
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label for="citizenship" class="form-label">{% tr 'Citizenship' %}</label>
@@ -489,7 +489,22 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <!--end col-->
+
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label for="occupation" class="form-label">{% tr 'Your Occupation' %}</label>
+                                                            <option value="" selected>{% tr 'Your Occupation' %}</option>
+                                                            {% for job_title in job_catalogue %}
+                                                            {% if job_title.id == user.candidate.occupation.id %}
+                                                            <option value="{{ job_title.id }}" selected>{{ job_title.name }}</option>
+                                                            {% else %}
+                                                            <option value="{{ job_title.id }}">{{ job_title.name }}</option>
+                                                            {% endif %}
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label for="gender" class="form-label">{% tr 'Gender' %}</label>
@@ -499,21 +514,21 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <!--end col-->
+                                                
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label for="email" class="form-label">{% tr 'Email' %}</label>
                                                         <input type="email" name="email" class="form-control" id="email" value="{{ candidate.user.email }}" required/>
                                                     </div>
                                                 </div>
-                                                <!--end col-->
+                                                
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label for="phone-number" class="form-label">{% tr 'Phone Number' %}</label>
                                                         <input type="tel" name="phone_number" class="form-control" id="phone-number" value="{% if candidate.user.phone_number %}{{ candidate.user.phone_number }}{% endif %}" required/>
                                                     </div>
                                                 </div>
-                                                <!--end col-->
+                                                
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label for="birthday" class="form-label">{% tr 'Birthday' %}</label>
@@ -521,14 +536,14 @@
                                                             name="birthday" placeholder="{% tr 'Your Birthday' %}" value="{% if user.candidate.birthday %}{{ user.candidate.birthday|date:'d M, Y' }}{% endif %}" required>
                                                     </div>
                                                 </div>
-                                                <!--end col-->
+                                                
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label for="id-card-number" class="form-label">{% tr 'ID Card Number' %}</label>
                                                         <input type="text" name="id_card_number" class="form-control" id="id-card-number" value="{{ candidate.id_card_number}}" required/>
                                                     </div>
                                                 </div>
-                                                <!--end col-->
+                                                
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <input type="hidden" id="langauge-values" name="languages"
@@ -547,7 +562,7 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <!--end col-->
+                                                
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label for="attachmentscv" class="form-label">{% tr 'Attachments CV' %}</label>
@@ -555,14 +570,14 @@
                                                             value="{% if candidate.cv %}{{ candidate.cv }}{% endif %}"/>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-12">
+                                                <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label for="address" class="form-label">{% tr 'Address' %}</label>
                                                         <input class="form-control" type="text" placeholder="{% tr 'Write your address' %}" name="address" id="address" 
                                                             value="{% if candidate.user.address %}{{ candidate.user.address }}{% endif %}"/>
                                                     </div>
                                                 </div>
-                                                <!--end col-->
+                                                
                                                 <div class="col-lg-12">
                                                     <div class="mb-3">
                                                         <label for="about" class="form-label">{% tr 'About Me' %}</label>
@@ -570,7 +585,7 @@
                                                             rows="5">{% if candidate.user.about %}{{ candidate.user.about }}{% endif %}</textarea>
                                                     </div>
                                                 </div>
-                                                <!--end col-->
+                                                
                                             </div>
                                             <!--end row-->
                                         </div>
@@ -586,7 +601,7 @@
                                                             value="{% if candidate.linkedin_url %}{{ candidate.linkedin_url }}{% endif %}" />
                                                     </div>
                                                 </div>
-                                                <!--end col-->
+                                                
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label for="whatsapp" class="form-label">WhatsApp</label>
@@ -594,7 +609,7 @@
                                                             value="{% if candidate.whatsapp %}{{ candidate.whatsapp }}{% endif %}" />
                                                     </div>
                                                 </div>
-                                                <!--end col-->
+                                                
                                             </div>
                                             <!--end row-->
                                         </div>
@@ -610,7 +625,7 @@
                                                             id="current-password-input" />
                                                     </div>
                                                 </div>
-                                                <!--end col-->
+                                                
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label for="new-password-input" class="form-label">{% tr 'New Password' %}</label>
@@ -619,7 +634,7 @@
                                                             id="new-password-input" />
                                                     </div>
                                                 </div>
-                                                <!--end col-->
+                                                
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label for="confirm-password-input" class="form-label">{% tr 'Confirm Password' %}</label>
@@ -628,7 +643,7 @@
                                                             id="confirm-password-input" />
                                                     </div>
                                                 </div>
-                                                <!--end col-->
+                                                
                                                 <div class="col-lg-12">
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="checkbox" value=""
@@ -638,7 +653,7 @@
                                                         </label>
                                                     </div>
                                                 </div>
-                                                <!--end col-->
+                                                
                                             </div>
                                             <!--end row-->
                                         </div>
@@ -924,7 +939,7 @@
                                                 <input type="text" class="form-control" id="preference-minimum-salary" value="{% if candidate.preference.min_salary %}{{ candidate.preference.min_salary }}{% endif %}" required/>
                                             </div>
                                         </div>
-                                        <!--end col-->
+                                        
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="maximum-salary" class="form-label">{% tr 'Maximum Salary' %}</label>
@@ -942,7 +957,7 @@
                             </div><!--end card-body-->
                         </div><!--end card-->
                     </div>
-                </div><!--end col-->
+                </div>
             </div><!--end row-->
         </div><!--end container-->
     </section>

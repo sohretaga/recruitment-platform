@@ -33,7 +33,8 @@ from recruitment_cp.models import(
         ParameterEducationLevel,
         ParameterCareerType,
         ParameterLocation,
-        ParameterEmployeeType
+        ParameterEmployeeType,
+        ParameterJobCatalogue
     )
 
 import os
@@ -236,6 +237,7 @@ def candidate_details(request, username):
         form = ManageCandidateAccountForm(request.POST, request.FILES, instance=user.candidate)
 
         if form.is_valid():
+            print('inn valid')
             email = form.cleaned_data.get('email')
             profile_photo = form.cleaned_data.get('profile_photo')
             phone_number = form.cleaned_data.get('phone_number')
@@ -279,6 +281,7 @@ def candidate_details(request, username):
         career_types = ParameterCareerType.translation().values('id', 'name')
         locations = ParameterLocation.translation().values('id', 'name')
         types_of_employment = ParameterEmployeeType.translation().values('id', 'name')
+        job_catalogue = ParameterJobCatalogue.translation().values('id', 'name')
 
         try:
             min_salary = user.candidate.preference.min_salary
@@ -306,14 +309,16 @@ def candidate_details(request, username):
             'career_types': career_types,
             'locations': locations,
             'types_of_employment': types_of_employment,
+            'job_catalogue': job_catalogue,
             'preference': preference
         }
     
-
+    occupation = Candidate.translation().get(id=candidate.id).occupation_name
     context = {
         'candidate': candidate,
         'educations': user.candidate.educations.all(),
         'experiences': user.candidate.experiences.all(),
+        'occupation': occupation,
         **logged_user_context
     }
 

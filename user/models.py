@@ -17,7 +17,8 @@ from recruitment_cp.models import (
     ParameterEducationLevel,
     ParameterCareerType,
     ParameterLocation,
-    ParameterEmployeeType
+    ParameterEmployeeType,
+    ParameterJobCatalogue
 )
 from .utils import calculate_recent_duration
 
@@ -95,6 +96,7 @@ class Candidate(models.Model):
     cv = models.FileField(upload_to='cvs/', blank=True, null=True)
     views = models.PositiveIntegerField(default=0)
     citizenship = models.ForeignKey(ParameterCountry, on_delete=models.SET_NULL, null=True)
+    occupation = models.ForeignKey(ParameterJobCatalogue, on_delete=models.SET_NULL, null=True)
 
     def __str__(self) -> str:
         return self.user.get_full_name()
@@ -151,7 +153,8 @@ class Candidate(models.Model):
             education_level_name=Subquery(
                 education_level_case,
                 output_field=CharField(),
-            )
+            ),
+            occupation_name=F(f'occupation__name_{language}')
         )
 
         return candidates
