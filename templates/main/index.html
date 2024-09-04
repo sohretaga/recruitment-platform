@@ -96,7 +96,7 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <!-- Swiper -->
-                    <div class="swiper mySwiper">
+                    <div class="swiper featured-swiper">
                         <h4 class="title">{% tr 'FEATURED VACANCIES' %}</h4>
                         <div class="swiper-wrapper">
                             {% for featured in featured_slider %}
@@ -258,16 +258,20 @@
         {% if company_slider %}
         <div class="py-4">
             <div class="container">
-                <div class="row">
-                    {% for slider in company_slider %}
-                        <div class="col-lg-2">
-                            <div class="text-center p-3">
-                                <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ slider.user.first_name }}" data-bs-original-title="{{ slider.user.first_name }}">
-                                    <img src="{{ slider.user.profile_photo.url }}" alt="{{ slider.user.first_name }}" class="company-slider">
-                                </a>
-                            </div>
+                <div class="row d-flex">
+                    <div class="swiper company-swiper">
+                        <div class="swiper-wrapper">
+                            {% for slider in company_slider %}
+                                <div class="swiper-slide">
+                                    <div class="text-center p-3">
+                                        <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ slider.user.first_name }}" data-bs-original-title="{{ slider.user.first_name }}">
+                                            <img src="{{ slider.user.profile_photo.url }}" alt="{{ slider.user.first_name }}" class="company-slider">
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endfor %}
                         </div>
-                    {% endfor %}
+                    </div>
                 </div>
                 <!--end row-->
             </div>
