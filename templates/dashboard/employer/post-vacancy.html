@@ -418,46 +418,39 @@
             Italic,
             Font
         } from 'ckeditor5';
-
-        var descriptionEditor;
-        var responsibilitiesEditor;
-        var qualificationEditor;
-        var skillExperienceEditor;
-
-        const editorIdList = {
-            description: descriptionEditor,
-            responsibilities: responsibilitiesEditor,
-            qualification: qualificationEditor,
-            skill_experience: skillExperienceEditor
-        }
-
-        const initializeEditor = async (id, editorVar) => {
+    
+        const initializeEditor = async (id) => {
             try {
-                editorVar = await ClassicEditor.create(document.querySelector(`#${id}`), {
+                const editor = await ClassicEditor.create(document.querySelector(`#${id}`), {
                     plugins: [Essentials, Paragraph, Bold, Italic, Font],
                     toolbar: [
                         'undo', 'redo', '|', 'bold', 'italic', '|',
                         'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
                     ]
                 });
-
-                editorVar.editing.view.change(writer => {
-                    writer.setStyle('height', '200px', editorVar.editing.view.document.getRoot());
+    
+                editor.editing.view.change(writer => {
+                    writer.setStyle('height', '200px', editor.editing.view.document.getRoot());
                 });
-
-                window[id + 'Editor'] = editorVar;
+    
+                window[id] = editor;
             } catch (error) {
                 console.error(error);
             }
         };
-
-        for (let id in editorIdList) {
-            if (editorIdList.hasOwnProperty(id)) {
-                initializeEditor(id, editorIdList[id]);
-            }
-        }
-
+    
+        const editorIds = ['description', 'responsibilities', 'qualification', 'skill_experience'];
+    
+        const editorPromises = editorIds.map(id => initializeEditor(id));
+    
+        Promise.all(editorPromises)
+            .then(() => {
+                autoFetchDefinition();
+            })
+            .catch(error => {
+                console.error('Error initializing editors:', error);
+            });
+    
     </script>
-
 
 {% endblock script %}

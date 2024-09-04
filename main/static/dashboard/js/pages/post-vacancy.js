@@ -47,6 +47,7 @@ $.ajaxSetup({
     selectedJobTitleId = $('#job-title').val();
     $('#job-title').on('select2:select', function(e) {
         selectedJobTitleId = $(this).val();
+        autoFetchDefinition();
     });
 })(window.jQuery);
 
@@ -90,8 +91,50 @@ const fetchDefinition = (requestedField) => {
             },
             success: (response) => {
                 const definition = response.definition;
-                const editor = window[requestedField+'Editor']
+                const editor = window[requestedField]
                 editor.setData(definition);
+            }
+        })
+    }
+};
+
+const autoFetchDefinition = () => {
+    if (selectedJobTitleId) {
+        $.ajax({
+            url: '/dashboard/ajax/auto-fetch-definition',
+            type: 'POST',
+            data: {
+                job_title_id: selectedJobTitleId
+            },
+            success: (response) => {
+                let descriptionData = response.description;
+                let responsibilitiesData = response.responsibilities
+                let qualificationData = response.qualification;
+                let skillExperienceData = response.skill_experience;
+
+                if (descriptionData) {
+                    description.setData(descriptionData);
+                }else {
+                    description.setData('');
+                }
+
+                if (responsibilitiesData) {
+                    responsibilities.setData(responsibilitiesData);
+                }else {
+                    responsibilities.setData('');
+                }
+
+                if (qualificationData) {
+                    qualification.setData(qualificationData);
+                }else {
+                    qualification.setData('');
+                }
+
+                if (skillExperienceData) {
+                    skill_experience.setData(skillExperienceData);
+                }else {
+                    skill_experience.setData('');
+                }
             }
         })
     }

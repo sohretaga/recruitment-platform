@@ -23,6 +23,7 @@ urlpatterns = [
     path('ajax/vacancies', employer.ajax_all_vacancy, name='ajax-all-vacancy'),
     path('ajax/delete-vacancy', employer.ajax_delete_vacancy, name='ajax-delete-vacancy'),
     path('ajax/fetch-definition', employer.ajax_fetch_definition, name='ajax-fetch-definition'),
+    path('ajax/auto-fetch-definition', employer.ajax_auto_fetch_definition, name='auto-ajax-fetch-definition'),
 
     # Candidate URL's
     path('candidate/complete-register', candidate.manage_account, name='candidate-complete-register'),

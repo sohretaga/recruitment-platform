@@ -229,3 +229,26 @@ def ajax_fetch_definition(request):
         definition = ''
 
     return JsonResponse({'definition': definition})
+
+def ajax_auto_fetch_definition(request):
+    job_title_id = request.POST.get('job_title_id')
+
+    try:
+        job_catalogue = ParameterJobCatalogue.objects.get(id=job_title_id)
+
+        description = job_catalogue.description
+        responsibilities = job_catalogue.responsibilities
+        qualification = job_catalogue.qualification
+        skill_experience = job_catalogue.skill_experience
+
+        context = {
+            'description': description,
+            'responsibilities': responsibilities,
+            'qualification': qualification,
+            'skill_experience': skill_experience
+        }
+
+    except ParameterJobCatalogue.DoesNotExist:
+        context = {}
+
+    return JsonResponse(context)
