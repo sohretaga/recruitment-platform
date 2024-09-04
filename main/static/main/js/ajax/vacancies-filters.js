@@ -178,13 +178,13 @@ const generatePagination = (paginationInfo) => {
 
 };
 
-const listVacancies = (texts, vacanciesInfo, bookmarks, applications, keywords) => {
+const listVacancies = (texts, vacanciesInfo, keywords) => {
     const container = document.getElementById('job-list-container');
     container.innerHTML = ''; // Clear existing content
 
     for (const [key, vacancy] of Object.entries(vacanciesInfo)) {
         container.insertAdjacentHTML('beforeend' ,`
-        <div id="vacancy-${vacancy.id}" class="job-box card mt-5 ${bookmarks.includes(vacancy.id) ? 'bookmark-post':''}">
+        <div id="vacancy-${vacancy.id}" class="job-box card mt-5 ${vacancy.is_bookmarked ? 'bookmark-post':''}">
             <div class="p-4">
                 <div class="row">
                     <div class="col-lg-1 company-logo">
@@ -242,7 +242,7 @@ const listVacancies = (texts, vacanciesInfo, bookmarks, applications, keywords) 
                             let applyId = `apply-now-${vacancy.id}`;
                             let applyText = texts.apply_now;
 
-                            if (applications.includes(vacancy.id)) {
+                            if (vacancy.is_applied) {
                                 applyId = `delete-apply-${vacancy.id}`;
                                 applyText = texts.delete_application;
                             };
@@ -281,8 +281,6 @@ const filterRequest = () => {
                     delete_application: response.delete_application_text
                 },
                 response.vacancies,
-                response.bookmarks,
-                response.applications,
                 response.keywords
             );
         }
@@ -449,9 +447,12 @@ searchInput.addEventListener('input', function() {
             );
 
             listVacancies(
+                {
+                    keywords: response.keywords_text,
+                    apply_now: response.apply_now_text,
+                    delete_application: response.delete_application_text
+                },
                 response.vacancies,
-                response.bookmarks,
-                response.applications,
                 response.keywords
             );
         }

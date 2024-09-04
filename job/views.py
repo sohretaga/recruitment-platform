@@ -299,9 +299,6 @@ def ajax_filter_vacancies(request):
             params.update({'job_title_name': trending})
 
         context = get_vacancies_context(request, Vacancy.translation_for_filter().filter(**params))
-        context['keywords_text'] = tr('Keywords')
-        context['apply_now_text'] = tr('Apply Now')
-        context['delete_application_text'] = tr('Delete Application')
 
         return JsonResponse(context, safe=False)
 

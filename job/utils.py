@@ -1,36 +1,53 @@
 from django.core.paginator import Paginator
 from django.utils import timezone
-from django.db.models import F, Count, When, Case, Value, CharField
+from django.db.models import F, Count, When, Case, Value, CharField, BooleanField, Exists, OuterRef
 from django.db.models.functions import Concat
 from django.conf import settings
 from datetime import timedelta
 
 from recruitment_cp import models
 from job.models import Vacancy
+from language.utils import tr
 
 
 def get_vacancies_context(request, vacancies) -> dict:
+
     # Set up Paginator
     paginator = Paginator(vacancy_with_related_info(vacancies), 10)
     current_page_number = request.POST.get('page', 1)
     vacancies_page = paginator.get_page(current_page_number)
 
     # Serialize the data
-    vacancies_list = list(vacancies_page.object_list.values(
+    bookmarked_vacancies = request.user.bookmarks.filter(
+        vacancy=OuterRef('pk')
+    )
+
+    applied_vacancies = request.user.candidate.applications.filter(
+        vacancy=OuterRef('pk')
+    )
+
+    vacancies = vacancies_page.object_list.annotate(
+        is_bookmarked=Case(
+            When(Exists(bookmarked_vacancies), then=Value(True)),
+            default=Value(False),
+            output_field=BooleanField()
+        ),
+
+        is_applied=Case(
+            When(Exists(applied_vacancies), then=Value(True)),
+            default=Value(False),
+            output_field=BooleanField()
+        )
+    ).values(
         'id', 'employer_username', 'profile_photo_url', 'company_name',
         'slug', 'position_title', 'location_name', 'salary_minimum',
         'salary_maximum', 'work_experience_name', 'keywords', 'user_id',
-        'anonium', 'employer_sector'
-    ))
-    bookmarks, applications = list(), list()
+        'anonium', 'employer_sector', 'is_bookmarked', 'is_applied'
+    )
+
+    vacancies_list = list(vacancies)
     keyword_list = list(models.ParameterKeyword.translation().values('id', 'name'))
     keywords = {item['id']: item['name'] for item in keyword_list}
-
-    if request.user.is_authenticated:
-        bookmarks = list(request.user.bookmarks.values_list('vacancy__id', flat=True))
-
-    if request.user.is_authenticated and request.user.user_type == 'candidate':
-        applications = list(request.user.candidate.applications.values_list('vacancy__id', flat=True))
 
     pagination_info = {
         'has_next': vacancies_page.has_next(),
@@ -42,10 +59,12 @@ def get_vacancies_context(request, vacancies) -> dict:
     context = {
         'vacancies': vacancies_list,
         'pagination': pagination_info,
-        'bookmarks': bookmarks,
-        'applications': applications,
         'keywords': keywords
     }
+
+    context['keywords_text'] = tr('Keywords')
+    context['apply_now_text'] = tr('Apply Now')
+    context['delete_application_text'] = tr('Delete Application')
 
     return context
 
