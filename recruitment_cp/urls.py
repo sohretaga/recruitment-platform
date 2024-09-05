@@ -98,6 +98,10 @@ urlpatterns = [
     path('parameters/competence-load', parameters.competence_load, name='competence_load'),
     path('parameters/competence-save', parameters.competence_save, name='competence_save'),
 
+    path('parameters/comp-grouping', parameters.competence_grouping_index, name='competence_grouping'),
+    path('parameters/comp-grouping-load', parameters.competence_grouping_load, name='competence_grouping_load'),
+    path('parameters/comp-grouping-save', parameters.competence_grouping_save, name='competence_grouping_save'),
+
     path('parameters/job-family', parameters.job_family_index, name='job_family'),
     path('parameters/job-family-load', parameters.job_family_load, name='job_family_load'),
     path('parameters/job-family-save', parameters.job_family_save, name='job_family_save'),

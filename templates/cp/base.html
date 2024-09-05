@@ -82,6 +82,7 @@
                     <li {% if 'keywords' in request.path %} class="active" {% endif %}><a href="{% url 'cp:keywords' %}">Keywords</a></li>
                     <li {% if 'faq-categories' in request.path %} class="active" {% endif %}><a href="{% url 'cp:faq_categories' %}">FAQ Categories</a></li>
                     <li {% if 'competence' in request.path %} class="active" {% endif %}><a href="{% url 'cp:competence' %}">Competencies</a></li>
+                    <li {% if 'comp-grouping' in request.path %} class="active" {% endif %}><a href="{% url 'cp:competence_grouping' %}">Comp Grouping</a></li>
                     <li {% if 'job-family' in request.path %} class="active" {% endif %}><a href="{% url 'cp:job_family' %}">Job Family</a></li>
                     <li {% if 'date-posted' in request.path %} class="active" {% endif %}><a href="{% url 'cp:date_posted' %}">Date Posted</a></li>
                     <li {% if 'age-group' in request.path %} class="active" {% endif %}><a href="{% url 'cp:age_group' %}">Age Group</a></li>

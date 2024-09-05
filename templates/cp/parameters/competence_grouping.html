@@ -2,7 +2,7 @@
 {% load static %}
 {% load filters %}
 
-{% block title %}Competencies - Control Panel{% endblock %}
+{% block title %}Competence Grouping - Control Panel{% endblock %}
 
 {% block stylesheets %}
 <link rel="stylesheet" href="{% static 'cp/css/tables.css' %}">
@@ -34,7 +34,7 @@
         </div>
     </div>
 
-    <div class="caption" id="caption">Competencies</div>
+    <div class="caption" id="caption">Competence Grouping</div>
     <div id="table"></div>
 </div>
 {% endblock content %}
@@ -43,18 +43,11 @@
 <script src="{% static 'cp/js/command.js' %}"></script>
 <script src="{% static 'cp/js/processes.js' %}"></script>
 <script>
-    var hot;
-    const saveUrl = "{% url 'cp:competence_save' %}";
-    const loadUrl = "{% url 'cp:competence_load' %}";
+    const saveUrl = "{% url 'cp:competence_grouping_save' %}";
+    const loadUrl = "{% url 'cp:competence_grouping_load' %}";
     const bmtTable = document.getElementById('table');
-    const consoleText = 'Competencies';
-    const modelColumnMap = {
-        'grouping':[2]
-
-        /* We specify the names of the models from which data will be retrieved for updating as keys,
-        and the IDs of the columns to be updated as values. This structure is used to clearly define
-        which column will be updated from which model. */
-    };
+    const consoleText = 'Competence Grouping';
+    var hot;
 
     $(document).ready(function() {
         hot = new Handsontable(bmtTable, {
@@ -86,29 +79,8 @@
                     className: 'htCenter htMiddle',
                 },
                 {
-                    title: 'Grouping',
-                    data: 'grouping_name',
-                    type: 'dropdown'
-                },
-                {
                     title: 'Name',
                     data: 'name'
-                },
-                {
-                    title: 'Behavioral',
-                    data: 'behavioral_competence'
-                },
-                {
-                    title: 'Functional',
-                    data: 'functional_competence'
-                },
-                {
-                    title: 'IT',
-                    data: 'it_competence'
-                },
-                {
-                    title: 'Language',
-                    data: 'language_competence'
                 },
                 {
                     title: 'Definition',

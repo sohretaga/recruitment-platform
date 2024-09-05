@@ -249,8 +249,30 @@ class ParameterKeyword(ParameterCommonFields):
 class ParameterFAQ(ParameterCommonFields):
     ...
 
-class ParameterCompetence(ParameterCommonFields):
+class ParameterCompetenceGrouping(ParameterCommonFields):
     ...
+
+class ParameterCompetence(ParameterCommonFields):
+    grouping = models.ForeignKey(ParameterCompetenceGrouping, on_delete=models.SET_NULL, null=True, blank=True)
+    behavioral_competence = models.CharField(max_length=150, null=True, blank=True)
+    functional_competence = models.CharField(max_length=150, null=True, blank=True)
+    it_competence = models.CharField(max_length=150, null=True, blank=True)
+    language_competence = models.CharField(max_length=150, null=True, blank=True)
+
+    @classmethod
+    def language_filter(cls, language_code):
+        objects = super().language_filter(language_code)
+
+        objects = objects.annotate(
+            grouping_name = Case(
+                When(**{f'grouping__name_{language_code}__isnull':False},
+                     then=F(f'grouping__name_{language_code}')),
+                     default=Value(''),
+                     output_field=CharField()
+            ),
+        )
+
+        return objects
 
 class ParameterJobFamily(ParameterCommonFields):
     ...

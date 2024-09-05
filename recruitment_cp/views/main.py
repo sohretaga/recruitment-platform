@@ -63,6 +63,9 @@ def load_source(request):
 
                 case 'job_family':
                     source = cp_models.ParameterJobFamily.language_filter(**params).values_list('name', flat=True)
+                
+                case 'grouping':
+                    source = cp_models.ParameterCompetenceGrouping.language_filter(**params).values_list('name', flat=True)
             
             source = json.dumps(list(source))
             return JsonResponse(source, safe=False)

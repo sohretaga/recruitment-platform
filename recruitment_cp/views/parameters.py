@@ -1165,6 +1165,59 @@ def faq_save(request):
         raise Http404
     
 #======================================================================================================
+def competence_grouping_index(request):
+    if request.user.is_superuser:
+        return render(request, 'cp/parameters/competence_grouping.html')
+    
+    raise Http404
+
+def competence_grouping_load(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            language = request.POST.get('language')
+            
+            competence_grouping = cp_models.ParameterCompetenceGrouping.language_filter(language).values(
+                'id', 'no', 'name', 'definition', 'note'
+            )
+            json_data = json.dumps(list(competence_grouping))
+
+            return JsonResponse(json_data, safe=False)
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+
+def competence_grouping_save(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            hot = json.loads(request.POST.get('hot'))
+            language = request.POST.get('language')
+            index = 0
+
+            while index < len(hot):
+                pk = hot[index].pop('id', None)
+                name = hot[index].get('name', None)
+
+                if name or language != 'en':
+                    if pk:
+                        competence_grouping = cp_models.ParameterCompetenceGrouping.objects.filter(pk=pk)
+                        competence_grouping.custom_update(language, **hot[index])
+                    else:
+                        competence_grouping = cp_models.ParameterCompetenceGrouping()
+                        competence_grouping.save(language, **hot[index])
+                else:
+                    competence_grouping = cp_models.ParameterCompetenceGrouping.objects.filter(pk = pk)
+                    competence_grouping.delete()
+                
+                index += 1
+
+            return JsonResponse({'status': 200})
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+    
+#======================================================================================================
 def competence_index(request):
     if request.user.is_superuser:
         return render(request, 'cp/parameters/competencies.html')
@@ -1177,7 +1230,8 @@ def competence_load(request):
             language = request.POST.get('language')
             
             competence = cp_models.ParameterCompetence.language_filter(language).values(
-                'id', 'no', 'name', 'definition', 'note'
+                'id', 'no', 'name', 'definition', 'note', 'grouping_name',
+                'behavioral_competence', 'functional_competence', 'it_competence', 'language_competence'
             )
             json_data = json.dumps(list(competence))
 
@@ -1198,12 +1252,28 @@ def competence_save(request):
                 pk = hot[index].pop('id', None)
                 name = hot[index].get('name', None)
 
+                grouping_name = hot[index].pop('grouping_name', None)
+                if grouping_name:
+                    try:
+                        grouping = cp_models.ParameterCompetenceGrouping.translation().get(name=grouping_name)
+                        hot[index]['grouping'] = grouping
+
+                    except cp_models.ParameterCompetenceGrouping.DoesNotExist: ...
+                
+                params = {
+                    'behavioral_competence': hot[index].get('behavioral_competence'),
+                    'functional_competence': hot[index].get('functional_competence'),
+                    'it_competence': hot[index].get('it_competence'),
+                    'language_competence': hot[index].get('language_competence')
+                }
+
                 if name or language != 'en':
                     if pk:
                         competence = cp_models.ParameterCompetence.objects.filter(pk=pk)
                         competence.custom_update(language, **hot[index])
+
                     else:
-                        competence = cp_models.ParameterCompetence()
+                        competence = cp_models.ParameterCompetence(**params)
                         competence.save(language, **hot[index])
                 else:
                     competence = cp_models.ParameterCompetence.objects.filter(pk = pk)
