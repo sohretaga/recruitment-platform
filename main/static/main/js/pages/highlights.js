@@ -15,6 +15,7 @@ var featuredSwiper = new Swiper(".featured-swiper", {
   var companySwiper = new Swiper(".company-swiper", {
     slidesPerView: 3,
     freeMode: true,
+    loop: true,
     autoplay: {
       delay: 2500,
       disableOnInteraction: false,
