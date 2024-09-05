@@ -113,27 +113,27 @@ const autoFetchDefinition = () => {
                 let skillExperienceData = response.skill_experience;
 
                 if (descriptionData) {
-                    description.setData(descriptionData);
-                }else {
-                    description.setData('');
+                    if (!description.getData()) {
+                        description.setData(descriptionData);
+                    }
                 }
 
                 if (responsibilitiesData) {
-                    responsibilities.setData(responsibilitiesData);
-                }else {
-                    responsibilities.setData('');
+                    if (!responsibilities.getData()) {
+                        responsibilities.setData(responsibilitiesData);
+                    }
                 }
 
                 if (qualificationData) {
-                    qualification.setData(qualificationData);
-                }else {
-                    qualification.setData('');
+                    if (!qualification.getData()) {
+                        qualification.setData(qualificationData);
+                    }
                 }
 
                 if (skillExperienceData) {
-                    skill_experience.setData(skillExperienceData);
-                }else {
-                    skill_experience.setData('');
+                    if (!skill_experience.getData()) {
+                        skill_experience.setData(skillExperienceData);
+                    }
                 }
             }
         })
