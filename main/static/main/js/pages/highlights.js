@@ -23,4 +23,5 @@ var featuredSwiper = new Swiper(".featured-swiper", {
       768: {
         slidesPerView: 3,
       },
+    }
   });
