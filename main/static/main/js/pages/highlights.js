@@ -19,4 +19,8 @@ var featuredSwiper = new Swiper(".featured-swiper", {
       delay: 2500,
       disableOnInteraction: false,
     },
+    breakpoints: {
+      768: {
+        slidesPerView: 3,
+      },
   });
