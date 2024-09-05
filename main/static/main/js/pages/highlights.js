@@ -13,7 +13,7 @@ var featuredSwiper = new Swiper(".featured-swiper", {
   });
 
   var companySwiper = new Swiper(".company-swiper", {
-    slidesPerView: 5,
+    slidesPerView: 3,
     freeMode: true,
     autoplay: {
       delay: 2500,
@@ -21,7 +21,7 @@ var featuredSwiper = new Swiper(".featured-swiper", {
     },
     breakpoints: {
       768: {
-        slidesPerView: 3,
+        slidesPerView: 5,
       },
     }
   });
