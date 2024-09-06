@@ -19,7 +19,6 @@ urlpatterns = [
     path('employer/vacnacy/post', employer.post_vacancy, name='post-vacancy'),
     path('employer/vacancy/all', employer.all_vacancy, name='all-vacancy'),
     path('employer/vacancy/edit/<int:id>', employer.edit_vacancy, name='edit-vacancy'),
-    path('employer/edit-account', employer.manage_account, name='employer-edit-account'),
     path('ajax/vacancies', employer.ajax_all_vacancy, name='ajax-all-vacancy'),
     path('ajax/delete-vacancy', employer.ajax_delete_vacancy, name='ajax-delete-vacancy'),
     path('ajax/fetch-definition', employer.ajax_fetch_definition, name='ajax-fetch-definition'),
@@ -28,7 +27,6 @@ urlpatterns = [
     # Candidate URL's
     path('candidate/complete-register', candidate.manage_account, name='candidate-complete-register'),
     path('applications', candidate.your_applies, name='applications'),
-    path('candidate/edit-account', candidate.manage_account, name='candidate-edit-account'),
     path('ajax/delete-apply', candidate.ajax_delete_apply, name='ajax-delete-apply'),
 
     # Blog URL's
