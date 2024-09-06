@@ -10,7 +10,18 @@ const typeOfEmploymentCheckboxes = '#preference-type-of-employment input[type="c
 var tempPresentId = 1;
 
 selects.forEach(select => {
-    new Choices(`#${select.id}`);
+    new Choices(`#${select.id}`, {
+        searchResultLimit: 500,
+        resetScrollPosition: false,
+        shouldSort: false,
+        shouldSortItems: false, 
+        fuseOptions: {
+            includeScore: true,
+            threshold: 0.2,
+            location: 0,
+            useExtendedSearch: true,
+        }
+    });
 });
 
 
