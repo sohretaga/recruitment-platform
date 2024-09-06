@@ -190,6 +190,13 @@
                                 {% endif %}
                             </div>
 
+                            {% if vacancy.additional %}
+                            <div class="mt-4">
+                                <h5 class="mb-3">{% tr 'Additional Information' %}</h5>
+                                <div class="job-details-desc text-muted">{{ vacancy.additional|safe }}</div>
+                            </div>
+                            {% endif %}
+
                             <div class="mt-4">
                                 <span class="badge bg-primary">PHP</span>
                                 <span class="badge bg-primary">JS</span>

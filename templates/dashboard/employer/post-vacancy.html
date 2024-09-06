@@ -323,7 +323,7 @@
                                                                 <textarea id="qualification" name="qualification">{% if vacancy.qualification %}{{ vacancy.qualification }}{% endif %}</textarea>    
                                                             </div>
 
-                                                            <div class="mb-0">
+                                                            <div class="mb-3">
                                                                 <div class="d-flex justify-content-between align-items-center">
                                                                     <h5 class="mt-3">{% tr 'Skill & Experience - DASHBOARD / POST VACANCY' %}</h5>
                                                                     <button type="button" class="btn btn-primary btn-sm waves-effect waves-light mb-2" data-toggle="tooltip" onclick="fetchDefinition('skill_experience')"
@@ -332,6 +332,11 @@
                                                                     </button>
                                                                 </div>
                                                                 <textarea id="skill_experience" name="skill_experience">{% if vacancy.skill_experience %}{{ vacancy.skill_experience }}{% endif %}</textarea>
+                                                            </div>
+
+                                                            <div class="mb-0">
+                                                                <h5 class="mt-3">{% tr 'Additional Information - DASHBOARD / POST VACANCY' %}</h5>
+                                                                <textarea id="additional" name="additional">{% if vacancy.additional %}{{ vacancy.additional }}{% endif %}</textarea>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -439,7 +444,7 @@
             }
         };
     
-        const editorIds = ['description', 'responsibilities', 'qualification', 'skill_experience'];
+        const editorIds = ['description', 'responsibilities', 'qualification', 'skill_experience', 'additional'];
     
         const editorPromises = editorIds.map(id => initializeEditor(id));
     

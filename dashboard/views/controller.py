@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.core.paginator import Paginator
+from django.utils import timezone
 
 from dashboard.decorators import is_controller
 from job.models import Vacancy
@@ -65,11 +66,29 @@ def ajax_manage_approval_level(request):
     approval_level = request.POST.get('approval_level')
     vacancy = get_object_or_404(Vacancy, id=vacancy_id)
     vacancy.approval_level = approval_level
-    vacancy.save()
 
     if approval_level == 'PUBLISHED':
         ws_protocol = 'wss://' if request.is_secure() else 'ws://'
         host = request.get_host()
         send_notification_to_preferred_candidates.delay(vacancy.id, ws_protocol, host)
 
-    return JsonResponse({'status': 200})
+        if not vacancy.published_date:
+            vacancy.published_date = timezone.now()
+
+    vacancy.save()
+
+    context = {
+        'published_date': vacancy.published_date
+    }
+
+    return JsonResponse(context)
+
+@is_controller
+def ajax_update_published_date(request):
+    vacancy_id = request.POST.get('vacancy_id')
+    vacancy = get_object_or_404(Vacancy, id=vacancy_id)
+    
+    vacancy.published_date = timezone.now()
+    vacancy.save()
+
+    return JsonResponse({'status':200})

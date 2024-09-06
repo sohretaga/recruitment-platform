@@ -90,16 +90,53 @@ const setApprovalLevel = (event, id) => {
             vacancy_id: id,
             approval_level: value
         },
-        success: () => {
+        success: (response) => {
             event.className = '';
 
             if (value == 'PUBLISHED') {
                 event.className = 'badge badge-soft-success font-size-12 btn dropdown-toggle';
+
+                if (response.published_date) {
+                    updatePublishedDate(id);
+                }
+
             }else if (value == 'PENDING') {
                 event.className = 'badge badge-soft-warning font-size-12 btn dropdown-toggle';
             }else if (value == 'DEACTIVATED') {
                 event.className = 'badge badge-soft-danger font-size-12 btn dropdown-toggle';
             };
+        }
+    });
+}
+
+
+const updatePublishedDate = (vacancy_id) => {
+    Swal.fire({
+        title: "Update the published date?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Update"
+        }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '/dashboard/controller/ajax/update-published-date',
+                method: 'POST',
+                data: { vacancy_id: vacancy_id },
+                success: () => {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Published date updated!",
+                        showConfirmButton: false,
+                        timer: 1000
+                    });
+                },
+                error: (xhr, status, error) => {
+                    console.log('Error:', error);
+                }
+            });
         }
     });
 }

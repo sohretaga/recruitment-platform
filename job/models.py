@@ -4,6 +4,7 @@ from django.db.models import F, Case, When, CharField, Value
 from django.core.cache import cache
 from django.conf import settings
 from ckeditor.fields import RichTextField
+from datetime import timedelta
 
 from user.models import Employer, Candidate, CustomUser
 from recruitment_cp import models as cp_models
@@ -43,7 +44,6 @@ class Vacancy(models.Model):
     delete = models.BooleanField(default=False)
     views = models.IntegerField(default=0)
     slug = models.SlugField(null=True)
-    created_date = models.DateTimeField(auto_now_add=True)
 
     approval_level = models.CharField(max_length=12, choices=STATUS_CHOICES, default='PENDING')
     status = models.BooleanField()
@@ -53,6 +53,11 @@ class Vacancy(models.Model):
     responsibilities = RichTextField(blank=True, null=True)
     qualification = RichTextField(blank=True, null=True)
     skill_experience = RichTextField(blank=True, null=True)
+    additional = RichTextField(blank=True, null=True)
+
+    created_date = models.DateTimeField(auto_now_add=True)
+    ending_date = models.DateTimeField(null=True)
+    published_date = models.DateTimeField(null=True)
 
     class Meta:
         ordering = ['-created_date']
@@ -70,6 +75,10 @@ class Vacancy(models.Model):
                 self.slug = f"{original_slug}-{counter}"
                 counter += 1
                 queryset = Vacancy.objects.filter(slug=self.slug)
+
+        if not self.ending_date:
+            self.ending_date = self.created_date + timedelta(days=30)
+        
         super(Vacancy, self).save(*args, **kwargs)
 
     def __str__(self) -> str:

@@ -20,7 +20,7 @@ class PostVacancyForm(forms.ModelForm):
             'position_title', 'job_title', 'employment_type',
             'work_preference', 'department', 'status', 'keywords',
             'description', 'responsibilities', 'qualification',
-            'skill_experience', 'anonium'
+            'skill_experience', 'additional', 'anonium'
         )
 
 class PostBlogForm(forms.ModelForm):
