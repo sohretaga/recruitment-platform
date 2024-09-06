@@ -10,6 +10,19 @@ from recruitment_cp.models import ParameterFAQ
 from dashboard.forms import ManageFaqForm
 from dashboard.decorators import is_superuser
 
+from recruitment_cp.models import (
+    Language,
+    ParameterCareerType,
+    ParameterCareerLevel,
+    ParameterLocation,
+    ParameterEmployeeType,
+    ParameterFTE,
+    ParameterJobCatalogue,
+    ParameterWorkPreference,
+    ParameterDepartment,
+    ParameterKeyword,
+)
+
 
 @login_required
 def index(request):
@@ -106,3 +119,30 @@ def ajax_delete_faq(request):
         faq.delete()
 
     return JsonResponse({'status':200})
+
+def get_vacancy_context() -> dict:
+    languages = Language.objects.values('code', 'name')
+    job_catalogue = ParameterJobCatalogue.translation().values('id', 'name').order_by('name')
+    career_types = ParameterCareerType.translation().values('id', 'name')
+    career_levels = ParameterCareerLevel.translation().values('id', 'name')
+    locations = ParameterLocation.translation().values('id', 'name')
+    employment_types = ParameterEmployeeType.translation().values('id', 'name')
+    ftes = ParameterFTE.translation().values('id', 'name')
+    work_preferences = ParameterWorkPreference.translation().values('id', 'name')
+    departments = ParameterDepartment.translation().values('id', 'name')
+    keywords = ParameterKeyword.translation().values('id', 'name')
+
+    context = {
+        'languages': languages,
+        'job_catalogues': job_catalogue,
+        'career_types': career_types,
+        'career_levels': career_levels,
+        'locations': locations,
+        'employment_types': employment_types,
+        'ftes': ftes,
+        'work_preferences': work_preferences,
+        'departments': departments,
+        'keywords': keywords
+    }
+
+    return context

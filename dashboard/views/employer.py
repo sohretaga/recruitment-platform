@@ -9,6 +9,7 @@ from dashboard.decorators import is_employer
 from dashboard.forms import PostVacancyForm, ManageEmployerAccountForm
 from job.models import Vacancy
 from job.utils import vacancy_with_related_info
+from .main import get_vacancy_context
 from recruitment_cp.models import (
     Language,
     ParameterCareerType,
@@ -40,31 +41,9 @@ def post_vacancy(request):
 
             instance.save()
             return redirect(reverse('dashboard:all-vacancy'))
+        
+    context = get_vacancy_context()
 
-    languages = Language.objects.values('code', 'name')
-    job_catalogue = ParameterJobCatalogue.translation().values('id', 'name')
-    career_types = ParameterCareerType.translation().values('id', 'name')
-    career_levels = ParameterCareerLevel.translation().values('id', 'name')
-    locations = ParameterLocation.translation().values('id', 'name')
-    employment_types = ParameterEmployeeType.translation().values('id', 'name')
-    ftes = ParameterFTE.translation().values('id', 'name')
-    work_preferences = ParameterWorkPreference.translation().values('id', 'name')
-    departments = ParameterDepartment.translation().values('id', 'name')
-    keywords = ParameterKeyword.translation().values('id', 'name')
-
-    context = {
-        'languages': languages,
-        'job_catalogues': job_catalogue,
-        'career_types': career_types,
-        'career_levels': career_levels,
-        'locations': locations,
-        'employment_types': employment_types,
-        'ftes': ftes,
-        'work_preferences': work_preferences,
-        'departments': departments,
-        'keywords': keywords
-    }
-    
     return render(request, 'dashboard/employer/post-vacancy.html', context)
 
 
@@ -128,30 +107,8 @@ def edit_vacancy(request, id):
             instance.save()
             return redirect(reverse('dashboard:all-vacancy'))
         
-    languages = Language.objects.values('code', 'name')
-    job_catalogue = ParameterJobCatalogue.translation().values('id', 'name')
-    career_types = ParameterCareerType.translation().values('id', 'name')
-    career_levels = ParameterCareerLevel.translation().values('id', 'name')
-    locations = ParameterLocation.translation().values('id', 'name')
-    employment_types = ParameterEmployeeType.translation().values('id', 'name')
-    ftes = ParameterFTE.translation().values('id', 'name')
-    work_preferences = ParameterWorkPreference.translation().values('id', 'name')
-    departments = ParameterDepartment.translation().values('id', 'name')
-    keywords = ParameterKeyword.translation().values('id', 'name')
-
-    context = {
-        'vacancy': vacancy,
-        'languages': languages,
-        'job_catalogues': job_catalogue,
-        'career_types': career_types,
-        'career_levels': career_levels,
-        'locations': locations,
-        'employment_types': employment_types,
-        'ftes': ftes,
-        'work_preferences': work_preferences,
-        'departments': departments,
-        'keywords': keywords
-    }
+    context = get_vacancy_context()
+    context['vacancy'] = vacancy
 
     return render(request, 'dashboard/employer/post-vacancy.html', context)
 
