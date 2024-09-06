@@ -2,13 +2,16 @@ from django.urls import reverse
 from django.db.models import F
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
+from django.utils.timesince import timesince
 
 from collections import Counter
 from job.models import Vacancy
 from recruitment_cp.models import ParameterKeyword
 from main.models import Notification, ContactEmail
 from language.utils import tr
+
 import math
+import datetime
 
 def get_vacancy_in_sublists(objects_per_list=5) -> list:
     objects = list(Vacancy.translation().filter(status=True, delete=False, approval_level='PUBLISHED').order_by('?')[:10])
@@ -54,10 +57,6 @@ def mark_notifications_as_read(request) -> None:
             read.read = True
 
         Notification.objects.bulk_update(unread_notifictions, ['read'])
-
-
-from django.utils.timesince import timesince
-import datetime
 
 def humanize_time(value) -> str:
     if value:
