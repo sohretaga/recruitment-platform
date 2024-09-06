@@ -4,7 +4,6 @@ from django.db.models import F, Case, When, CharField, Value
 from django.core.cache import cache
 from django.conf import settings
 from ckeditor.fields import RichTextField
-from datetime import timedelta
 
 from user.models import Employer, Candidate, CustomUser
 from recruitment_cp import models as cp_models
@@ -75,9 +74,6 @@ class Vacancy(models.Model):
                 self.slug = f"{original_slug}-{counter}"
                 counter += 1
                 queryset = Vacancy.objects.filter(slug=self.slug)
-
-        if not self.ending_date:
-            self.ending_date = self.created_date + timedelta(days=30)
         
         super(Vacancy, self).save(*args, **kwargs)
 

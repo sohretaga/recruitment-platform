@@ -7,6 +7,7 @@ from dashboard.decorators import is_controller
 from job.models import Vacancy
 from job.utils import vacancy_with_related_info
 from user.tasks import send_notification_to_preferred_candidates
+from datetime import timedelta
 
 @is_controller
 def all_vacancies(request):
@@ -74,6 +75,7 @@ def ajax_manage_approval_level(request):
 
         if not vacancy.published_date:
             vacancy.published_date = timezone.now()
+            vacancy.ending_date = vacancy.published_date + timedelta(days=30)
 
     vacancy.save()
 
@@ -89,6 +91,7 @@ def ajax_update_published_date(request):
     vacancy = get_object_or_404(Vacancy, id=vacancy_id)
     
     vacancy.published_date = timezone.now()
+    vacancy.ending_date = vacancy.published_date + timedelta(days=30)
     vacancy.save()
 
     return JsonResponse({'status':200})
