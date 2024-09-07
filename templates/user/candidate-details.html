@@ -145,7 +145,7 @@
                                     <div class="d-flex">
                                         <label class="text-dark">{% tr 'Languages' %}</label>
                                         <div>
-                                            <p class="text-muted mb-0">{% for competence in competencies %}{% if competence.id|stringformat:"s" in candidate.languages %}{{ competence.name }} {% endif %}{% endfor %}</p>
+                                            <p class="text-muted mb-0">{% for language in languages %}{{ language.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
                                         </div>
                                     </div>
                                 </li>
@@ -550,12 +550,12 @@
                                                     <div class="mb-3">
                                                         <input type="hidden" id="langauge-values" name="languages"
                                                             {% if candidate.languages %}
-                                                                value="{% for i in candidate.languages %}{{ i }}{% if not forloop.last %},{% endif %}{% endfor %}"
+                                                                value="{% for language.id in languages %}{{ language.id }}{% if not forloop.last %},{% endif %}{% endfor %}"
                                                             {% endif %}>
                                                         <label for="languages" class="form-label">{% tr 'Languages' %}</label>
                                                         <select class="form-select" data-trigger id="languages" multiple>
                                                             {% for competence in competencies %}
-                                                            {% if competence.id|stringformat:"s" in candidate.languages %}
+                                                            {% if competence in languages %}
                                                             <option value="{{ competence.id }}" selected>{{ competence.name }}</option>
                                                             {% else %}
                                                             <option value="{{ competence.id }}">{{ competence.name }}</option>

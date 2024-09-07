@@ -246,9 +246,11 @@ def candidate_details(request, username):
             last_name = form.cleaned_data.get('last_name')
             languages = form.cleaned_data.get('languages')
             instance = form.save(commit=False)
+
+            
             
             if languages:
-                instance.languages = languages.split(',')
+                instance.languages.set(languages.split(','))
 
             instance.save()
 
@@ -312,12 +314,14 @@ def candidate_details(request, username):
             'preference': preference
         }
     
-    occupation = Candidate.translation().get(id=candidate.id).occupation_name
+    languages = ParameterCompetence.translation().filter(id__in=candidate.languages.all()).values('id', 'name')
+
     context = {
         'candidate': candidate,
         'educations': user.candidate.educations.all(),
         'experiences': user.candidate.experiences.all(),
-        'occupation': occupation,
+        'occupation': candidate.occupation_name,
+        'languages': languages,
         **logged_user_context
     }
 
