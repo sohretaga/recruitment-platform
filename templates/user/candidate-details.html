@@ -145,7 +145,14 @@
                                     <div class="d-flex">
                                         <label class="text-dark">{% tr 'Languages' %}</label>
                                         <div>
-                                            <p class="text-muted mb-0">{% for competence in competencies %}{{ competence.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+                                            <p class="text-muted mb-0">
+                                                {% for competence in competencies %}
+                                                {% if competence.id|stringformat:"s" in candidate.languages %}
+                                                {{ competence.name }}
+                                                {% if not forloop.last %}, {% endif %}
+                                                {% endif %}
+                                                {% endfor %}
+                                            </p>
                                         </div>
                                     </div>
                                 </li>
