@@ -154,7 +154,8 @@ class Candidate(models.Model):
                 education_level_case,
                 output_field=CharField(),
             ),
-            occupation_name=F(f'occupation__name_{language}')
+            occupation_name=F(f'occupation__name_{language}'),
+            job_family = F(f'occupation__job_family')
         )
 
         return candidates

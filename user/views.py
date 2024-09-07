@@ -237,7 +237,6 @@ def candidate_details(request, username):
         form = ManageCandidateAccountForm(request.POST, request.FILES, instance=user.candidate)
 
         if form.is_valid():
-            print('inn valid')
             email = form.cleaned_data.get('email')
             profile_photo = form.cleaned_data.get('profile_photo')
             phone_number = form.cleaned_data.get('phone_number')
@@ -269,7 +268,7 @@ def candidate_details(request, username):
     params = manage_user_type_for_details(request, username, user_type='candidate')
     user = get_object_or_404(CustomUser, **params)
     logged_user_context = {}
-    candidate = user.candidate
+    candidate = Candidate.translation().get(user=user)
     candidate.views += 1
     candidate.save()
 
@@ -284,8 +283,8 @@ def candidate_details(request, username):
         job_catalogue = ParameterJobCatalogue.translation().values('id', 'name')
 
         try:
-            min_salary = user.candidate.preference.min_salary
-            max_salary = user.candidate.preference.max_salary
+            min_salary = candidate.preference.min_salary
+            max_salary = candidate.preference.max_salary
 
             if min_salary and max_salary:
                 offered_salary = int((int(min_salary) + int(max_salary)) / 2)

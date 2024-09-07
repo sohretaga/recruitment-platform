@@ -127,7 +127,7 @@
                                     <div class="d-flex">
                                         <label class="text-dark">{% tr 'Categories' %}</label>
                                         <div>
-                                            <p class="text-muted mb-0">Accounting / Finance</p>
+                                            <p class="text-muted mb-0">{{ candidate.job_family }}</p>
                                         </div>
                                     </div>
                                 </li>
@@ -153,7 +153,7 @@
                                     <div class="d-flex">
                                         <label class="text-dark">{% tr 'Experience' %}</label>
                                         <div>
-                                            <p class="text-muted mb-0">3 Years</p>
+                                            <p class="text-muted mb-0">{{ candidate.experience_duration_years|floatformat:0 }} {% tr 'Years' %}</p>
                                         </div>
                                     </div>
                                 </li>
@@ -161,7 +161,7 @@
                                     <div class="d-flex">
                                         <label class="text-dark">{% tr 'Qualification' %}</label>
                                         <div>
-                                            <p class="text-muted mb-0">Associate Degree</p>
+                                            <p class="text-muted mb-0">{{ candidate.education_level_name }}</p>
                                         </div>
                                     </div>
                                 </li>
