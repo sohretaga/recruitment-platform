@@ -54,6 +54,7 @@
     line-height: .9rem;
     display: flex;
     align-items: center;
+    max-width: 250px;
 }
 
 footer {
