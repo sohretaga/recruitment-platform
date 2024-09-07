@@ -145,7 +145,7 @@
                                     <div class="d-flex">
                                         <label class="text-dark">{% tr 'Languages' %}</label>
                                         <div>
-                                            <p class="text-muted mb-0">English, Turkish, Japanese</p>
+                                            <p class="text-muted mb-0">{% for competence in competencies %}{{ competence.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
                                         </div>
                                     </div>
                                 </li>
