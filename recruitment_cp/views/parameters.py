@@ -399,7 +399,7 @@ def job_catalogue_load(request):
             
             job_catalogues = cp_models.ParameterJobCatalogue.language_filter(language)\
                 .values(
-                    'id', 'no', 'name', 'definition', 'note', 'job_family', 'job_sub_family',
+                    'id', 'no', 'name', 'definition', 'note', 'job_family_name', 'job_sub_family',
                     'career_type', 'career_level', 'typical_education', 'relevant_experience',
                     'job_code', 'description', 'responsibilities', 'qualification', 'skill_experience'
                 )
@@ -421,8 +421,15 @@ def job_catalogue_save(request):
             while index < len(hot):
                 pk = hot[index].pop('id', None)
                 name = hot[index].get('name', None)
+                job_family_name = hot[index].pop('job_family_name')
 
                 if name or language != 'en':
+                    try:
+                        job_family = cp_models.ParameterJobFamily.translation().get(name=job_family_name)
+                        hot[index]['job_family'] = job_family
+                    except cp_models.ParameterJobFamily.DoesNotExist:
+                        pass
+
                     if pk:
                         job_catalogues = cp_models.ParameterJobCatalogue.objects.filter(pk=pk)
                         job_catalogues.custom_update(language, **hot[index])
@@ -431,7 +438,7 @@ def job_catalogue_save(request):
                         job_catalogues.save(language, **hot[index])
                 else:
                     job_catalogues = cp_models.ParameterJobCatalogue.objects.filter(pk = pk)
-                    # job_catalogues.delete()
+                    job_catalogues.delete()
                 
                 index += 1
 

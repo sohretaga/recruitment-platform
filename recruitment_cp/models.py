@@ -202,13 +202,16 @@ class ParameterWorkExperience(ParameterCommonFields):
 class ParameterFTE(ParameterCommonFields):
     ...
 
+class ParameterJobFamily(ParameterCommonFields):
+    ...
+
 class ParameterJobCatalogue(ParameterCommonFields):
     """
     - Job Title is name field
     - Common Duties and Responsibilities is definition field
     """
 
-    # job_family = models.CharField(max_length=100, blank=True, null=True)
+    job_family = models.ForeignKey(ParameterJobFamily, on_delete=models.SET_NULL, blank=True, null=True)
     job_sub_family = models.CharField(max_length=100, blank=True, null=True)
     career_type = models.CharField(max_length=100, blank=True, null=True)
     career_level = models.CharField(max_length=100, blank=True, null=True)
@@ -221,6 +224,16 @@ class ParameterJobCatalogue(ParameterCommonFields):
     typical_education = models.CharField(max_length=100, blank=True, null=True)
     relevant_experience = models.CharField(max_length=100, blank=True, null=True)
     job_code = models.CharField(max_length=100, blank=True, null=True)
+
+    @classmethod
+    def language_filter(cls, language_code):
+        objects = super().language_filter(language_code)
+
+        objects = objects.annotate(
+            job_family_name = F(f'job_family__name_{language_code}')
+        )
+
+        return objects
 
 class ParameterEmployeeType(ParameterCommonFields):
     ...
@@ -273,9 +286,6 @@ class ParameterCompetence(ParameterCommonFields):
         )
 
         return objects
-
-class ParameterJobFamily(ParameterCommonFields):
-    ...
 
 class ParameterDatePosted(ParameterCommonFields):
     hours = models.PositiveIntegerField()

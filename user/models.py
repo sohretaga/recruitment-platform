@@ -155,7 +155,7 @@ class Candidate(models.Model):
                 output_field=CharField(),
             ),
             occupation_name=F(f'occupation__name_{language}'),
-            job_family = F(f'occupation__job_family')
+            job_family = F(f'occupation__job_family__name_{language}')
         )
 
         return candidates
