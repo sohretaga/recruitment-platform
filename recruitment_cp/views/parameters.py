@@ -647,7 +647,8 @@ def company_load(request):
             company = Employer.objects.values(
                 'id', 'user__email', 'user__profile_photo', 'no', 'user__first_name',
                 'sector__name_en', 'organization_type__name_en', 'organization_ownership__name_en',
-                'number_of_employees__name_en', 'second_email', 'other_email', 'note', 'slider'
+                'number_of_employees__name_en', 'second_email', 'other_email', 'note', 'slider',
+                'amcham_user', 'key_account',
             ).order_by('user__first_name')
             
             json_data = json.dumps(list(company), default=datetime_to_string)
@@ -667,7 +668,9 @@ def company_save(request):
             while index < len(hot):
                 pk = hot[index].pop('id', None)
                 params = {
-                    "slider": hot[index].get('slider')
+                    "slider": hot[index].get('slider'),
+                    "amcham_user": hot[index].get('amcham_user'),
+                    "key_account": hot[index].get('key_account')
                 }
 
                 try:

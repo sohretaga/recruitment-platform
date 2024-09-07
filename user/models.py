@@ -67,6 +67,10 @@ class Employer(models.Model):
     facebook_url = models.URLField(blank=True, null=True)
     linkedin_url = models.URLField(blank=True, null=True)
 
+    discount_code = models.CharField(max_length=6, blank=True, null=True)
+    amcham_user = models.BooleanField(default=False)
+    key_account = models.BooleanField(default=False)
+
     @classmethod
     def translation(cls):
         language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)

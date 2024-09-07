@@ -55,7 +55,7 @@
             height: $(document).height() - 350,
             data: [{id:''}],
             fixedColumnsLeft: 3,
-            colWidths: [0, 50, 450, 250, 250, 250, 250, 250, 250, 250, 250, 100, 100],
+            colWidths: [0, 50, 450, 250, 250, 250, 250, 250, 250, 250, 250, 100, 150, 100, 100, 100],
             dropdownMenu:  ['filter_by_value', 'filter_action_bar'],
             licenseKey: 'non-commercial-and-evaluation',
 
@@ -119,6 +119,22 @@
                     title: 'Logo',
                     data: 'user__profile_photo',
                     renderer: logoRenderer
+                },
+                {
+                    title: 'Discount Code',
+                    data: 'discount_code',
+                },
+                {
+                    title: 'Amcham',
+                    data: 'amcham_user',
+                    type: 'checkbox',
+                    className: 'htCenter'
+                },
+                {
+                    title: 'Key Account',
+                    data: 'key_account',
+                    type: 'checkbox',
+                    className: 'htCenter'
                 },
                 {
                     title: 'Slider',
