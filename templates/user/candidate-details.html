@@ -145,8 +145,7 @@
                                     <div class="d-flex">
                                         <label class="text-dark">{% tr 'Languages' %}</label>
                                         <div>
-                                            <p class="text-muted mb-0">{% for competence in competencies %}{% if competence.id|stringformat:"s" in candidate.languages %}{{ competence.name }} {% endif %}{% endfor %}
-                                            </p>
+                                            <p class="text-muted mb-0">{% for competence in competencies %}{% if competence.id|stringformat:"s" in candidate.languages %}{{ competence.name }} {% endif %}{% endfor %}</p>
                                         </div>
                                     </div>
                                 </li>

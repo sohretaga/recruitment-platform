@@ -208,7 +208,7 @@ class ParameterJobCatalogue(ParameterCommonFields):
     - Common Duties and Responsibilities is definition field
     """
 
-    job_family = models.CharField(max_length=100, blank=True, null=True)
+    # job_family = models.CharField(max_length=100, blank=True, null=True)
     job_sub_family = models.CharField(max_length=100, blank=True, null=True)
     career_type = models.CharField(max_length=100, blank=True, null=True)
     career_level = models.CharField(max_length=100, blank=True, null=True)
