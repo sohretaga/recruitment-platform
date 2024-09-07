@@ -74,6 +74,7 @@
             fixedColumnsLeft: 3,
             height: $(document).height() - 350,
             fixedColumnsStart: 1,
+            colWidths: [0, 50, 250, 200, 200, 200, 200, 250, 250, 250, 250, 250, 200, 200, 250, 100],
             dropdownMenu:  ['filter_by_value', 'filter_action_bar'],
             licenseKey: 'non-commercial-and-evaluation',
 
@@ -96,91 +97,77 @@
                 {
                     title: 'Job Title',
                     data: 'name',
-                    colWidths: 100,
                     className: 'htMiddle',
                 },
                 {
                     title: 'Job Family',
                     type: 'dropdown',
                     data: 'job_family_name',
-                    colWidths: 100,
                     className: 'htMiddle',
                 },
                 {
                     title: 'Job Sub-Family',
                     type: 'dropdown',
                     data: 'job_sub_family',
-                    colWidths: 100,
                     className: 'htMiddle',
                 },
                 {
                     title: 'Career Type',
                     type: 'dropdown',
                     data: 'career_type_name',
-                    colWidths: 100,
                     className: 'htMiddle',
                 },
                 {
                     title: 'Career Level',
                     type: 'dropdown',
                     data: 'career_level',
-                    colWidths: 100,
                     className: 'htMiddle',
                 },
                 {
                     title: 'Common Duties and Responsibilities',
                     data: 'definition',
-                    colWidths: 200,
-                    className: 'htMiddle',
+                    renderer: scrollableTextRenderer
                 },
                 {
                     title: 'Job Description',
                     data: 'description',
-                    colWidths: 200,
                     renderer: scrollableTextRenderer
                 },
                 {
                     title: 'Responsibilities',
                     data: 'responsibilities',
-                    colWidths: 200,
                     renderer: scrollableTextRenderer
                 },
                 {
                     title: 'Qualification',
                     data: 'qualification',
-                    colWidths: 200,
                     renderer: scrollableTextRenderer
                 },
                 {
                     title: 'Skill & Experience',
                     data: 'skill_experience',
-                    colWidths: 200,
                     renderer: scrollableTextRenderer
                 },
                 {
                     title: 'Typical Education',
                     type: 'dropdown',
                     data: 'typical_education_name',
-                    colWidths: 100,
                     className: 'htMiddle',
                 },
                 {
                     title: 'Relevant Experience',
                     type: 'dropdown',
                     data: 'relevant_experience_name',
-                    colWidths: 100,
                     className: 'htMiddle',
                 },
                 {
                     title: 'Note',
                     data: 'note',
-                    colWidths: 100,
                     renderer: scrollableTextRenderer
                 },
                 {
                     title: 'Job Code',
                     data: 'job_code',
-                    colWidths: 100,
                     className: 'htMiddle',
                 }
             ],
