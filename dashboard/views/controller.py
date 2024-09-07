@@ -67,6 +67,7 @@ def ajax_manage_approval_level(request):
     approval_level = request.POST.get('approval_level')
     vacancy = get_object_or_404(Vacancy, id=vacancy_id)
     vacancy.approval_level = approval_level
+    published_date = True
 
     if approval_level == 'PUBLISHED':
         ws_protocol = 'wss://' if request.is_secure() else 'ws://'
@@ -76,11 +77,12 @@ def ajax_manage_approval_level(request):
         if not vacancy.published_date:
             vacancy.published_date = timezone.now()
             vacancy.ending_date = vacancy.published_date + timedelta(days=30)
+            published_date = False
 
     vacancy.save()
 
     context = {
-        'published_date': vacancy.published_date
+        'published_date': published_date
     }
 
     return JsonResponse(context)

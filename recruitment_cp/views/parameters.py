@@ -639,16 +639,19 @@ def company_index(request):
         return render(request, 'cp/parameters/companies.html')
     
     raise Http404
+from django.db.models import Count, Q
 
 def company_load(request):
     if request.user.is_superuser:
         if is_ajax(request) and request.POST:
             
-            company = Employer.objects.values(
+            company = Employer.objects.annotate(
+                vacancy_count=Count('vacancies', filter=Q(vacancies__status=True, vacancies__delete=False, vacancies__approval_level='PUBLISHED'))
+            ).values(
                 'id', 'user__email', 'user__profile_photo', 'no', 'user__first_name',
                 'sector__name_en', 'organization_type__name_en', 'organization_ownership__name_en',
                 'number_of_employees__name_en', 'second_email', 'other_email', 'note', 'slider',
-                'amcham_user', 'key_account',
+                'amcham_user', 'key_account','vacancy_count'
             ).order_by('user__first_name')
             
             json_data = json.dumps(list(company), default=datetime_to_string)
