@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse, Http404
-from django.db.models import F, Case, When, Value, CharField
+from django.db.models import F, Case, When, Value, CharField, Count, Q
 
 from recruitment_cp import models as cp_models
 from blog.models import Category as BlogCategory
@@ -639,7 +639,6 @@ def company_index(request):
         return render(request, 'cp/parameters/companies.html')
     
     raise Http404
-from django.db.models import Count, Q
 
 def company_load(request):
     if request.user.is_superuser:
@@ -651,7 +650,7 @@ def company_load(request):
                 'id', 'user__email', 'user__profile_photo', 'no', 'user__first_name',
                 'sector__name_en', 'organization_type__name_en', 'organization_ownership__name_en',
                 'number_of_employees__name_en', 'second_email', 'other_email', 'note', 'slider',
-                'amcham_user', 'key_account','vacancy_count'
+                'amcham_user', 'key_account','vacancy_count', 'discount_code'
             ).order_by('user__first_name')
             
             json_data = json.dumps(list(company), default=datetime_to_string)
@@ -710,6 +709,19 @@ def company_save(request):
             raise PermissionError
     else:
         raise Http404
+
+import random
+import string
+    
+def generate_discount_code(request):
+    employers = Employer.objects.filter(discount_code__isnull=True)
+    characters = string.ascii_uppercase + string.digits
+
+    for employer in employers:
+        employer.discount_code = ''.join(random.choices(characters, k=6))
+        employer.save()
+    
+    return JsonResponse({'status': 200})
     
 #======================================================================================================
 def candidate_index(request):

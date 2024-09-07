@@ -57,6 +57,7 @@ urlpatterns = [
     path('parameters/company', parameters.company_index, name='company'),
     path('parameters/company-load', parameters.company_load, name='company_load'),
     path('parameters/company-save', parameters.company_save, name='company_save'),
+    path('parameters/ajax/generate-discount-code', parameters.generate_discount_code, name='generate_discount_code'),
 
     path('parameters/candidate', parameters.candidate_index, name='candidate'),
     path('parameters/candidate-load', parameters.candidate_load, name='candidate_load'),

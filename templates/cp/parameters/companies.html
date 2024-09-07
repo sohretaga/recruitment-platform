@@ -9,7 +9,42 @@
 
 {% block content %}
 
-{% include 'cp/container.html' %}
+<div class="container">
+    <div data-jsfiddle="bmt-level" class="ajax-container">
+        <div class="row">
+            <div>
+                <div class="pull-left" style="width: 40%;">
+                    <pre id="bmt-console" class="console">Click "Load" to load data from server</pre>
+                </div>
+            </div>
+            <div class="controls pull-right">
+                <div style="margin-top: 5px;">
+                    <button id="clear-conditions" class="btn btn-default command-btn"><i class="fa fa-filter" aria-hidden="true"></i></button>
+                    <button type="button" name="load" id="load" class="btn btn-primary command-btn">LOAD</button>
+                    <button type="button" name="discount_code" id="discount_code" class="btn btn-primary command-btn">DISCOUNT</button>
+                    <button type="button" name="save" id="save" class="btn btn-primary command-btn">SAVE</button>
+                    <button type="button" name="add_row" id="add_row" class="btn btn-primary command-btn">ADD ROW</button>
+                    <button type="button" name="del_row" id="del_row" class="btn btn-primary command-btn">DEL ROW</button>
+                    <button type="button" name="export" id="export" class="btn btn-primary command-btn">EXPORT</button>
+                    <button type="button" name="import_data" id="import_data" class="btn btn-primary command-btn">IMPORT</button>
+                    <button type="button" name="clear" id="clear" class="btn btn-danger command-btn">CLEAR</button>
+                </div>
+             </div>
+        </div>
+        <div id="import-data-form-container" style="display: none;">
+            <hr>
+            <p class="alert alert-info">To get template for import data, please use export for this table...</p>
+            <form action="#" method="post" enctype="multipart/form-data"
+                  id="import-data-form">
+                {% csrf_token %}
+                <input id="file_input" type="file" name="csv_file" style="display: inline;">
+                <input id="submit_input" type="submit" value="Upload and Import">
+            </form>
+            <hr>
+        </div>
+        <br>
+    </div>
+</div>
 
 <div class="table-container">
     <div id="data-filter" style="display: none;">
@@ -29,6 +64,7 @@
 
 <script>
     var hot;
+    const discountCode = $$('discount_code')
     const saveUrl = "{% url 'cp:company_save' %}";
     const loadUrl = "{% url 'cp:company_load' %}";
     const bmtTable = document.getElementById('table');
@@ -152,6 +188,21 @@
         });
 
         loadData();
+
+        const generateDiscountCode = () => {
+            $.ajax({
+                url: "{% url 'cp:generate_discount_code' %}",
+                type: 'POST',
+                success: () => {
+                    loadData();
+                }
+            })
+        }
+
+        Handsontable.dom.addEvent(discountCode, 'click', function(event) {
+            event.preventDefault();
+            generateDiscountCode();
+        });
     })
 
 </script>
