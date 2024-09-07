@@ -400,7 +400,7 @@ def job_catalogue_load(request):
             job_catalogues = cp_models.ParameterJobCatalogue.language_filter(language)\
                 .values(
                     'id', 'no', 'name', 'definition', 'note', 'job_family_name', 'job_sub_family',
-                    'career_type', 'career_level', 'typical_education', 'relevant_experience',
+                    'career_type_name', 'career_level', 'typical_education_name', 'relevant_experience_name',
                     'job_code', 'description', 'responsibilities', 'qualification', 'skill_experience'
                 )
             json_data = json.dumps(list(job_catalogues))
@@ -422,13 +422,30 @@ def job_catalogue_save(request):
                 pk = hot[index].pop('id', None)
                 name = hot[index].get('name', None)
                 job_family_name = hot[index].pop('job_family_name')
+                career_type_name = hot[index].pop('career_type_name')
+                typical_education_name = hot[index].pop('typical_education_name')
+                relevant_experience_name = hot[index].pop('relevant_experience_name')
 
                 if name or language != 'en':
                     try:
                         job_family = cp_models.ParameterJobFamily.translation().get(name=job_family_name)
                         hot[index]['job_family'] = job_family
-                    except cp_models.ParameterJobFamily.DoesNotExist:
-                        pass
+                    except cp_models.ParameterJobFamily.DoesNotExist: ...
+
+                    try:
+                        career_type = cp_models.ParameterCareerType.translation().get(name=career_type_name)
+                        hot[index]['career_type'] = career_type
+                    except cp_models.ParameterCareerType.DoesNotExist: ...
+
+                    try:
+                        typical_education = cp_models.ParameterEducationLevel.translation().get(name=typical_education_name)
+                        hot[index]['typical_education'] = typical_education
+                    except cp_models.ParameterEducationLevel.DoesNotExist: ...
+
+                    try:
+                        relevant_experience = cp_models.ParameterWorkExperience.translation().get(name=relevant_experience_name)
+                        hot[index]['relevant_experience'] = relevant_experience
+                    except cp_models.ParameterWorkExperience.DoesNotExist: ...
 
                     if pk:
                         job_catalogues = cp_models.ParameterJobCatalogue.objects.filter(pk=pk)

@@ -51,10 +51,10 @@
     const modelColumnMap = {
         'job_family':[3],
         // 'job_sub_family':[4],
-        'career_levels':[5],
-        'career_types':[6],
-        // 'typical_education':[8],
-        // 'work_experience':[9]
+        'career_types':[5],
+        // 'career_levels':[6],
+        'education_level':[12],
+        'work_experience':[13]
 
         /* We specify the names of the models from which data will be retrieved for updating as keys,
         and the IDs of the columns to be updated as values. This structure is used to clearly define
@@ -112,7 +112,7 @@
                 {
                     title: 'Career Type',
                     type: 'dropdown',
-                    data: 'career_type',
+                    data: 'career_type_name',
                     colWidths: 100
                 },
                 {
@@ -149,13 +149,13 @@
                 {
                     title: 'Typical Education',
                     type: 'dropdown',
-                    data: 'typical_education',
+                    data: 'typical_education_name',
                     colWidths: 100
                 },
                 {
                     title: 'Relevant Experience',
                     type: 'dropdown',
-                    data: 'relevant_experience',
+                    data: 'relevant_experience_name',
                     colWidths: 100
                 },
                 {

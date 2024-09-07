@@ -43,6 +43,9 @@ def load_source(request):
                 case 'work_experience':
                     source = cp_models.ParameterWorkExperience.language_filter(**params).values_list('name', flat=True)
                 
+                case 'education_level':
+                    source = cp_models.ParameterEducationLevel.language_filter(**params).values_list('name', flat=True)
+                
                 case 'sector':
                     source = cp_models.ParameterSector.language_filter(**params).values_list('name', flat=True)
                 

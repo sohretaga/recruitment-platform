@@ -205,6 +205,9 @@ class ParameterFTE(ParameterCommonFields):
 class ParameterJobFamily(ParameterCommonFields):
     ...
 
+class ParameterEducationLevel(ParameterCommonFields):
+    level_order = models.PositiveIntegerField()
+
 class ParameterJobCatalogue(ParameterCommonFields):
     """
     - Job Title is name field
@@ -213,16 +216,16 @@ class ParameterJobCatalogue(ParameterCommonFields):
 
     job_family = models.ForeignKey(ParameterJobFamily, on_delete=models.SET_NULL, blank=True, null=True)
     job_sub_family = models.CharField(max_length=100, blank=True, null=True)
-    # career_type = models.CharField(max_length=100, blank=True, null=True)
+    career_type = models.ForeignKey(ParameterCareerType, on_delete=models.SET_NULL, blank=True, null=True)
     career_level = models.CharField(max_length=100, blank=True, null=True)
+    typical_education = models.ForeignKey(ParameterEducationLevel, on_delete=models.SET_NULL, blank=True, null=True)
+    relevant_experience = models.ForeignKey(ParameterWorkExperience, on_delete=models.SET_NULL, blank=True, null=True)
 
     description = models.TextField(blank=True, null=True)
     responsibilities = models.TextField(blank=True, null=True)
     qualification = models.TextField(blank=True, null=True)
     skill_experience = models.TextField(blank=True, null=True)
 
-    # typical_education = models.CharField(max_length=100, blank=True, null=True)
-    # relevant_experience = models.CharField(max_length=100, blank=True, null=True)
     job_code = models.CharField(max_length=100, blank=True, null=True)
 
     @classmethod
@@ -230,7 +233,10 @@ class ParameterJobCatalogue(ParameterCommonFields):
         objects = super().language_filter(language_code)
 
         objects = objects.annotate(
-            job_family_name = F(f'job_family__name_{language_code}')
+            job_family_name = F(f'job_family__name_{language_code}'),
+            career_type_name = F(f'career_type__name_{language_code}'),
+            typical_education_name = F(f'typical_education__name_{language_code}'),
+            relevant_experience_name = F(f'relevant_experience__name_{language_code}')
         )
 
         return objects
@@ -293,6 +299,3 @@ class ParameterDatePosted(ParameterCommonFields):
 class ParameterAgeGroup(ParameterCommonFields):
     minimum = models.PositiveIntegerField()
     maximum = models.PositiveIntegerField()
-
-class ParameterEducationLevel(ParameterCommonFields):
-    level_order = models.PositiveIntegerField()
