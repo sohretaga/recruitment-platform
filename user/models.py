@@ -89,7 +89,7 @@ class Candidate(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='candidate')
     id_card_number = models.CharField(max_length=20, null=True)
     birthday = models.DateField(null=True)
-    languages = models.JSONField(blank=True, null=True)
+    # languages = models.JSONField(blank=True, null=True)
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES, null=True)
     whatsapp = models.CharField(max_length=15, blank=True, null=True)
     linkedin_url = models.URLField(blank=True, null=True)
