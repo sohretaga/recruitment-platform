@@ -43,4 +43,4 @@ def move_expired_vacancies():
             published_date=vacancy.published_date,
         )
 
-        vacancy.delete()
+        vacancy.__class__.objects.filter(id=vacancy.id).delete()
