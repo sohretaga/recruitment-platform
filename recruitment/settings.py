@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 from dotenv import load_dotenv
 from django.core.cache import cache
+from celery.schedules import crontab
 import os
 
 load_dotenv()
@@ -191,3 +192,10 @@ DEFAULT_FROM_EMAIL = 'no-reply@sohretaga.com'
 
 CELERY_BROKER_URL = "redis://localhost:6379"
 CELERY_RESULT_BACKEND = "redis://localhost:6379"
+
+CELERY_BEAT_SCHEDULE = {
+    'move-expired-vacancies-every-day': {
+        'task': 'job.tasks.move_expired_vacancies',
+        'schedule': crontab(hour=0, minute=0),
+    },
+}

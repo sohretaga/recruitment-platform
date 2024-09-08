@@ -32,6 +32,19 @@
                 </div>
             </div>
         </div>
+
+        <div style="display: flex; margin-bottom: 10px;"></div>
+            <div class="chb-style">
+                <span style="margin-right: 5px;">Vacancies: </span>
+                <div class="filter-chb">
+                    <span title="Active Vacancies"><input type="checkbox" id="active_vacancies" name="vacancies" value="active_vacancies" checked="checked"></span>
+                    <label for="active_vacancies"></label>
+
+                    <span title="Expired Vacancies"><input type="checkbox" id="expired_vacancy" name="vacancies" value="expired_vacancy"></span>
+                    <label for="expired_vacancy"></label>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="caption" id="caption">Vacancy</div>
@@ -51,7 +64,6 @@
     const saveUrl = "{% url 'cp:vacancy_save' %}";
     const loadUrl = "{% url 'cp:vacancy_load' %}";
     const bmtTable = document.getElementById('table');
-    const language = document.querySelector("input[name='language']:checked").value;
     const consoleText = 'Vacancy';
     const modelColumnMap = {
         'career_types':[6],
@@ -67,10 +79,6 @@
         and the IDs of the columns to be updated as values. This structure is used to clearly define
         which column will be updated from which model. */
     };
-
-    function fetchData() {
-        loadData();
-    }
 
     $(document).ready(function() {
         hot = new Handsontable(bmtTable, {
@@ -239,9 +247,17 @@
         });
 
         function loadData() {
+            const language = document.querySelector("input[name='language']:checked").value;
+            const vacancies = document.querySelector("input[name='vacancies']:checked").value;
+
             $.ajax({
                 url: loadUrl,
-                data: { offset: offset, limit: limit, language: language},
+                data: {
+                    offset: offset,
+                    limit: limit,
+                    language: language,
+                    vacancies: vacancies
+                },
                 dataType: 'json',
                 type: 'POST',
                 success: function (resp) {
@@ -257,6 +273,9 @@
                         hot.loadData(hotData);
                         hotData = [];
 
+                        offset = 0;
+                        limit = 1000;
+
                         try {
                             loadSource(modelColumnMap);
                         } catch (error) {
@@ -268,10 +287,24 @@
                 }
             });
         };
-        
 
         loadData();
-    })
+
+        document.getElementById('data-filter').addEventListener('change', function(event) {
+            if (event.target.tagName === 'INPUT') {
+                const name = event.target.name;
+                const inputs = document.querySelectorAll(`#data-filter input[name='${name}']`);
+                inputs.forEach(input => {
+                    if (input !== event.target) {
+                        input.checked = false;
+                    }
+                });
+
+                loadData();
+            };
+        });
+
+    });
 
 </script>
 

@@ -4,7 +4,7 @@ from django.db.models import F, Case, When, Value, CharField, Count, Q
 
 from recruitment_cp import models as cp_models
 from blog.models import Category as BlogCategory
-from job.models import Vacancy
+from job.models import Vacancy, ExpiredVacancy
 from user.models import Candidate, Employer
 from recruitment_cp.utils import is_ajax, datetime_to_string, date_to_string
 
@@ -529,12 +529,22 @@ def vacancy_load(request):
     if request.user.is_superuser:
         if is_ajax(request) and request.POST:
             language = request.POST.get('language')
+            vacancy_type = request.POST.get('vacancies')
             offset = int(request.POST.get('offset', 0))
             limit = int(request.POST.get('limit', 1000))
             
-            vacancies = Vacancy.translation().filter(language = language).select_related(
-                'employer').annotate(company_name=F('employer__user__first_name'),
-                ).values()[offset:offset+limit]
+            match vacancy_type:
+                case 'active_vacancies':
+                    vacancies = Vacancy.translation().filter(language = language).select_related(
+                    'employer').annotate(company_name=F('employer__user__first_name'),
+                    ).values()[offset:offset+limit]
+                
+                case 'expired_vacancy':
+                    vacancies = ExpiredVacancy.translation().filter(language = language).select_related(
+                    'employer').annotate(company_name=F('employer__user__first_name'),
+                    ).values()[offset:offset+limit]
+                case _:
+                    vacancies = {}
             
             json_data = json.dumps(list(vacancies), default=datetime_to_string)
 

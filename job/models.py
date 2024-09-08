@@ -117,6 +117,11 @@ class Vacancy(models.Model):
         )
         return vacancies
 
+
+class ExpiredVacancy(Vacancy):
+    class Meta:
+        db_table = 'vacancy_expired'
+
 class Bookmark(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='bookmarks')
     vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE)

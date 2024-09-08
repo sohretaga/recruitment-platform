@@ -12,3 +12,4 @@ django-ckeditor==6.7.1
 redis==5.0.7
 celery==5.4.0
 websocket-client==1.8.0
+django-celery-beat==2.7.0
