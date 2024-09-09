@@ -1,6 +1,6 @@
 from celery import shared_task
 from django.utils import timezone
-# from .models import Vacancy, ExpiredVacancy
+from .models import Vacancy, ExpiredVacancy
 
 @shared_task
 def move_expired_vacancies():

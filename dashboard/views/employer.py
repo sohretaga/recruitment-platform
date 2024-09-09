@@ -7,7 +7,7 @@ from django.views.decorators.http import require_POST
 
 from dashboard.decorators import is_employer
 from dashboard.forms import PostVacancyForm, ManageEmployerAccountForm
-# from job.models import Vacancy, ExpiredVacancy
+from job.models import Vacancy, ExpiredVacancy
 from job.utils import vacancy_with_related_info
 from .main import get_vacancy_context
 from recruitment_cp.models import (

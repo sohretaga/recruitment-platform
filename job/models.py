@@ -120,8 +120,8 @@ class BaseVacancy(models.Model):
 class Vacancy(BaseVacancy):
     employer = models.ForeignKey(Employer, related_name='vacancies', on_delete=models.CASCADE)
 
-# class ExpiredVacancy(BaseVacancy):
-#     employer = models.ForeignKey(Employer, related_name='expired_vacancies', on_delete=models.CASCADE)
+class ExpiredVacancy(BaseVacancy):
+    employer = models.ForeignKey(Employer, related_name='expired_vacancies', on_delete=models.CASCADE)
 
 class Bookmark(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='bookmarks')

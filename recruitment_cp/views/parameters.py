@@ -4,7 +4,7 @@ from django.db.models import F, Case, When, Value, CharField, Count, Q
 
 from recruitment_cp import models as cp_models
 from blog.models import Category as BlogCategory
-# from job.models import Vacancy, ExpiredVacancy
+from job.models import Vacancy, ExpiredVacancy
 from user.models import Candidate, Employer
 from recruitment_cp.utils import is_ajax, datetime_to_string, date_to_string
 
