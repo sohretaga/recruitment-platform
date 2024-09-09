@@ -10,7 +10,7 @@ from recruitment_cp import models as cp_models
 
 # Create your models here.
 
-class Vacancy(models.Model):
+class BaseVacancy(models.Model):
 
     STATUS_CHOICES = [
         ('PUBLISHED', 'Published'),
@@ -23,7 +23,6 @@ class Vacancy(models.Model):
 
     position_title = models.CharField(max_length=500, blank=True, null=True)
 
-    employer = models.ForeignKey(Employer, related_name='vacancies', on_delete=models.CASCADE)
     career_type = models.ForeignKey(cp_models.ParameterCareerType, on_delete=models.SET_NULL, blank=True, null=True)
     career_level = models.ForeignKey(cp_models.ParameterCareerLevel, on_delete=models.SET_NULL, blank=True, null=True)
     location = models.ForeignKey(cp_models.ParameterLocation, on_delete=models.SET_NULL, blank=True, null=True)
@@ -60,6 +59,7 @@ class Vacancy(models.Model):
 
     class Meta:
         ordering = ['-created_date']
+        abstract = True 
 
     def save(self, *args, **kwargs) -> None:
         if self.salary_minimum and self.salary_maximum:
@@ -68,14 +68,14 @@ class Vacancy(models.Model):
         if not self.slug:
             self.slug = slugify(self.position_title)
             original_slug = self.slug
-            queryset = Vacancy.objects.filter(slug=self.slug)
+            queryset = self.__class__.objects.filter(slug=self.slug)
             counter = 1
             while queryset.exists():
                 self.slug = f"{original_slug}-{counter}"
                 counter += 1
-                queryset = Vacancy.objects.filter(slug=self.slug)
+                queryset = self.__class__.objects.filter(slug=self.slug)
         
-        super(Vacancy, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     def __str__(self) -> str:
         return self.position_title
@@ -117,10 +117,11 @@ class Vacancy(models.Model):
         )
         return vacancies
 
+class Vacancy(BaseVacancy):
+    employer = models.ForeignKey(Employer, related_name='vacancies', on_delete=models.CASCADE)
 
-class ExpiredVacancy(Vacancy):
-    class Meta:
-        db_table = 'vacancy_expired'
+# class ExpiredVacancy(BaseVacancy):
+#     employer = models.ForeignKey(Employer, related_name='expired_vacancies', on_delete=models.CASCADE)
 
 class Bookmark(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='bookmarks')
