@@ -84,12 +84,7 @@ def ajax_all_vacancy(request):
 
 @is_employer
 def expired_vacancy(request):
-    expired_vacancies_count = ExpiredVacancy.objects.filter(employer=request.user.employer).count()
-    context = {
-        'expired_vacancies_count': expired_vacancies_count
-    }
-
-    return render(request, 'dashboard/employer/expired-vacancies.html', context)
+    return render(request, 'dashboard/employer/expired-vacancies.html')
 
 def ajax_expired_vacancy(request):
     start:str = int(request.GET.get('start', 0))
