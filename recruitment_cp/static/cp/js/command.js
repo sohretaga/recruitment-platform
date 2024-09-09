@@ -8,8 +8,8 @@ $.ajaxSetup({
     complete: function () {
         $('body').css('cursor', 'default');
     },
-    error: function () {
-        tableConsole.innerText = 'Failure when operation performed...';
+    error: function (err) {
+        console.error(`Failure when operation performed: ${err}`);
     }
 });
 
