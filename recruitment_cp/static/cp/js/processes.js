@@ -42,16 +42,9 @@ function saveData() {
     });
 };
 
-async function updateHotDroplist(model, map) {
+async function updateHotDroplist(data, model, map) {
     try {
-        let resp = await $.ajax({
-            url: '/cp/load-source',
-            data: {...collectValues(), 'model': model},
-            dataType: 'json',
-            type: 'POST',
-        });
-        
-        let newSource = JSON.parse(resp);
+        let newSource = JSON.parse(data[model]);
         let settings = hot.getSettings();
         map[model].forEach(id => {
             settings.columns[id].source = newSource;
@@ -63,9 +56,17 @@ async function updateHotDroplist(model, map) {
 };
 
 async function loadSource(map) {
-    for (let model of Object.keys(map)) {
-        await updateHotDroplist(model, map);
-    };
+    $.ajax({
+        url: '/cp/load-source',
+        data: {...collectValues(), 'map': JSON.stringify(Object.keys(map))},
+        dataType: 'json',
+        type: 'POST',
+        success: (resp) => {
+            for (let model of Object.keys(map)) {
+                updateHotDroplist(resp, model, map);
+            };
+        }
+    });
 };
 
 function swal(title, content) {
