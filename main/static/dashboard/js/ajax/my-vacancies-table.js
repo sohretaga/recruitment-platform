@@ -4,7 +4,6 @@ $(document).ready(function() {
         dom: 'rt<"bottom"ilp>',
         lengthMenu: [10, 25, 50, 100],
         pageLength: 10,
-        // scrollX: true,
         autoWidth: false,
         columnDefs: [
             { width: "250px", targets: 1 }
