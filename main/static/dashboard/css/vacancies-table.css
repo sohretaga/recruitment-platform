@@ -1,0 +1,8 @@
+.position-title-col {
+    display: flex;
+    justify-content: space-between;
+}
+
+table.dataTable th {
+    text-align: center;
+}

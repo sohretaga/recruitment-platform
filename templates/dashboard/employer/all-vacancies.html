@@ -21,6 +21,8 @@
     <link href="{% static 'dashboard/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
     <!-- App Css-->
     <link href="{% static 'dashboard/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
+    <!-- Custom CSS -->
+     <link href="{% static 'dashboard/css/vacancies-table.css' %}" rel="stylesheet" type="text/css">
 {% endblock head %}
 
 {% block content %}
@@ -71,7 +73,7 @@
                             <table class="table table-centered datatable dt-responsive nowrap" data-page-length="10" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th>Job Position</th>
+                                        <th>Position Title</th>
                                         <th>Job Title</th>
                                         <th>Career Type</th>
                                         <th>Career Level</th>
