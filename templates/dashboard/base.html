@@ -218,14 +218,14 @@
                                 <a class="dropdown-item" href="/admin"><i class="ri-admin-line align-middle mr-1"></i> Admin</a>
                                 <a class="dropdown-item" href="{% url 'cp:vacancy' %}"><i class="ri-dashboard-line align-middle mr-1"></i> Control Panel</a>
                                 <a class="dropdown-item" href="{% url 'job:job-postings' %}"><i class="ri-briefcase-line align-middle mr-1"></i> Job Postings</a>
-                                <a class="dropdown-item" href="{% url 'job:applications' %}"><i class="ri-file-list-line align-middle mr-1"></i> My Applies</a>
+                                <a class="dropdown-item" href="{% url 'job:applications' %}"><i class="ri-file-list-line align-middle mr-1"></i> My Applications</a>
                                 <a class="dropdown-item" href="{% url 'user:company' user.username %}"><i class="ri-building-line align-middle mr-1"></i> Employer</a>
                                 <a class="dropdown-item" href="{% url 'user:candidate' user.username %}"><i class="ri-user-line align-middle mr-1"></i> Candidate</a>
                                 {% elif user.user_type == 'employer' %}
                                 <a class="dropdown-item" href="{% url 'job:job-postings' %}"><i class="ri-briefcase-line align-middle mr-1"></i> Job Postings</a>
                                 <a class="dropdown-item" href="{% url 'user:company' user.username %}"><i class="ri-building-line align-middle mr-1"></i> Employer</a>
                                 {% elif user.user_type == 'candidate' %}
-                                <a class="dropdown-item" href="{% url 'job:applications' %}"><i class="ri-file-list-line align-middle mr-1"></i> My Applies</a>
+                                <a class="dropdown-item" href="{% url 'job:applications' %}"><i class="ri-file-list-line align-middle mr-1"></i> My Applications</a>
                                 <a class="dropdown-item" href="{% url 'user:candidate' user.username %}"><i class="ri-user-line align-middle mr-1"></i> Candidate</a>
                                 {% endif %}
                                 <a class="dropdown-item" href="{% url 'job:bookmarks' %}"><i class="ri-bookmark-line align-middle mr-1"></i> Bookmarks</a>
@@ -303,7 +303,7 @@
                                 <li>
                                     <a href="{% url 'dashboard:applications' %}" class="waves-effect">
                                         <i class="ri-file-list-line"></i>
-                                        <span>My Applies</span>
+                                        <span>My Applications</span>
                                     </a>
                                 </li>
 
@@ -362,7 +362,7 @@
                                 <li>
                                     <a href="{% url 'dashboard:applications' %}" class="waves-effect">
                                         <i class="ri-list-settings-fill"></i>
-                                        <span>Your Applies</span>
+                                        <span>My Applications</span>
                                     </a>
                                 </li>
 

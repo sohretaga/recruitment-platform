@@ -37,7 +37,7 @@ def your_applies(request):
         'applications': applications
     }
 
-    return render(request, 'dashboard/candidate/your-applies.html', context)
+    return render(request, 'dashboard/candidate/my-applications.html', context)
 
 @is_candidate
 def manage_account(request):
