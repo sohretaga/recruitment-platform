@@ -1,8 +1,22 @@
-.position-title-col {
-    display: flex;
-    justify-content: space-between;
-}
-
 table.dataTable th {
     text-align: center;
+}
+
+.dataTables_length label {
+    padding-top: 0.70em;
+    white-space: nowrap;
+    margin-left: 10px;
+}
+
+.dataTables_info {
+    float: left;
+    margin-right: 10px;
+}
+
+.dataTables_length {
+    float: left;
+}
+
+.dataTables_paginate {
+    float: right;
 }

@@ -1,6 +1,7 @@
 // Table configuratusins
 $(document).ready(function() {
     var dataTable = $(".datatable").DataTable({
+        dom: 'rt<"bottom"ilp>',
         lengthMenu: [10, 25, 50, 100],
         pageLength: 10,
         // scrollX: true,
@@ -72,6 +73,10 @@ $(document).ready(function() {
         drawCallback: function() {
             $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
         }
+    });
+
+    $('#customSearch').on('keyup', function() {
+        dataTable.search(this.value).draw();
     });
 
     $('.datatable').on('click', '.delete-row', function(e) {

@@ -51,20 +51,8 @@
             <div class="col-lg">
                 <div class="card">
                     <div class="card-body">
-                        <div class="dropdown float-right">
-                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
-                                <i class="mdi mdi-dots-vertical"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item">Sales Report</a>
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item">Export Report</a>
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item">Profit</a>
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item">Action</a>
-                            </div>
+                        <div class="float-right">
+                            <input type="search" class="form-control form-control-sm" id="customSearch" placeholder="Search" aria-controls="DataTables_Table_0">
                         </div>
 
                         <h4 class="card-title mb-4">{{user.employer.vacancies.count}} Vacancies</h4>
