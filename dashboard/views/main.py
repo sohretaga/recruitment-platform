@@ -63,7 +63,7 @@ def faqs(request):
     if request.POST:
         ...
 
-    faqs = FAQ.objects.all()
+    faqs = FAQ.translation().values('id', 'category_name', 'question').order_by('category_name')
 
     context = {
         'faqs':faqs

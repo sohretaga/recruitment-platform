@@ -18,6 +18,14 @@ class FAQ(models.Model):
     question = models.TextField()
     answer = models.TextField()
 
+    @classmethod
+    def translation(cls):
+        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
+        faqs = cls.objects.annotate(
+            category_name=F(f'category__name_{language}'),
+        )
+        return faqs
+
 
 class Notification(models.Model):
     # For translation, the same texts must be written in translation.html
@@ -87,17 +95,10 @@ class HowItWork(models.Model):
     @classmethod
     def translation(cls):
         language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
-        match language:
-            case 'en':
-                how_it_work = cls.objects.annotate(
-                    title = F('title_en'),
-                    description = F('description_en')
-                ).all()
-            case 'tr':
-                how_it_work = cls.objects.annotate(
-                    title = F('title_tr'),
-                    description = F('description_tr')
-                ).all()
+        how_it_work = cls.objects.annotate(
+            title=F(f'title_{language}'),
+            description=F(f'description_{language}')
+        )
         return how_it_work
 
 class Team(models.Model):
