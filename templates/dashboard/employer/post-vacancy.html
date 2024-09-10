@@ -17,6 +17,8 @@
     <link href="{% static 'dashboard/css/app.css' %}" rel="stylesheet" type="text/css" />
     <!-- Ckeditor Css-->
     <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.css">
+    <!-- Custom CSS -->
+     <link rel="stylesheet" href="{% static 'dashboard/css/post-vacancy.css' %}">
 
 {% endblock head %}
 
@@ -29,7 +31,7 @@
             <div class="col-12">
                 <div class="page-title-box d-flex align-items-center justify-content-between">
                     {% if vacancy %}
-                        <div>
+                        <div class="action-bnt-group">
                             <a href="{% url 'dashboard:post-vacancy' %}"><label class="btn btn-info" type="button"><i class="mdi mdi-plus"></i>Add Vacancy</label></a>
                             <label class="btn btn-success" for='save' type="submit"><i class="mdi mdi-content-save"></i> Save</label>
                         </div>
