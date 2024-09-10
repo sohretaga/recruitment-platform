@@ -1,18 +1,12 @@
 // Table configuratusins
 $(document).ready(function() {
     var dataTable = $(".datatable").DataTable({
+        dom: 'rt<"bottom"ilp>',
         lengthMenu: [10, 25, 50, 100],
         pageLength: 10,
+        autoWidth: false,
         columnDefs: [
-            { width: '200px', targets: 0 },
-            { width: '150px', targets: 1 },
-            { width: '100px', targets: 2 },
-            { width: '100px', targets: 3 },
-            { width: '70px', targets: 4 },
-            { width: '70px', targets: 5 },
-            { width: '80px', targets: 6 },
-            { width: '50px', targets: 7 },
-            { width: '50px', targets: 8 },
+            { width: '250px', targets: 1 },
         ],
         columns: columns = [
             { orderable: false },
@@ -76,6 +70,10 @@ $(document).ready(function() {
         drawCallback: function() {
             $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
         }
+    });
+
+    $('#customSearch').on('keyup', function() {
+        dataTable.search(this.value).draw();
     });
 
 });
