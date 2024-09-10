@@ -38,7 +38,7 @@ class BaseVacancy(models.Model):
     salary_midpoint = models.IntegerField(default=0, null=True)
     salary_maximum = models.IntegerField(default=0, null=True)
 
-    keywords = models.JSONField(blank=True, null=True) # The keyword id is saving as a list
+    # keywords = models.JSONField(blank=True, null=True)
     delete = models.BooleanField(default=False)
     views = models.IntegerField(default=0)
     slug = models.SlugField(null=True)
