@@ -38,18 +38,7 @@ $(document).ready(function() {
         "columns": [
             { "data": null,
                 "render": function (data, type, row) {
-                    return `
-                        <div class="position-title-col">
-                            <div>
-                            <a href="/vacancy/${row[10]}" class="text-dark font-weight-bold" target='_blank'>${row[0]}</a>
-                            </div>
-
-                            <div>
-                                <a href="/dashboard/employer/vacancy/edit/${row[9]}" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top"><i class="mdi mdi-pencil font-size-18"></i></a>
-                                <a href="javascript:void(0);" data-id="${row[9]}" class="text-danger delete-row" data-toggle="tooltip" data-placement="top"><i class="mdi mdi-trash-can font-size-18"></i></a>
-                            </div>
-                        </div>
-                    `;
+                    return `<a href="/vacancy/${row[10]}" class="text-dark font-weight-bold" target='_blank'>${row[0]}</a>`;
                 }
             },
             { "data": 1 },
