@@ -28,7 +28,7 @@ def post_vacancy(request):
 
         if form.is_valid():
             keywords = form.cleaned_data.get('keywords')
-            instance.keywords.set(keywords)
+            instance.keywords.set(json.loads(keywords))
             instance = form.save(commit=False)
             instance.employer = request.user.employer
             instance.save()
@@ -137,7 +137,7 @@ def edit_vacancy(request, id):
         if form.is_valid():
             keywords = form.cleaned_data.get('keywords')
             instance = form.save(commit=False)
-            instance.keywords.set(keywords)
+            instance.keywords.set(json.loads(keywords))
             instance.save()
             return redirect(reverse('dashboard:all-vacancy'))
         
