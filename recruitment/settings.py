@@ -179,6 +179,9 @@ AUTH_USER_MODEL = 'user.CustomUser'
 
 LOGIN_URL = 'user:sign-in'
 
+REMEMBER_ME_TRUE_SESSION_DURATION = 60 * 60 * 24 * 30  # 1 month (30 day)
+REMEMBER_ME_FALSE_SESSION_DURATION = 60 * 60 * 24 * 5  # 5 weeks
+
 CKEDITOR_UPLOAD_PATH = 'ckeditor/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

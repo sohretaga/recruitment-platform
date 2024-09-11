@@ -48,11 +48,18 @@ def sign_in(request):
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
+            remember_me = form.cleaned_data.get('remember_me')
             user = authenticate(request, username=username, password=password)
 
             if user:
                 login(request, user=user)
                 next_url = request.GET.get('next', '/')
+
+                if remember_me:
+                    request.session.set_expiry(settings.REMEMBER_ME_TRUE_SESSION_DURATION)
+                else:
+                    request.session.set_expiry(settings.REMEMBER_ME_FALSE_SESSION_DURATION)
+
                 return redirect(next_url)
             else:
                 messages.error(request, 'Username or password is wrong!')

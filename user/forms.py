@@ -4,6 +4,7 @@ from .models import CustomUser
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=65)
     password = forms.CharField(max_length=65)
+    remember_me = forms.BooleanField(required=False)
 
 class CustomUserCreationForm(forms.ModelForm):
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
