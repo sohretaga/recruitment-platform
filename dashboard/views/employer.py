@@ -137,6 +137,7 @@ def edit_vacancy(request, id):
         if form.is_valid():
             keywords = form.cleaned_data.get('keywords')
             instance = form.save(commit=False)
+            print(keywords, type(keywords))
             instance.keywords.set(json.loads(keywords))
             instance.save()
             return redirect(reverse('dashboard:all-vacancy'))

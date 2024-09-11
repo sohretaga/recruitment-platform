@@ -36,7 +36,7 @@ $.ajaxSetup({
         // Update hidden input on change
         i("#keywordsSelect").on('change', function() {
             var selectedValues = i(this).val();
-            i("#keywordsInput").val(JSON.stringify(selectedValues));
+            i("#keywordsInput").val(`"[${selectedValues}]"`);
         });
     };
 
