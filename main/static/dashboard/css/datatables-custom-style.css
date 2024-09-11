@@ -20,3 +20,15 @@ table.dataTable th {
 .dataTables_paginate {
     float: right;
 }
+
+@media only screen and (max-width: 992px) {
+    .bottom {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .dataTables_info {
+        margin-right: 0;
+    }
+}

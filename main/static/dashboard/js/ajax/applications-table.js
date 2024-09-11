@@ -3,6 +3,7 @@ $(document).ready(function() {
     var dataTable = $(".datatable").DataTable({
         dom: 'rt<"bottom"ilp>',
         lengthMenu: [10, 25, 50, 100],
+        scrollX: true,
         pageLength: 10,
         columns: [
             { orderable: false },
