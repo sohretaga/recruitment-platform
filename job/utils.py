@@ -99,67 +99,65 @@ def fetch_vacancies(request) -> dict:
 
         # lower salary range
         if salary_range_lower:
-            params['salary__gte'] = salary_range_lower
+            params.update({'salary__gte': salary_range_lower})
 
         # upper salary range
         if salary_range_upper:
-            params['salary__lte'] = salary_range_upper
+            params.update({'salary__lte': salary_range_upper})
 
     if work_experience := request.GET.get('work-experience'):
         url += f'&work-experience={work_experience}'
-        params['work_experience_name__in'] = work_experience.split(',')
-
+        params.update({'work_experience_name__in': work_experience.split(',')})
+    
     if employment_type := request.GET.get('employment-type'):
         url += f'&employment-type={employment_type}'
-        params['employment_type_name__in'] = employment_type.split(',')
-
+        params.update({'employment_type_name__in': employment_type.split(',')})
+    
     if sector := request.GET.get('sector'):
         url += f'&sector={sector}'
-        params['employer_sector'] = sector
+        params.update({'employer_sector': sector})
 
     if department := request.GET.get('department'):
         url += f'&department={department}'
-        params['department_name__in'] = department.split(',')
+        params.update({'department_name__in': department.split(',')})
 
     if work_preference := request.GET.get('work-preference'):
         url += f'&work-preference={work_preference}'
-        params['work_preference_name__in'] = work_preference.split(',')
+        params.update({'work_preference_name__in': work_preference.split(',')})
 
     if career_type := request.GET.get('career-type'):
         url += f'&career-type={career_type}'
-        params['career_type_name__in'] = career_type.split(',')
+        params.update({'career_type_name__in': career_type.split(',')})
 
     if date := request.GET.get('date'):
         url += f'&date={date}'
-        params['created_date__gte'] = timezone.now() - timedelta(hours=int(date))
+        params.update({'created_date__gte': timezone.now() - timedelta(hours=int(date))})
 
     if location := request.GET.get('location'):
         url += f'&location={location}'
-        params['location_name'] = location
+        params.update({'location_name': location})
 
     if job_family := request.GET.get('job-family'):
         url += f'&job-family={job_family}'
-        params['job_title__job_family'] = job_family
+        params.update({'job_title__job_family': job_family})
 
     if trending := request.GET.get('trending'):
         url += f'&trending={trending}'
-        params['job_title_name'] = trending
-
+        params.update({'job_title_name': trending})
+    
     # filter settings for view more
     if job_title := request.GET.get('job-title'):
         url += f'&job-title={job_title}'
-        params['job_title_name'] = job_title
-
+        params.update({'job_title_name': job_title})
+    
     if company := request.GET.get('company'):
         url += f'&company={company}'
-        params['employer__user__first_name'] = company
-
+        params.update({'employer__user__first_name': company})
     # end
 
     if keyword := request.GET.get('keyword'):
         url += f'&keyword={keyword}'
-        params['keywords_names__contains'] = keyword
-
+        # params.update({'keywords__contains': keyword})
 
     filtered_vacancies = vacancy_with_related_info(Vacancy.translation_for_filter().filter(**params))
 

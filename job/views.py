@@ -287,7 +287,8 @@ def ajax_filter_vacancies(request):
             params['created_date__gte'] = timezone.now() - timedelta(hours=int(date))
 
         if keyword := data.get('keyword'):
-            params['keywords__in'] = keyword
+            # params['keywords_names__custom_contains'] = keyword
+            ...
 
         if location := data.get('location'):
             params['location_name'] = location
