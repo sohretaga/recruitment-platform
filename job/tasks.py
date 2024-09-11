@@ -8,7 +8,7 @@ def move_expired_vacancies():
     expired_vacancies = Vacancy.objects.filter(ending_date__lt=now)
 
     for vacancy in expired_vacancies:
-        ExpiredVacancy.objects.create(
+        expired_vacancy = ExpiredVacancy.objects.create(
             no=vacancy.no,
             language=vacancy.language,
             position_title=vacancy.position_title,
@@ -26,7 +26,6 @@ def move_expired_vacancies():
             salary_minimum=vacancy.salary_minimum,
             salary_midpoint=vacancy.salary_midpoint,
             salary_maximum=vacancy.salary_maximum,
-            keywords=vacancy.keywords,
             delete=vacancy.__dict__['delete'],
             views=vacancy.views,
             slug=vacancy.slug,
@@ -42,5 +41,7 @@ def move_expired_vacancies():
             ending_date=vacancy.ending_date,
             published_date=vacancy.published_date,
         )
+
+        expired_vacancy.keywords.set(vacancy.keywords.all())
 
         vacancy.__class__.objects.filter(id=vacancy.id).delete()

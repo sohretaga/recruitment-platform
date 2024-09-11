@@ -178,7 +178,7 @@ const generatePagination = (paginationInfo) => {
 
 };
 
-const listVacancies = (texts, vacanciesInfo, keywords) => {
+const listVacancies = (texts, vacanciesInfo) => {
     const container = document.getElementById('job-list-container');
     container.innerHTML = ''; // Clear existing content
 
@@ -220,21 +220,21 @@ const listVacancies = (texts, vacanciesInfo, keywords) => {
             <div class="p-3 bg-light">
                 <div class="row justify-content-between">
                     <div class="col-md-7">
-                    ${vacancy.keywords ? `
                         <div>
                             <ul class="list-inline mb-0">
                                 <li class="list-inline-item"><i class="uil uil-tag"></i> ${texts.keywords} :</li>
                                 ${(() => {
                                     let itemsHtml = '';
-                                    const lastItem = vacancy.keywords.length-1;
-                                    vacancy.keywords.forEach((key, idx) => {
-                                        itemsHtml += `<li class="list-inline-item"><a href="javascript:void(0)" class="primary-link text-muted" onclick="filterByKeyword('${key}')">${keywords[parseInt(key)]}${idx===lastItem?'':','}</a></li>`;
+                                    const lastItem = vacancy.keywords_names.length-1;
+                                    vacancy.keywords_names.forEach((key, idx) => {
+                                        if (key != null){
+                                            itemsHtml += `<li class="list-inline-item"><a href="javascript:void(0)" class="primary-link text-muted" onclick="filterByKeyword('${key}')">${key}${idx===lastItem?'':','}</a></li>`;
+                                        }
                                     });
                                     return itemsHtml;
                                 })()}
                             </ul>
                         </div>
-                    `:''}
                     </div>
                     <div class="col-md-4">
                         <div class="text-md-end">
@@ -281,7 +281,6 @@ const filterRequest = () => {
                     delete_application: response.delete_application_text
                 },
                 response.vacancies,
-                response.keywords
             );
         }
 
@@ -300,10 +299,12 @@ const filterByKeyword = (keywordId) => {
             );
 
             listVacancies(
+                {
+                    keywords: response.keywords_text,
+                    apply_now: response.apply_now_text,
+                    delete_application: response.delete_application_text
+                },
                 response.vacancies,
-                response.bookmarks,
-                response.applications,
-                response.keywords
             );
         }
 
@@ -453,7 +454,6 @@ searchInput.addEventListener('input', function() {
                     delete_application: response.delete_application_text
                 },
                 response.vacancies,
-                response.keywords
             );
         }
     })

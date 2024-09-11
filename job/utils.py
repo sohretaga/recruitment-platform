@@ -41,13 +41,11 @@ def get_vacancies_context(request, vacancies) -> dict:
     ).values(
         'id', 'employer_username', 'profile_photo_url', 'company_name',
         'slug', 'position_title', 'location_name', 'salary_minimum',
-        'salary_maximum', 'work_experience_name', 'keywords', 'user_id',
+        'salary_maximum', 'work_experience_name', 'keywords_names', 'user_id',
         'anonium', 'employer_sector', 'is_bookmarked', 'is_applied'
     )
 
     vacancies_list = list(vacancies)
-    keyword_list = list(models.ParameterKeyword.translation().values('id', 'name'))
-    keywords = {item['id']: item['name'] for item in keyword_list}
 
     pagination_info = {
         'has_next': vacancies_page.has_next(),
@@ -59,7 +57,6 @@ def get_vacancies_context(request, vacancies) -> dict:
     context = {
         'vacancies': vacancies_list,
         'pagination': pagination_info,
-        'keywords': keywords
     }
 
     context['keywords_text'] = tr('Keywords')
@@ -102,65 +99,67 @@ def fetch_vacancies(request) -> dict:
 
         # lower salary range
         if salary_range_lower:
-            params.update({'salary__gte': salary_range_lower})
+            params['salary__gte'] = salary_range_lower
 
         # upper salary range
         if salary_range_upper:
-            params.update({'salary__lte': salary_range_upper})
+            params['salary__lte'] = salary_range_upper
 
     if work_experience := request.GET.get('work-experience'):
         url += f'&work-experience={work_experience}'
-        params.update({'work_experience_name__in': work_experience.split(',')})
-    
+        params['work_experience_name__in'] = work_experience.split(',')
+
     if employment_type := request.GET.get('employment-type'):
         url += f'&employment-type={employment_type}'
-        params.update({'employment_type_name__in': employment_type.split(',')})
-    
+        params['employment_type_name__in'] = employment_type.split(',')
+
     if sector := request.GET.get('sector'):
         url += f'&sector={sector}'
-        params.update({'employer_sector': sector})
+        params['employer_sector'] = sector
 
     if department := request.GET.get('department'):
         url += f'&department={department}'
-        params.update({'department_name__in': department.split(',')})
+        params['department_name__in'] = department.split(',')
 
     if work_preference := request.GET.get('work-preference'):
         url += f'&work-preference={work_preference}'
-        params.update({'work_preference_name__in': work_preference.split(',')})
+        params['work_preference_name__in'] = work_preference.split(',')
 
     if career_type := request.GET.get('career-type'):
         url += f'&career-type={career_type}'
-        params.update({'career_type_name__in': career_type.split(',')})
+        params['career_type_name__in'] = career_type.split(',')
 
     if date := request.GET.get('date'):
         url += f'&date={date}'
-        params.update({'created_date__gte': timezone.now() - timedelta(hours=int(date))})
+        params['created_date__gte'] = timezone.now() - timedelta(hours=int(date))
 
     if location := request.GET.get('location'):
         url += f'&location={location}'
-        params.update({'location_name': location})
+        params['location_name'] = location
 
     if job_family := request.GET.get('job-family'):
         url += f'&job-family={job_family}'
-        params.update({'job_title__job_family': job_family})
+        params['job_title__job_family'] = job_family
 
     if trending := request.GET.get('trending'):
         url += f'&trending={trending}'
-        params.update({'job_title_name': trending})
-    
+        params['job_title_name'] = trending
+
     # filter settings for view more
     if job_title := request.GET.get('job-title'):
         url += f'&job-title={job_title}'
-        params.update({'job_title_name': job_title})
-    
+        params['job_title_name'] = job_title
+
     if company := request.GET.get('company'):
         url += f'&company={company}'
-        params.update({'employer__user__first_name': company})
+        params['employer__user__first_name'] = company
+
     # end
 
     if keyword := request.GET.get('keyword'):
         url += f'&keyword={keyword}'
-        params.update({'keywords__contains': keyword})
+        params['keywords_names__contains'] = keyword
+
 
     filtered_vacancies = vacancy_with_related_info(Vacancy.translation_for_filter().filter(**params))
 
@@ -182,8 +181,6 @@ def fetch_vacancies(request) -> dict:
     career_types = models.ParameterCareerType.translation().values('id', 'name')
 
     popular_job_titles = Vacancy.translation().values('job_title_name').annotate(count=Count('job_title_name')).order_by('-count')[:6]
-    keyword_list = list(models.ParameterKeyword.translation().values('id', 'name'))
-    keywords = {item['id']: item['name'] for item in keyword_list}
 
     return {
         'vacancies': vacancies,
@@ -197,7 +194,6 @@ def fetch_vacancies(request) -> dict:
         'related_vacancies_title': job_title,
         'company': company,
         'popular_job_titles': popular_job_titles,
-        'keywords': keywords,
         'job_family': job_family,
         'date_posted': date_posted,
         'career_types': career_types

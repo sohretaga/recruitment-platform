@@ -260,43 +260,43 @@ def ajax_filter_vacancies(request):
         }
 
         if salary_range_lower := data.get('salary_range_lower'):
-            params.update({'salary__gte': salary_range_lower})
-        
+            params['salary__gte'] = salary_range_lower
+
         if salary_range_upper := data.get('salary_range_upper'):
-            params.update({'salary__lte': salary_range_upper})
+            params['salary__lte'] = salary_range_upper
 
         if work_experiences := data.get('work_experiences'):
-            params.update({'work_experience_name__in': work_experiences})
-        
+            params['work_experience_name__in'] = work_experiences
+
         if employment_type := data.get('employment_type'):
-            params.update({'employment_type_name__in': employment_type})    
+            params['employment_type_name__in'] = employment_type    
 
         if sector := data.get('sector'):
-            params.update({'employer_sector': sector})
+            params['employer_sector'] = sector
 
         if department := data.get('department'):
-            params.update({'department_name__in': department})
+            params['department_name__in'] = department
 
         if work_preference := data.get('work_preference'):
-            params.update({'work_preference_name__in': work_preference})
+            params['work_preference_name__in'] = work_preference
 
         if career_type := data.get('career_type'):
-            params.update({'career_type_name__in': career_type})
+            params['career_type_name__in'] = career_type
 
         if date := data.get('date_posted'):
-            params.update({'created_date__gte': timezone.now() - timedelta(hours=int(date))})
+            params['created_date__gte'] = timezone.now() - timedelta(hours=int(date))
 
         if keyword := data.get('keyword'):
-            params.update({'keywords__contains': keyword})
+            params['keywords__in'] = keyword
 
         if location := data.get('location'):
-            params.update({'location_name': location})
+            params['location_name'] = location
 
         if job_family := data.get('job_family'):
-            params.update({'job_title__job_family': job_family})
+            params['job_title__job_family'] = job_family
 
         if trending := data.get('trending'):
-            params.update({'job_title_name': trending})
+            params['job_title_name'] = trending
 
         context = get_vacancies_context(request, Vacancy.translation_for_filter().filter(**params))
 

@@ -535,8 +535,10 @@ def vacancy_load(request):
             
             match vacancy_type:
                 case 'active_vacancies':
-                    vacancies = Vacancy.translation().filter(language = language).select_related(
-                    'employer').annotate(company_name=F('employer__user__first_name'),
+                    vacancies = Vacancy.translation().filter(language = language).select_related('employer')\
+                        .annotate(
+                            company_name=F('employer__user__first_name',
+                        ),
                     ).values()[offset:offset+limit]
                 
                 case 'expired_vacancy':

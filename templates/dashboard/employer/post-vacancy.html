@@ -156,7 +156,7 @@
                                             <div class="col-lg-4">
                                                 <div class="form-group mb-0">
                                                     <label class="control-label">{% tr 'Keywords - DASHBOARD / POST VACANCY' %}</label>
-                                                    <input type="hidden" name="keywords" id="keywordsInput" {% if vacancy.keywords %}value="{{ vacancy.keywords }}"{% endif %}>
+                                                    <input type="hidden" name="keywords" id="keywordsInput" value="[{% for keyword in vacancy.keywords.all %}{{ keyword.id }}{% if not forloop.last %}, {% endif %}{% endfor %}]">
                                                     <select id="keywordsSelect" class="select2 form-control select2-multiple" multiple="multiple" data-placeholder="Choose ...">
                                                         {% for key in keywords %}
                                                             <option value="{{ key.id }}">{{ key.name }}</option>

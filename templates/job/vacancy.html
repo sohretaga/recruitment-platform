@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="{{ vacancy.definition|safe }}">
-<meta name="keywords" content="{% if vacancy.keywords %}{% for key in vacancy.keywords %}{{ keywords|get_item:key }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}">
+<meta name="keywords" content="{% for key in vacancy.keywords_names %}{{ key }}{% if not forloop.last %}, {% endif %}{% endfor %}">
 {% endblock meta %}
 
 {% block head %}

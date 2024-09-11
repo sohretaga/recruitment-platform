@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 from django.db.models import F, Case, When, CharField, Value
+from django.contrib.postgres.aggregates import ArrayAgg
 from django.core.cache import cache
 from django.conf import settings
 from ckeditor.fields import RichTextField
@@ -38,7 +39,7 @@ class BaseVacancy(models.Model):
     salary_midpoint = models.IntegerField(default=0, null=True)
     salary_maximum = models.IntegerField(default=0, null=True)
 
-    # keywords = models.JSONField(blank=True, null=True)
+    keywords = models.ManyToManyField(cp_models.ParameterKeyword, blank=True)
     delete = models.BooleanField(default=False)
     views = models.IntegerField(default=0)
     slug = models.SlugField(null=True)
@@ -93,7 +94,8 @@ class BaseVacancy(models.Model):
             work_experience_name = F(f'work_experience__name_{language}'),
             work_preference_name = F(f'work_preference__name_{language}'),
             department_name = F(f'department__name_{language}'),
-            employer_sector = F(f'employer__sector__name_{language}')
+            employer_sector = F(f'employer__sector__name_{language}'),
+            keywords_names=ArrayAgg(f'keywords__name_{language}', distinct=True)
         )
 
         return vacancies
@@ -112,8 +114,8 @@ class BaseVacancy(models.Model):
             work_preference_name = F(f'work_preference__name_{language}'),
             career_type_name = F(f'career_type__name_{language}'),
             job_title_name = F(f'job_title__name_{language}'),
-            employer_sector = F(f'employer__sector__name_{language}')
-
+            employer_sector = F(f'employer__sector__name_{language}'),
+            keywords_names=ArrayAgg(f'keywords__name_{language}', distinct=True)
         )
         return vacancies
 
