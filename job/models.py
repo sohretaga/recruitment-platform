@@ -96,7 +96,7 @@ class BaseVacancy(models.Model):
             department_name = F(f'department__name_{language}'),
             employer_sector = F(f'employer__sector__name_{language}'),
             keywords_names=ArrayAgg(f'keywords__name_{language}', distinct=True)
-        )
+        ).order_by('-created_date')
 
         return vacancies
     
@@ -116,7 +116,7 @@ class BaseVacancy(models.Model):
             job_title_name = F(f'job_title__name_{language}'),
             employer_sector = F(f'employer__sector__name_{language}'),
             keywords_names=ArrayAgg(f'keywords__name_{language}', distinct=True)
-        )
+        ).order_by('-created_date')
         return vacancies
 
 class Vacancy(BaseVacancy):
