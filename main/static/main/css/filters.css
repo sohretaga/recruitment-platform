@@ -85,6 +85,6 @@ body[data-layout-mode="dark"] .sectors-btn {
   }
 
   .sectors {
-      min-width: 150px;
+      min-width: 100px;
   }
 }
