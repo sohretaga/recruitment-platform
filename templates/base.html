@@ -265,10 +265,10 @@
                                     {% if user.is_superuser %}
                                         <li><a class="dropdown-item" href="{% url 'user:company' user.username %}">{% tr 'My Profile' %} ({% tr 'Employer' %})</a></li>
                                         <li><a class="dropdown-item" href="{% url 'user:candidate' user.username %}">{% tr 'My Profile' %} ({% tr 'Candidate' %})</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'job:job-postings' %}">{% tr 'Job Postings' %}</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'job:job-postings' %}">{% tr 'My Postings' %}</a></li>
                                         <li><a class="dropdown-item" href="{% url 'job:applications' %}">{% tr 'My Applies' %}</a></li>
                                     {% elif user.user_type == 'employer' %}
-                                        <li><a class="dropdown-item" href="{% url 'job:job-postings' %}">{% tr 'Job Postings' %}</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'job:job-postings' %}">{% tr 'My Postings' %}</a></li>
                                     {% elif user.user_type == 'candidate' %}
                                         <li><a class="dropdown-item" href="{% url 'job:applications' %}">{% tr 'My Applies' %}</a></li>
                                     {% endif %}
