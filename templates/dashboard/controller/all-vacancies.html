@@ -1,7 +1,8 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
+{% load translate %}
 
-{% block title %}All Vacancy{% endblock title %}
+{% block title %}{% tr 'All Vacancies - DASHBOARD / ALL VACANCIES' %}{% endblock title %}
 
 {% block head %}
     <!-- DataTables -->
@@ -45,12 +46,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-flex align-items-center justify-content-between">
-                    <h4 class="mb-0">All Vacancies</h4>
+                    <h4 class="mb-0">{% tr 'All Vacancies - DASHBOARD / ALL VACANCIES' %}</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">General</a></li>
-                            <li class="breadcrumb-item active">All Vacancies</li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">{% tr 'General - DASHBOARD / ALL VACANCIES' %}</a></li>
+                            <li class="breadcrumb-item active">{% tr 'All Vacancies - DASHBOARD / ALL VACANCIES' %}</li>
                         </ol>
                     </div>
 
@@ -67,22 +68,22 @@
                             <input type="search" class="form-control form-control-sm" id="customSearch" placeholder="Search" aria-controls="DataTables_Table_0">
                         </div>
 
-                        <h4 class="card-title mb-4">{{ all_vacancies_count }} Vacancies</h4>
+                        <h4 class="card-title mb-4">{{ all_vacancies_count }} {% tr 'Vacancies - DASHBOARD / ALL VACANCIES' %}</h4>
 
                         <div class="table-responsive">
                             <table class="table table-centered datatable" data-page-length="10" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th>Position Title</th>
-                                        <th>Job Title</th>
-                                        <th>Status</th>
-                                        <th>Career Type</th>
-                                        <th>Career Level</th>
-                                        <th>Salary Min</th>
-                                        <th>Salary Mid</th>
-                                        <th>Salary Max</th>
-                                        <th>Salary</th>
-                                        <th>Views</th>
+                                        <th>{% tr 'Position Title - DASHBOARD / ALL VACANCIES' %}</th>
+                                        <th>{% tr 'Job Title - DASHBOARD / ALL VACANCIES' %}</th>
+                                        <th>{% tr 'Status - DASHBOARD / ALL VACANCIES' %}</th>
+                                        <th>{% tr 'Career Type - DASHBOARD / ALL VACANCIES' %}</th>
+                                        <th>{% tr 'Career Level - DASHBOARD / ALL VACANCIES' %}</th>
+                                        <th>{% tr 'Salary Min - DASHBOARD / ALL VACANCIES' %}</th>
+                                        <th>{% tr 'Salary Mid - DASHBOARD / ALL VACANCIES' %}</th>
+                                        <th>{% tr 'Salary Max - DASHBOARD / ALL VACANCIES' %}</th>
+                                        <th>{% tr 'Salary - DASHBOARD / ALL VACANCIES' %}</th>
+                                        <th>{% tr 'Views - DASHBOARD / ALL VACANCIES' %}</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>

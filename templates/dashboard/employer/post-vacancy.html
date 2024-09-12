@@ -2,7 +2,7 @@
 {% load static %}
 {% load translate %}
 
-{% block title %}Post Vacancy{% endblock title %}
+{% block title %}{% tr 'Post Vacancy - DASHBOARD / POST VACANCY' %}{% endblock title %}
 
 {% block head %}
     <link href="{% static 'dashboard/libs/select2/css/select2.min.css' %}" rel="stylesheet" type="text/css" />
@@ -32,17 +32,17 @@
                 <div class="page-title-box d-flex align-items-center justify-content-between">
                     {% if vacancy %}
                         <div class="action-bnt-group">
-                            <a href="{% url 'dashboard:post-vacancy' %}"><label class="btn btn-info" type="button"><i class="mdi mdi-plus"></i>Add Vacancy</label></a>
-                            <label class="btn btn-success" for='save' type="submit"><i class="mdi mdi-content-save"></i> Save</label>
+                            <a href="{% url 'dashboard:post-vacancy' %}"><label class="btn btn-info" type="button"><i class="mdi mdi-plus"></i>{% tr 'Add Vacancy - DASHBOARD / POST VACANCY' %}</label></a>
+                            <label class="btn btn-success" for='save' type="submit"><i class="mdi mdi-content-save"></i> {% tr 'Save - DASHBOARD / POST VACANCY' %}</label>
                         </div>
                     {% else %}
-                        <h4 class="mb-0">Post Vacancy</h4>
+                        <h4 class="mb-0">{% tr 'Post Vacancy - DASHBOARD / POST VACANCY' %}</h4>
                     {% endif %}
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Post Vacancy</li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">{% tr 'Dashboard - DASHBOARD / POST VACANCY' %}</a></li>
+                            <li class="breadcrumb-item active">{% tr 'Post Vacancy - DASHBOARD / POST VACANCY' %}</li>
                         </ol>
                     </div>
 

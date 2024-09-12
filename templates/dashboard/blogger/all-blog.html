@@ -1,7 +1,8 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
+{% load translate %}
 
-{% block title %}All Blogs{% endblock title %}
+{% block title %}{% tr 'All Blogs - DASHBOARD / ALL BLOG' %}{% endblock title %}
 
 {% block head %}
     <!-- DataTables -->
@@ -33,12 +34,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-flex align-items-center justify-content-between">
-                    <a href="{% url 'dashboard:post-blog' %}"><button class="btn btn-info" type="button"><i class="mdi mdi-plus"></i>Add Blog</button></a>
+                    <a href="{% url 'dashboard:post-blog' %}"><button class="btn btn-info" type="button"><i class="mdi mdi-plus"></i>{% tr 'Add Blog - DASHBOARD / ALL BLOG' %}</button></a>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Blog</a></li>
-                            <li class="breadcrumb-item active">All Blogs</li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">{% tr 'Blog - DASHBOARD / ALL BLOG' %}</a></li>
+                            <li class="breadcrumb-item active">{% tr 'All Blogs - DASHBOARD / ALL BLOG' %}</li>
                         </ol>
                     </div>
 
@@ -55,47 +56,34 @@
                             <input type="search" class="form-control form-control-sm" id="customSearch" placeholder="Search" aria-controls="DataTables_Table_0">
                         </div>
 
-                        <h4 class="card-title mb-4">All Blogs</h4>
+                        <h4 class="card-title mb-4">{% tr 'All Blogs - DASHBOARD / ALL BLOG' %}</h4>
 
                         <div class="table-responsive">
                             <table class="table table-centered datatable" data-page-length="10" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead class="thead-light">
                                     <tr>
-                                        {% comment %} <th style="width: 20px;">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="ordercheck">
-                                                <label class="custom-control-label" for="ordercheck">&nbsp;</label>
-                                            </div>
-                                        </th> {% endcomment %}
-                                        <th>Title</th>
-                                        <th>Date</th>
-                                        <th>Category</th>
-                                        <th>Views</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
+                                        <th>{% tr 'Title - DASHBOARD / ALL BLOG' %}</th>
+                                        <th>{% tr 'Date - DASHBOARD / ALL BLOG' %}</th>
+                                        <th>{% tr 'Category - DASHBOARD / ALL BLOG' %}</th>
+                                        <th>{% tr 'Views - DASHBOARD / ALL BLOG' %}</th>
+                                        <th>{% tr 'Status - DASHBOARD / ALL BLOG' %}</th>
+                                        <th>{% tr 'Action - DASHBOARD / ALL BLOG' %}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for blog in blogs %}
                                     <tr>
-                                        {% comment %} <td>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="ordercheck{{ blog.id }}">
-                                                <label class="custom-control-label" for="ordercheck{{ blog.id }}">&nbsp;</label>
-                                            </div>
-                                        </td> {% endcomment %}
-                                        
                                         <td><a href="{% url 'blog:detail' blog.slug %}" class="text-dark font-weight-bold" target='_blank'>{{ blog.title|title }}</a></td>
                                         <td>{{ blog.created_date|date:"M d, Y" }}</td>
                                         <td>{{ blog.category.name }}</td>
                                         <td><i class="mdi mdi-eye"></i> {{ blog.views }}</td>
                                         <td>
                                             {% if blog.status == 'published' %}
-                                                <div class="badge badge-soft-success font-size-12">Published</div>
+                                                <div class="badge badge-soft-success font-size-12">{% tr 'Published - DASHBOARD / ALL BLOG' %}</div>
                                             {% elif blog.status == 'draft' %}
-                                                <div class="badge badge-soft-warning font-size-12">Draft</div>
+                                                <div class="badge badge-soft-warning font-size-12">{% tr 'Draft - DASHBOARD / ALL BLOG' %}</div>
                                             {% elif blog.status == 'deactivated' %}
-                                                <div class="badge badge-soft-danger font-size-12">Deactivated</div>
+                                                <div class="badge badge-soft-danger font-size-12">{% tr 'Deactivated - DASHBOARD / ALL BLOG' %}</div>
                                             {% endif %}
                                         </td>
                                         <td>

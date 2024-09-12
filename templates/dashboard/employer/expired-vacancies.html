@@ -1,7 +1,8 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
+{% load translate %}
 
-{% block title %}Expired Vacancies{% endblock title %}
+{% block title %}{% tr 'Expired Vacancies - DASHBOARD / EXPIRED VACANCIES' %}{% endblock title %}
 
 {% block head %}
     <!-- DataTables -->
@@ -33,12 +34,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-flex align-items-center justify-content-between">
-                    <a href="{% url 'dashboard:post-vacancy' %}"><button class="btn btn-info" type="button"><i class="mdi mdi-plus"></i>Add Vacancy</button></a>
+                    <a href="{% url 'dashboard:post-vacancy' %}"><button class="btn btn-info" type="button"><i class="mdi mdi-plus"></i>{% tr 'Add Vacancy - DASHBOARD / EXPIRED VACANCIES' %}</button></a>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Vacancies</a></li>
-                            <li class="breadcrumb-item active">Expired Vacancy</li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">{% tr 'Vacancies - DASHBOARD / EXPIRED VACANCIES' %}</a></li>
+                            <li class="breadcrumb-item active">{% tr 'Expired Vacancies - DASHBOARD / EXPIRED VACANCIES' %}</li>
                         </ol>
                     </div>
 
@@ -55,23 +56,23 @@
                             <input type="search" class="form-control form-control-sm" id="customSearch" placeholder="Search" aria-controls="DataTables_Table_0">
                         </div>
 
-                        <h4 class="card-title mb-4">{{user.employer.expired_vacancies.count}} Vacancies</h4>
+                        <h4 class="card-title mb-4">{{user.employer.expired_vacancies.count}} {% tr 'Vacancies - DASHBOARD / EXPIRED VACANCIES' %}</h4>
 
                         <div class="table-responsive">
                             <table class="table table-centered datatable" data-page-length="10" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th>Position Title</th>
-                                        <th>Job Title</th>
-                                        <th>Career Type</th>
-                                        <th>Career Level</th>
-                                        <th>Salary Min</th>
-                                        <th>Salary Mid</th>
-                                        <th>Salary Max</th>
-                                        <th>Salary</th>
-                                        <th>Views</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
+                                        <th>{% tr 'Position Title - DASHBOARD / EXPIRED VACANCIES' %}</th>
+                                        <th>{% tr 'Job Title - DASHBOARD / EXPIRED VACANCIES' %}</th>
+                                        <th>{% tr 'Career Type - DASHBOARD / EXPIRED VACANCIES' %}</th>
+                                        <th>{% tr 'Career Level - DASHBOARD / EXPIRED VACANCIES' %}</th>
+                                        <th>{% tr 'Salary Min - DASHBOARD / EXPIRED VACANCIES' %}</th>
+                                        <th>{% tr 'Salary Mid - DASHBOARD / EXPIRED VACANCIES' %}</th>
+                                        <th>{% tr 'Salary Max - DASHBOARD / EXPIRED VACANCIES' %}</th>
+                                        <th>{% tr 'Salary - DASHBOARD / EXPIRED VACANCIES' %}</th>
+                                        <th>{% tr 'Views - DASHBOARD / EXPIRED VACANCIES' %}</th>
+                                        <th>{% tr 'Status - DASHBOARD / EXPIRED VACANCIES' %}</th>
+                                        <th>{% tr 'Action - DASHBOARD / EXPIRED VACANCIES' %}</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>

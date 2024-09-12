@@ -1,4 +1,5 @@
 {% load static %}
+{% load translate %}
 
 <!doctype html>
 <html lang="en">
@@ -71,7 +72,7 @@
                         <!-- App Search-->
                         <form class="app-search d-none d-lg-block">
                             <div class="position-relative">
-                                <input type="text" class="form-control" placeholder="Search...">
+                                <input type="text" class="form-control" placeholder="{% tr 'Search - DASHBOARD / NAV' %}...">
                                 <span class="ri-search-line"></span>
                             </div>
                         </form>
@@ -91,7 +92,7 @@
                                 <form class="p-3">
                                     <div class="form-group m-0">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Search ...">
+                                            <input type="text" class="form-control" placeholder="{% tr 'Search - DASHBOARD / NAV' %}...">
                                             <div class="input-group-append">
                                                 <button class="btn btn-primary" type="submit"><i class="ri-search-line"></i></button>
                                             </div>
@@ -111,10 +112,10 @@
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a href="javascript:void(0);" class="dropdown-item notify-item language" data-code="tr">
-                                    <img src="{% static 'main/images/flags/turkish.jpg' %}" alt="user-image" class="mr-1" height="12"> <span class="align-middle">Turkic</span>
+                                    <img src="{% static 'main/images/flags/turkish.jpg' %}" alt="user-image" class="mr-1" height="12"> <span class="align-middle">{% tr 'Turkic - DASHBOARD / NAV' %}</span>
                                 </a>
                                 <a href="javascript:void(0);" class="dropdown-item notify-item language" data-code="en">
-                                    <img src="{% static 'main/images/flags/british.jpg' %}" alt="user-image" class="mr-1" height="12"> <span class="align-middle">English</span>
+                                    <img src="{% static 'main/images/flags/british.jpg' %}" alt="user-image" class="mr-1" height="12"> <span class="align-middle">{% tr 'English - DASHBOARD / NAV' %}</span>
                                 </a>
                             </div>
                         </div>
@@ -221,24 +222,24 @@
                                 <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="{% url 'main:main-index' %}"><i class="ri-home-line align-middle mr-1"></i> Home</a>
+                                <a class="dropdown-item" href="{% url 'main:main-index' %}"><i class="ri-home-line align-middle mr-1"></i> {% tr 'Home - DASHBOARD / NAV' %}</a>
                                 {% if user.is_superuser %}
-                                <a class="dropdown-item" href="/admin"><i class="ri-admin-line align-middle mr-1"></i> Admin</a>
-                                <a class="dropdown-item" href="{% url 'cp:vacancy' %}"><i class="ri-dashboard-line align-middle mr-1"></i> Control Panel</a>
-                                <a class="dropdown-item" href="{% url 'job:job-postings' %}"><i class="ri-briefcase-line align-middle mr-1"></i> Job Postings</a>
-                                <a class="dropdown-item" href="{% url 'job:applications' %}"><i class="ri-file-list-line align-middle mr-1"></i> My Applications</a>
-                                <a class="dropdown-item" href="{% url 'user:company' user.username %}"><i class="ri-building-line align-middle mr-1"></i> Employer</a>
-                                <a class="dropdown-item" href="{% url 'user:candidate' user.username %}"><i class="ri-user-line align-middle mr-1"></i> Candidate</a>
+                                <a class="dropdown-item" href="/admin"><i class="ri-admin-line align-middle mr-1"></i> {% tr 'Admin - DASHBOARD / NAV' %}</a>
+                                <a class="dropdown-item" href="{% url 'cp:vacancy' %}"><i class="ri-dashboard-line align-middle mr-1"></i> {% tr 'Control Panel - DASHBOARD / NAV' %}</a>
+                                <a class="dropdown-item" href="{% url 'job:job-postings' %}"><i class="ri-briefcase-line align-middle mr-1"></i> {% tr 'Job Postings - DASHBOARD / NAV' %}</a>
+                                <a class="dropdown-item" href="{% url 'job:applications' %}"><i class="ri-file-list-line align-middle mr-1"></i> {% tr 'My Applications - DASHBOARD / NAV' %}</a>
+                                <a class="dropdown-item" href="{% url 'user:company' user.username %}"><i class="ri-building-line align-middle mr-1"></i> {% tr 'Employer - DASHBOARD / NAV' %}</a>
+                                <a class="dropdown-item" href="{% url 'user:candidate' user.username %}"><i class="ri-user-line align-middle mr-1"></i> {% tr 'Candidate - DASHBOARD / NAV' %}</a>
                                 {% elif user.user_type == 'employer' %}
-                                <a class="dropdown-item" href="{% url 'job:job-postings' %}"><i class="ri-briefcase-line align-middle mr-1"></i> Job Postings</a>
-                                <a class="dropdown-item" href="{% url 'user:company' user.username %}"><i class="ri-building-line align-middle mr-1"></i> Employer</a>
+                                <a class="dropdown-item" href="{% url 'job:job-postings' %}"><i class="ri-briefcase-line align-middle mr-1"></i> {% tr 'Job Postings - DASHBOARD / NAV' %}</a>
+                                <a class="dropdown-item" href="{% url 'user:company' user.username %}"><i class="ri-building-line align-middle mr-1"></i> {% tr 'Employer - DASHBOARD / NAV' %}</a>
                                 {% elif user.user_type == 'candidate' %}
-                                <a class="dropdown-item" href="{% url 'job:applications' %}"><i class="ri-file-list-line align-middle mr-1"></i> My Applications</a>
-                                <a class="dropdown-item" href="{% url 'user:candidate' user.username %}"><i class="ri-user-line align-middle mr-1"></i> Candidate</a>
+                                <a class="dropdown-item" href="{% url 'job:applications' %}"><i class="ri-file-list-line align-middle mr-1"></i> {% tr 'My Applications - DASHBOARD / NAV' %}</a>
+                                <a class="dropdown-item" href="{% url 'user:candidate' user.username %}"><i class="ri-user-line align-middle mr-1"></i> {% tr 'Candidate - DASHBOARD / NAV' %}</a>
                                 {% endif %}
-                                <a class="dropdown-item" href="{% url 'job:bookmarks' %}"><i class="ri-bookmark-line align-middle mr-1"></i> Bookmarks</a>
+                                <a class="dropdown-item" href="{% url 'job:bookmarks' %}"><i class="ri-bookmark-line align-middle mr-1"></i> {% tr 'Bookmarks - DASHBOARD / NAV' %}</a>
 
-                                <a class="dropdown-item text-danger" href="{% url 'user:sign-out' %}"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i> Logout</a>
+                                <a class="dropdown-item text-danger" href="{% url 'user:sign-out' %}"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i> {% tr 'Logout - DASHBOARD / NAV' %}</a>
                             </div>
                         </div>
             
@@ -256,99 +257,99 @@
                         <!-- Left Menu Start -->
                         <ul class="metismenu list-unstyled" id="side-menu">
                             {% if not request.user.is_superuser %}
-                                <li class="menu-title">Menu</li>
+                                <li class="menu-title">{% tr 'Menu - DASHBOARD / MENU' %}</li>
                             {% endif %}
 
                             {% if request.user.is_superuser %}
-                                <li class="menu-title">General</li>
+                                <li class="menu-title">{% tr 'General - DASHBOARD / MENU' %}</li>
 
                                 <li>
                                     <a href="{% url 'dashboard:bookmarks' %}" class="waves-effect">
                                         <i class="ri-heart-line"></i>
-                                        <span>Bookmarks</span>
+                                        <span>{% tr 'Bookmarks - DASHBOARD / MENU' %}</span>
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="{% url 'dashboard:faqs' %}" class="waves-effect">
                                         <i class="ri-question-line"></i>
-                                        <span>FAQ's</span>
+                                        <span>{% tr 'FAQ's - DASHBOARD / MENU' %}</span>
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="{% url 'dashboard:controller-all-vacancies' %}" class="waves-effect">
                                         <i class="ri-file-list-2-line"></i>
-                                        <span>All Vacancies</span>
+                                        <span>{% tr 'All Vacancies - DASHBOARD / MENU' %}</span>
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="{% url 'dashboard:employer-complete-register' %}" class="waves-effect">
                                         <i class="ri-user-follow-line"></i>
-                                        <span>Register (Employer)</span>
+                                        <span>{% tr 'Register (Employer) - DASHBOARD / MENU' %}</span>
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="{% url 'dashboard:candidate-complete-register' %}" class="waves-effect">
                                         <i class="ri-user-follow-line"></i>
-                                        <span>Register (Candidate)</span>
+                                        <span>{% tr 'Register (Candidate) - DASHBOARD / MENU' %}</span>
                                     </a>
                                 </li>
 
-                                <li class="menu-title">For Employer</li>
+                                <li class="menu-title">{% tr 'For Employer - DASHBOARD / MENU' %}</li>
 
                                 <li>
                                     <a href="{% url 'dashboard:all-vacancy' %}" class="waves-effect">
                                         <i class="ri-briefcase-line"></i>
-                                        <span>My Vacancies</span>
+                                        <span>{% tr 'My Vacancies - DASHBOARD / MENU' %}</span>
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="{% url 'dashboard:expired-vacancy' %}" class="waves-effect">
                                         <i class="ri-history-line"></i>
-                                        <span>Expired Vacancies</span>
+                                        <span>{% tr 'Expired Vacancies - DASHBOARD / MENU' %}</span>
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="{% url 'dashboard:post-vacancy' %}" class="waves-effect">
                                         <i class="ri-file-add-line"></i>
-                                        <span>Post Vacancy</span>
+                                        <span>{% tr 'Post Vacancy - DASHBOARD / MENU' %}</span>
                                     </a>
                                 </li>
 
-                                <li class="menu-title">For Candidate</li>
+                                <li class="menu-title">{% tr 'For Candidate - DASHBOARD / MENU' %}</li>
 
                                 <li>
                                     <a href="{% url 'dashboard:applications' %}" class="waves-effect">
                                         <i class="ri-file-list-line"></i>
-                                        <span>My Applications</span>
+                                        <span>{% tr 'My Applications - DASHBOARD / MENU' %}</span>
                                     </a>
                                 </li>
 
-                                <li class="menu-title">For Content</li>
+                                <li class="menu-title">{% tr 'For Content - DASHBOARD / MENU' %}</li>
 
                                 <li>
                                     <a href="{% url 'dashboard:all-blog' %}" class=" waves-effect">
                                         <i class="ri-profile-line"></i>
-                                        <span>All Blog</span>
+                                        <span>{% tr 'All Blog - DASHBOARD / MENU' %}</span>
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="{% url 'dashboard:post-blog' %}" class="waves-effect">
                                         <i class="ri-send-plane-line"></i>
-                                        <span>Post Blog</span>
+                                        <span>{% tr 'Post Blog - DASHBOARD / MENU' %}</span>
                                     </a>
                                 </li>
                                 
                                 <li>
                                     <a href="{% url 'dashboard:comments' %}" class="waves-effect">
                                         <i class="ri-chat-1-line"></i>
-                                        <span>Comments</span>
+                                        <span>{% tr 'Comments - DASHBOARD / MENU' %}</span>
                                     </a>
                                 </li>
                                 
@@ -356,63 +357,63 @@
                                 <li>
                                     <a href="{% url 'dashboard:all-vacancy' %}" class="waves-effect">
                                         <i class="ri-briefcase-line"></i>
-                                        <span>My Vacancies</span>
+                                        <span>{% tr 'My Vacancies - DASHBOARD / MENU' %}</span>
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="{% url 'dashboard:expired-vacancy' %}" class="waves-effect">
                                         <i class="ri-history-line"></i>
-                                        <span>Expired Vacancies</span>
+                                        <span>{% tr 'Expired Vacancies - DASHBOARD / MENU' %}</span>
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="{% url 'dashboard:post-vacancy' %}" class="waves-effect">
                                         <i class="ri-file-add-line"></i>
-                                        <span>Post Vacancy</span>
+                                        <span>{% tr 'Post Vacancy - DASHBOARD / MENU' %}</span>
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="{% url 'dashboard:bookmarks' %}" class="waves-effect">
                                         <i class="ri-heart-line"></i>
-                                        <span>Bookmarks</span>
+                                        <span>{% tr 'Bookmarks - DASHBOARD / MENU' %}</span>
                                     </a>
                                 </li>
                             {% elif request.user.user_type == 'candidate' %}
                                 <li>
                                     <a href="{% url 'dashboard:applications' %}" class="waves-effect">
                                         <i class="ri-list-settings-fill"></i>
-                                        <span>My Applications</span>
+                                        <span>{% tr 'My Applications - DASHBOARD / MENU' %}</span>
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="{% url 'dashboard:bookmarks' %}" class="waves-effect">
                                         <i class="ri-heart-line"></i>
-                                        <span>Bookmarks</span>
+                                        <span>{% tr 'Bookmarks - DASHBOARD / MENU' %}</span>
                                     </a>
                                 </li>
                             {% elif request.user.user_type == 'blogger' %}
                                 <li>
                                     <a href="{% url 'dashboard:all-blog' %}" class=" waves-effect">
                                         <i class="ri-list-settings-fill"></i>
-                                        <span>All Blog</span>
+                                        <span>{% tr 'All Blog - DASHBOARD / MENU' %}</span>
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="{% url 'dashboard:post-blog' %}" class="waves-effect">
                                         <i class="ri-dashboard-line"></i>
-                                        <span>Post Blog</span>
+                                        <span>{% tr 'Post Blog - DASHBOARD / MENU' %}</span>
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="{% url 'dashboard:comments' %}" class="waves-effect">
                                         <i class="ri-chat-1-line"></i>
-                                        <span>Comments</span>
+                                        <span>{% tr 'Comments - DASHBOARD / MENU' %}</span>
                                     </a>
                                 </li>
                             {% endif %}

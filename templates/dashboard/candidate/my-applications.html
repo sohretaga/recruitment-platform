@@ -1,7 +1,8 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
+{% load translate %}
 
-{% block title %}My Applications{% endblock title %}
+{% block title %}{% tr 'My Applications - DASHBOARD / MY APPLICATIONS' %}{% endblock title %}
 
 {% block head %}
     <!-- DataTables -->
@@ -33,12 +34,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-flex align-items-center justify-content-between">
-                    <h4 class="mb-0">My Applications</h4>
+                    <h4 class="mb-0">{% tr 'My Applications - DASHBOARD / MY APPLICATIONS' %}</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
-                            <li class="breadcrumb-item active">My Applications</li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">{% tr 'Dashboard - DASHBOARD / MY APPLICATIONS' %}</a></li>
+                            <li class="breadcrumb-item active">{% tr 'My Applications - DASHBOARD / MY APPLICATIONS' %}</li>
                         </ol>
                     </div>
 
@@ -55,17 +56,17 @@
                             <input type="search" class="form-control form-control-sm" id="customSearch" placeholder="Search" aria-controls="DataTables_Table_0">
                         </div>
 
-                        <h4 class="card-title mb-4">Applications you send to vacancies</h4>
+                        <h4 class="card-title mb-4">{% tr 'Applications you send to vacancies - DASHBOARD / MY APPLICATIONS' %}</h4>
 
                         <div class="table-responsive">
                             <table class="table table-centered datatable" data-page-length="10" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th>Position Title</th>
-                                        <th>Job Title</th>
-                                        <th>Career Level</th>
-                                        <th>Company Name</th>
-                                        <th>Action</th>
+                                        <th>{% tr 'Position Title - DASHBOARD / MY APPLICATIONS' %}</th>
+                                        <th>{% tr 'Job Title - DASHBOARD / MY APPLICATIONS' %}</th>
+                                        <th>{% tr 'Career Level - DASHBOARD / MY APPLICATIONS' %}</th>
+                                        <th>{% tr 'Company Name - DASHBOARD / MY APPLICATIONS' %}</th>
+                                        <th>{% tr 'Action - DASHBOARD / MY APPLICATIONS' %}</th>
                                     </tr>
                                 </thead>
                                 <tbody>

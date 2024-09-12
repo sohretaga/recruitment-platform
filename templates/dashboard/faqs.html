@@ -1,7 +1,8 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
+{% load translate %}
 
-{% block title %}FAQ's{% endblock title %}
+{% block title %}{% tr 'FAQ's - DASHBOARD / FAQS' %}{% endblock title %}
 
 {% block head %}
     <!-- DataTables -->
@@ -33,12 +34,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-flex align-items-center justify-content-between">
-                    <a href="{% url 'dashboard:add-faq' %}"><button class="btn btn-info" type="button"><i class="mdi mdi-plus"></i>Add FAQ</button></a>
+                    <a href="{% url 'dashboard:add-faq' %}"><button class="btn btn-info" type="button"><i class="mdi mdi-plus"></i>{% tr 'Add FAQ - DASHBOARD / FAQS' %}</button></a>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
-                            <li class="breadcrumb-item active">FAQ's</li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">{% tr 'Dashboard - DASHBOARD / FAQS' %}</a></li>
+                            <li class="breadcrumb-item active">{% tr 'FAQ's - DASHBOARD / FAQS' %}</li>
                         </ol>
                     </div>
 
@@ -59,9 +60,9 @@
                             <table class="table table-centered datatable dt-responsive nowrap" data-page-length="10" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th>Category</th>
-                                        <th>Question</th>
-                                        <th>Action</th>
+                                        <th>{% tr 'Category - DASHBOARD / FAQS' %}</th>
+                                        <th>{% tr 'Question - DASHBOARD / FAQS' %}</th>
+                                        <th>{% tr 'Action - DASHBOARD / FAQS' %}</th>
                                     </tr>
                                 </thead>
                                 <tbody>

@@ -1,7 +1,8 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
+{% load translate %}
 
-{% block title %}Bookmarks{% endblock title %}
+{% block title %}{% tr 'Bookmarks - DASHBOARD / BOOKMARKS' %}{% endblock title %}
 
 {% block head %}
     <!-- DataTables -->
@@ -33,12 +34,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-flex align-items-center justify-content-between">
-                    <h4 class="mb-0">Your Bookmarks</h4>
+                    <h4 class="mb-0">{% tr 'Your Bookmarks - DASHBOARD / BOOKMARKS' %}</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Bookmarks</li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">{% tr 'Dashboard - DASHBOARD / BOOKMARKS' %}</a></li>
+                            <li class="breadcrumb-item active">{% tr 'Bookmarks - DASHBOARD / BOOKMARKS' %}</li>
                         </ol>
                     </div>
 
@@ -55,16 +56,16 @@
                             <input type="search" class="form-control form-control-sm" id="customSearch" placeholder="Search" aria-controls="DataTables_Table_0">
                         </div>
 
-                        <h4 class="card-title mb-4">{{ bookmarks.count }} Bookmarked Vacancies</h4>
+                        <h4 class="card-title mb-4">{{ bookmarks.count }} {% tr 'Bookmarked Vacancies - DASHBOARD / BOOKMARKS' %}</h4>
 
                         <div class="table-responsive">
                             <table class="table table-centered datatable" data-page-length="10" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th>Position Title</th>
-                                        <th>Company Name</th>
-                                        <th>Views</th>
-                                        <th>Action</th>
+                                        <th>{% tr 'Position Title - DASHBOARD / BOOKMARKS' %}</th>
+                                        <th>{% tr 'Company Name - DASHBOARD / BOOKMARKS' %}</th>
+                                        <th>{% tr 'Views - DASHBOARD / BOOKMARKS' %}</th>
+                                        <th>{% tr 'Action - DASHBOARD / BOOKMARKS' %}</th>
                                     </tr>
                                 </thead>
                                 <tbody>

@@ -1,11 +1,12 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
+{% load translate %}
 
 {% block title %}
     {% if blog %}
-        Edit - {{ faq.title|title }}
+        {% tr 'Edit - DASHBOARD / FAQS' %} - {{ faq.title|title }}
     {% else %}
-        Publish FAQ
+        {% tr 'Publish FAQ - DASHBOARD / FAQS' %}
     {% endif %}
 {% endblock title %}
 
@@ -28,20 +29,20 @@
                 <div class="page-title-box d-flex align-items-center justify-content-between">                        
                         {% if faq %}
                             <div>
-                                <a href="{% url 'dashboard:add-faq' %}"><label class="btn btn-info" type="button"><i class="mdi mdi-plus"></i>Add FAQ</label></a>
-                                <label class="btn btn-success" for='save' type="submit"><i class="mdi mdi-content-save"></i> Save</label>
+                                <a href="{% url 'dashboard:add-faq' %}"><label class="btn btn-info" type="button"><i class="mdi mdi-plus"></i>{% tr 'Add FAQ - DASHBOARD / FAQS' %}</label></a>
+                                <label class="btn btn-success" for='save' type="submit"><i class="mdi mdi-content-save"></i> {% tr 'Save - DASHBOARD / FAQS' %}</label>
                             </div>
                         {% else %}
-                            <label class="btn btn-primary" for='post' type="submit"><i class="mdi mdi-send"></i> Publish</label>
+                            <label class="btn btn-primary" for='post' type="submit"><i class="mdi mdi-send"></i> {% tr 'Publish - DASHBOARD / FAQS' %}</label>
                         {% endif %}
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">FAQ</a></li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">{% tr 'FAQ - DASHBOARD / FAQS' %}</a></li>
                             {% if faq %}
-                                <li class="breadcrumb-item active">Edit FAQ</li>
+                                <li class="breadcrumb-item active">{% tr 'Edit FAQ - DASHBOARD / FAQS' %}</li>
                             {% else %}
-                                <li class="breadcrumb-item active">Add FAQ</li>
+                                <li class="breadcrumb-item active">{% tr 'Add FAQ - DASHBOARD / FAQS' %}</li>
                             {% endif %}
                         </ol>
                     </div>
@@ -58,7 +59,7 @@
                         <form method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="form-group row">
-                                <label class="col-md-2 col-form-label">Select Category</label>
+                                <label class="col-md-2 col-form-label">{% tr 'Select Category - DASHBOARD / FAQS' %}</label>
                                 <div class="col-md-10">
                                     <select class="form-control" name="category">
                                         {% for category in categories %}
@@ -73,16 +74,16 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="example-text-input" class="col-md-2 col-form-label">Question</label>
+                                <label for="example-text-input" class="col-md-2 col-form-label">{% tr 'Question - DASHBOARD / FAQS' %}</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" name="question" type="text" placeholder="Example Question" id="example-text-input" value="{{ faq.question }}">
+                                    <input class="form-control" name="question" type="text" placeholder="{% tr 'Example Question - DASHBOARD / FAQS' %}" id="example-text-input" value="{{ faq.question }}">
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="example-text-input" class="col-md-2 col-form-label">Answer</label>
+                                <label for="example-text-input" class="col-md-2 col-form-label">{% tr 'Answer - DASHBOARD / FAQS' %}</label>
                                 <div class="col-md-10">
-                                    <textarea class="form-control" rows="10" placeholder="Example Answer" name="answer">{{ faq.answer }}</textarea>
+                                    <textarea class="form-control" rows="10" placeholder="{% tr 'Example Answe - DASHBOARD / FAQS' %}r" name="answer">{{ faq.answer }}</textarea>
                                 </div>
                             </div>
                             

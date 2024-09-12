@@ -1,8 +1,9 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
 {% load site_content %}
+{% load translate %}
 
-{% block title %}Edit Account{% endblock title %}
+{% block title %}{% tr 'Edit Account - DASHBOARD / EMPLOYER' %}{% endblock title %}
 
 {% block head %}
     <link href="{% static 'dashboard/libs/select2/css/select2.min.css' %}" rel="stylesheet" type="text/css" />
@@ -30,18 +31,18 @@
             <div class="col-12">
                 <div class="page-title-box d-flex align-items-center justify-content-between">
                     {% if 'complete' in request.path %}
-                    <h4 class="mb-0">Complete Your Register</h4>
+                    <h4 class="mb-0">{% tr 'Complete Your Register - DASHBOARD / EMPLOYER' %}</h4>
                     {% else %}
-                    <h4 class="mb-0">Edit Account</h4>
+                    <h4 class="mb-0">{% tr 'Edit Account - DASHBOARD / EMPLOYER' %}</h4>
                     {% endif %}
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">{% tr 'Dashboard - DASHBOARD / EMPLOYER' %}</a></li>
                             {% if 'complete' in request.path %}
-                            <li class="breadcrumb-item active">Register</li>
+                            <li class="breadcrumb-item active">{% tr 'Register - DASHBOARD / EMPLOYER' %}</li>
                             {% else %}
-                            <li class="breadcrumb-item active">Edit Account</li>
+                            <li class="breadcrumb-item active">{% tr 'Edit Account - DASHBOARD / EMPLOYER' %}</li>
                             {% endif %}
                         </ol>
                     </div>
@@ -67,7 +68,7 @@
                                         <img src="{% if user.profile_photo %}{{ user.profile_photo.url }}{% else %}{% static 'main/images/user/img-02.jpg' %}{% endif %}" class="rounded-circle img-thumbnail profile-img" id="profile-img" alt="">
                                         <input id="profile-img-file-input" type="file" class="profile-img-file-input" name="profile_photo" accept="image/*" onchange="previewImg(this)">     
                                         <span class="icon-center"><i class="ri-edit-line"></i></span>
-                                        <span class="profile-photo-text">Company Logo</span>
+                                        <span class="profile-photo-text">{% tr 'Company Logo - DASHBOARD / EMPLOYER' %}</span>
                                     </label>
                                     </div>
                                 </div>
@@ -77,7 +78,7 @@
                                         <img src="{% if user.employer.background_image %}{{ user.employer.background_image.url }}{% else %}{% static 'main/images/user/img-02.jpg' %}{% endif %}" class="img-thumbnail profile-img" id="background-img" alt="" style="width: 300px;">
                                         <input id="background-img-file-input" type="file" class="profile-img-file-input" name="background_image" accept="image/*" onchange="previewImg(this)">     
                                         <span class="icon-center"><i class="ri-edit-line"></i></span>
-                                        <span class="profile-photo-text">Background Image</span>
+                                        <span class="profile-photo-text">{% tr 'Background Image - DASHBOARD / EMPLOYER' %}</span>
                                     </label>
                                     </div>
                                 </div>
@@ -85,29 +86,29 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="first-name">Company Name</label>
+                                        <label for="first-name">{% tr 'Company Name - DASHBOARD / EMPLOYER' %}</label>
                                         <input type="text" class="form-control" id="first-name" name="first_name" placeholder="Company name" value="{{ user.first_name }}" required>
                                         <div class="invalid-feedback">This field is required!</div>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="last-name">Company Name (Legal)</label>
-                                        <input type="text" class="form-control" id="last-name" name="last_name" placeholder="Legal name" value="{{ user.last_name }}" required>
+                                        <label for="last-name">{% tr 'Company Name (Legal) - DASHBOARD / EMPLOYER' %}</label>
+                                        <input type="text" class="form-control" id="last-name" name="last_name" placeholder="{% tr 'Legal name - DASHBOARD / EMPLOYER' %}" value="{{ user.last_name }}" required>
                                         <div class="invalid-feedback">This field is required!</div>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="phone-number">Phone Number</label>
+                                        <label for="phone-number">{% tr 'Phone Number - DASHBOARD / EMPLOYER' %}</label>
                                         <input type="text" class="form-control" id="phone-number" name="phone_number" placeholder="Ex: +994 XX-XXX-XX-XX" value="{% if user.phone_number %}{{ user.phone_number }}{% endif %}" required>
                                         <div class="invalid-feedback">This field is required!</div>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="username">Username</label>
-                                        <input type="text" class="form-control" id="username" name="username" placeholder="Username" value="{{ user.username }}" required>
+                                        <label for="username">{% tr 'Username - DASHBOARD / EMPLOYER' %}</label>
+                                        <input type="text" class="form-control" id="username" name="username" placeholder="{% tr 'Username - DASHBOARD / EMPLOYER' %}" value="{{ user.username }}" required>
                                         <div class="invalid-feedback">This field is required!</div>
                                     </div>
                                 </div>
@@ -115,7 +116,7 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label class="control-label">Sector</label>
+                                        <label class="control-label">{% tr 'Sector - DASHBOARD / EMPLOYER' %}</label>
                                         <select class="form-control select2" name="sector">
                                             {% for sector in sectors %}
                                                 {% if sector.id == user.employer.sector.id %}
@@ -129,7 +130,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label class="control-label">Number of Employees</label>
+                                        <label class="control-label">{% tr 'Number of Employees - DASHBOARD / EMPLOYER' %}</label>
                                         <select class="form-control select2" name="number_of_employees">
                                             {% for number in number_of_employees %}
                                                 {% if number.id == user.employer.number_of_employees.id %}
@@ -143,7 +144,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label class="control-label">Organization Ownership</label>
+                                        <label class="control-label">{% tr 'Organization Ownership - DASHBOARD / EMPLOYER' %}</label>
                                         <select class="form-control select2" name="organization_ownership">
                                             {% for ownership in organization_ownerships %}
                                                 {% if ownership.id == user.employer.organization_ownership.id %}
@@ -157,7 +158,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label class="control-label">Organization Type</label>
+                                        <label class="control-label">{% tr 'Organization Type - DASHBOARD / EMPLOYER' %}</label>
                                         <select class="form-control select2" name="organization_type">
                                             {% for type in organization_types %}
                                                 {% if type.id == user.employer.organization_type.id %}
@@ -173,26 +174,26 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="primary-email">Primary Email</label>
+                                        <label for="primary-email">{% tr 'Primary Emai - DASHBOARD / EMPLOYER' %}l</label>
                                         <input type="text" class="form-control" id="primary-email" name="primary_email" placeholder="example@email.com" value="{{ user.employer.user.email }}" required>
                                         <div class="invalid-feedback">This field is required!</div>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="second-email">Second Email</label>
+                                        <label for="second-email">{% tr 'Second Email - DASHBOARD / EMPLOYER' %}</label>
                                         <input type="text" class="form-control" id="second-email" name="second_email" placeholder="example@email.com" value="{% if user.employer.second_email %}{{ user.employer.second_email }}{% endif %}">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="other-email">Other Email</label>
+                                        <label for="other-email">{% tr 'Other Email - DASHBOARD / EMPLOYER' %}</label>
                                         <input type="text" class="form-control" id="other-email" name="other_email" placeholder="example@email.com" value="{% if user.employer.other_email %}{{ user.employer.other_email }}{% endif %}">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="certificate-of-registration">Certificate of Registration</label>
+                                        <label for="certificate-of-registration">{% tr 'Certificate of Registration - DASHBOARD / EMPLOYER' %}</label>
                                         <div class="custom-file text-truncate">
                                             <input type="file" class="custom-file-input" id="certificate-of-registration" name="certificate_of_registration">
                                             <label class="custom-file-label " for="certificate-of-registration">{% if user.employer.certificate_of_registration %}{{ user.employer.certificate_of_registration }}{% else %}Choose file{% endif %}</label>
@@ -201,9 +202,9 @@
                                 </div>
                             </div>
                             {% if 'complete' in request.path %}
-                            <button class="btn btn-primary" type="submit">Complete!</button>
+                            <button class="btn btn-primary" type="submit">{% tr 'Complete! - DASHBOARD / EMPLOYER' %}</button>
                             {% else %}
-                            <button class="btn btn-primary" type="submit">Save</button>
+                            <button class="btn btn-primary" type="submit">{% tr 'Save - DASHBOARD / EMPLOYER' %}</button>
                             {% endif %}
                         </form>
                     </div>

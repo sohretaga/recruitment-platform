@@ -1,7 +1,8 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
+{% load translate %}
 
-{% block title %}Comments{% endblock title %}
+{% block title %}{% tr 'Comments - DASHBOARD / BLOG COMMENT' %}{% endblock title %}
 
 {% block head %}
     <!-- DataTables -->
@@ -33,12 +34,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-flex align-items-center justify-content-between">
-                    <a href="{% url 'dashboard:post-blog' %}"><button class="btn btn-info" type="button"><i class="mdi mdi-plus"></i>Add Blog</button></a>
+                    <a href="{% url 'dashboard:post-blog' %}"><button class="btn btn-info" type="button"><i class="mdi mdi-plus"></i>{% tr 'Add Blog - DASHBOARD / BLOG COMMENT' %}</button></a>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Blog</a></li>
-                            <li class="breadcrumb-item active">Comments</li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">{% tr 'Blog - DASHBOARD / BLOG COMMENT' %}</a></li>
+                            <li class="breadcrumb-item active">{% tr 'Comments - DASHBOARD / BLOG COMMENT' %}</li>
                         </ol>
                     </div>
 
@@ -55,16 +56,16 @@
                             <input type="search" class="form-control form-control-sm" id="customSearch" placeholder="Search" aria-controls="DataTables_Table_0">
                         </div>
 
-                        <h4 class="card-title mb-4">All Blogs</h4>
+                        <h4 class="card-title mb-4">{% tr 'All Blogs - DASHBOARD / BLOG COMMENT' %}</h4>
 
                         <div class="table-responsive">
                             <table class="table table-centered datatable" data-page-length="10" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th>Blog Title</th>
-                                        <th>Comment</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
+                                        <th>{% tr 'Blog Title - DASHBOARD / BLOG COMMENT' %}</th>
+                                        <th>{% tr 'Comment - DASHBOARD / BLOG COMMENT' %}</th>
+                                        <th>{% tr 'Status - DASHBOARD / BLOG COMMENT' %}</th>
+                                        <th>{% tr 'Action - DASHBOARD / BLOG COMMENT' %}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -76,13 +77,13 @@
                                             <select onchange="setStatus(this, '{{ comment.id }}')"
                                                 class="badge {% if comment.status == 'PUBLISHED' %}badge-soft-success{% elif comment.status == 'PENDING' %}badge-soft-warning{% else %}badge-soft-danger{% endif %} font-size-12 btn dropdown-toggle" >
                                                 <option value="PUBLISHED" {% if comment.status == 'PUBLISHED' %}selected{% endif %}>
-                                                    <div class="badge badge-soft-success font-size-12">Published</div>
+                                                    <div class="badge badge-soft-success font-size-12">{% tr 'Published - DASHBOARD / BLOG COMMENT' %}</div>
                                                 </option>
                                                 <option value="PENDING" {% if comment.status == 'PENDING' %}selected{% endif %}>
-                                                    <div class="badge badge-soft-warning font-size-12">Pending</div>
+                                                    <div class="badge badge-soft-warning font-size-12">{% tr 'Pending - DASHBOARD / BLOG COMMENT' %}</div>
                                                 </option>
                                                 <option value="DEACTIVATED" {% if comment.status == 'DEACTIVATED' %}selected{% endif %}>
-                                                    <div class="badge badge-soft-danger font-size-12">Deactivated</div>
+                                                    <div class="badge badge-soft-danger font-size-12">{% tr 'Deactivated - DASHBOARD / BLOG COMMENT' %}</div>
                                                 </option>
                                             </select>
                                         </td>
@@ -106,7 +107,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Edit Comment</h5>
+                        <h5 class="modal-title">{% tr 'Edit Comment - DASHBOARD / BLOG COMMENT' %}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -115,8 +116,8 @@
                         <textarea class="form-control" rows="4" id="edit-comment-area"></textarea>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary waves-effect waves-light" id="save-comment-btn">Save</button>
+                        <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">{% tr 'Close - DASHBOARD / BLOG COMMENT' %}</button>
+                        <button type="button" class="btn btn-primary waves-effect waves-light" id="save-comment-btn">{% tr 'Save - DASHBOARD / BLOG COMMENT' %}</button>
                     </div>
                 </div>
             </div>

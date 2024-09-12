@@ -1,11 +1,12 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
+{% load translate %}
 
 {% block title %}
     {% if blog %}
-        Edit - {{ blog.title_en }}
+        {% tr 'Edit - DASHBOARD / POST BLOG' %} - {{ blog.title_en }}
     {% else %}
-        Post Blog
+        {% tr 'Post Blog - DASHBOARD / POST BLOG' %}
     {% endif %}
 {% endblock title %}
 
@@ -28,17 +29,17 @@
                 <div class="page-title-box d-flex align-items-center justify-content-between">                        
                         {% if blog %}
                             <div>
-                                <a href="{% url 'dashboard:post-blog' %}"><label class="btn btn-info" type="button"><i class="mdi mdi-plus"></i>Add Blog</label></a>
-                                <label class="btn btn-success" for='save' type="submit"><i class="mdi mdi-content-save"></i> Save</label>
+                                <a href="{% url 'dashboard:post-blog' %}"><label class="btn btn-info" type="button"><i class="mdi mdi-plus"></i>{% tr 'Add Blog - DASHBOARD / POST BLOG' %}</label></a>
+                                <label class="btn btn-success" for='save' type="submit"><i class="mdi mdi-content-save"></i> {% tr 'Save - DASHBOARD / POST BLOG' %}</label>
                             </div>
                         {% else %}
-                            <label class="btn btn-primary" for='post' type="submit"><i class="mdi mdi-send"></i> Post</label>
+                            <label class="btn btn-primary" for='post' type="submit"><i class="mdi mdi-send"></i> {% tr 'Post - DASHBOARD / POST BLOG' %}</label>
                         {% endif %}
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Blog</a></li>
-                            <li class="breadcrumb-item active">Post Blog</li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">{% tr 'Blog - DASHBOARD / POST BLOG' %}</a></li>
+                            <li class="breadcrumb-item active">{% tr 'Post Blog - DASHBOARD / POST BLOG' %}</li>
                         </ol>
                     </div>
 
@@ -54,15 +55,15 @@
                         <form method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="form-group row">
-                                <label for="example-text-input" class="col-md-2 col-form-label">Blog Title</label>
+                                <label for="example-text-input" class="col-md-2 col-form-label">{% tr 'Blog Title - DASHBOARD / POST BLOG' %}</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" name="title_en" type="text" placeholder="Example Title" id="example-text-input" value="{{ blog.title_en }}">
-                                    <input class="form-control" name="title_tr" type="text" placeholder="Example Title" id="example-text-input" value="{{ blog.title_tr }}" style="display: none;">
+                                    <input class="form-control" name="title_en" type="text" placeholder="{% tr 'Example Title - DASHBOARD / POST BLOG' %}" id="example-text-input" value="{{ blog.title_en }}">
+                                    <input class="form-control" name="title_tr" type="text" placeholder="{% tr 'Example Title - DASHBOARD / POST BLOG' %}" id="example-text-input" value="{{ blog.title_tr }}" style="display: none;">
                                 </div>
                             </div>
     
                             <div class="form-group row">
-                                <label class="col-md-2 col-form-label">Select Category</label>
+                                <label class="col-md-2 col-form-label">{% tr 'Select Category - DASHBOARD / POST BLOG' %}</label>
                                 <div class="col-md-10">
                                     <select class="form-control" name="category">
                                         {% for category in categories %}
@@ -77,18 +78,18 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-md-2 col-form-label">Status</label>
+                                <label class="col-md-2 col-form-label">{% tr 'Status - DASHBOARD / POST BLOG' %}</label>
                                 <div class="col-md-10">
                                     <select class="form-control" name="status">
-                                        <option value='published'{% if blog.status == 'published' %}selected{% endif %} >Publish</option>
-                                        <option value='draft'{% if blog.status == 'draft' %}selected{% endif %} >Draft</option>
-                                        <option value='deactivated'{% if blog.status == 'deactivated' %}selected{% endif %} >Deactivate</option>
+                                        <option value='published'{% if blog.status == 'published' %}selected{% endif %} >{% tr 'Publish - DASHBOARD / POST BLOG' %}</option>
+                                        <option value='draft'{% if blog.status == 'draft' %}selected{% endif %} >{% tr 'Draft - DASHBOARD / POST BLOG' %}</option>
+                                        <option value='deactivated'{% if blog.status == 'deactivated' %}selected{% endif %} >{% tr 'Deactivate - DASHBOARD / POST BLOG' %}</option>
                                     </select>
                                 </div>
                             </div>
     
                             <div class="form-group row">
-                                <label class="col-md-2 col-form-label">Cover Photo</label>
+                                <label class="col-md-2 col-form-label">{% tr 'Cover Photo - DASHBOARD / POST BLOG' %}</label>
                                 <div class="col-md-10">
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" name="cover_photo" id="customFile">
@@ -98,18 +99,18 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-md-2 col-form-label">Language</label>
+                                <label class="col-md-2 col-form-label">{% tr 'Language - DASHBOARD / POST BLOG' %}</label>
                                 <div class="col-md-10">
                                     <select class="form-control" name="language">
-                                        <option value='en' selected>English</option>
-                                        <option value='tr'>Turkic</option>
+                                        <option value='en' selected>{% tr 'English - DASHBOARD / POST BLOG' %}</option>
+                                        <option value='tr'>{% tr 'Turkic - DASHBOARD / POST BLOG' %}</option>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="custom-control custom-checkbox mb-3">
                                 <input type="checkbox" class="custom-control-input" name="quick_career_tip" id="quick-career-tip" {% if blog.quick_career_tip %}checked{% endif %}>
-                                <label class="custom-control-label" for="quick-career-tip">Quick Career Tip</label>
+                                <label class="custom-control-label" for="quick-career-tip">{% tr 'Quick Career Tip - DASHBOARD / POST BLOG' %}</label>
                             </div>
 
                             <div id="content-en">
@@ -122,9 +123,9 @@
                             </div>
 
                             {% if blog %}
-                                <button style='display: none;' class="btn btn-success" id='save' type="submit">Save</button>
+                                <button style='display: none;' class="btn btn-success" id='save' type="submit">{% tr 'Save - DASHBOARD / POST BLOG' %}</button>
                             {% else %}
-                                <button style='display: none;' class="btn btn-primary" id='post' type="submit">Post</button>
+                                <button style='display: none;' class="btn btn-primary" id='post' type="submit">{% tr 'Post - DASHBOARD / POST BLOG' %}</button>
                             {% endif %}
                         </form>
                     </div>
