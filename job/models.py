@@ -2,12 +2,11 @@ from django.db import models
 from django.utils.text import slugify
 from django.db.models import F, Case, When, CharField, Value
 from django.contrib.postgres.aggregates import ArrayAgg
-from django.core.cache import cache
-from django.conf import settings
 from ckeditor.fields import RichTextField
 
 from user.models import Employer, Candidate, CustomUser
 from recruitment_cp import models as cp_models
+from language.middleware import get_current_user_language
 
 # Create your models here.
 
@@ -83,7 +82,7 @@ class BaseVacancy(models.Model):
     
     @classmethod
     def translation(cls):
-        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
+        language = get_current_user_language()
         vacancies = cls.objects.annotate(
             career_type_name = F(f'career_type__name_{language}'),
             career_level_name = F(f'career_level__name_{language}'),
@@ -105,7 +104,7 @@ class BaseVacancy(models.Model):
         """This method is used to perform operations only on the fields required
         for filtering, so that there are no unnecessary operations during filtering."""
 
-        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
+        language = get_current_user_language()
         vacancies = cls.objects.annotate(
             location_name = F(f'location__name_{language}'),
             work_experience_name = F(f'work_experience__name_{language}'),
@@ -131,7 +130,7 @@ class Bookmark(models.Model):
 
     @classmethod
     def translation(cls):
-        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
+        language = get_current_user_language()
         bookmarks = cls.objects.annotate(
             location=Case(
                 When(**{f"vacancy__location__name_{language}__isnull":False},

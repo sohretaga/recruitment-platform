@@ -2,14 +2,13 @@ from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.utils.text import slugify
-from django.core.cache import cache
-from django.conf import settings
 from django.db.models import F
 from ckeditor_uploader.fields import RichTextUploadingField
 
 from recruitment_cp.models import ParameterFAQ
 from user.models import CustomUser
 from job.models import CandidateAction, EmployerAction
+from language.middleware import get_current_user_language
 
 # Create your models here.
 
@@ -20,7 +19,7 @@ class FAQ(models.Model):
 
     @classmethod
     def translation(cls):
-        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
+        language = get_current_user_language()
         faqs = cls.objects.annotate(
             category_name=F(f'category__name_{language}'),
         )
@@ -94,7 +93,7 @@ class HowItWork(models.Model):
     
     @classmethod
     def translation(cls):
-        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
+        language = get_current_user_language()
         how_it_work = cls.objects.annotate(
             title=F(f'title_{language}'),
             description=F(f'description_{language}')
@@ -117,7 +116,7 @@ class Team(models.Model):
     
     @classmethod
     def translation(cls):
-        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
+        language = get_current_user_language()
         match language:
             case 'en':
                 members = cls.objects.annotate(
@@ -160,7 +159,7 @@ class Service(models.Model):
 
     @classmethod
     def translation(cls):
-        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
+        language = get_current_user_language()
         match language:
             case 'en':
                 services = cls.objects.annotate(
@@ -206,7 +205,7 @@ class AboutSection(models.Model):
     
     @classmethod
     def translation(cls):
-        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
+        language = get_current_user_language()
         match language:
             case 'en':
                 sections = cls.objects.annotate(
@@ -227,7 +226,7 @@ class AboutSectionFactor(models.Model):
 
     @classmethod
     def translation(cls):
-        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
+        language = get_current_user_language()
         match language:
             case 'en':
                 factors = cls.objects.annotate(

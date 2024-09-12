@@ -1,5 +1,4 @@
-from django.core.cache import cache
-from django.conf import settings
+from language.middleware import get_current_user_language
 
 def notification_count(request):
     if request.user.is_authenticated:
@@ -10,5 +9,5 @@ def notification_count(request):
     return {'notification_count':count}
 
 def selected_language(request):
-    language_code = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
+    language_code = get_current_user_language()
     return {'language_code': language_code}

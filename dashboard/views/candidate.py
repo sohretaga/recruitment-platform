@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.decorators.http import require_POST
-from django.core.cache import cache
-from django.conf import settings
 from django.db.models import F, Case, When, CharField, Value
 from django.http import JsonResponse
 
@@ -10,11 +8,11 @@ from dashboard.decorators import is_candidate
 from dashboard.forms import ManageCandidateAccountForm
 from recruitment_cp.models import ParameterCountry
 from job.models import Apply
+from language.middleware import get_current_user_language
 
 @is_candidate
 def your_applies(request):
-    cache.delete("site_language")
-    language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
+    language = get_current_user_language()
     applications = request.user.candidate.applications.select_related('vacancy', 'candidate').annotate(
         company_name=F('candidate__user__first_name'),
         position_title=F('vacancy__position_title'),

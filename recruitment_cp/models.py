@@ -1,8 +1,8 @@
 from django.db import models
 from django.db.models import F, Value, CharField, When, Case
 from django.core.cache import cache
-from django.conf import settings
 from language.utils import get_cache_key
+from language.middleware import get_current_user_language
 
 # Create your models here.
 
@@ -61,7 +61,7 @@ class SiteContent(models.Model):
 
     @classmethod
     def translation(cls):
-        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
+        language = get_current_user_language()
         objects = cls.objects.annotate(
             title = Case(
                 When(**{f'title_{language}__isnull':False}, then=F(f'title_{language}')),
@@ -144,7 +144,7 @@ class ParameterCommonFields(models.Model):
 
     @classmethod
     def translation(cls):
-        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
+        language = get_current_user_language()
         objects = cls.objects.annotate(
             name = Case(
                     When(**{f'name_{language}__isnull':False}, then=F(f'name_{language}')),

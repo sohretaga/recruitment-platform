@@ -97,7 +97,7 @@ def ajax_filter_blog(request):
         )
 
         if categories:
-            params.update({'category_name__in':categories})        
+            params['category_name__in'] = categories    
 
         filtered_blogs = Blog.translation().filter(**params).annotate(
             like_count=Count('likes'),

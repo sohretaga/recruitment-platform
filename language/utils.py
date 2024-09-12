@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.core.cache import cache
 from language.models import Translation
+from language.middleware import get_current_user_language
 
 import hashlib
 import os
@@ -41,7 +42,7 @@ def create_language_table(language) -> None:
                 f.close()
 
 def tr(text: str) -> str:
-    language_code = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
+    language_code = get_current_user_language()
     params = {
         'language__code':language_code,
         'text': text

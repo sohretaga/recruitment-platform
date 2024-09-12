@@ -1,12 +1,11 @@
 from django.db import models
 from django.utils.text import slugify
-from django.core.cache import cache
 from django.db.models import F, Value, CharField
-from django.conf import settings
 
 from recruitment_cp.models import ParameterCommonFields
 from user.models import CustomUser
 from ckeditor_uploader.fields import RichTextUploadingField
+from language.middleware import get_current_user_language
 
 # Create your models here.
 
@@ -52,7 +51,7 @@ class Blog(models.Model):
 
     @classmethod
     def translation(cls):
-        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
+        language = get_current_user_language()
         match language:
             case 'en':
                 blogs = cls.objects.annotate(
@@ -96,7 +95,7 @@ class Comment(models.Model):
 
     @classmethod
     def translation(cls):
-        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
+        language = get_current_user_language()
         match language:
             case 'en':
                 comments = cls.objects.annotate(

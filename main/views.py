@@ -185,5 +185,12 @@ def subscribe(request):
 def set_language(request):
     data = json.loads(request.body)
     language_code = data.get('language', settings.SITE_LANGUAGE_CODE)
-    cache.set(f'site_language', language_code, timeout=604800)
+
+    if request.user.is_authenticated:
+        cache.set(f'site_language_{request.user.username}', language_code, timeout=31536000) # 31536000 = 1 year
+    else:
+        if not request.session.session_key:
+            request.session.create()
+
+        cache.set(f'site_language_{request.session.session_key}', language_code, timeout=604800) # 604800 = 1 week
     return JsonResponse({'status': 'success'})

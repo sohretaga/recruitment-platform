@@ -7,8 +7,6 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q, F, Value, Count, Case, When, CharField
 from django.db.models.functions import Concat
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.cache import cache
-from django.conf import settings
 from datetime import timedelta
 
 from job.models import Vacancy, Bookmark, Apply, EmployerAction, CandidateAction
@@ -18,6 +16,7 @@ from .utils import fetch_vacancies
 from recruitment_cp.models import ParameterKeyword
 from dashboard.decorators import is_candidate, is_employer
 from language.utils import tr
+from language.middleware import get_current_user_language
 
 import json
 
@@ -88,7 +87,7 @@ def vacancy_applications(request, slug):
 
 @is_candidate
 def applications(request):
-    language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
+    language = get_current_user_language()
     applications = request.user.candidate.applications.select_related('vacancy').annotate(
         username=F('vacancy__employer__user__username'),
         company_name=F('vacancy__employer__user__first_name'),

@@ -1,9 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.db.models import F, Case, When, Value, CharField, Subquery, OuterRef, FloatField, IntegerField
-from django.db.models.functions import ExtractYear, Cast
-from django.conf import settings
-from django.core.cache import cache
+from django.db.models import F, Case, When, Value, CharField, Subquery, OuterRef, FloatField
+from django.db.models.functions import ExtractYear
 from datetime import datetime
 
 from recruitment_cp.models import (
@@ -22,6 +20,7 @@ from recruitment_cp.models import (
     ParameterCompetence
 )
 from .utils import calculate_recent_duration
+from language.middleware import get_current_user_language
 
 class CustomUser(AbstractUser):
     USER_TYPE_CHOICES = (
@@ -73,7 +72,7 @@ class Employer(models.Model):
 
     @classmethod
     def translation(cls):
-        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
+        language = get_current_user_language()
 
         employers = cls.objects.annotate(
             sector_name=F(f'sector__name_{language}'),
@@ -108,7 +107,7 @@ class Candidate(models.Model):
     
     @classmethod
     def translation(cls):
-        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
+        language = get_current_user_language()
         current_year = datetime.now().year
         age_groups = ParameterAgeGroup.translation().values('minimum', 'maximum', 'name')
         work_experiences = ParameterWorkExperience.translation().values('minimum', 'maximum', 'name')
@@ -190,7 +189,7 @@ class Education(models.Model):
 
     @classmethod
     def translation(cls):
-        language = cache.get('site_language', settings.SITE_LANGUAGE_CODE)
+        language = get_current_user_language()
         educations = cls.objects.annotate(
             education_level_name=Case(
                 When(**{f'education_level__name_{language}__isnull':False},
