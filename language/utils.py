@@ -54,7 +54,7 @@ def tr(text: str) -> str:
         if cached_text:
             return cached_text
         else:
-            translation = Translation.objects.get(**params).translation
+            translation = Translation.translation(language_code).get(**params).translated_text
             if translation:
                 cache.set(cache_key, translation, timeout=None)
                 return translation
