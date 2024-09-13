@@ -21,6 +21,10 @@ table.dataTable th {
     float: right;
 }
 
+.navbar-search {
+    display: inline !important;
+}
+
 @media only screen and (max-width: 992px) {
     .bottom {
         display: flex;
@@ -30,5 +34,9 @@ table.dataTable th {
 
     .dataTables_info {
         margin-right: 0;
+    }
+
+    .navbar-search-mobile {
+        display: inline !important;
     }
 }
