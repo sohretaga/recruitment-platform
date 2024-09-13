@@ -123,6 +123,7 @@ urlpatterns = [
     path('translation/contents', languages.contents, name='contents'),
     path('translation/contents-load', languages.contents_load, name='contents_load'),
     path('translation/contents-save', languages.contents_save, name='contents_save'),
+    path('translation/contents-generate', languages.contents_generate, name='contents_generate'),
 
     path('translation/languages', languages.languages, name='languages'),
     path('translation/languages-load', languages.languages_load, name='languages_load'),

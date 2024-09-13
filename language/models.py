@@ -8,13 +8,11 @@ class Language(models.Model):
     code = models.CharField(max_length=2)
 
 class Translation(models.Model):
-    language = models.ForeignKey(Language, on_delete=models.CASCADE)
-    text = models.TextField()
+    text = models.CharField(max_length=255, unique=True)
     translation_en = models.TextField(null=True, blank=True)
     translation_tr = models.TextField(null=True, blank=True)
 
     class Meta:
-        unique_together = ('language', 'text')
         ordering = ('id',)
 
     @classmethod

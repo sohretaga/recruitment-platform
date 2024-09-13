@@ -14,7 +14,7 @@ def get_cache_key(text: str, language_code: str) -> str:
 
     return cache_key
 
-def create_language_table(language) -> None:
+def create_language_table() -> None:
     templates = os.path.join(settings.BASE_DIR, 'templates')
 
     for root, dirs, files in os.walk(templates):
@@ -29,32 +29,21 @@ def create_language_table(language) -> None:
 
                     if matches:
                         for text in matches:
-
-                            params = {
-                                'language': language,
-                                'text': text
-                            }
-
-                            translation_exists = Translation.objects.filter(**params).exists()
+                            translation_exists = Translation.objects.filter(text=text).exists()
                             if not translation_exists:
-                                Translation.objects.create(**params)
+                                Translation.objects.create(text=text)
 
                 f.close()
 
 def tr(text: str) -> str:
     language_code = get_current_user_language()
-    params = {
-        'language__code':language_code,
-        'text': text
-    }
-
     try:
         cache_key = get_cache_key(text, language_code)
         cached_text = cache.get(cache_key)
         if cached_text:
             return cached_text
         else:
-            translation = Translation.translation(language_code).get(**params).translated_text
+            translation = Translation.translation(language_code).get(text=text).translated_text
             if translation:
                 cache.set(cache_key, translation, timeout=None)
                 return translation

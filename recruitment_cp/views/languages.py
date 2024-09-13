@@ -22,10 +22,9 @@ def contents(request):
 
 def contents_load(request):
     if request.user.is_superuser:
-        language = request.POST.get('language')
         
-        translation = Translation.objects.filter(language__code=language).values(
-            'id', 'text', 'translation'
+        translation = Translation.objects.values(
+            'id', 'text', 'translation_en', 'translation_tr'
         )
         json_data = json.dumps(list(translation))
 
@@ -35,7 +34,6 @@ def contents_load(request):
 
 def contents_save(request):
     if request.user.is_superuser:
-        language = request.POST.get('language')
         hot = json.loads(request.POST.get('hot'))
         index = 0
 
@@ -46,7 +44,10 @@ def contents_save(request):
 
             if delete:
                 translation = Translation.objects.filter(pk=pk)
-                cache_key = get_cache_key(text, language)
+                cache_key = get_cache_key(text, 'en')
+                cache.delete(cache_key)
+
+                cache_key = get_cache_key(text, 'tr')
                 cache.delete(cache_key)
                 translation.delete()
 
@@ -54,12 +55,25 @@ def contents_save(request):
                 translation = Translation.objects.filter(pk=pk)
                 translation.update(**hot[index])
 
-                translation_text = hot[index].get('translation', None)
-                if text and translation_text:
-                    cache_key = get_cache_key(text, language)
-                    cache.set(cache_key, translation_text, timeout=None)
+                translation_text_en = hot[index].get('translation_en', None)
+                if text and translation_text_en:
+                    cache_key = get_cache_key(text, 'en')
+                    cache.set(cache_key, translation_text_en, timeout=None)
+
+                translation_text_tr = hot[index].get('translation_tr', None)
+                if text and translation_text_tr:
+                    cache_key = get_cache_key(text, 'tr')
+                    cache.set(cache_key, translation_text_tr, timeout=None)
 
             index += 1
+        return JsonResponse({'status': 200})
+    else:
+        raise Http404
+    
+def contents_generate(request):
+    if request.user.is_superuser:
+        create_language_table()
+
         return JsonResponse({'status': 200})
     else:
         raise Http404
