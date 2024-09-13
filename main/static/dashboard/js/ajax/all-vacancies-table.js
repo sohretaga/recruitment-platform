@@ -73,7 +73,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#customSearch').on('keyup', function() {
+    $('.customSearch').on('keyup', function() {
         dataTable.search(this.value).draw();
     });
 
