@@ -41,7 +41,7 @@ File: Main Css File
   -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
   padding: 0;
-  margin-top: 44px;
+  margin-top: 38.5px;
   background-color: #fff;
   -webkit-box-shadow: 0px 3px 10px 0px rgba(49, 64, 71, 0.08);
           box-shadow: 0px 3px 10px 0px rgba(49, 64, 71, 0.08);
@@ -189,7 +189,7 @@ File: Main Css File
   }
 }
 
-@media (max-width: 767.98px) {
+/* @media (max-width: 767.98px) {
   .navbar {
     margin-top: 0px;
   }
@@ -197,7 +197,7 @@ File: Main Css File
   .top-bar {
     display: none;
   }
-}
+} */
 /*****************dark-mode******************/
 body[data-layout-mode=dark] .nav-sticky,
 body[data-layout-mode=dark] .navbar {

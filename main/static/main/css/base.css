@@ -13,13 +13,9 @@
 }
 
 #marquee {
-    height: 44px;
+    height: 38.5px;
 }
 
 .top-bar {
     display: inline !important;
-}
-
-@media only screen and (min-width: 768px) {
-    
 }
