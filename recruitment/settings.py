@@ -87,6 +87,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'main.context_processors.notification_count',
                 'main.context_processors.selected_language',
+                'main.context_processors.marquee',
             ],
         },
     },
