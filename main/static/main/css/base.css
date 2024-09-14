@@ -12,8 +12,14 @@
     }
 }
 
+#marquee {
+    height: 44px;
+}
+
+.top-bar {
+    display: inline !important;
+}
+
 @media only screen and (min-width: 768px) {
-    #marquee {
-        height: 44px;
-    }
+    
 }

@@ -153,14 +153,14 @@
                     </div>
                     <!--end navabar-collapse-->
                     <ul class="header-menu list-inline d-flex align-items-center mb-0">
-                        <li class="list-inline-item py-2 me-4 align-middle">
+                        <li class="py-2 align-middle">
                             <a href="javascript: void(0);" id="mode" >
                                 <i class="uil uil-brightness mode-dark mx-auto"></i>
                                 <i class="uil uil-moon mode-light"></i>
                             </a>
                         </li>
                         {% if user.is_authenticated %}
-                        <li class="list-inline-item dropdown">
+                        <li class="dropdown ms-4">
                             <a href="javascript:void(0)" class="header-item noti-icon position-relative" data-bs-toggle="dropdown" aria-expanded="false" id="notification-toggle">
                                 <i class="mdi mdi-bell fs-22"></i>
                                 <div class="count position-absolute {% if not notification_count %}d-none{% endif %}" id="notification-count">{{ notification_count }}</div>
@@ -181,7 +181,7 @@
                             </div>
                         </li>
                         {% endif %}
-                        <li class="">
+                        <li class="align-middle">
                             <div class="dropdown d-inline-block language-switch">
                                 <button type="button" class="btn" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="selected-language" data-code="{{ language_code }}">
                                     {% if language_code == 'en' %}
@@ -205,7 +205,7 @@
                             </div>
                         </li>
                         {% if user.is_authenticated %}
-                        <li class="list-inline-item dropdown">
+                        <li class="dropdown">
                             <a href="javascript:void(0)" class="header-item" id="userdropdown" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                                 <img src="{% if user.profile_photo %}{{ user.profile_photo.url }}{% else %}{% static 'main/images/featured-job/default-company-img.jpeg' %}{% endif %}" alt="{{ user.get_full_name }}" width="35" height="35" class="rounded-circle me-1"> <span class="d-none d-md-inline-block fw-medium">{{ user.first_name }}</span>
@@ -239,7 +239,7 @@
                             </ul>
                         </li>
                         {% else %}
-                        <li class="list-inline-item py-2 me-2 align-middle dropdown">
+                        <li class="py-2 me-2 align-middle dropdown">
                             <a class="list-inline-item py-2 me-2 align-middle text-dark fw-medium fs-13" href="#" id="logindropdown" role="button" data-bs-toggle="dropdown">
                                 {% tr 'Login' %} <div class="arrow-down"></div>
                             </a>
