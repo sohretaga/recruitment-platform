@@ -15,5 +15,5 @@ def selected_language(request):
 
 def marquee(request):
     marquees = Vacancy.translation().filter(status=True, delete=False, approval_level='PUBLISHED')\
-        .values('position_title', 'slug', 'employer__user__first_name').order_by('?')[:20]
+        .values('position_title', 'slug', 'employer__user__first_name').order_by('?')[:5]
     return {'marquees': marquees}

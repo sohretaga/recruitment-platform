@@ -175,7 +175,8 @@ MarqueeJS.prototype._applyAnimation = function (marquee) {
     this._appendStylesToNode(inner, {
         willChange: "transform",
         display: "inline-block",
-        paddingLeft: "100%",
+        // paddingLeft: "0",
+        width: "auto",
         animationName: "marqueejs" + this._keyframeId,
         animationDuration: String(Math.abs(this._params.duration)) + "s",
         animationTimingFunction: this._params.timingFunction,
@@ -188,7 +189,7 @@ MarqueeJS.prototype._applyAnimation = function (marquee) {
 
 document.addEventListener('DOMContentLoaded', function() {
     new MarqueeJS("#marquee").init({
-      duration: 50,
+      duration: 10,
       direction: "rtl",
       pauseOnHover: true,
     });
