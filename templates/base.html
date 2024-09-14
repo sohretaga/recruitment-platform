@@ -62,7 +62,7 @@
             <div class="top-bar">
                 <div class="container-fluid custom-container">
                     <div class="row g-0 align-items-center justify-content-between">
-                        <div class="col-md-2">
+                        <!-- <div class="col-md-2">
                             <ul class="list-inline mb-0 text-center text-md-start">
                                 <li class="list-inline-item">
                                     <p class="fs-13 mb-0"> <i class="mdi mdi-map-marker"></i> {% tr 'Your Location' %}: <a href="javascript:void(0)" class="text-dark">Agdam</a></p>
@@ -76,26 +76,21 @@
                                     </ul>
                                 </li>
                             </ul>
-                        </div>
-                        <div class="col-md-8">
+                        </div> -->
+                        <div class="col-md-12">
                             <div id="marquee">
                                 <div class="marquee-content">
-                                    <p class="mb-0">
+                                    <p class="mb-0 py-2">
                                         {% for marquee in marquees %}
                                         <a href="{% url 'job:vacancy' marquee.slug %}">{{ marquee.position_title }}, {{ marquee.employer__user__first_name }}</a>&nbsp;&nbsp; &bull; &nbsp;&nbsp;
                                         {% endfor %}
+                                    </p>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="col-md-2">
+                        <!-- <div class="col-md-2">
                             <ul class="list-inline mb-0 text-center text-md-end">
-                                <li class="list-inline-item py-2 me-2 align-middle">
-                                    <a href="javascript: void(0);" id="mode" >
-                                        <i class="uil uil-brightness mode-dark mx-auto"></i>
-                                        <i class="uil uil-moon mode-light"></i>
-                                    </a>
-                                </li>
                                 {% if user.is_authenticated %}
                                     <li class="list-inline-item py-2 me-2 align-middle">
                                         <a href="{% url 'dashboard:index' %}" class="text-dark fw-medium fs-13" >{% tr 'Dashboard' %}</a>
@@ -112,31 +107,8 @@
                                         </ul>
                                     </li>
                                 {% endif %}
-                                <li class="list-inline-item align-middle">
-                                    <div class="dropdown d-inline-block language-switch">
-                                        <button type="button" class="btn" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="selected-language" data-code="{{ language_code }}">
-                                            {% if language_code == 'en' %}
-                                            <img id="header-lang-img" src="{% static 'main/images/flags/british.jpg' %}" alt="Header Language" height="16" />
-                                            {% elif language_code == 'tr' %}
-                                            <img id="header-lang-img" src="{% static 'main/images/flags/turkish.jpg' %}" alt="Header Language" height="16" />
-                                            {% endif %}
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-end">
-                                            <!-- item-->
-                                            <a href="javascript:void(0);" class="dropdown-item notify-item language" data-code="tr">
-                                                <img src="{% static 'main/images/flags/turkish.jpg' %}" alt="user-image" class="me-1" height="12" />
-                                                <span class="align-middle">{% tr 'Turkic' %}</span>
-                                            </a>
-                                            <!-- item-->
-                                            <a href="javascript:void(0);" class="dropdown-item notify-item language" data-code="en">
-                                                <img src="{% static 'main/images/flags/british.jpg' %}" alt="user-image" class="me-1" height="12" />
-                                                <span class="align-middle">{% tr 'English' %}</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </li>
                             </ul>
-                        </div>
+                        </div> -->
                         
                     </div>
                     <!--end row-->
@@ -154,29 +126,6 @@
                                 <img src="{% static 'main/images/mec-logo.png' %}" height="40" alt="mec logo" class="logo-dark" />
                                 <img src="{% static 'main/images/mec-logo.png' %}" height="40" alt="mec logo" class="logo-light" />
                             </a>
-                        </li>
-                        <li class="list-inline-item align-middle language-mobile" style="display: none;">
-                            <div class="dropdown d-inline-block language-switch">
-                                <button type="button" class="btn" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="selected-language" data-code="{{ language_code }}">
-                                    {% if language_code == 'en' %}
-                                    <img id="header-lang-img" src="{% static 'main/images/flags/british.jpg' %}" alt="Header Language" height="16" />
-                                    {% elif language_code == 'tr' %}
-                                    <img id="header-lang-img" src="{% static 'main/images/flags/turkish.jpg' %}" alt="Header Language" height="16" />
-                                    {% endif %}
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item notify-item language" data-code="tr">
-                                        <img src="{% static 'main/images/flags/turkish.jpg' %}" alt="user-image" class="me-1" height="12" />
-                                        <span class="align-middle">{% tr 'Turkic' %}</span>
-                                    </a>
-                                    <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item notify-item language" data-code="en">
-                                        <img src="{% static 'main/images/flags/british.jpg' %}" alt="user-image" class="me-1" height="12" />
-                                        <span class="align-middle">{% tr 'English' %}</span>
-                                    </a>
-                                </div>
-                            </div>
                         </li>
                     </ul>
                     <div>
@@ -239,71 +188,102 @@
                     </div>
                     <!--end navabar-collapse-->
                     <ul class="header-menu list-inline d-flex align-items-center mb-0">
+                        <li class="list-inline-item py-2 me-4 align-middle">
+                            <a href="javascript: void(0);" id="mode" >
+                                <i class="uil uil-brightness mode-dark mx-auto"></i>
+                                <i class="uil uil-moon mode-light"></i>
+                            </a>
+                        </li>
                         {% if user.is_authenticated %}
-                            <li class="list-inline-item dropdown me-4">
-                                <a href="javascript:void(0)" class="header-item noti-icon position-relative" data-bs-toggle="dropdown" aria-expanded="false" id="notification-toggle">
-                                    <i class="mdi mdi-bell fs-22"></i>
-                                    <div class="count position-absolute {% if not notification_count %}d-none{% endif %}" id="notification-count">{{ notification_count }}</div>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end p-0" aria-labelledby="notification">
-                                    <div class="notification-header border-bottom bg-light">
-                                        <h6 class="mb-1"> Notification </h6>
-                                        <p class="text-muted fs-13 mb-0 d-none" id="unread-notification-text">You have <span>4</span> unread Notification</p>
-                                    </div>
-                                    <div class="notification-wrapper dropdown-scroll" id="notification-list">
-                                        <!-- Notifications will be dynamically added here -->
-                                    </div><!--end notification-wrapper-->
-                                    <div class="notification-footer border-top text-center">
-                                        <a class="primary-link fs-13" href="javascript:void(0)">
-                                            <a href="{% url 'main:notifications' %}"><i class="mdi mdi-arrow-right-circle me-1"></i> <span>{% tr 'View More' %}..</span></a>
-                                        </a>
-                                    </div>
+                        <li class="list-inline-item dropdown">
+                            <a href="javascript:void(0)" class="header-item noti-icon position-relative" data-bs-toggle="dropdown" aria-expanded="false" id="notification-toggle">
+                                <i class="mdi mdi-bell fs-22"></i>
+                                <div class="count position-absolute {% if not notification_count %}d-none{% endif %}" id="notification-count">{{ notification_count }}</div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end p-0" aria-labelledby="notification">
+                                <div class="notification-header border-bottom bg-light">
+                                    <h6 class="mb-1"> Notification </h6>
+                                    <p class="text-muted fs-13 mb-0 d-none" id="unread-notification-text">You have <span>4</span> unread Notification</p>
                                 </div>
-                            </li>
-                            <li class="list-inline-item dropdown">
-                                <a href="javascript:void(0)" class="header-item" id="userdropdown" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    <img src="{% if user.profile_photo %}{{ user.profile_photo.url }}{% else %}{% static 'main/images/featured-job/default-company-img.jpeg' %}{% endif %}" alt="{{ user.get_full_name }}" width="35" height="35" class="rounded-circle me-1"> <span class="d-none d-md-inline-block fw-medium">{{ user.first_name }}</span>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown">
-                                    {% if user.user_type == 'employer' and not user.is_superuser %}
-                                        <li><a class="dropdown-item" href="{% url 'user:company' user.username %}">{% tr 'My Profile' %}</a></li>
-                                    {% elif user.user_type == 'candidate' and not user.is_superuser %}
-                                        <li><a class="dropdown-item" href="{% url 'user:candidate' user.username %}">{% tr 'My Profile' %}</a></li>
+                                <div class="notification-wrapper dropdown-scroll" id="notification-list">
+                                    <!-- Notifications will be dynamically added here -->
+                                </div><!--end notification-wrapper-->
+                                <div class="notification-footer border-top text-center">
+                                    <a class="primary-link fs-13" href="javascript:void(0)">
+                                        <a href="{% url 'main:notifications' %}"><i class="mdi mdi-arrow-right-circle me-1"></i> <span>{% tr 'View More' %}..</span></a>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        {% endif %}
+                        <li class="list-inline-item align-middle">
+                            <div class="dropdown d-inline-block language-switch">
+                                <button type="button" class="btn" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="selected-language" data-code="{{ language_code }}">
+                                    {% if language_code == 'en' %}
+                                    <img id="header-lang-img" src="{% static 'main/images/flags/british.jpg' %}" alt="Header Language" height="16" />
+                                    {% elif language_code == 'tr' %}
+                                    <img id="header-lang-img" src="{% static 'main/images/flags/turkish.jpg' %}" alt="Header Language" height="16" />
                                     {% endif %}
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item language" data-code="tr">
+                                        <img src="{% static 'main/images/flags/turkish.jpg' %}" alt="user-image" class="me-1" height="12" />
+                                        <span class="align-middle">{% tr 'Turkic' %}</span>
+                                    </a>
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item language" data-code="en">
+                                        <img src="{% static 'main/images/flags/british.jpg' %}" alt="user-image" class="me-1" height="12" />
+                                        <span class="align-middle">{% tr 'English' %}</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        {% if user.is_authenticated %}
+                        <li class="list-inline-item dropdown">
+                            <a href="javascript:void(0)" class="header-item" id="userdropdown" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <img src="{% if user.profile_photo %}{{ user.profile_photo.url }}{% else %}{% static 'main/images/featured-job/default-company-img.jpeg' %}{% endif %}" alt="{{ user.get_full_name }}" width="35" height="35" class="rounded-circle me-1"> <span class="d-none d-md-inline-block fw-medium">{{ user.first_name }}</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown">
+                                {% if user.user_type == 'employer' and not user.is_superuser %}
+                                    <li><a class="dropdown-item" href="{% url 'user:company' user.username %}">{% tr 'My Profile' %}</a></li>
+                                {% elif user.user_type == 'candidate' and not user.is_superuser %}
+                                    <li><a class="dropdown-item" href="{% url 'user:candidate' user.username %}">{% tr 'My Profile' %}</a></li>
+                                {% endif %}
 
-                                    {% if user.is_superuser %}
-                                        <li><a class="dropdown-item" href="{% url 'user:company' user.username %}">{% tr 'My Profile' %} ({% tr 'Employer' %})</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'user:candidate' user.username %}">{% tr 'My Profile' %} ({% tr 'Candidate' %})</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'job:job-postings' %}">{% tr 'My Postings' %}</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'job:applications' %}">{% tr 'My Applies' %}</a></li>
-                                    {% elif user.user_type == 'employer' %}
-                                        <li><a class="dropdown-item" href="{% url 'job:job-postings' %}">{% tr 'My Postings' %}</a></li>
-                                    {% elif user.user_type == 'candidate' %}
-                                        <li><a class="dropdown-item" href="{% url 'job:applications' %}">{% tr 'My Applies' %}</a></li>
-                                    {% endif %}
+                                {% if user.is_superuser %}
+                                    <li><a class="dropdown-item" href="{% url 'user:company' user.username %}">{% tr 'My Profile' %} ({% tr 'Employer' %})</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'user:candidate' user.username %}">{% tr 'My Profile' %} ({% tr 'Candidate' %})</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'job:job-postings' %}">{% tr 'My Postings' %}</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'job:applications' %}">{% tr 'My Applies' %}</a></li>
+                                {% elif user.user_type == 'employer' %}
+                                    <li><a class="dropdown-item" href="{% url 'job:job-postings' %}">{% tr 'My Postings' %}</a></li>
+                                {% elif user.user_type == 'candidate' %}
+                                    <li><a class="dropdown-item" href="{% url 'job:applications' %}">{% tr 'My Applies' %}</a></li>
+                                {% endif %}
 
-                                        <li><a class="dropdown-item" href="{% url 'job:bookmarks' %}">{% tr 'Bookmarks' %}</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'dashboard:index' %}">{% tr 'Dashboard' %}</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'user:sign-out' %}">{% tr 'Logout' %}</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'job:bookmarks' %}">{% tr 'Bookmarks' %}</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'dashboard:index' %}">{% tr 'Dashboard' %}</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'user:sign-out' %}">{% tr 'Logout' %}</a></li>
 
-                                    {% if user.is_superuser  %}
-                                        <li><a class="dropdown-item" target="_blank" href="/admin">{% tr 'Admin Panel' %}</a></li>
-                                        <li><a class="dropdown-item" target="_blank" href="{% url 'cp:vacancy' %}">{% tr 'Control Panel' %}</a></li>
-                                    {% endif %}
-                                </ul>
-                            </li>
+                                {% if user.is_superuser  %}
+                                    <li><a class="dropdown-item" target="_blank" href="/admin">{% tr 'Admin Panel' %}</a></li>
+                                    <li><a class="dropdown-item" target="_blank" href="{% url 'cp:vacancy' %}">{% tr 'Control Panel' %}</a></li>
+                                {% endif %}
+                            </ul>
+                        </li>
                         {% else %}
-                            <li class="list-inline-item py-2 me-2 align-middle dropdown login-mobile">
-                                <a class="list-inline-item py-2 me-2 align-middle text-dark fw-medium fs-13" href="#" id="logindropdown" role="button" data-bs-toggle="dropdown">
-                                    Login <div class="arrow-down"></div>
-                                </a>
+                        <li class="list-inline-item py-2 me-2 align-middle dropdown">
+                            <a class="list-inline-item py-2 me-2 align-middle text-dark fw-medium fs-13" href="#" id="logindropdown" role="button" data-bs-toggle="dropdown">
+                                {% tr 'Login' %} <div class="arrow-down"></div>
+                            </a>
 
-                                <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="logindropdown">
-                                    <li><a class="dropdown-item" href="{% url 'user:sign-up' %}"><i class="uil uil-lock"></i>{% tr 'Sign Up' %}</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'user:sign-in' %}"><i class="uil uil-unlock"></i>{% tr 'Sign In' %}</a></li>
-                                </ul>
-                            </li>
+                            <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="logindropdown">
+                                <li><a class="dropdown-item" href="{% url 'user:sign-up' %}"><i class="uil uil-lock"></i>{% tr 'Sign Up' %}</a></li>
+                                <li><a class="dropdown-item" href="{% url 'user:sign-in' %}"><i class="uil uil-unlock"></i>{% tr 'Sign In' %}</a></li>
+                            </ul>
+                        </li>
                         {% endif %}
                     </ul><!--end header-menu-->
                 </div>

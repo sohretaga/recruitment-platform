@@ -2,26 +2,18 @@
     text-transform: none !important;
 }
 
-.login-mobile {
-    display: none !important;
-}
-
 .choices__list--dropdown {
     max-height: none !important;
 }
 
 @media only screen and (max-width: 768px) {
-    .login-mobile {
-      display: inline !important;
-    }
-
     .language-mobile {
         display: inline !important;
     }
 }
 
-@media only screen and (max-width: 992px) {
-    #logindropdown .arrow-down {
-        display: none !important;
+@media only screen and (min-width: 768px) {
+    .navbar {
+        margin-top: 39px !important;
     }
 }
