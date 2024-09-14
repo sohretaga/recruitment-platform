@@ -82,7 +82,7 @@
                                 <div class="marquee-content">
                                     <p class="mb-0">
                                         {% for marquee in marquees %}
-                                        <a href="{% url 'job:vacancy' marquee.slug %}">{{ marquee.position_title }}</a>{% if not forloop.last %}&nbsp;&nbsp; &bull; &nbsp;&nbsp;{% endif %}
+                                        <a href="{% url 'job:vacancy' marquee.slug %}">{{ marquee.position_title }}, {{ marquee.employer__user__first_name }}</a>{% if not forloop.last %}&nbsp;&nbsp; &bull; &nbsp;&nbsp;{% endif %}
                                         {% endfor %}
                                 </div>
                             </div>
@@ -98,7 +98,7 @@
                                 </li>
                                 {% if user.is_authenticated %}
                                     <li class="list-inline-item py-2 me-2 align-middle">
-                                        <a href="{% url 'dashboard:index' %}" class="text-dark fw-medium fs-13" >{% tr 'Dashboard' %}</a> <!-- #signupModal data-bs-toggle="modal" -->
+                                        <a href="{% url 'dashboard:index' %}" class="text-dark fw-medium fs-13" >{% tr 'Dashboard' %}</a>
                                     </li>
                                 {% else %}
                                     <li class="list-inline-item py-2 me-2 align-middle dropdown">
