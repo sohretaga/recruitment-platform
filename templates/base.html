@@ -60,23 +60,19 @@
 
             <!-- START TOP-BAR -->
             <div class="top-bar">
-                <div class="container-fluid custom-container">
-                    <div class="row g-0 align-items-center justify-content-between">
-                        <div class="col-md-12">
-                            <div id="marquee">
-                                <div class="marquee-content">
-                                    <p class="mb-0 py-2">
-                                        {% for marquee in marquees %}
-                                        <a href="{% url 'job:vacancy' marquee.slug %}" class="fw-bold">{{ marquee.position_title }}, {{ marquee.employer__user__first_name }}</a>&nbsp;&nbsp; &bull; &nbsp;&nbsp;
-                                        {% endfor %}
-                                    </p>
-                                </div>
+                <div class="row g-0 align-items-center justify-content-between">
+                    <div class="col-md-12">
+                        <div id="marquee">
+                            <div class="marquee-content">
+                                <p class="mb-0 py-2">
+                                    {% for marquee in marquees %}
+                                    <a href="{% url 'job:vacancy' marquee.slug %}" class="fw-bold">{{ marquee.position_title }}, {{ marquee.employer__user__first_name }}</a>&nbsp;&nbsp; &bull; &nbsp;&nbsp;
+                                    {% endfor %}
+                                </p>
                             </div>
                         </div>
                     </div>
-                    <!--end row-->
                 </div>
-                <!--end container-->
             </div>
             <!-- END TOP-BAR -->
 
