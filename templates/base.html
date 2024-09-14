@@ -66,7 +66,7 @@
                             <div class="marquee-content">
                                 <p class="mb-0 py-2">
                                     {% for marquee in marquees %}
-                                    <a href="{% url 'job:vacancy' marquee.slug %}" class="fw-bold">{{ marquee.position_title }}, {{ marquee.employer__user__first_name }}</a>&nbsp;&nbsp; &bull; &nbsp;&nbsp;
+                                    &nbsp;&nbsp; &bull; <a href="{% url 'job:vacancy' marquee.slug %}" class="fw-bold">{{ marquee.position_title }}, {{ marquee.employer__user__first_name }}</a>
                                     {% endfor %}
                                 </p>
                             </div>
