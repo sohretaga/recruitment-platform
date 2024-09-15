@@ -63,12 +63,10 @@
                 <div class="row g-0 align-items-center justify-content-between">
                     <div class="col-md-12">
                         <div id="marquee">
-                            <div class="marquee-content">
-                                <p class="mb-0 py-2">
-                                    {% for marquee in marquees %}
-                                    &nbsp;&nbsp; &bull; <a href="{% url 'job:vacancy' marquee.slug %}" class="fw-bold">{{ marquee.position_title }}, {{ marquee.employer__user__first_name }}</a>
-                                    {% endfor %}
-                                </p>
+                            <div class="marquee-content mb-0 py-2">
+                                {% for marquee in marquees %}
+                                <span>&nbsp;&nbsp; &bull; <a href="{% url 'job:vacancy' marquee.slug %}" class="fw-bold">{{ marquee.position_title }}, {{ marquee.employer__user__first_name }}</a></span>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -237,7 +235,7 @@
                         {% else %}
                         <li class="py-2 me-2 align-middle dropdown">
                             <a class="list-inline-item py-2 me-2 align-middle text-dark fw-medium fs-13" href="#" id="logindropdown" role="button" data-bs-toggle="dropdown">
-                                {% tr 'Login' %} <div class="arrow-down"></div>
+                                {% tr 'Login' %} <div class="arrow-down login-arrow-down"></div>
                             </a>
 
                             <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="logindropdown">

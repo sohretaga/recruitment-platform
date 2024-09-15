@@ -16,6 +16,7 @@
  * @license GNU General Public License (GPL) 3.0 or later.
  * @author Elias Ritter
  */
+
 function MarqueeJS(selector) {
     this._params = {
         duration: 50,
@@ -133,7 +134,6 @@ MarqueeJS.prototype._grabMarqueesFromDOM = function () {
             }
             marquees.push(node);
         }
-
     return marquees;
 };
 
@@ -176,7 +176,7 @@ MarqueeJS.prototype._applyAnimation = function (marquee) {
         willChange: "transform",
         display: "inline-block",
         // paddingLeft: "0",
-        width: "auto",
+        // width: "100%",
         animationName: "marqueejs" + this._keyframeId,
         animationDuration: String(Math.abs(this._params.duration)) + "s",
         animationTimingFunction: this._params.timingFunction,
@@ -189,8 +189,9 @@ MarqueeJS.prototype._applyAnimation = function (marquee) {
 
 document.addEventListener('DOMContentLoaded', function() {
     new MarqueeJS("#marquee").init({
-      duration: 50,
-      direction: "rtl",
-      pauseOnHover: true,
+        duration: 50,
+        direction: "rtl",
+        pauseOnHover: true,
+        iterations: 2
     });
-  });
+});
