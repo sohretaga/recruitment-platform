@@ -52,12 +52,29 @@ $(document).ready(function() {
             { "data": 8 },
             {   "data": null,
                 "render": function (data, type, row) {
+                    if (row[12] == 'STANDARD'){
+                        return `<div class="badge badge-soft-primary font-size-12">Standard</div>`;
+                    }else{
+                        return `<div class="badge badge-soft-info font-size-12">Premium</div>`;
+                    }
+                },
+            },
+            {   "data": null,
+                "render": function (data, type, row) {
                     if (row[11]){
                         return `<div class="badge badge-soft-success font-size-12">Active</div>`;
                     };
 
                     return `<div class="badge badge-soft-danger font-size-12">Deactivate</div>`;
                 },
+            },
+            {
+                "data": null,
+                "render": function (data, type, row) {
+                    return `
+                        <a href="javascript:void(0);" data-id="${row[9]}" class="text-primary" data-toggle="modal" data-target=".bs-payment-detail-modal"><i class="ri-refund-2-line font-size-24"></i></a>
+                    `;
+                }
             },
             {
                 "data": null,
