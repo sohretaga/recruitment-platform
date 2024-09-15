@@ -18,6 +18,11 @@ class BaseVacancy(models.Model):
         ('DEACTIVATED', 'Deactivated')
     ]
 
+    TYPE_CHOICES = [
+        ('STANDARD', 'Standard'),
+        ('PREMIUM', 'Premium')
+    ]
+
     no = models.IntegerField(blank=True, null=True)
     language = models.CharField(max_length=5)
 
@@ -44,6 +49,7 @@ class BaseVacancy(models.Model):
     slug = models.SlugField(null=True)
 
     approval_level = models.CharField(max_length=12, choices=STATUS_CHOICES, default='PENDING')
+    type = models.CharField(max_length=8, choices=TYPE_CHOICES, default='STANDARD')
     status = models.BooleanField()
     anonium = models.BooleanField(default=False)
 
