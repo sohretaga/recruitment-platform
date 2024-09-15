@@ -56,29 +56,8 @@ $.ajaxSetup({
     window.jQuery.AdvancedForm.init();
 })();
 
-
-var callback = function(mutationsList, observer) {
-    for(var mutation of mutationsList) {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-            var hasDisabledClass = targetNode.parentNode.classList.contains('disabled');
-            if (hasDisabledClass) {
-                targetNode.innerText = 'Post';
-                nextBtn.classList.remove('disabled')
-                targetNode.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    document.getElementById('post-vacancy').submit();                    
-                });
-            }
-        }
-    }
-};
-
 var observer = new MutationObserver(callback);
 observer.observe(targetNode.parentNode, config);
-
-previousBtn.addEventListener('click', function(event) {
-    targetNode.innerText = 'Next';
-});
 
 const fetchDefinition = (requestedField) => {
     if (selectedJobTitleId) {
