@@ -59,6 +59,21 @@ $(document).ready(function() {
                     `;
                 }
             },
+            { "data": null,
+                "render": function (data, type, row) {
+                    return `
+                        <select onchange="setType(this, ${row[9]})"
+                            class="badge ${row[13] == 'STANDARD' ? 'badge-soft-primary':'badge-soft-info'} font-size-12 btn dropdown-toggle" >
+                            <option value="STANDARD" ${row[13] == 'STANDARD' ? 'selected':''}>
+                                <div class="badge badge-soft-primary font-size-12">Standard</div>
+                            </option>
+                            <option value="PREMIUM" ${row[13] == 'PREMIUM' ? 'selected':''}>
+                                <div class="badge badge-soft-info font-size-12">Premium</div>
+                            </option>
+                        </select>
+                    `;
+                }
+            },
             { "data": 2 },
             { "data": 3 },
             { "data": 4 },
@@ -78,6 +93,28 @@ $(document).ready(function() {
     });
 
 });
+
+const setType = (event, id) => {
+    let value = event.value;
+    $.ajax({
+        url: '/dashboard/controller/ajax/manage-type',
+        type: 'POST',
+        data: {
+            vacancy_id: id,
+            type: value
+        },
+        success: () => {
+            event.className = '';
+
+            if (value == 'STANDARD') {
+                event.className = 'badge badge-soft-primary font-size-12 btn dropdown-toggle';
+
+            }else if (value == 'PREMIUM') {
+                event.className = 'badge badge-soft-info font-size-12 btn dropdown-toggle';
+            };
+        }
+    });
+}
 
 
 const setApprovalLevel = (event, id) => {

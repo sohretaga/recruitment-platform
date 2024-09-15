@@ -49,7 +49,8 @@ def ajax_all_vacancies(request):
             obj.id,
             obj.slug,
             obj.status,
-            obj.approval_level
+            obj.approval_level,
+            obj.type
         ])
 
     response = {
@@ -97,3 +98,12 @@ def ajax_update_published_date(request):
     vacancy.save()
 
     return JsonResponse({'status':200})
+
+@is_controller
+def ajax_manage_type(request):
+    vacancy_id = request.POST.get('vacancy_id')
+    type = request.POST.get('type')
+    vacancy = get_object_or_404(Vacancy, id=vacancy_id)
+    vacancy.type = type
+    vacancy.save()
+    return JsonResponse({'status': 200})

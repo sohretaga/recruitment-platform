@@ -46,5 +46,6 @@ urlpatterns = [
     path('controller/vacancy/all', controller.all_vacancies, name='controller-all-vacancies'),
     path('controller/ajax/vacancies', controller.ajax_all_vacancies, name='ajax-controller-all-vacancies'),
     path('controller/ajax/manage-approval-level', controller.ajax_manage_approval_level, name='ajax-controller-manage-approval-level'),
+    path('controller/ajax/manage-type', controller.ajax_manage_type, name='ajax-controller-manage-type'),
     path('controller/ajax/update-published-date', controller.ajax_update_published_date, name='ajax-controller-update-published-date'),
 ]
