@@ -42,7 +42,6 @@ def ajax_all_vacancies(request):
             obj.career_type_name,
             obj.career_level_name,
             obj.salary_minimum,
-            obj.salary_midpoint,
             obj.salary_maximum,
             obj.salary,
             obj.views,
