@@ -14,6 +14,6 @@ def selected_language(request):
     return {'language_code': language_code}
 
 def marquee(request):
-    marquees = Vacancy.translation().filter(status=True, delete=False, approval_level='PUBLISHED')\
-        .values('position_title', 'slug', 'employer__user__first_name').order_by('?')[:20]
+    marquees = Vacancy.translation().filter(status=True, delete=False, approval_level='PUBLISHED', type='PREMIUM')\
+        .values('position_title', 'slug', 'employer__user__first_name')
     return {'marquees': marquees}
