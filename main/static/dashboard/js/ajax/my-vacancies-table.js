@@ -72,8 +72,9 @@ $(document).ready(function() {
                 "data": null,
                 "render": function (data, type, row) {
                     return `
+                    <div class="justify-content-center d-flex">
                         <a href="javascript:void(0);" data-id="${row[9]}" class="text-primary" data-toggle="modal" data-target=".bs-payment-detail-modal"><i class="ri-refund-2-line font-size-24"></i></a>
-                    `;
+                    </div>`;
                 }
             },
             {
