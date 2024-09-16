@@ -103,3 +103,22 @@ subscribeBtn.addEventListener('click', () => {
         });
     };
 });
+
+
+// Marquee size settings
+const topBar = document.querySelector('.top-bar');
+
+function updateTopBarMargin() {
+    const nav = document.querySelector('nav');
+    if (nav) {
+        const navHeight = nav.offsetHeight;
+        topBar.style.marginTop = navHeight + 'px';
+        console.log('Nav yüksekliği: ' + navHeight + 'px');
+    }
+}
+
+// Update on window resize
+window.addEventListener('resize', updateTopBarMargin);
+
+// Update on initial load
+window.addEventListener('load', updateTopBarMargin);
