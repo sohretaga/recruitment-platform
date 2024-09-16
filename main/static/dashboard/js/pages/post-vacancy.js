@@ -126,6 +126,29 @@ confirmBtn.addEventListener('click', () => {
     if (positionTitle && salaryMaximum && salaryMinimum && salary) {
         document.getElementById('post-vacancy').submit();
     }else {
+        let requiredFields = document.getElementById('required-fields');
+        requiredFields.innerHTML = '';
+
+        if (!positionTitle){
+            let label = document.querySelector("label[for='position_title']").textContent;
+            requiredFields.innerHTML += `<li>${label}</li>`;
+        }
+
+        if (!salaryMaximum){
+            let label = document.querySelector("label[for='salary_maximum']").textContent;
+            requiredFields.innerHTML += `<li>${label}</li>`;
+        }
+
+        if (!salaryMinimum){
+            let label = document.querySelector("label[for='salary_minimum']").textContent;
+            requiredFields.innerHTML += `<li>${label}</li>`;
+        }
+
+        if (!salary){
+            let label = document.querySelector("label[for='salary']").textContent;
+            requiredFields.innerHTML += `<li>${label}</li>`;
+        }
+
         $('.bs-confirm-detail-modal').modal('show')
     }
 });
