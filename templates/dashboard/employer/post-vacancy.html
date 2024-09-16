@@ -101,6 +101,7 @@
                                                 <div class="form-group">
                                                     <label>{% tr 'Job Title - DASHBOARD / POST VACANCY' %}</label>
                                                     <select class="custom-select select2" id="job-title" name="job_title">
+                                                        <option value="" selected>---</option>
                                                         {% for catalogue in job_catalogues %}
                                                             {% if catalogue.id == vacancy.job_title.id %}
                                                                 <option value="{{ catalogue.id }}" selected>{{ catalogue.name }}</option>
