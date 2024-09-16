@@ -93,7 +93,7 @@
                                         <div class="row">
                                             <div class="col-lg-4">
                                                 <div class="form-group">
-                                                    <label for="basicpill-firstname-input">{% tr 'Position Title - DASHBOARD / POST VACANCY' %}</label>
+                                                    <label for="basicpill-firstname-input" class="fw-bolder text-dark">{% tr 'Position Title - DASHBOARD / POST VACANCY' %} <span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control" name="position_title" id="basicpill-firstname-input" value="{{ vacancy.position_title }}">
                                                 </div>
                                             </div>
@@ -237,7 +237,7 @@
 
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
-                                                        <label for="input-currency">{% tr 'Salary Minimum - DASHBOARD / POST VACANCY' %}</label>
+                                                        <label for="input-currency" class="fw-bolder text-dark">{% tr 'Salary Minimum - DASHBOARD / POST VACANCY' %} <span class="text-danger">*</span></label>
                                                         <input id="input-currency" name="salary_minimum" class="form-control input-mask text-left" value="{{ vacancy.salary_minimum }}" data-inputmask="'alias': 'numeric', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
                                                     </div>
                                                 </div>
@@ -260,7 +260,7 @@
 
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
-                                                        <label for="input-currency">{% tr 'Salary Maximum - DASHBOARD / POST VACANCY' %}</label>
+                                                        <label for="input-currency" class="fw-bolder text-dark">{% tr 'Salary Maximum - DASHBOARD / POST VACANCY' %} <span class="text-danger">*</span></label>
                                                         <input id="input-currency" name="salary_maximum" class="form-control input-mask text-left" value="{{ vacancy.salary_maximum }}" data-inputmask="'alias': 'numeric', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
                                                     </div>
                                                 </div>
@@ -283,7 +283,7 @@
 
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
-                                                        <label for="input-currency">{% tr 'Salary - DASHBOARD / POST VACANCY' %}</label>
+                                                        <label for="input-currency" class="fw-bolder text-dark">{% tr 'Salary - DASHBOARD / POST VACANCY' %} <span class="text-danger">*</span></label>
                                                         <input id="input-currency" name="salary" class="form-control input-mask text-left" value="{{ vacancy.salary }}" data-inputmask="'alias': 'numeric', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
                                                     </div>
                                                 </div>
