@@ -119,6 +119,10 @@ urlpatterns = [
     path('parameters/education-level-load', parameters.education_level_load, name='education_level_load'),
     path('parameters/education-level-save', parameters.education_level_save, name='education_level_save'),
 
+    path('parameters/pricing', parameters.pricing_index, name='pricing'),
+    path('parameters/pricing-load', parameters.pricing_load, name='pricing_load'),
+    path('parameters/pricing-save', parameters.pricing_save, name='pricing_save'),
+
     #LANGUAGE URLS
     path('translation/contents', languages.contents, name='contents'),
     path('translation/contents-load', languages.contents_load, name='contents_load'),

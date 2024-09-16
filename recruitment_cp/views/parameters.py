@@ -1555,3 +1555,59 @@ def education_level_save(request):
             raise PermissionError
     else:
         raise Http404
+
+#======================================================================================================
+def pricing_index(request):
+    if request.user.is_superuser:
+        return render(request, 'cp/parameters/pricing.html')
+    
+    raise Http404
+
+def pricing_load(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            language = request.POST.get('language')
+            
+            pricing = cp_models.ParameterPricing.language_filter(language).values(
+                'id', 'no', 'name', 'standard', 'premium', 'hot_vacancies'
+            )
+            json_data = json.dumps(list(pricing))
+
+            return JsonResponse(json_data, safe=False)
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+
+def pricing_save(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            hot = json.loads(request.POST.get('hot'))
+            language = request.POST.get('language')
+            index = 0
+
+            while index < len(hot):
+                pk = hot[index].pop('id', None)
+                standard = hot[index].get('standard', 0)
+                premium = hot[index].get('premium', 0)
+                hot_vacancies = hot[index].get('hot_vacancies', 0)
+                name = hot[index].get('name', None)
+
+                if name or language != 'en':
+                    if pk:
+                        pricing = cp_models.ParameterPricing.objects.filter(pk=pk)
+                        pricing.custom_update(language, **hot[index])
+                    else:
+                        pricing = cp_models.ParameterPricing(standard=standard, premium=premium, hot_vacancies=hot_vacancies)
+                        pricing.save(language, **hot[index])
+                else:
+                    pricing = cp_models.ParameterPricing.objects.filter(pk = pk)
+                    pricing.delete()
+                
+                index += 1
+
+            return JsonResponse({'status': 200})
+        else:
+            raise PermissionError
+    else:
+        raise Http404

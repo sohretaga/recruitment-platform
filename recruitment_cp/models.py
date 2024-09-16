@@ -299,3 +299,26 @@ class ParameterDatePosted(ParameterCommonFields):
 class ParameterAgeGroup(ParameterCommonFields):
     minimum = models.PositiveIntegerField()
     maximum = models.PositiveIntegerField()
+
+class ParameterPricing(ParameterCommonFields):
+    definition_en = None
+    definition_tr = None
+    note_en = None
+    note_tr = None
+
+    # category field is name field
+    standard = models.PositiveIntegerField()
+    premium = models.PositiveIntegerField()
+    hot_vacancies = models.PositiveIntegerField()
+
+    @classmethod
+    def language_filter(cls, language_code):
+        objects = cls.objects.annotate(
+            name = Case(
+                When(**{f'name_{language_code}__isnull':False},
+                     then=F(f'name_{language_code}')),
+                     default=Value(''),
+                     output_field=CharField()
+            ),
+        )
+        return objects
