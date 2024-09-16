@@ -27,10 +27,12 @@ def post_vacancy(request):
         form = PostVacancyForm(request.POST)
 
         if form.is_valid():
-            keywords = form.cleaned_data.get('keywords')
-            instance.keywords.set(json.loads(keywords))
+            keywords = json.loads(form.cleaned_data.get('keywords'))
             instance = form.save(commit=False)
             instance.employer = request.user.employer
+            if keywords:
+                instance.keywords.set(keywords)
+
             instance.save()
             return redirect(reverse('dashboard:all-vacancy'))
         

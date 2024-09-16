@@ -1,5 +1,6 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
+{% load site_content %}
 {% load translate %}
 
 {% block title %}{% tr 'Post Vacancy - DASHBOARD / POST VACANCY' %}{% endblock title %}
@@ -23,6 +24,8 @@
 {% endblock head %}
 
 {% block content %}
+{% get_site_content 'CONFIRM_VACANCY' as confirm %}
+
 <div class="page-content">
     <div class="container-fluid">
 
@@ -356,7 +359,7 @@
                                                     <div>
                                                         <h5>{% tr 'Confirm Detail - DASHBOARD / POST VACANCY' %}</h5>
                                                         <p class="text-muted">If several languages coalesce, the grammar of the resulting</p>
-                                                        <button type="submit" class="btn btn-dark btn-rounded waves-effect waves-light">{% tr 'Confirm - DASHBOARD / POST VACANCY' %}</button>
+                                                        <button type="button" class="btn btn-dark btn-rounded waves-effect waves-light">{% tr 'Confirm - DASHBOARD / POST VACANCY' %}</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -374,8 +377,24 @@
                     </div>
                 </div>
             </div>
-        </form>        
-    </div> <!-- container-fluid -->
+        </form>
+
+        <div class="modal fade bs-confirm-detail-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title mt-0">{{ confirm.title }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>{{ confirm.content }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- End Page-content -->
 {% endblock content %}

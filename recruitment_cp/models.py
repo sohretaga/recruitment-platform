@@ -23,7 +23,8 @@ class SiteContent(models.Model):
         ('QUICK_CAREER_TIPS', 'Quick Career Tips'),
         ('SUBSCRIBE', 'Subscribe'),
         ('RESET_PASSWORD', 'Reset Password'),
-        ('CONFIRM_PASSWORD_RESET', 'Confirm Password Reset')
+        ('CONFIRM_PASSWORD_RESET', 'Confirm Password Reset'),
+        ('CONFIRM_VACANCY', 'Confirm Vacancy - DASHBOARD')
     )
 
     page = models.CharField(max_length=30, choices=PAGE_CHOICES, unique=True)

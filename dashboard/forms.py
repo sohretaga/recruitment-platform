@@ -6,21 +6,18 @@ from user.models import Employer, Candidate
 from main.models import FAQ
 
 class PostVacancyForm(forms.ModelForm):
-    definition = forms.CharField(widget=forms.Textarea, required=False)
-    salary = forms.IntegerField(required=False)
-    salary_minimum = forms.IntegerField(required=False)
-    salary_maximum = forms.IntegerField(required=False)
-    keywords = forms.JSONField(required=False)
+    salary = forms.IntegerField()
+    salary_minimum = forms.IntegerField()
+    salary_maximum = forms.IntegerField()
+    keywords = forms.JSONField()
     
     class Meta:
         model = Vacancy
         fields = (
-            'language', 'career_type', 'career_level', 'location',
-            'fte', 'salary', 'salary_minimum', 'salary_maximum',
-            'position_title', 'job_title', 'employment_type',
-            'work_preference', 'department', 'status', 'keywords',
-            'description', 'responsibilities', 'qualification',
-            'skill_experience', 'additional', 'anonium'
+            'language', 'career_type', 'career_level', 'location', 'fte', 'salary',
+            'salary_minimum', 'salary_maximum', 'position_title', 'job_title',
+            'employment_type', 'work_preference', 'department', 'status', 'keywords',
+            'description', 'responsibilities', 'qualification', 'skill_experience', 'additional', 'anonium'
         )
 
 class PostBlogForm(forms.ModelForm):

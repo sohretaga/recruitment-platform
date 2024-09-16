@@ -2,7 +2,7 @@ var targetNode = document.querySelector('li.next a');
 var nextBtn = document.querySelector('li.next');
 var previousBtn = document.querySelector('li.previous a');
 var config = { attributes: true, attributeFilter: ['class'] };
-var selectedJobTitleId;
+var selectedJobTitleId = '';
 
 $.ajaxSetup({
     beforeSend: function (xhr, settings) {
@@ -55,9 +55,6 @@ $.ajaxSetup({
     "use strict";
     window.jQuery.AdvancedForm.init();
 })();
-
-var observer = new MutationObserver(callback);
-observer.observe(targetNode.parentNode, config);
 
 const fetchDefinition = (requestedField) => {
     if (selectedJobTitleId) {
@@ -118,3 +115,17 @@ const autoFetchDefinition = () => {
         })
     }
 };
+
+const confirmBtn = document.querySelector('#confirm-detail button');
+confirmBtn.addEventListener('click', () => {
+    let positionTitle = document.querySelector("input[name='position_title']").value;
+    let salaryMaximum = document.querySelector("input[name='salary_maximum']").value;
+    let salaryMinimum = document.querySelector("input[name='salary_minimum']").value;
+    let salary = document.querySelector("input[name='salary']").value;
+
+    if (positionTitle && salaryMaximum && salaryMinimum && salary) {
+        document.getElementById('post-vacancy').submit();
+    }else {
+        $('.bs-confirm-detail-modal').modal('show')
+    }
+});
