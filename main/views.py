@@ -26,7 +26,7 @@ def index(request):
     today_releases = Vacancy.translation().filter(status=True, delete=False, approval_level='PUBLISHED').order_by('?')[:6]
     quick_career_tips = Blog.translation().filter(status='published', quick_career_tip=True)
     featured_slider_vacancies = get_vacancy_in_sublists()
-    trending_keywords = ParameterKeyword.translation().filter(trending=True).values('id', 'name')
+    trending_keywords = ParameterKeyword.translation().filter(trending=True).values('name')
     how_it_works = HowItWork.translation()
     
     context = {
