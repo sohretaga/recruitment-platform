@@ -189,7 +189,7 @@ MarqueeJS.prototype._applyAnimation = function (marquee) {
 
 document.addEventListener('DOMContentLoaded', function() {
     new MarqueeJS("#marquee").init({
-        duration: 50,
+        duration: 100,
         direction: "rtl",
         pauseOnHover: true,
         iterations: 2
