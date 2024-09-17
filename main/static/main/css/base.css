@@ -19,7 +19,7 @@
 .top-bar {
     display: inline !important;
     position: fixed !important;
-    z-index: 1 !important;
+    z-index: 5 !important;
 }
 
 @media only screen and (max-width: 992px) {
@@ -30,4 +30,23 @@
 
 .navbar {
     margin-top: 0 !important;
+}
+
+#whatsapp {
+    width: 35px;
+    height: 35px;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    background: #8c85f6;
+    border-color: transparent;
+    border-radius: 5px;
+    color: #fff;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    z-index: 99;
+    font-size: 24px;
+    justify-content: center;
 }
