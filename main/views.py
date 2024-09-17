@@ -20,9 +20,6 @@ import json
 
 # Create your views here.
 
-def marquee(request):
-    return render(request, 'marquee.html')
-
 def index(request):
     vacancies = fetch_vacancies(request)
     company_slider = Employer.objects.filter(slider=True, user__profile_photo__isnull=False).exclude(user__profile_photo='')

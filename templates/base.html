@@ -66,6 +66,9 @@
                                 {% for marquee in marquees %}
                                 <span>&nbsp;&nbsp; &bull; <a href="{% url 'job:vacancy' marquee.slug %}" class="fw-bold">{{ marquee.position_title }}, {{ marquee.employer__user__first_name }}</a></span>
                                 {% endfor %}
+                                {% for marquee in marquees %}
+                                <span>&nbsp;&nbsp; &bull; <a href="{% url 'job:vacancy' marquee.slug %}" class="fw-bold">{{ marquee.position_title }}, {{ marquee.employer__user__first_name }}</a></span>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>

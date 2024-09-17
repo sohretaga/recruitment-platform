@@ -94,7 +94,7 @@ MarqueeJS.prototype._generateKeyframeSet = function (direction) {
 
         case "rtl":
             from = 0;
-            to = -100;
+            to = -50;
             break;
     }
 
