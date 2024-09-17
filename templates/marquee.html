@@ -1,0 +1,128 @@
+<style>
+.marquee-container {
+  height: 30px;
+  overflow: hidden;
+  line-height: 30px;
+
+  .marquee {
+    top: 0;
+    left: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    animation: marquee 30s linear infinite;
+  }
+
+  .marquee2 {
+    animation-delay: 15s;
+  }
+  b {
+    padding-left: 10px;
+  }
+}
+
+@keyframes marquee {
+  0% {
+    left: 100%;
+  }
+  100% {
+    left: -100%
+  }
+}
+</style>
+
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="position-relative marquee-container d-none d-sm-block">
+        <div class="marquee d-flex justify-content-around">
+          <span>BTC<b>3,588.39</b></span>
+          <span>XRP<b>0.32</b></span>
+          <span>ETH<b>116.36</b></span>
+          <span>EOS<b>2.44</b></span>
+          <span>USDT<b>1.01</b></span>
+          <span>LTC<b>32.61</b></span>
+          <span>XLM<b>0.10</b></span>
+          <span>TRX<b>0.03</b></span>
+          <span>BSV<b>74.29</b></span>
+          <span>ADA<b>0.04</b></span>
+        </div>
+        <div class="marquee marquee2 d-flex justify-content-around">
+          <span>BTC<b>3,588.39</b></span>
+          <span>XRP<b>0.32</b></span>
+          <span>ETH<b>116.36</b></span>
+          <span>EOS<b>2.44</b></span>
+          <span>USDT<b>1.01</b></span>
+          <span>LTC<b>32.61</b></span>
+          <span>XLM<b>0.10</b></span>
+          <span>TRX<b>0.03</b></span>
+          <span>BSV<b>74.29</b></span>
+          <span>ADA<b>0.04</b></span>
+        </div>
+      </div>
+
+
+      <style>
+.container {
+  background-color: black;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  overflow: hidden;
+}
+
+.marquee-items {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.marquee {
+  display: flex;
+  width: 200%;
+  animation: marqueeSlide 20s linear infinite;
+}
+
+.marquee:hover {
+  animation-play-state: paused; /* Hover edildiğinde animasyonu durdurur */
+}
+
+@keyframes marqueeSlide {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+p {
+  color: white;
+}
+
+      </style>
+      <div class="container">
+        <div class="marquee">
+          <div class="marquee-items"> 
+            <p> Text 1 </p>
+            <p> Text 2 </p>
+            <p> Text 3 </p>
+            <p> Text 4 </p>
+            <p> Text 5 </p>
+            <p> Text 6 </p>
+          </div>
+          <div class="marquee-items"> 
+            <p> Text 1 </p>
+            <p> Text 2 </p>
+            <p> Text 3 </p>
+            <p> Text 4 </p>
+            <p> Text 5 </p>
+            <p> Text 6 </p>
+          </div>
+        </div>
+        
+      </div>
+  </body>
+  </html>
