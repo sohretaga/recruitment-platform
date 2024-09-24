@@ -16,6 +16,7 @@ from recruitment_cp.models import (
     ParameterOrganizationType,
     ParameterOrganizationOwnership,
     ParameterNumberOfEmployee,
+    ParameterPricing
 )
 
 import json
@@ -43,7 +44,12 @@ def post_vacancy(request):
 
 @is_employer
 def all_vacancy(request):
-    return render(request, 'dashboard/employer/all-vacancies.html')
+    pricing = ParameterPricing.translation().filter(active=True)
+    context = {
+        'pricing': pricing
+    }
+
+    return render(request, 'dashboard/employer/all-vacancies.html', context)
 
 def ajax_all_vacancy(request):
     start:str = int(request.GET.get('start', 0))

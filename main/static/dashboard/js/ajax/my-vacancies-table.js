@@ -134,3 +134,49 @@ $(document).ready(function() {
           });
     });
 });
+
+// const pricingTable = document.querySelectorAll('#pricing-table input');
+const employerDiscountCode = document.getElementById('employer-discount-code').textContent;
+const discountCode = document.getElementById('discount-code');
+const totalPrice = document.getElementById('total-price');
+const discountCodeInput = document.getElementById('discount-code-input');
+const priceRadios = document.querySelectorAll("input[name='pricing-radio']");
+const selectedOption = document.querySelector('.job-list-menu .nav-link.active');
+
+// If the employer has a discount code, it will be automatically adapted.
+if (employerDiscountCode) {
+    let discountRadio = document.querySelector("input[value='Discounted']");
+    discountRadio.checked = true
+    discountCodeInput.style.display = 'block';
+    discountCode.value = employerDiscountCode;
+}
+
+priceRadios.forEach(radio => {
+    radio.addEventListener('change', () => {
+        calculatePrice();
+        if (radio.value == 'Discounted') {
+            discountCodeInput.style.display = 'block';
+            discountCode.value = employerDiscountCode;
+        }else {
+            discountCodeInput.style.display = 'none';
+        }
+    })
+})
+
+const calculatePrice = () => {
+    setTimeout(function() {
+        const priceCol = document.querySelector('.job-list-menu .nav-link.active').getAttribute('data-value');
+        const hotVacancy = document.getElementById('hot-vacancy').checked;
+        const priceRow = document.querySelector("input[name='pricing-radio']:checked");
+        let totalPriceValue = priceRow.getAttribute(`data-${priceCol}`);
+
+        if (hotVacancy) {
+            const hotVacancyValue = priceRow.getAttribute('data-hot');
+            totalPriceValue = parseInt(totalPriceValue) + parseInt(hotVacancyValue);
+        }
+
+        totalPrice.innerText = totalPriceValue;
+    }, 50);
+}
+
+calculatePrice();

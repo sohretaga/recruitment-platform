@@ -24,7 +24,8 @@ class SiteContent(models.Model):
         ('SUBSCRIBE', 'Subscribe'),
         ('RESET_PASSWORD', 'Reset Password'),
         ('CONFIRM_PASSWORD_RESET', 'Confirm Password Reset'),
-        ('CONFIRM_VACANCY', 'Confirm Vacancy - DASHBOARD')
+        ('CONFIRM_VACANCY', 'Confirm Vacancy - DASHBOARD'),
+        ('PAYMENT_MODAL', 'Payment Modal - DASHBOARD')
     )
 
     page = models.CharField(max_length=30, choices=PAGE_CHOICES, unique=True)
@@ -311,6 +312,7 @@ class ParameterPricing(ParameterCommonFields):
     standard = models.PositiveIntegerField()
     premium = models.PositiveIntegerField()
     hot_vacancies = models.PositiveIntegerField()
+    active = models.BooleanField(default=False)
 
     @classmethod
     def language_filter(cls, language_code):
