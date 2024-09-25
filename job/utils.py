@@ -17,34 +17,42 @@ def get_vacancies_context(request, vacancies) -> dict:
     paginator = Paginator(vacancy_with_related_info(vacancies), 10)
     current_page_number = request.POST.get('page', 1)
     vacancies_page = paginator.get_page(current_page_number)
-
-    # Serialize the data
-    bookmarked_vacancies = request.user.bookmarks.filter(
-        vacancy=OuterRef('pk')
-    )
-
-    applied_vacancies = request.user.candidate.applications.filter(
-        vacancy=OuterRef('pk')
-    )
-
-    vacancies = vacancies_page.object_list.annotate(
-        is_bookmarked=Case(
-            When(Exists(bookmarked_vacancies), then=Value(True)),
-            default=Value(False),
-            output_field=BooleanField()
-        ),
-
-        is_applied=Case(
-            When(Exists(applied_vacancies), then=Value(True)),
-            default=Value(False),
-            output_field=BooleanField()
-        )
-    ).values(
+    vacancy_args = (
         'id', 'employer_username', 'profile_photo_url', 'company_name',
         'slug', 'position_title', 'location_name', 'salary_minimum',
         'salary_maximum', 'work_experience_name', 'keywords_names', 'user_id',
-        'anonium', 'employer_sector', 'is_bookmarked', 'is_applied'
+        'anonium', 'employer_sector'
     )
+
+    # Serialize the data
+    if request.user.is_authenticated:
+        vacancy_args = list(vacancy_args)
+        vacancy_args += ['is_bookmarked', 'is_applied']
+
+        bookmarked_vacancies = request.user.bookmarks.filter(
+            vacancy=OuterRef('pk')
+        )
+
+        applied_vacancies = request.user.candidate.applications.filter(
+            vacancy=OuterRef('pk')
+        )
+
+        vacancies = vacancies_page.object_list.annotate(
+            is_bookmarked=Case(
+                When(Exists(bookmarked_vacancies), then=Value(True)),
+                default=Value(False),
+                output_field=BooleanField()
+            ),
+
+            is_applied=Case(
+                When(Exists(applied_vacancies), then=Value(True)),
+                default=Value(False),
+                output_field=BooleanField()
+            )
+        ).values(*vacancy_args)
+
+    else:
+        vacancies = vacancies_page.object_list.values(*vacancy_args)
 
     vacancies_list = list(vacancies)
 
