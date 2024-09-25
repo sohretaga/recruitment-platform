@@ -147,7 +147,7 @@ const selectedOption = document.querySelector('.job-list-menu .nav-link.active')
 if (employerDiscountCode) {
     let discountRadio = document.querySelector("input[value='Discounted']");
     discountRadio.checked = true
-    discountCodeInput.style.display = 'block';
+    discountCodeInput.style.display = 'flex';
     discountCode.value = employerDiscountCode;
 }
 
@@ -155,7 +155,7 @@ priceRadios.forEach(radio => {
     radio.addEventListener('change', () => {
         calculatePrice();
         if (radio.value == 'Discounted') {
-            discountCodeInput.style.display = 'block';
+            discountCodeInput.style.display = 'flex';
             discountCode.value = employerDiscountCode;
         }else {
             discountCodeInput.style.display = 'none';
