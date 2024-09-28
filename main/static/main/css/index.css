@@ -2,6 +2,10 @@
     display: none;
 }
 
+.bg-home {
+    padding: 200px 0 190px 0 !important;
+}
+
 @media only screen and (max-width: 992px) {
     .hiw-mobile {
         display: inline;
