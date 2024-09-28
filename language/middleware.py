@@ -1,5 +1,4 @@
 import threading
-from django.utils import translation
 from django.core.cache import cache
 from django.conf import settings
 

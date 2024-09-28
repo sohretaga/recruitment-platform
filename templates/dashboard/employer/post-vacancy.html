@@ -92,10 +92,15 @@
                                     <div class="tab-pane" id="titles-and-career">
                                         <div class="row">
                                             <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    <label for="position_title" class="font-weight-boler text-dark">{% tr 'Position Title - DASHBOARD / POST VACANCY' %} <span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" name="position_title" id="position_title" value="{{ vacancy.position_title }}">
+                                                <div class="form-group" style="position: relative;">
+                                                    <label for="position_title" class="font-weight-bold text-dark">
+                                                        {% tr 'Position Title - DASHBOARD / POST VACANCY' %} <span class="text-danger">*</span>
+                                                    </label>
+                                                    <input type="text" class="form-control" name="position_title" id="position_title" value="{{ vacancy.position_title }}" 
+                                                           {% if vacancy %}readonly style="background-color: #e9ecef;" {% endif %}>
+                                                    <a href="#"  data-toggle="tooltip" data-placement="top" title="{% tr 'Send edit request - DASHBOARD / POST VACANCY' %}" style="position: absolute; right: 10px; top: 50%; font-size: 20px;"><i class="ri-edit-line"></i></a>
                                                 </div>
+                                            
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="form-group">
