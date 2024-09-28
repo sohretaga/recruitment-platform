@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load translate %}
+{% load site_content %}
 
-{% block title %}Pricing{% endblock title %}
+{% block title %}{% tr 'Pricing' %}{% endblock title %}
 
 {% block head %}
 <!-- Bootstrap Css -->
@@ -14,6 +16,7 @@
 {% endblock head %}
 
 {% block content %}
+{% get_site_content 'PRICING' as pricing %}
 <div class="page-content">
 
     <!-- Start home -->
@@ -22,13 +25,13 @@
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="text-center text-white">
-                        <h3 class="mb-4">Pricing</h3>
+                        <h3 class="mb-4">{% tr 'Pricing' %}</h3>
                         <div class="page-next">
                             <nav class="d-inline-block" aria-label="breadcrumb text-center">
                                 <ol class="breadcrumb justify-content-center">
-                                    <li class="breadcrumb-item"><a href="{% url 'main:main-index' %}">Home</a></li>
-                                    <li class="breadcrumb-item"><a href="javascript:void(0)">Company</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page"> Pricing </li>
+                                    <li class="breadcrumb-item"><a href="{% url 'main:main-index' %}">{% tr 'Home' %}</a></li>
+                                    <li class="breadcrumb-item"><a href="javascript:void(0)">{% tr 'Company' %}</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page"> {% tr 'Pricing' %} </li>
                                 </ol>
                             </nav>
                         </div>
@@ -61,9 +64,9 @@
             <div class="row justify-content-center">
                 <div class="col-lg-6">
                     <div class="text-center">
-                        <span class="badge bg-soft-warning  fs-15 mb-2">Choose Your Plan</span>
-                        <h3>Save up to 15%</h3>
-                        <p class="text-muted">The faster, most seamless CI & development you'll find anywhere.</p>
+                        <span class="badge bg-soft-warning  fs-15 mb-2">{% tr 'Choose Your Plan' %}</span>
+                        <h3>{{ pricing.title }}</h3>
+                        <p class="text-muted">{{ pricing.content }}</p>
                     </div>
                 </div><!--end col-->
             </div><!--end row-->
@@ -151,23 +154,6 @@
     </section>
     <!-- END PRICING -->
 
-    <!--START CTA-->
-    <section class="section bg-light">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="section-title text-center">
-                    <h3 class="title mb-4 pb-2">See everything about your employee at one place.</h3>
-                    <p class="para-desc text-muted mx-auto">Start working with Jobcy that can provide everything you need to generate awareness, drive traffic, connect.</p>
-                    <div class="mt-4">
-                        <a href="{% url 'main:contact' %}" class="btn btn-primary btn-hover mt-2"><i class="uil uil-phone me-1"></i> Contact</a>
-                        <a href="{% url 'main:faqs' %}" class="btn btn-outline-primary btn-hover ms-sm-1 mt-2"><i class="uil uil-file-question me-1"></i> Faq's</a>
-                    </div>
-                </div>
-            </div><!--end row-->
-        </div><!--end container-->
-    </section>
-    <!--END CTA-->
-
     <!-- START CTA -->
     <section class="section">
         <div class="container">
@@ -176,32 +162,32 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="counter-box mt-3">
                             <div class="counters text-center">
-                                <h5 class="counter mb-0">15,000+</h5>
-                                <h6 class="fs-16 mt-3">Available Jobs</h6>
+                                <h5 class="counter mb-0">{{ vacancy_count }}</h5>
+                                <h6 class="fs-16 mt-3">{% tr 'Available Jobs' %}</h6>
                             </div>
                         </div>
                     </div><!--end col-->
                     <div class="col-lg-3 col-md-6">
                         <div class="counter-box mt-3">
                             <div class="counters text-center">
-                                <h5 class="counter mb-0">7500+</h5>
-                                <h6 class="fs-16 mt-3">Applications</h6>
+                                <h5 class="counter mb-0">{{ apply_count }}</h5>
+                                <h6 class="fs-16 mt-3">{% tr 'Applications' %}</h6>
                             </div>
                         </div>
                     </div><!--end col-->
                     <div class="col-lg-3 col-md-6">
                         <div class="counter-box mt-3">
                             <div class="counters text-center">
-                                <h5 class="counter mb-0">8.85K</h5>
-                                <h6 class="fs-16 mt-3">Positive Feedback</h6>
+                                <h5 class="counter mb-0">{{ candidate_count }}</h5>
+                                <h6 class="fs-16 mt-3">{% tr 'Candidate' %}</h6>
                             </div>
                         </div>
                     </div><!--end col-->
                     <div class="col-lg-3 col-md-6">
                         <div class="counter-box mt-3">
                             <div class="counters text-center">
-                                <h5 class="counter mb-0">9875</h5>
-                                <h6 class="fs-16 mt-3">Members</h6>
+                                <h5 class="counter mb-0">{{ employer_count }}</h5>
+                                <h6 class="fs-16 mt-3">{% tr 'Employer' %}</h6>
                             </div>
                         </div>
                     </div><!--end col-->

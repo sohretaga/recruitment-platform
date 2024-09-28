@@ -7,8 +7,8 @@ from django.conf import settings
 from threading import Thread
 
 from job.utils import fetch_vacancies
-from user.models import Employer
-from job.models import Vacancy
+from user.models import CustomUser, Employer, Candidate
+from job.models import Vacancy, Apply
 from recruitment_cp.models import ParameterFAQ, ParameterKeyword
 from main.models import FAQ
 from blog.models import Blog
@@ -112,7 +112,19 @@ def team(request):
     return render(request, 'main/team.html', context)
 
 def pricing(request):
-    return render(request, 'main/pricing.html')
+    vacancy_count = Vacancy.objects.filter(status=True, delete=False, approval_level='PUBLISHED').count()
+    apply_count = Apply.objects.count()
+    candidate_count = Candidate.objects.count()
+    employer_count = Employer.objects.count()
+
+    context = {
+        'vacancy_count': vacancy_count,
+        'apply_count': apply_count,
+        'candidate_count': candidate_count,
+        'employer_count': employer_count
+    }
+
+    return render(request, 'main/pricing.html', context)
 
 def privacy_policy(request):
     return render(request, 'main/privacy-policy.html')

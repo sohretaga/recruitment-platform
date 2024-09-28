@@ -20,6 +20,7 @@ class SiteContent(models.Model):
         ('SERVICES', 'Services'),
         ('HOME', 'Home'),
         ('TEAM', 'Team'),
+        ('PRICING', 'Pricing'),
         ('QUICK_CAREER_TIPS', 'Quick Career Tips'),
         ('SUBSCRIBE', 'Subscribe'),
         ('RESET_PASSWORD', 'Reset Password'),
