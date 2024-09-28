@@ -97,8 +97,10 @@
                                                         {% tr 'Position Title - DASHBOARD / POST VACANCY' %} <span class="text-danger">*</span>
                                                     </label>
                                                     <input type="text" class="form-control" name="position_title" id="position_title" value="{{ vacancy.position_title }}" 
-                                                           {% if vacancy %}readonly style="background-color: #e9ecef;" {% endif %}>
-                                                    {% if vacancy %}<a href="#"  data-toggle="tooltip" data-placement="top" title="{% tr 'Send edit request - DASHBOARD / POST VACANCY' %}" style="position: absolute; right: 10px; top: 50%; font-size: 20px;"><i class="ri-edit-line"></i></a>{% endif %}
+                                                           {% if vacancy and vacancy.approval_level == 'PUBLISHED' %}readonly style="background-color: #e9ecef;" {% endif %}>
+                                                    {% if vacancy and vacancy.approval_level == 'PUBLISHED' %}
+                                                    <a href="#"  data-toggle="tooltip" data-placement="top" title="{% tr 'Send edit request - DASHBOARD / POST VACANCY' %}" style="position: absolute; right: 10px; top: 50%; font-size: 20px;"><i class="ri-edit-line"></i></a>
+                                                    {% endif %}
                                                 </div>
                                             
                                             </div>
