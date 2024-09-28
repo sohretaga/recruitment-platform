@@ -71,58 +71,7 @@
                 </div><!--end col-->
             </div><!--end row-->
             <div class="row">
-                <div class="col-lg-4 col-md-6 mt-5 pt-2">
-                    <div class="pricing-box card bg-light">
-                        <div class="card-body p-4 px-lg-5">
-                            <div class="pricing-icon bg-light rounded-circle icons-md">
-                                <i class="uim uim-telegram-alt"></i>
-                            </div>
-                            <div class="pricing-name text-center mt-4 pt-2">
-                                <h4 class="fs-18">Starter</h4>
-                            </div>
-                            <div class="pricing-price text-center mt-4">
-                                <h2 class="fw-semibold">$35.99<small class="fs-16">/mo</small></h2>
-                            </div>
-                            <ul class="list-unstyled pricing-details text-muted mt-4">
-                                <li class="pricing-item"><i class="mdi mdi-check-bold bg-soft-success me-2"></i> Unlimited file recovery</li>
-                                <li class="pricing-item"><i class="mdi mdi-check-bold bg-soft-success me-2"></i> Professional reports</li>
-                                <li class="pricing-item"><i class="mdi mdi-check-bold bg-soft-success me-2"></i> Sell on marketplaces</li>
-                                <li class="pricing-item text-decoration-line-through"><i class="mdi mdi-close-thick bg-soft-muted me-2"></i> Unlimited Builds</li>
-                                <li class="pricing-item text-decoration-line-through"><i class="mdi mdi-close-thick bg-soft-muted me-2"></i> Job displayed for 30 days</li>
-                                <li class="pricing-item text-decoration-line-through"><i class="mdi mdi-close-thick bg-soft-muted me-2"></i> Premium Support 24/7</li>
-                            </ul>
-                            <div class="text-center mt-4 mb-2">
-                                <a href="javascript:void(0)" class="btn btn-soft-primary rounded-pill">Purchase Now <i class="uil uil-arrow-right"></i></a>
-                            </div>
-                        </div>
-                    </div><!--end pricing-box-->
-                </div><!--end col-->
-                <div class="col-lg-4 col-md-6 mt-5 pt-2">
-                    <div class="pricing-box card bg-light">
-                        <div class="card-body p-4 px-lg-5">
-                            <div class="pricing-icon bg-light rounded-circle icons-md">
-                                <i class="uim uim-rocket"></i>
-                            </div>
-                            <div class="pricing-name text-center mt-4 pt-2">
-                                <h4 class="fs-18">Professional</h4>
-                            </div>
-                            <div class="pricing-price text-center mt-4">
-                                <h2 class="fw-semibold">$49.99<small class="fs-16">/mo</small></h2>
-                            </div>
-                            <ul class="list-unstyled pricing-details text-muted mt-4">
-                                <li class="pricing-item"><i class="mdi mdi-check-bold bg-soft-success me-2"></i> Unlimited file recovery</li>
-                                <li class="pricing-item"><i class="mdi mdi-check-bold bg-soft-success me-2"></i> Professional reports</li>
-                                <li class="pricing-item"><i class="mdi mdi-check-bold bg-soft-success me-2"></i> Sell on marketplaces</li>
-                                <li class="pricing-item"><i class="mdi mdi-check-bold bg-soft-success me-2"></i> Unlimited Builds</li>
-                                <li class="pricing-item text-decoration-line-through"><i class="mdi mdi-close-thick bg-soft-muted me-2"></i> Job displayed for 30 days</li>
-                                <li class="pricing-item text-decoration-line-through"><i class="mdi mdi-close-thick bg-soft-muted me-2"></i> Premium Support 24/7</li>
-                            </ul>
-                            <div class="text-center mt-4 mb-2">
-                                <a href="javascript:void(0)" class="btn btn-primary rounded-pill">Purchase Now <i class="uil uil-arrow-right"></i></a>
-                            </div>
-                        </div>
-                    </div><!--end pricing-box-->
-                </div><!--end col-->
+                {% for price in all_pricing %}
                 <div class="col-lg-4 col-md-6 mt-5 pt-2">
                     <div class="pricing-box card bg-light">
                         <div class="card-body p-4 px-lg-5">
@@ -130,27 +79,31 @@
                                 <i class="uim uim-bag"></i>
                             </div>
                             <div class="pricing-name text-center mt-4 pt-2">
-                                <h4 class="fs-18">Enterprice</h4>
+                                <h4 class="fs-18">{{ price.name }}</h4>
                             </div>
                             <div class="pricing-price text-center mt-4">
-                                <h2 class="fw-semibold">$59.99<small class="fs-16">/mo</small></h2>
+                                <h2 class="fw-semibold">₼{{ price.price }}<small class="fs-16">/mo</small></h2>
                             </div>
                             <ul class="list-unstyled pricing-details text-muted mt-4">
-                                <li class="pricing-item"><i class="mdi mdi-check-bold bg-soft-success me-2"></i> Unlimited file recovery</li>
-                                <li class="pricing-item"><i class="mdi mdi-check-bold bg-soft-success me-2"></i> Professional reports</li>
-                                <li class="pricing-item"><i class="mdi mdi-check-bold bg-soft-success me-2"></i> Sell on marketplaces</li>
-                                <li class="pricing-item"><i class="mdi mdi-check-bold bg-soft-success me-2"></i> Unlimited Builds</li>
-                                <li class="pricing-item"><i class="mdi mdi-check-bold bg-soft-success me-2"></i> Job displayed for 30 days</li>
-                                <li class="pricing-item"><i class="mdi mdi-check-bold bg-soft-success me-2"></i> Premium Support 24/7</li>
+                                {% for p_feature in pricing_features %}
+                                    {% if price.id == p_feature.package.id %}
+                                        {% if p_feature.is_feature_active %}
+                                        <li class="pricing-item"><i class="mdi mdi-check-bold bg-soft-success me-2"></i> {{ p_feature.name }}</li>
+                                        {% else %}
+                                        <li class="pricing-item text-decoration-line-through"><i class="mdi mdi-close-thick bg-soft-muted me-2"></i> {{ p_feature.name }}</li>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
                             </ul>
                             <div class="text-center mt-4 mb-2">
                                 <a href="javascript:void(0)" class="btn btn-soft-primary rounded-pill">Purchase Now <i class="uil uil-arrow-right"></i></a>
                             </div>
                         </div>
-                    </div><!--end pricing-box-->
-                </div><!--end col-->
-            </div><!--end row-->
-        </div><!--end container-->
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
     </section>
     <!-- END PRICING -->
 

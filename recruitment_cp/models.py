@@ -317,6 +317,33 @@ class ParameterPricing(ParameterCommonFields):
 
     @classmethod
     def language_filter(cls, language_code):
+        objects = super().language_filter(language_code)
+
+        objects = objects.annotate(
+            grouping_name = Case(
+                When(**{f'name_{language_code}__isnull':False},
+                     then=F(f'name_{language_code}')),
+                     default=Value(''),
+                     output_field=CharField()
+            ),
+        )
+
+        return objects
+    
+class ParameterPricingExternal(ParameterCommonFields):
+    no = None
+    definition_en = None
+    definition_tr = None
+    note_en = None
+    note_tr = None
+
+    price = models.PositiveIntegerField()
+
+    class Meta:
+        ordering = ['id']
+
+    @classmethod
+    def language_filter(cls, language_code):
         objects = cls.objects.annotate(
             name = Case(
                 When(**{f'name_{language_code}__isnull':False},
@@ -324,5 +351,50 @@ class ParameterPricing(ParameterCommonFields):
                      default=Value(''),
                      output_field=CharField()
             ),
+        )
+
+        return objects
+    
+class ParameterPricingFeature(ParameterCommonFields):
+    no = None
+    definition_en = None
+    definition_tr = None
+    note_en = None
+    note_tr = None
+
+    is_feature_active = models.BooleanField()
+    package = models.ForeignKey(ParameterPricingExternal, on_delete=models.CASCADE, related_name='features')
+
+    class Meta:
+        ordering = ['id']
+
+    @classmethod
+    def language_filter(cls, language_code):
+        objects = cls.objects.annotate(
+            feature = Case(
+                When(**{f'name_{language_code}__isnull':False},
+                     then=F(f'name_{language_code}')),
+                     default=Value(''),
+                     output_field=CharField()
+            ),
+
+            package_name = Case(
+                When(**{f'package__name_{language_code}__isnull':False},
+                     then=F(f'package__name_{language_code}')),
+                     default=Value(''),
+                     output_field=CharField()
+            ),
+        )
+        return objects
+
+    @classmethod
+    def translation(cls):
+        language = get_current_user_language()
+        objects = cls.objects.annotate(
+            name = Case(
+                    When(**{f'name_{language}__isnull':False}, then=F(f'name_{language}')),
+                    default=F('name_en'),
+                    output_field=CharField()
+            )
         )
         return objects

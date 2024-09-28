@@ -7,9 +7,9 @@ from django.conf import settings
 from threading import Thread
 
 from job.utils import fetch_vacancies
-from user.models import CustomUser, Employer, Candidate
+from user.models import Employer, Candidate
 from job.models import Vacancy, Apply
-from recruitment_cp.models import ParameterFAQ, ParameterKeyword
+from recruitment_cp.models import ParameterFAQ, ParameterKeyword, ParameterPricingExternal, ParameterPricingFeature
 from main.models import FAQ
 from blog.models import Blog
 from main.models import Notification, Subscribe, HowItWork, Team, Service, AboutUs, AboutSectionFactor
@@ -116,12 +116,16 @@ def pricing(request):
     apply_count = Apply.objects.count()
     candidate_count = Candidate.objects.count()
     employer_count = Employer.objects.count()
+    pricing = ParameterPricingExternal.translation().all()
+    pricing_features = ParameterPricingFeature.translation().all()
 
     context = {
         'vacancy_count': vacancy_count,
         'apply_count': apply_count,
         'candidate_count': candidate_count,
-        'employer_count': employer_count
+        'employer_count': employer_count,
+        'all_pricing': pricing,
+        'pricing_features': pricing_features
     }
 
     return render(request, 'main/pricing.html', context)

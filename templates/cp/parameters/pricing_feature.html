@@ -1,0 +1,105 @@
+{% extends 'cp/base.html' %}
+{% load static %}
+{% load filters %}
+
+{% block title %}Pricing Feature - Control Panel{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'cp/css/tables.css' %}">
+{% endblock %}
+
+{% block content %}
+
+{% include 'cp/container.html' %}
+
+<div class="table-container">
+    <div id="data-filter">
+        <div style="display: flex; margin-bottom: 10px;">
+            <div class="chb-style">
+                <span style="margin-right: 5px;">Language: </span>
+                <div class="filter-chb">
+                    {% languages as language_list %}
+                    {% for language in language_list reversed %}
+                        {% if forloop.first %}
+                            <span title="{{language.name}}"><input type="checkbox" id="id-{{language.code}}" name="language" value="{{language.code}}"
+                                    checked="checked"></span>
+                            <label for="id-{{language.code}}"></label>
+                        {% else %}
+                            <span title="{{language.name}}"><input type="checkbox" id="id-{{language.code}}" name="language" value="{{language.code}}"></span>
+                            <label for="id-{{language.code}}"></label>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="caption" id="caption">Pricing Feature</div>
+    <div id="table"></div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'cp/js/command.js' %}"></script>
+<script src="{% static 'cp/js/processes.js' %}"></script>
+<script>
+    const saveUrl = "{% url 'cp:pricing_feature_save' %}";
+    const loadUrl = "{% url 'cp:pricing_feature_load' %}";
+    const bmtTable = document.getElementById('table');
+    const consoleText = 'Pricing Feature';
+    var hot;
+    const modelColumnMap = {
+        'package_name':[1],
+
+        /* We specify the names of the models from which data will be retrieved for updating as keys,
+        and the IDs of the columns to be updated as values. This structure is used to clearly define
+        which column will be updated from which model. */
+    };
+
+    $(document).ready(function() {
+        hot = new Handsontable(bmtTable, {
+            rowHeaders: true,
+            colHeaders: true,
+            stretchH: 'all',
+            startRows: 1,
+            wordWrap: true,
+            filters: true,
+            data: [{id:''}],
+            dropdownMenu:  ['filter_by_value', 'filter_action_bar'],
+            licenseKey: 'non-commercial-and-evaluation',
+
+            hiddenColumns: {
+                columns: [0],
+                indicators: false
+            },
+
+            columns: [
+                {
+                    title: 'id',
+                    data: 'id',
+                    readOnly: true
+                },
+                {
+                    title: 'Package Name',
+                    data: 'package_name',
+                    type: 'dropdown'
+                },
+                {
+                    title: 'Feature',
+                    data: 'feature'
+                },
+                {
+                    title: 'Active',
+                    data: 'is_feature_active',
+                    type: 'checkbox',
+                    className: 'htCenter'
+                }
+            ],
+        });
+
+        loadData();
+    })
+
+</script>
+
+{% endblock scripts %}

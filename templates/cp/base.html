@@ -88,6 +88,8 @@
                     <li {% if 'age-group' in request.path %} class="active" {% endif %}><a href="{% url 'cp:age_group' %}">Age Group</a></li>
                     <li {% if 'education-level' in request.path %} class="active" {% endif %}><a href="{% url 'cp:education_level' %}">Education Level</a></li>
                     <li {% if 'pricing' in request.path %} class="active" {% endif %}><a href="{% url 'cp:pricing' %}">Pricing</a></li>
+                    <li {% if 'p-external' in request.path %} class="active" {% endif %}><a href="{% url 'cp:pricing_external' %}">Pricing (External)</a></li>
+                    <li {% if 'p-feature' in request.path %} class="active" {% endif %}><a href="{% url 'cp:pricing_feature' %}">Pricing (Feature)</a></li>
                 {% elif 'translation' in request.path %}
                     <li {% if 'contents' in request.path %} class="active" {% endif %}><a href="{% url 'cp:contents' %}">Contents</a></li>
                 {% endif %}

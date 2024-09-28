@@ -1612,3 +1612,112 @@ def pricing_save(request):
             raise PermissionError
     else:
         raise Http404
+    
+#======================================================================================================
+def pricing_external_index(request):
+    if request.user.is_superuser:
+        return render(request, 'cp/parameters/pricing_external.html')
+    
+    raise Http404
+
+def pricing_external_load(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            language = request.POST.get('language')
+            
+            pricing_external = cp_models.ParameterPricingExternal.language_filter(language).values(
+                'id', 'name', 'price'
+            )
+            json_data = json.dumps(list(pricing_external))
+
+            return JsonResponse(json_data, safe=False)
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+
+def pricing_external_save(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            hot = json.loads(request.POST.get('hot'))
+            language = request.POST.get('language')
+            index = 0
+
+            while index < len(hot):
+                pk = hot[index].pop('id', None)
+                name = hot[index].get('name')
+                price = hot[index].get('price', 0)
+
+                if name or language != 'en':
+                    if pk:
+                        pricing_external = cp_models.ParameterPricingExternal.objects.filter(pk=pk)
+                        pricing_external.custom_update(language, **hot[index])
+                    else:
+                        pricing_external = cp_models.ParameterPricingExternal(price=price)
+                        pricing_external.save(language, **hot[index])
+                else:
+                    pricing_external = cp_models.ParameterPricingExternal.objects.filter(pk = pk)
+                    pricing_external.delete()
+                
+                index += 1
+
+            return JsonResponse({'status': 200})
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+    
+#======================================================================================================
+def pricing_feature_index(request):
+    if request.user.is_superuser:
+        return render(request, 'cp/parameters/pricing_feature.html')
+    
+    raise Http404
+
+def pricing_feature_load(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            language = request.POST.get('language')
+            
+            pricing_feature = cp_models.ParameterPricingFeature.language_filter(language).values(
+                'id', 'package_name', 'feature', 'is_feature_active'
+            )
+            json_data = json.dumps(list(pricing_feature))
+
+            return JsonResponse(json_data, safe=False)
+        else:
+            raise PermissionError
+    else:
+        raise Http404
+
+def pricing_feature_save(request):
+    if request.user.is_superuser:
+        if is_ajax(request) and request.POST:
+            hot = json.loads(request.POST.get('hot'))
+            language = request.POST.get('language')
+            index = 0
+
+            while index < len(hot):
+                pk = hot[index].pop('id', None)
+                package_name = cp_models.ParameterPricingExternal.translation().get(name=hot[index].get('package_name'))
+                feature = hot[index].get('feature')
+                is_feature_active = hot[index].get('is_feature_active') or False
+
+                if feature or language != 'en':
+                    if pk:
+                        pricing_feature = cp_models.ParameterPricingFeature.objects.filter(pk=pk)
+                        pricing_feature.custom_update(language, name=feature, is_feature_active=is_feature_active, package=package_name)
+                    else:
+                        pricing_feature = cp_models.ParameterPricingFeature(is_feature_active=is_feature_active, package=package_name)
+                        pricing_feature.save(language, name=feature)
+                else:
+                    pricing_feature = cp_models.ParameterPricingFeature.objects.filter(pk = pk)
+                    pricing_feature.delete()
+                
+                index += 1
+
+            return JsonResponse({'status': 200})
+        else:
+            raise PermissionError
+    else:
+        raise Http404

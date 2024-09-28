@@ -123,6 +123,14 @@ urlpatterns = [
     path('parameters/pricing-load', parameters.pricing_load, name='pricing_load'),
     path('parameters/pricing-save', parameters.pricing_save, name='pricing_save'),
 
+    path('parameters/p-external', parameters.pricing_external_index, name='pricing_external'),
+    path('parameters/p-external-load', parameters.pricing_external_load, name='pricing_external_load'),
+    path('parameters/p-external-save', parameters.pricing_external_save, name='pricing_external_save'),
+
+    path('parameters/p-feature', parameters.pricing_feature_index, name='pricing_feature'),
+    path('parameters/p-feature-load', parameters.pricing_feature_load, name='pricing_feature_load'),
+    path('parameters/p-feature-save', parameters.pricing_feature_save, name='pricing_feature_save'),
+
     #LANGUAGE URLS
     path('translation/contents', languages.contents, name='contents'),
     path('translation/contents-load', languages.contents_load, name='contents_load'),
