@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models import F, Case, When, Value, CharField, Subquery, OuterRef, FloatField
 from django.db.models.functions import ExtractYear
+from django.core.validators import MinLengthValidator, MaxLengthValidator
 from datetime import datetime
 
 from recruitment_cp.models import (
@@ -28,6 +29,18 @@ class CustomUser(AbstractUser):
         ('candidate', 'Candidate'),
         ('blogger', 'Content'),
         ('controller', 'Controller'),
+    )
+
+    username = models.CharField(
+        max_length=19,
+        unique=True,
+        validators=[
+            MinLengthValidator(2),
+            MaxLengthValidator(19)
+        ],
+        error_messages={
+            "unique": "A user with that username already exists.",
+        },
     )
 
     profile_photo = models.ImageField(upload_to='profile-photos/', null=True, blank=True)

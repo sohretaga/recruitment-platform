@@ -20,6 +20,7 @@ from job.utils import vacancy_with_related_info
 from .utils import manage_user_type_for_details
 from dashboard.forms import ManageEmployerAccountForm, ManageCandidateAccountForm
 from dashboard.decorators import is_candidate
+from language.utils import tr
 from recruitment_cp.models import(
         ParameterKeyword,
         ParameterSector,
@@ -35,7 +36,7 @@ from recruitment_cp.models import(
         ParameterLocation,
         ParameterEmployeeType,
         ParameterJobCatalogue
-    )
+)
 
 import os
 import json
@@ -62,7 +63,7 @@ def sign_in(request):
 
                 return redirect(next_url)
             else:
-                messages.error(request, 'Username or password is wrong!')
+                messages.error(request, tr('Username or password is wrong!'))
 
     return render(request, 'user/sign-in.html')
 
@@ -97,7 +98,7 @@ def sign_up(request):
 
             for field, errors in form.errors.items():
                 for error in errors:
-                    messages.error(request, error)
+                    messages.error(request, tr(error))
 
             return render(request, 'user/sign-up.html', context)
 
