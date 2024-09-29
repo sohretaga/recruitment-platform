@@ -41,6 +41,7 @@ $(document).ready(function() {
                 }
             },
             { "data": 1 },
+            { "data": 14 },
             { "data": null,
                 "render": function (data, type, row) {
                     return `
