@@ -35,8 +35,7 @@ class CustomUser(AbstractUser):
         max_length=19,
         unique=True,
         validators=[
-            MinLengthValidator(2),
-            MaxLengthValidator(19)
+            MinLengthValidator(2, message='Username must be at least 2 characters long.'),
         ],
         error_messages={
             "unique": "A user with that username already exists.",
