@@ -1680,7 +1680,7 @@ def pricing_feature_load(request):
             language = request.POST.get('language')
             
             pricing_feature = cp_models.ParameterPricingFeature.language_filter(language).values(
-                'id', 'package_name', 'feature', 'is_feature_active'
+                'id', 'no', 'feature', 'standard', 'premium'
             )
             json_data = json.dumps(list(pricing_feature))
 
@@ -1699,16 +1699,17 @@ def pricing_feature_save(request):
 
             while index < len(hot):
                 pk = hot[index].pop('id', None)
-                package_name = cp_models.ParameterPricingExternal.translation().get(name=hot[index].get('package_name'))
+                no = hot[index].pop('no', None)
                 feature = hot[index].get('feature')
-                is_feature_active = hot[index].get('is_feature_active') or False
+                standard = hot[index].get('standard') or False
+                premium = hot[index].get('premium') or False
 
                 if feature or language != 'en':
                     if pk:
                         pricing_feature = cp_models.ParameterPricingFeature.objects.filter(pk=pk)
-                        pricing_feature.custom_update(language, name=feature, is_feature_active=is_feature_active, package=package_name)
+                        pricing_feature.custom_update(language, name=feature, no=no, standard=standard, premium=premium)
                     else:
-                        pricing_feature = cp_models.ParameterPricingFeature(is_feature_active=is_feature_active, package=package_name)
+                        pricing_feature = cp_models.ParameterPricingFeature(no=no, standard=standard, premium=premium)
                         pricing_feature.save(language, name=feature)
                 else:
                     pricing_feature = cp_models.ParameterPricingFeature.objects.filter(pk = pk)

@@ -356,17 +356,13 @@ class ParameterPricingExternal(ParameterCommonFields):
         return objects
     
 class ParameterPricingFeature(ParameterCommonFields):
-    no = None
     definition_en = None
     definition_tr = None
     note_en = None
     note_tr = None
 
-    is_feature_active = models.BooleanField()
-    package = models.ForeignKey(ParameterPricingExternal, on_delete=models.CASCADE, related_name='features')
-
-    class Meta:
-        ordering = ['id']
+    standard = models.BooleanField()
+    premium = models.BooleanField()
 
     @classmethod
     def language_filter(cls, language_code):
@@ -374,13 +370,6 @@ class ParameterPricingFeature(ParameterCommonFields):
             feature = Case(
                 When(**{f'name_{language_code}__isnull':False},
                      then=F(f'name_{language_code}')),
-                     default=Value(''),
-                     output_field=CharField()
-            ),
-
-            package_name = Case(
-                When(**{f'package__name_{language_code}__isnull':False},
-                     then=F(f'package__name_{language_code}')),
                      default=Value(''),
                      output_field=CharField()
             ),

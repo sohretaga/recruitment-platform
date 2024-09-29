@@ -74,9 +74,6 @@ def load_source(request):
                     case 'grouping':
                         source = cp_models.ParameterCompetenceGrouping.language_filter(**params).values_list('name', flat=True)
 
-                    case 'package_name':
-                        source = cp_models.ParameterPricingExternal.language_filter(**params).values_list('name', flat=True)
-
                 data[source_model] = json.dumps(list(source))
             
             return JsonResponse(data)

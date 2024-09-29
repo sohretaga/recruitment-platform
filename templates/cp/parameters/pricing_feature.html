@@ -48,13 +48,6 @@
     const bmtTable = document.getElementById('table');
     const consoleText = 'Pricing Feature';
     var hot;
-    const modelColumnMap = {
-        'package_name':[1],
-
-        /* We specify the names of the models from which data will be retrieved for updating as keys,
-        and the IDs of the columns to be updated as values. This structure is used to clearly define
-        which column will be updated from which model. */
-    };
 
     $(document).ready(function() {
         hot = new Handsontable(bmtTable, {
@@ -80,17 +73,23 @@
                     readOnly: true
                 },
                 {
-                    title: 'Package Name',
-                    data: 'package_name',
-                    type: 'dropdown'
+                    title: 'No',
+                    data: 'no',
+                    className: 'htCenter'
                 },
                 {
                     title: 'Feature',
                     data: 'feature'
                 },
                 {
-                    title: 'Active',
-                    data: 'is_feature_active',
+                    title: 'Standard',
+                    data: 'standard',
+                    type: 'checkbox',
+                    className: 'htCenter'
+                },
+                {
+                    title: 'Premium',
+                    data: 'premium',
                     type: 'checkbox',
                     className: 'htCenter'
                 }

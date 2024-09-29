@@ -85,15 +85,23 @@
                                 <h2 class="fw-semibold">₼{{ price.price }}<small class="fs-16">/{% tr 'mo' %}</small></h2>
                             </div>
                             <ul class="list-unstyled pricing-details text-muted mt-4">
-                                {% for p_feature in pricing_features %}
-                                    {% if price.id == p_feature.package.id %}
-                                        {% if p_feature.is_feature_active %}
+                                {% if forloop.first %}
+                                    {% for p_feature in pricing_features %}
+                                        {% if p_feature.standard %}
                                         <li class="pricing-item"><i class="mdi mdi-check-bold bg-soft-success me-2"></i> {{ p_feature.name }}</li>
                                         {% else %}
                                         <li class="pricing-item text-decoration-line-through"><i class="mdi mdi-close-thick bg-soft-muted me-2"></i> {{ p_feature.name }}</li>
                                         {% endif %}
-                                    {% endif %}
-                                {% endfor %}
+                                    {% endfor %}
+                                {% else %}
+                                    {% for p_feature in pricing_features %}
+                                        {% if p_feature.premium %}
+                                        <li class="pricing-item"><i class="mdi mdi-check-bold bg-soft-success me-2"></i> {{ p_feature.name }}</li>
+                                        {% else %}
+                                        <li class="pricing-item text-decoration-line-through"><i class="mdi mdi-close-thick bg-soft-muted me-2"></i> {{ p_feature.name }}</li>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
                             </ul>
                         </div>
                     </div>
