@@ -77,14 +77,27 @@ $(document).ready(function() {
             },
             { "data": 2 },
             { "data": 3 },
-            { "data": 4 },
-            { "data": 6 },
-            { "data": 7 },
+            // { "data": 4 },
+            // { "data": 6 },
+
+            { "data": null,
+                "render": function (data, type, row) {
+                    return `
+                        <div data-toggle="tooltip" data-placement="left" title="Salary Min: ${row[4]}<br>Salary Max: ${row[6]}">${row[7]}</div>
+                    `;
+                }
+            },
+
             { "data": 8 },
         ],
         
         drawCallback: function() {
             $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+
+            // Enable Bootstrap tooltips on every redraw
+            $('[data-toggle="tooltip"]').tooltip({
+                html: true
+            });
         }
     });
 
