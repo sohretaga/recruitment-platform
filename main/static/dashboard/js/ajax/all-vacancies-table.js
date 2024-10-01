@@ -77,8 +77,6 @@ $(document).ready(function() {
             },
             { "data": 2 },
             { "data": 3 },
-            // { "data": 4 },
-            // { "data": 6 },
 
             { "data": null,
                 "render": function (data, type, row) {
