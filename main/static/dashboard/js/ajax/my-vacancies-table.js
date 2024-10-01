@@ -45,9 +45,13 @@ $(document).ready(function() {
             { "data": 1 },
             { "data": 2 },
             { "data": 3 },
-            { "data": 4 },
-            { "data": 5 },
-            { "data": 7 },
+            { "data": null,
+                "render": function (data, type, row) {
+                    return `
+                        <div data-toggle="tooltip" data-placement="left" title="Salary Min: ${row[7]}<br>Salary Max: ${row[4]}">${row[5]}</div>
+                    `;
+                }
+            },
             { "data": 8 },
             {   "data": null,
                 "render": function (data, type, row) {
@@ -89,6 +93,11 @@ $(document).ready(function() {
         
         drawCallback: function() {
             $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+
+            // Enable Bootstrap tooltips on every redraw
+            $('[data-toggle="tooltip"]').tooltip({
+                html: true
+            });
         }
     });
 
