@@ -51,7 +51,7 @@ def ajax_all_vacancies(request):
             obj.status,
             obj.approval_level,
             obj.type,
-            obj.company_name
+            obj.company_name,
         ])
 
     response = {

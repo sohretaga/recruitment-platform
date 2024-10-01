@@ -75,6 +75,15 @@ $(document).ready(function() {
                     `;
                 }
             },
+            {  "data": null,
+                "render": function (data, type, row) {
+                    if (row[11]){
+                        return `<div class="badge badge-soft-success font-size-12">Active</div>`;
+                    };
+
+                    return `<div class="badge badge-soft-danger font-size-12">Deactivate</div>`;
+                },
+            },
             { "data": 2 },
             { "data": 3 },
 
