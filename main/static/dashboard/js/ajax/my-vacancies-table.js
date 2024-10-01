@@ -53,7 +53,8 @@ $(document).ready(function() {
                 }
             },
             { "data": 8 },
-            {   "data": null,
+            {   
+                "data": null,
                 "render": function (data, type, row) {
                     if (row[12] == 'STANDARD'){
                         return `<div class="badge badge-soft-primary font-size-12">Standard</div>`;
@@ -62,13 +63,24 @@ $(document).ready(function() {
                     }
                 },
             },
-            {   "data": null,
+            { 
+                "data": null,
                 "render": function (data, type, row) {
                     if (row[11]){
                         return `<div class="badge badge-soft-success font-size-12">Active</div>`;
                     };
 
                     return `<div class="badge badge-soft-danger font-size-12">Deactivate</div>`;
+                },
+            },
+            {   "data": null,
+                "render": function (data, type, row) {
+                    if (row[13] == 'PUBLISHED'){
+                        return `<div class="badge badge-soft-success font-size-12">Published</div>`;
+                    }else if (row[13] == 'PENDING') {
+                        return `<div class="badge badge-soft-warning font-size-12">Pending</div>`;
+                    }
+                    return `<div class="badge badge-soft-danger font-size-12">Deactivated</div>`;
                 },
             },
             {

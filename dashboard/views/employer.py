@@ -81,6 +81,7 @@ def ajax_all_vacancy(request):
             obj.slug,
             obj.status,
             obj.type,
+            obj.approval_level,
         ])
 
     response = {
