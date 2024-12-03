@@ -113,7 +113,6 @@ function updateTopBarMargin() {
     if (nav) {
         const navHeight = nav.offsetHeight;
         topBar.style.marginTop = navHeight + 'px';
-        console.log('Nav yüksekliği: ' + navHeight + 'px');
     }
 }
 

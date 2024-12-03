@@ -44,7 +44,7 @@ MarqueeJS.prototype._log = function(msg, type) {
         type = "log";
     }
 
-    console[type](msg);
+    // console[type](msg);
 };
 
 MarqueeJS.prototype.init = function (params) {

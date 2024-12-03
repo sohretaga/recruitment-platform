@@ -126,7 +126,9 @@
                                     </div>
                                 </div><!--end col-->
                                 <div class="col-lg-4 col-md-6">
-                                    <a href="javascript:void(0)" class="btn btn-primary w-100"><i class="uil uil-filter"></i> {% tr 'Filter' %}</a>
+                                    <a href="javascript:void(0)" class="btn btn-primary w-100" id="vacancy-filter"><i class="uil uil-filter"></i> {% tr 'Filter' %}</a>
+                                    <a href="javascript:void(0)" class="btn btn-primary w-100" id="clear-vacancy-filter" style="display: none;" onclick="clearFilter()">
+                                        <i class="uil uil-filter"></i> {% tr 'Clear Filter' %}</a>
                                 </div><!--end col-->
                             </div><!--end row-->
                         </form>

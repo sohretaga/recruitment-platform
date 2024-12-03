@@ -1,5 +1,7 @@
 const slider = document.getElementById('slider1');
 const trending = document.querySelectorAll('.trending');
+const vacancyFilterBtn = document.getElementById('vacancy-filter');
+const clearVacancyFilterBtn = document.getElementById('clear-vacancy-filter');
 const url = new URL(window.location);
 
 const locationFilter = new Choices("#location", {
@@ -128,7 +130,7 @@ const getUrlParameterValue = (parameterName) => {
         return parameterValue.split(',');
 
     } catch (error) {
-        return [];
+        return false;
      };
 };
 
@@ -263,12 +265,12 @@ const listVacancies = (texts, vacanciesInfo) => {
 // Filter Request
 const filterRequest = () => {
     const data = new DataCollector();
-    const collectded_data = data.collectData();
+    const collectdedData = data.collectData();
 
     $.ajax({
         url: `/ajax/filter-vacancies`,
         type: 'POST',
-        data: JSON.stringify(collectded_data),
+        data: JSON.stringify(collectdedData),
         success: (response) => {
             generatePagination(
                 response.pagination
@@ -322,12 +324,15 @@ const addCheckboxListener = (selector, callback) => {
 };
 
 const setFilterCheckboxes = (selector, values) => {
-    const checkboxes = document.querySelectorAll(selector);
-    checkboxes.forEach(checkbox => {
-        if (values.includes(checkbox.value)) {
-            checkbox.checked = true;
-        };
-    });
+    if (values) {
+        // Adjust checkboxes if any filters are applied
+        const checkboxes = document.querySelectorAll(selector);
+        checkboxes.forEach(checkbox => {
+            if (values.includes(checkbox.value)) {
+                checkbox.checked = true;
+            }
+        });
+    };
 };
 
 addCheckboxListener(workExperiencesCheckboxes, filterRequest); // Work Experiences Listener
@@ -458,3 +463,81 @@ searchInput.addEventListener('input', function() {
         }
     })
 });
+
+// Clear Filter
+const setFilterBtn = (clear) => {
+    if (clear) {
+        vacancyFilterBtn.style.display = 'none';
+        clearVacancyFilterBtn.style.display = 'inline-block';
+    }else {
+        vacancyFilterBtn.style.display = 'inline-block';
+        clearVacancyFilterBtn.style.display = 'none';
+    }
+};
+
+const unselectAllFilters = (selector) => {
+    const checkboxes = document.querySelectorAll(selector);
+    checkboxes.forEach(checkbox => {
+        if (checkbox.value) {
+            checkbox.checked = false;
+        }
+    });
+};
+
+const clearFilter = () => {
+    setUrl('work-experience');
+    setUrl('employment-type');
+    setUrl('work-preference');
+    setUrl('career-type');
+    setUrl('department');
+    setUrl('date');
+    setUrl('salary-range');
+    setUrl('sector');
+    setUrl('location');
+    setUrl('job-family');
+    setUrl('trending');
+    setUrl('keyword');
+
+    unselectAllFilters(workExperiencesCheckboxes);
+    unselectAllFilters(employmentTypeCheckboxes);
+    unselectAllFilters(workPreferenceCheckboxes);
+    unselectAllFilters(careerTypeCheckboxes);
+    unselectAllFilters(departmentCheckboxes);
+    unselectAllFilters(datePostedRadios);
+    slider.noUiSlider.set([minValue, maxValue]); // clear salary range filter
+    deselectOtherButtons(null); // clear sector filter
+    locationFilter.setChoiceByValue('');
+    jobFamilyFilter.setChoiceByValue('');
+
+    // clear trending filter
+    const activeTrend = document.querySelector('.active-trend');
+    if (activeTrend) {activeTrend.classList.remove('active-trend')};
+
+    filterRequest();
+};
+
+const observer = new MutationObserver(() => {
+    const params = new URLSearchParams(window.location.search);
+    const allParams = [
+        params.get('work-experience'),
+        params.get('employment-type'),
+        params.get('work-preference'),
+        params.get('career-type'),
+        params.get('department'),
+        params.get('date'),
+        params.get('salary-range'),
+        params.get('sector'),
+        params.get('location'),
+        params.get('job-family'),
+        params.get('trending'),
+        params.get('keyword'),
+    ];
+
+    if (allParams.some(param => param)) {
+        setFilterBtn(clear=true);
+    } else {
+        setFilterBtn(clear=false);
+    };
+});
+
+observer.observe(document, { subtree: true, childList: true });
