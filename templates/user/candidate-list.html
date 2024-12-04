@@ -158,9 +158,11 @@
                                             <p class="text-muted mb-2"> {{ candidate.occupation_name }}</p>
                                             {% endif %}
                                             <ul class="list-inline mb-0 text-muted">
+                                                {% if candidate.citizenship %}
                                                 <li class="list-inline-item">
-                                                    <i class="mdi mdi-map-marker"></i> Oakridge Lane Richardson
+                                                    <i class="mdi mdi-map-marker"></i> {{ candidate.citizenship_name }}
                                                 </li>
+                                                {% endif %}
                                                 <li class="list-inline-item">
                                                     <i class="uil uil-wallet"></i> $650 / hours
                                                 </li>
