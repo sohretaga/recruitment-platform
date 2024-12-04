@@ -10,18 +10,32 @@ const typeOfEmploymentCheckboxes = '#preference-type-of-employment input[type="c
 var tempPresentId = 1;
 
 selects.forEach(select => {
-    new Choices(`#${select.id}`, {
-        searchResultLimit: 500,
-        resetScrollPosition: false,
-        shouldSort: false,
-        shouldSortItems: false, 
-        fuseOptions: {
-            includeScore: true,
-            threshold: 0.2,
-            location: 0,
-            useExtendedSearch: true,
-        }
-    });
+    if (select.id == 'gender') {
+        new Choices(`#${select.id}`, {
+            searchEnabled: false,
+            shouldSort: false,
+            shouldSortItems: false, 
+            fuseOptions: {
+                includeScore: true,
+                threshold: 0.2,
+                location: 0,
+                useExtendedSearch: true,
+            }
+        });
+    }else {
+        new Choices(`#${select.id}`, {
+            searchResultLimit: 500,
+            resetScrollPosition: false,
+            shouldSort: false,
+            shouldSortItems: false, 
+            fuseOptions: {
+                includeScore: true,
+                threshold: 0.2,
+                location: 0,
+                useExtendedSearch: true,
+            }
+        });
+    }
 });
 
 // Collects the values ​​selected from the Language selection into an input and prepares it for recording.
