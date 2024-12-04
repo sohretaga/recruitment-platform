@@ -4,7 +4,7 @@ from .models import CustomUser, Candidate, Employer
 
 @admin.register(CustomUser)
 class CustomUserAdmin(admin.ModelAdmin):
-    list_display = ['get_full_name', 'username', 'user_type']
+    list_display = ['get_full_name', 'username', 'user_type', 'email']
 
     def get_full_name(self, obj):
         if obj.user_type == 'employer':

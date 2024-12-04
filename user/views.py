@@ -254,7 +254,6 @@ def candidate_details(request, username):
             last_name = form.cleaned_data.get('last_name')
             languages = form.cleaned_data.get('languages')
             instance = form.save(commit=False)
-            print(languages, 'inn')
             
             if languages:
                 instance.languages.set(languages.split(','))
