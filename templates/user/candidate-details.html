@@ -548,10 +548,7 @@
                                                 
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
-                                                        <input type="hidden" id="langauge-values" name="languages"
-                                                            {% if candidate.languages %}
-                                                                value="{% for language.id in languages %}{{ language.id }}{% if not forloop.last %},{% endif %}{% endfor %}"
-                                                            {% endif %}>
+                                                        <input type="hidden" id="langauge-values" name="languages">
                                                         <label for="languages" class="form-label">{% tr 'Languages' %}</label>
                                                         <select class="form-select" data-trigger id="languages" multiple>
                                                             {% for competence in competencies %}

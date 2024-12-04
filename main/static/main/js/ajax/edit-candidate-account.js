@@ -24,17 +24,21 @@ selects.forEach(select => {
     });
 });
 
-
 // Collects the values ​​selected from the Language selection into an input and prepares it for recording.
 const languageSkils = document.getElementById('languages');
 const languageValuesInput = document.getElementById('langauge-values');
-languageSkils.addEventListener('change', function() {
+const collectLanguageSkils = () => {
     let values = new Array();
     languageSkils.querySelectorAll('option').forEach((option) => {
-        values.push(option.value);
+        let value = option.value;
+        if (value) {
+            values.push(option.value);
+        }
     });
     languageValuesInput.value = values;
-});
+};
+collectLanguageSkils();
+languageSkils.addEventListener('change', collectLanguageSkils);
 // End
 
 const previewImg = (input) => {
