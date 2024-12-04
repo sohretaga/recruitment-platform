@@ -163,9 +163,11 @@
                                                     <i class="mdi mdi-map-marker"></i> {{ candidate.citizenship_name }}
                                                 </li>
                                                 {% endif %}
+                                                {% if candidate.preference.offered_salary %}
                                                 <li class="list-inline-item">
-                                                    <i class="uil uil-wallet"></i> $650 / hours
+                                                    <i class="uil uil-wallet"></i> {{ candidate.preference.offered_salary }} AZN
                                                 </li>
+                                                {% endif %}
                                             </ul>
                                         </div>
                                     </div>

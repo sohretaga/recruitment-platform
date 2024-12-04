@@ -240,3 +240,10 @@ class CandidatePreference(models.Model):
     types_of_employment = models.ManyToManyField(ParameterEmployeeType, blank=True, related_name='preferred_employment_types')
     min_salary = models.PositiveIntegerField(null=True, blank=True)
     max_salary = models.PositiveIntegerField(null=True, blank=True)
+
+    @property
+    def offered_salary(self):
+        if self.min_salary and self.max_salary:
+            return int((int(self.min_salary) + int(self.max_salary)) / 2)
+        else:
+            return False
