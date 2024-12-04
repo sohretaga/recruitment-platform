@@ -309,7 +309,7 @@
                                             <div class="circle flex-shrink-0 bg-soft-primary"> {{ exp.title|slice:':1' }} </div>
                                             <div class="ms-4">
                                                 <h6 class="fs-16 mb-1">{{ exp.title }}</h6>
-                                                <p class="mb-2 text-muted">{{ exp.company_name }} - ({{ exp.start_date_month }}, {{ exp.start_date_year }} - {% if exp.present %}Present{% else %}{{ exp.end_date_month }}, {{ exp.end_date_year }}{% endif %})</p>
+                                                <p class="mb-2 text-muted">{{ exp.company_name }} ({{ exp.start_date_month }}, {{ exp.start_date_year }} - {% if exp.present %}Present{% else %}{{ exp.end_date_month }}, {{ exp.end_date_year }}{% endif %})</p>
                                                 <p class="text-muted">{{ exp.description }}</p>
                                             </div>
                                         </div>
@@ -324,7 +324,7 @@
                                             <div class="circle flex-shrink-0 bg-soft-primary"> {{ edu.speciality|slice:':1' }} </div>
                                             <div class="ms-4">
                                                 <h6 class="fs-16 mb-1">{{ edu.speciality }}</h6>
-                                                <p class="mb-2 text-muted">{{ edu.school }} - ({{ edu.start_date_month }}, {{ edu.start_date_year }} - {{ edu.end_date_month }}, {{ edu.end_date_year }})</p>
+                                                <p class="mb-2 text-muted">{{ edu.school }} ({{ edu.start_date_month }}, {{ edu.start_date_year }} - {{ edu.end_date_month }}, {{ edu.end_date_year }})</p>
                                                 <p class="text-muted">{{ edu.description }}</p>
                                             </div>
                                         </div>
