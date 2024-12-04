@@ -243,6 +243,7 @@ def candidate_details(request, username):
     if request.POST:
         user = request.user
         form = ManageCandidateAccountForm(request.POST, request.FILES, instance=user.candidate)
+        next_url = request.POST.get('next')
 
         if form.is_valid():
             email = form.cleaned_data.get('email')
@@ -270,6 +271,9 @@ def candidate_details(request, username):
             user.first_name = first_name
             user.last_name = last_name
             user.save()
+
+            if next_url:
+                return redirect(next_url)
 
             return redirect(reverse('user:candidate', args=[user.username]))
     
@@ -460,6 +464,7 @@ def manage_education(request):
     start_dates = request.POST.getlist('start_date')
     end_dates = request.POST.getlist('end_date')
     descriptions = request.POST.getlist('description')
+    next_url = request.POST.get('next')
 
     for edu_id, education_level_id, school, speciality, start_date, end_date, description in zip(
         education_ids,
@@ -503,7 +508,10 @@ def manage_education(request):
                 end_date_month=end_date_month,
                 end_date_year=end_date_year,
                 description=description
-            )        
+            )    
+
+    if next_url:
+        return redirect(next_url)
     
     return redirect(reverse('user:candidate', args=[request.user]))
     
@@ -530,6 +538,7 @@ def manage_experience(request):
     end_dates = request.POST.getlist('end_date')
     descriptions = request.POST.getlist('description')
     present_ids = request.POST.getlist('present_id')
+    next_url = request.POST.get('next')
 
     for exp_id, company_name, title, start_date, end_date, description, present_id in zip(
         experience_ids,
@@ -578,8 +587,11 @@ def manage_experience(request):
                 end_date_year=end_date_year,
                 description=description,
                 present=present
-            )  
-    
+            )
+
+    if next_url:
+        return redirect(next_url)
+
     return redirect(reverse('user:candidate', args=[request.user]))
     
 

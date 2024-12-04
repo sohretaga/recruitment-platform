@@ -279,11 +279,14 @@ const savePreference = () => {
 // Tab settings
 const url = new URL(window.location);
 const tabButtons = document.querySelectorAll('[data-bs-toggle="pill"]');
+const nextUrl = document.querySelectorAll('input[name="next"]');
+
 
 tabButtons.forEach(button => {
     button.addEventListener('shown.bs.tab', (event) => {
         const targetTabId = event.target.getAttribute('data-bs-target').replace('#', '');
         updateUrlParameter('tab', targetTabId);
+        updateNextInputs();
     });
 });
 
@@ -304,4 +307,10 @@ const updateUrlParameter = (param, value) => {
         url.searchParams.delete(param);
     }
     window.history.replaceState({}, '', url);
+};
+
+const updateNextInputs = () => {
+    nextUrl.forEach(input => {
+        input.value = url.href;
+    });
 };

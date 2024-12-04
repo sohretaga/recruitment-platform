@@ -440,6 +440,8 @@
                                 {% if candidate.user == request.user %}
                                 <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
                                     <form method="post" enctype="multipart/form-data">
+                                        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+
                                         {% csrf_token %}
                                         <div>
                                             <h5 class="fs-17 fw-semibold mb-3 mb-0">{% tr 'Account' %}</h5>
@@ -665,6 +667,8 @@
                                 </div>
                                 <div class="tab-pane fade" id="experience" role="tabpanel" aria-labelledby="experience-tab">
                                     <form method="post" action="{% url 'user:manage-experience' %}">
+                                        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+
                                         {% csrf_token %}
                                         <div id="experiences">
                                             {% if experiences %}
@@ -742,6 +746,8 @@
                                 </div>
                                 <div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="education-tab">
                                     <form method="post" action="{% url 'user:manage-education' %}">
+                                        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+
                                         {% csrf_token %}
                                         <div id="educations">
                                             {% if educations %}
