@@ -123,12 +123,21 @@ const listCandidate = (candidateInfo) => {
                                 <h5 class="fs-19 mb-0"><a href="/candidate/${candidate.username}" class="primary-link">${candidate.full_name}</a> <span class="badge bg-success ms-1"><i class="mdi mdi-star align-middle"></i> 4.8</span></h5>
                                 <p class="text-muted mb-2"> Project Manager</p>
                                 <ul class="list-inline mb-0 text-muted">
-                                    <li class="list-inline-item">
-                                        <i class="mdi mdi-map-marker"></i> Oakridge Lane Richardson
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <i class="uil uil-wallet"></i> $650 / hours
-                                    </li>
+                                    ${(() => {
+                                        if (candidate.citizenship_name) {
+                                            return `<li class="list-inline-item">
+                                                <i class="mdi mdi-map-marker"></i> ${candidate.citizenship_name}
+                                            </li>`
+                                        }else {return ''}
+                                    })()}
+
+                                    ${(() => {
+                                        if (candidate.offered_salary) {
+                                            return `<li class="list-inline-item">
+                                                <i class="uil uil-wallet"></i> ${candidate.offered_salary} AZN
+                                            </li>`
+                                        }else {return ''}
+                                    })()}
                                 </ul>
                             </div>
                         </div>

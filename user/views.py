@@ -7,10 +7,11 @@ from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import F, Value, Case, When, CharField, OuterRef, Exists, BooleanField
+from django.db.models import F, Value, Case, When, CharField, OuterRef, Exists, BooleanField, IntegerField
 from django.db.models.functions import Concat
 from django.conf import settings
 
+from language.middleware import get_current_user_language
 from . import forms
 from .models import Gallery, GalleryImage, CandidateBookmark, CandidatePreference
 from job.models import Vacancy
@@ -96,7 +97,7 @@ def sign_up(request):
                 'terms': terms
             }
 
-            for field, errors in form.errors.items():
+            for _, errors in form.errors.items():
                 for error in errors:
                     messages.error(request, tr(error))
 
@@ -164,6 +165,7 @@ def candidate_list(request):
 
 @require_POST
 def ajax_filter_candidate(request):
+    language = get_current_user_language()
     params = {}
 
     employer_id = request.user.employer.id \
@@ -221,7 +223,20 @@ def ajax_filter_candidate(request):
             default=Value(False),
             output_field=BooleanField()
         ),
-    ).values('id', 'full_name', 'profile_photo', 'is_bookmark', 'username'))
+
+        citizenship_name=F(f'citizenship__name_{language}'),
+
+        offered_salary=Case(
+            When(
+                preference__min_salary__isnull=False,
+                preference__max_salary__isnull=False,
+                then=(F('preference__min_salary') + F('preference__max_salary')) / 2
+            ),
+            default=Value(None),
+            output_field=IntegerField()
+        )
+
+    ).values('id', 'full_name', 'profile_photo', 'is_bookmark', 'username', 'citizenship_name', 'offered_salary'))
 
     pagination_info = {
         'has_next': candidates_page.has_next(),
