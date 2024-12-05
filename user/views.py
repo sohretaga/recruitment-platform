@@ -10,6 +10,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import F, Value, Case, When, CharField, OuterRef, Exists, BooleanField, IntegerField
 from django.db.models.functions import Concat
 from django.conf import settings
+from django.views.decorators.cache import never_cache
 
 from language.middleware import get_current_user_language
 from . import forms
@@ -42,6 +43,7 @@ from recruitment_cp.models import(
 import os
 import json
 
+@never_cache
 @logout_required
 def sign_in(request):
     if request.method == "POST":
