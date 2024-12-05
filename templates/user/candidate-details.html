@@ -127,25 +127,27 @@
                                     <div class="d-flex">
                                         <label class="text-dark">{% tr 'Categories' %}</label>
                                         <div>
-                                            <p class="text-muted mb-0">{{ candidate.job_family }}</p>
+                                            <p class="text-muted mb-0">{% if candidate.job_family %}{{ candidate.job_family }}{% else %}-{% endif %}</p>
                                         </div>
                                     </div>
                                 </li>
-                                {% if preference.offered_salary %}
                                 <li>
                                     <div class="d-flex">
                                         <label class="text-dark" style="max-width: 118px;">{% tr 'Offered Salary' %}</label>
                                         <div class="d-flex align-items-center">
-                                            <p class="text-muted mb-0">{{ preference.offered_salary }} AZN</p>
+                                            <p class="text-muted mb-0">{% if preference.offered_salary %}{{ preference.offered_salary }} AZN{% else %}-{% endif %}</p>
                                         </div>
                                     </div>
                                 </li>
-                                {% endif %}
                                 <li>
                                     <div class="d-flex">
                                         <label class="text-dark">{% tr 'Languages' %}</label>
                                         <div>
-                                            <p class="text-muted mb-0">{% for language in languages %}{{ language.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+                                            <p class="text-muted mb-0">
+                                                {% if languages %}
+                                                    {% for language in languages %}{{ language.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                                                {% else %}-{% endif %}
+                                            </p>
                                         </div>
                                     </div>
                                 </li>
@@ -153,7 +155,10 @@
                                     <div class="d-flex">
                                         <label class="text-dark">{% tr 'Experience' %}</label>
                                         <div>
-                                            <p class="text-muted mb-0">{{ candidate.experience_duration_years|floatformat:0 }} {% tr 'Years' %}</p>
+                                            <p class="text-muted mb-0">
+                                                {% if candidate.experience_duration_years %}
+                                                    {{ candidate.experience_duration_years|floatformat:0 }} {% tr 'Years' %}
+                                                {% else %}-{% endif %}</p>
                                         </div>
                                     </div>
                                 </li>
@@ -161,7 +166,7 @@
                                     <div class="d-flex">
                                         <label class="text-dark">{% tr 'Qualification' %}</label>
                                         <div>
-                                            <p class="text-muted mb-0">{{ candidate.education_level_name }}</p>
+                                            <p class="text-muted mb-0">{% if candidate.education_level_name %}{{ candidate.education_level_name }}{% else %}-{% endif %}</p>
                                         </div>
                                     </div>
                                 </li>
