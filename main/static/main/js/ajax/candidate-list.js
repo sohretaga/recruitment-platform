@@ -11,8 +11,16 @@ const genderCheckboxes = '#gender input[type="checkbox"]';
 const workExperienceCheckboxes = '#work-experience input[type="checkbox"]';
 const educationLevelCheckboxes = '#education-level input[type="checkbox"]';
 
-const filterOrderby = new Choices('#choices-single-filter-orderby');
-const candidatePage = new Choices('#choices-candidate-page');
+const filterOrderby = new Choices('#choices-single-filter-orderby', {
+    shouldSort: false,
+    shouldSortItems: false,
+    searchEnabled: false,
+});
+const candidatePage = new Choices('#choices-candidate-page', {
+    shouldSort: false,
+    shouldSortItems: false,
+    searchEnabled: false,
+});
 const jobFamily = new Choices('#job-family');
 
 const setUrl = (parameter, value) => {
