@@ -65,29 +65,52 @@ const previewImg = (input) => {
     };
 };
 
-const deleteEducation = (button) => {
-    const parentDiv = button.closest('.d-flex.justify-content-between');
-    const educationId = parentDiv.id;
-    parentDiv.remove();
+const getEducationPlaceholders = () => {
+    const firstDiv = educations.querySelector('div');
+    const school = firstDiv.querySelector("input[name='school']").placeholder;
+    const speciality = firstDiv.querySelector("input[name='speciality']").placeholder;
+    const startDate = firstDiv.querySelector("input[name='start_date']").placeholder;
+    const endDate = firstDiv.querySelector("input[name='end_date']").placeholder;
+    const description = firstDiv.querySelector("textarea[name='description']").placeholder;
 
-    if (educationId) {
-        $.ajax({
-            url: '/ajax/delete-education',
-            type: 'POST',
-            data: {education_id: educationId},
-        });
+    return {
+        school: school,
+        speciality: speciality,
+        startDate: startDate,
+        endDate: endDate,
+        description: description
+    }
+    
+};
+
+const deleteEducation = (button) => {
+    const directDivs = Array.from(educations.children).filter(el => el.tagName.toLowerCase() === 'div');
+
+    if (directDivs.length > 1) {
+        const parentDiv = button.closest('.d-flex.justify-content-between');
+        const educationId = parentDiv.id;
+        parentDiv.remove();
+
+        if (educationId) {
+            $.ajax({
+                url: '/ajax/delete-education',
+                type: 'POST',
+                data: {education_id: educationId},
+            });
+        };
     };
 };
 
 const addEducation = () => {
-    let index = educations.childElementCount
+    const index = educations.childElementCount;
+    const placeholder = getEducationPlaceholders();
 
     educations.insertAdjacentHTML('beforeend', `
     <div class="d-flex justify-content-between mb-5">
         <div class="w-100">
             <input type="hidden" name="education_id" value="">
             <div class="d-flex">
-                <input name="school" type="text" class="form-control mb-2" placeholder="School*" required>
+                <input name="school" type="text" class="form-control mb-2" placeholder="${placeholder.school}" required>
                 <button class="btn btn-danger fs-17 mb-2 ms-2" onclick="deleteEducation(this)"><i class="uil uil-trash-alt"></i></button>
             </div>
 
@@ -106,17 +129,17 @@ const addEducation = () => {
                         })()}
                     </select>
                 </div>
-                <input name="speciality" type="text" class="form-control" placeholder="Speciality*" required>
+                <input name="speciality" type="text" class="form-control" placeholder="${placeholder.speciality}" required>
             </div>
 
             <div class="d-flex mb-2">
                 <input type="text" class="form-control" data-provide="datepicker" data-date-format="M, yyyy"
-                    name="start_date" placeholder="Start date*" required>
+                    name="start_date" placeholder="${placeholder.startDate}" required>
 
                 <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="M, yyyy"
-                    name="end_date" placeholder="End date*" required>
+                    name="end_date" placeholder="${placeholder.endDate}" required>
             </div>
-            <textarea name="description" class="form-control" rows="3" placeholder="Description*" required></textarea>
+            <textarea name="description" class="form-control" rows="3" placeholder="${placeholder.description}" required></textarea>
         </div>
     </div>`);
 
