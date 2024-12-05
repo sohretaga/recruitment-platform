@@ -234,9 +234,11 @@ def ajax_filter_candidate(request):
             ),
             default=Value(None),
             output_field=IntegerField()
-        )
+        ),
 
-    ).values('id', 'full_name', 'profile_photo', 'is_bookmark', 'username', 'citizenship_name', 'offered_salary'))
+        occupation_name=F(f'occupation__name_{language}')
+
+    ).values('id', 'full_name', 'profile_photo', 'is_bookmark', 'username', 'citizenship_name', 'offered_salary', 'occupation_name'))
 
     pagination_info = {
         'has_next': candidates_page.has_next(),

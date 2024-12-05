@@ -121,7 +121,7 @@ const listCandidate = (candidateInfo) => {
                         <div class="col-lg-5 candidate-content">
                             <div class="candidate-list-content mt-3 mt-lg-0">
                                 <h5 class="fs-19 mb-0"><a href="/candidate/${candidate.username}" class="primary-link">${candidate.full_name}</a> <span class="badge bg-success ms-1"><i class="mdi mdi-star align-middle"></i> 4.8</span></h5>
-                                <p class="text-muted mb-2"> Project Manager</p>
+                                <p class="text-muted mb-2"> ${candidate.occupation_name ? candidate.occupation_name:''}</p>
                                 <ul class="list-inline mb-0 text-muted">
                                     ${(() => {
                                         if (candidate.citizenship_name) {
