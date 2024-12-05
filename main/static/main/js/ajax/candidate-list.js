@@ -11,6 +11,9 @@ const genderCheckboxes = '#gender input[type="checkbox"]';
 const workExperienceCheckboxes = '#work-experience input[type="checkbox"]';
 const educationLevelCheckboxes = '#education-level input[type="checkbox"]';
 
+const vacancyFilterBtn = document.getElementById('vacancy-filter');
+const clearVacancyFilterBtn = document.getElementById('clear-vacancy-filter');
+
 const filterOrderby = new Choices('#choices-single-filter-orderby', {
     shouldSort: false,
     shouldSortItems: false,
@@ -260,3 +263,58 @@ citizenshipSearchInput.addEventListener('input', function() {
         }
     });
 });
+
+// Clear Filter
+const setFilterBtn = (clear) => {
+    if (clear) {
+        vacancyFilterBtn.style.display = 'none';
+        clearVacancyFilterBtn.style.display = 'inline-block';
+    }else {
+        vacancyFilterBtn.style.display = 'inline-block';
+        clearVacancyFilterBtn.style.display = 'none';
+    }
+};
+
+const unselectAllFilters = (selector) => {
+    const checkboxes = document.querySelectorAll(selector);
+    checkboxes.forEach(checkbox => {
+        if (checkbox.value) {
+            checkbox.checked = false;
+        }
+    });
+};
+
+const clearFilter = () => {
+    setUrl('citizenship');
+    setUrl('age-group');
+    setUrl('gender');
+    setUrl('work-experience');
+    setUrl('education-level');
+
+    unselectAllFilters(citizenshipCheckboxes);
+    unselectAllFilters(ageGroypCheckboxes);
+    unselectAllFilters(genderCheckboxes);
+    unselectAllFilters(workExperienceCheckboxes);
+    unselectAllFilters(educationLevelCheckboxes);
+
+    filterRequest();
+};
+
+const observer = new MutationObserver(() => {
+    const params = new URLSearchParams(window.location.search);
+    const allParams = [
+        params.get('citizenship'),
+        params.get('age-group'),
+        params.get('gender'),
+        params.get('work-experience'),
+        params.get('education-level')
+    ];
+
+    if (allParams.some(param => param)) {
+        setFilterBtn(clear=true);
+    } else {
+        setFilterBtn(clear=false);
+    };
+});
+
+observer.observe(document, { subtree: true, childList: true });
