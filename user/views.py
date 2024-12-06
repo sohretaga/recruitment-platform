@@ -367,6 +367,7 @@ def company_details(request, username):
     if request.POST:
         user = request.user
         form = ManageEmployerAccountForm(request.POST, request.FILES, instance=user.employer)
+        next_url = request.POST.get('next')
 
         if form.is_valid():
             email = form.cleaned_data.get('primary_email')
@@ -388,6 +389,9 @@ def company_details(request, username):
             user.first_name = first_name
             user.last_name = last_name
             user.save()
+
+            if next_url:
+                return redirect(next_url)
 
             return redirect(reverse('user:company', args=[user.username]))
         
@@ -437,6 +441,7 @@ def gallery_upload(request):
     image_ids = request.POST.getlist('image-id', [])
     titles = request.POST.getlist('title', [])
     descriptions = request.POST.getlist('description', [])
+    next_url = request.POST.get('next')
 
     for image_id, title, description in zip(image_ids, titles, descriptions):
 
@@ -459,6 +464,9 @@ def gallery_upload(request):
                     title=title,
                     description=description
                 )
+
+    if next_url:
+        return redirect(next_url)
 
     return redirect(reverse('user:company', args=[request.user]))
 

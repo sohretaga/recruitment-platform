@@ -329,7 +329,6 @@ const url = new URL(window.location);
 const tabButtons = document.querySelectorAll('[data-bs-toggle="pill"]');
 const nextUrl = document.querySelectorAll('input[name="next"]');
 
-
 tabButtons.forEach(button => {
     button.addEventListener('shown.bs.tab', (event) => {
         const targetTabId = event.target.getAttribute('data-bs-target').replace('#', '');

@@ -131,3 +131,41 @@ document.addEventListener('click', function(event) {
         closeAllMenus();
     }
 });
+
+// Tab settings
+const url = new URL(window.location);
+const tabButtons = document.querySelectorAll('[data-bs-toggle="pill"]');
+const nextUrl = document.querySelectorAll('input[name="next"]');
+
+tabButtons.forEach(button => {
+    button.addEventListener('shown.bs.tab', (event) => {
+        const targetTabId = event.target.getAttribute('data-bs-target').replace('#', '');
+        updateUrlParameter('tab', targetTabId);
+        updateNextInputs();
+    });
+});
+
+const urlParams = new URLSearchParams(window.location.search);
+const tabParam = urlParams.get('tab');
+if (tabParam) {
+    const targetTab = document.querySelector(`[data-bs-target="#${tabParam}"]`);
+    if (targetTab) {
+        const bootstrapTab = new bootstrap.Tab(targetTab);
+        bootstrapTab.show();
+    }
+};
+
+const updateUrlParameter = (param, value) => {
+    if (value) {
+        url.searchParams.set(param, value);
+    } else {
+        url.searchParams.delete(param);
+    }
+    window.history.replaceState({}, '', url);
+};
+
+const updateNextInputs = () => {
+    nextUrl.forEach(input => {
+        input.value = url.href;
+    });
+};
