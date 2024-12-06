@@ -13,6 +13,7 @@ const educationLevelCheckboxes = '#education-level input[type="checkbox"]';
 
 const vacancyFilterBtn = document.getElementById('vacancy-filter');
 const clearVacancyFilterBtn = document.getElementById('clear-vacancy-filter');
+const bookmarkFilterBtn = document.getElementById('bookmark-filter-btn');
 
 const filterOrderby = new Choices('#choices-single-filter-orderby', {
     shouldSort: false,
@@ -263,6 +264,12 @@ citizenshipSearchInput.addEventListener('input', function() {
         }
     });
 });
+
+const filterOwnBookmark = () => {
+    const isActive = bookmarkFilterBtn.classList.toggle('bookmark-filter-active');
+    setUrl('bookmark', isActive);
+    filterRequest();
+}
 
 // Clear Filter
 const setFilterBtn = (clear) => {

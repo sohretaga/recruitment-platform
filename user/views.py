@@ -141,6 +141,21 @@ def candidate_list(request):
         url += f'&education-level={education_level}'
 
     candidates = Candidate.translation().filter(**params)
+
+    if request.GET.get('bookmark'):
+        if request.user.is_authenticated:
+            if request.user.user_type == 'employer' or request.user.is_superuser:
+                employer_id = request.user.employer.id
+            else: employer_id = None
+        else: employer_id = None
+
+        employer_bookmarked_candidate = CandidateBookmark.objects.filter(
+            candidate=OuterRef('pk'),
+            employer_id=employer_id
+        )
+
+        candidates = candidates.filter(Exists(employer_bookmarked_candidate))
+    
     candidate_count = candidates.count()
 
     common_filter_args = ('id', 'name')
@@ -170,9 +185,11 @@ def ajax_filter_candidate(request):
     language = get_current_user_language()
     params = {}
 
-    employer_id = request.user.employer.id \
-        if request.user.is_authenticated and \
-            request.user.user_type == 'employer' else None
+    if request.user.is_authenticated:
+        if request.user.user_type == 'employer' or request.user.is_superuser:
+            employer_id = request.user.employer.id
+        else: employer_id = None
+    else: employer_id = None
 
     employer_bookmarked_candidate = CandidateBookmark.objects.filter(
         candidate=OuterRef('pk'),
@@ -241,6 +258,10 @@ def ajax_filter_candidate(request):
         occupation_name=F(f'occupation__name_{language}')
 
     ).values('id', 'full_name', 'profile_photo', 'is_bookmark', 'username', 'citizenship_name', 'offered_salary', 'occupation_name'))
+
+    if request.POST.get('bookmark'):
+        candidate_list = [candidate for candidate in candidate_list if candidate['is_bookmark']]
+        candidate_count = len(candidate_list)
 
     pagination_info = {
         'has_next': candidates_page.has_next(),

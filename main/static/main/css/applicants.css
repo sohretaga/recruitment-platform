@@ -1,3 +1,10 @@
+#bookmark-filter-btn:hover,
+.bookmark-filter-active,
+.bookmark-filter-active:focus {
+    background-color: #da3746;
+    border-color: #da3746;
+}
+
 @media only screen and (max-width:768px) {
     .candidate-row {
         align-items: normal !important;

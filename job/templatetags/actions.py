@@ -14,10 +14,11 @@ def bookmarks(request, vacancy_id) -> str:
 
 @register.simple_tag
 def candidate_bookmarks(request, candidate_id) -> str:
-    if request.user.is_authenticated and request.user.user_type == 'employer':
-        candidate_bookmarks_exists = CandidateBookmark.objects.filter(employer=request.user.employer, candidate__id=candidate_id).exists()
-        if candidate_bookmarks_exists:
-            return 'bookmark-post'
+    if request.user.is_authenticated:
+        if request.user.user_type == 'employer' or request.user.is_superuser:
+            candidate_bookmarks_exists = CandidateBookmark.objects.filter(employer=request.user.employer, candidate__id=candidate_id).exists()
+            if candidate_bookmarks_exists:
+                return 'bookmark-post'
     return ''
         
 @register.simple_tag
