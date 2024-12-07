@@ -186,3 +186,13 @@ const updateNextInputs = () => {
         input.value = url.href;
     });
 };
+
+
+// WhatsApp Input
+document.getElementById('whatsapp_number').addEventListener('input', function (e) {
+    const allowedChars = /^[0-9+]*$/;
+
+    if (!allowedChars.test(this.value)) {
+        this.value = this.value.replace(/[^0-9+]/g, '');
+    }
+});
