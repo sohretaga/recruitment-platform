@@ -14,7 +14,6 @@ languages.forEach((language) => {
 });
 
 const setLanguage = (code) => {
-
     fetch('/language/set-language', {
         method: 'POST',
         headers: {
@@ -27,8 +26,13 @@ const setLanguage = (code) => {
         })
     })
     .then(response => {
-        if (response.ok) {
-            window.location.reload();
-        };
+        if (!response.ok) {
+            throw new Error(`HTTP Error: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.info('Process:', data.process);
+        window.location.reload();
     });
-}
+};
