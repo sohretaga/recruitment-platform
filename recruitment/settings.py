@@ -161,7 +161,7 @@ USE_TZ = True
 # If there is no language code in the cache, the site uses this language code by default.
 
 SITE_LANGUAGE_CODE = cache.get('site_language', 'tr')
-DEFUALT_SITE_LANGUAGE = 'tr'
+DEFAULT_SITE_LANGUAGE = 'tr'
 
 
 # Static files (CSS, JavaScript, Images)
