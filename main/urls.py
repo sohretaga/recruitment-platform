@@ -15,7 +15,6 @@ urlpatterns = [
     path('faqs', views.faqs, name='faqs'),
     path('coming-soon', views.coming_soon, name='coming-soon'),
     path('notifications', views.notifications, name='notifications'),
-    path('set-language', views.set_language, name='set-language'),
 
     #AJAX
     path('ajax/get-notifications', views.get_notifications, name='ajax-get-notifications'),

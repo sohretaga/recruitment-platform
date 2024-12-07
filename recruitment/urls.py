@@ -30,6 +30,7 @@ urlpatterns = [
     path('cp/', include('recruitment_cp.urls')),
     path('blog/', include('blog.urls')),
     path('dashboard/', include('dashboard.urls')),
+    path('language/', include('language.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 

@@ -15,17 +15,20 @@ languages.forEach((language) => {
 
 const setLanguage = (code) => {
 
-    fetch('/set-language', {
+    fetch('/language/set-language', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'X-CSRFToken': csrf_token
         },
-        body: JSON.stringify({ language: code })
+        body: JSON.stringify({
+            language: code,
+            url:  window.location.pathname,
+        })
     })
     .then(response => {
         if (response.ok) {
-            location.reload();
+            window.location.reload();
         };
     });
 }

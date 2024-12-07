@@ -17,7 +17,7 @@ def get_cache_key(text: str, language_code: str) -> str:
 def create_language_table() -> None:
     templates = os.path.join(settings.BASE_DIR, 'templates')
 
-    for root, dirs, files in os.walk(templates):
+    for root, _, files in os.walk(templates):
         for file in files:
 
             if file.endswith(".html"):
