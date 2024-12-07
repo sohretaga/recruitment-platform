@@ -5,18 +5,35 @@ const menus = document.querySelectorAll('.edit-menu');
 var tempImageId = 1;
 
 selects.forEach(select => {
-    new Choices(`#${select.id}`, {
-        searchResultLimit: 500,
-        resetScrollPosition: false,
-        shouldSort: false,
-        shouldSortItems: false, 
-        fuseOptions: {
-            includeScore: true,
-            threshold: 0.2,
-            location: 0,
-            useExtendedSearch: true,
-        }
-    });
+    if (select.id == 'organization_ownership'
+        || select.id == 'sector'
+        || select.id == 'number_of_employees'
+        || select.id == 'organization_type' ) {
+        new Choices(`#${select.id}`, {
+            searchEnabled: false,
+            shouldSort: false,
+            shouldSortItems: false, 
+            fuseOptions: {
+                includeScore: true,
+                threshold: 0.2,
+                location: 0,
+                useExtendedSearch: true,
+            }
+        });
+    }else {
+        new Choices(`#${select.id}`, {
+            searchResultLimit: 500,
+            resetScrollPosition: false,
+            shouldSort: false,
+            shouldSortItems: false, 
+            fuseOptions: {
+                includeScore: true,
+                threshold: 0.2,
+                location: 0,
+                useExtendedSearch: true,
+            }
+        });
+    };
 });
 
 const previewImg = (input) => {

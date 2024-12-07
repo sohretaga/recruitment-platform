@@ -417,8 +417,8 @@
                                                 
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
-                                                        <label for="whatsapp" class="form-label">WhatsApp</label>
-                                                        <input type="text" name="whatsapp" class="form-control" id="whatsapp"
+                                                        <label for="whatsapp_number" class="form-label">WhatsApp</label>
+                                                        <input type="text" name="whatsapp" class="form-control" id="whatsapp_number"
                                                             value="{% if employer.whatsapp %}{{ employer.whatsapp }}{% endif %}" />
                                                     </div>
                                                 </div>
@@ -639,7 +639,7 @@
                                         </div>
     
                                         <div class="w-100 d-flex justify-content-between">
-                                            <button class="btn btn-success" type="submit">Save <i class="uil uil-image-v"></i></button>
+                                            <button class="btn btn-success" type="submit">{% tr 'Save' %} <i class="uil uil-image-v"></i></button>
                                             <button class="btn btn-primary" type="button" onclick="addImage()">{% tr 'Add Image' %} <i class="uil uil-plus-circle"></i></button>
                                         </div>
                                     </form>

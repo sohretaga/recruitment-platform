@@ -11,8 +11,16 @@ const modalTitle = document.getElementById('modal-title');
 const requestOtherDateInfoText = document.getElementById('request-other-date-info-text')
 const sendActionBtn = document.getElementById('send-action-btn');
 
-const singleFilterChoices = new Choices('#choices-single-filter-orderby');
-const singleCandidate=new Choices("#choices-candidate-page");
+const singleFilterChoices = new Choices('#choices-single-filter-orderby', {
+    shouldSort: false,
+    shouldSortItems: false,
+    searchEnabled: false
+});
+const singleCandidate=new Choices("#choices-candidate-page", {
+    shouldSort: false,
+    shouldSortItems: false,
+    searchEnabled: false
+});
 const actionChoices = new Choices('#action', {
     shouldSort: false,
     shouldSortItems: false,
