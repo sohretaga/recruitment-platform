@@ -13,12 +13,13 @@ def set_language(request):
     language_code = data.get('language', settings.SITE_LANGUAGE_CODE)
 
     if request.user.is_authenticated:
+        cache.delete(f'site_language_{request.user.username}')
         cache.set(f'site_language_{request.user.username}', language_code, timeout=31536000) # 31536000 = 1 year
         return JsonResponse({'process': 'username'})
 
     else:
         if not request.session.session_key:
             request.session.create()
-
+        cache.delete(f'site_language_{request.session.session_key}')
         cache.set(f'site_language_{request.session.session_key}', language_code, timeout=604800) # 604800 = 1 week
         return JsonResponse({'process': 'session'})
