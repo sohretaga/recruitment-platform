@@ -341,7 +341,22 @@
                                             </div>
                                         </div>
                                         {% endfor %}
-                                    </div><!--end candidate-education-details-->
+                                    </div>
+                                    {% endif %}
+                                    {% if projects %}
+                                    <div class="candidate-education-details mt-4 pt-3">
+                                        <h6 class="fs-17 fw-bold mb-0">{% tr 'Project' %}</h6>
+                                        {% for project in projects %}
+                                        <div class="candidate-education-content mt-4 d-flex">
+                                            <div class="circle flex-shrink-0 bg-soft-primary"> {{ project.title|slice:':1' }} </div>
+                                            <div class="ms-4">
+                                                <h6 class="fs-16 mb-1">{{ project.title }}</h6>
+                                                <p class="mb-2 text-muted">{{ project.company_name }} ({{ project.start_date_month }}, {{ project.start_date_year }} - {% if project.present %}Present{% else %}{{ project.end_date_month }}, {{ project.end_date_year }}{% endif %})</p>
+                                                <p class="text-muted">{{ project.description }}</p>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
                                     {% endif %}
                                     <div class="candidate-portfolio mt-4 pt-3">
                                         <h6 class="fs-17 fw-bold mb-0">{% tr 'Projects' %}</h6>
@@ -856,7 +871,7 @@
                                                 <div class="w-100">
                                                     <input type="hidden" name="project_id" value="{{ project.id }}">
                                                     <div class="d-flex">
-                                                        <input name="company_name" type="text" class="form-control mb-2" placeholder="{% tr 'Company name' %}*" required value="{{ project.company_name }}">
+                                                        <input name="company_name" type="text" class="form-control mb-2" placeholder="{% tr 'Company name' %}" required value="{{ project.company_name }}">
                                                         <button class="btn btn-danger fs-17 mb-2 ms-2" onclick="deleteProject(this)"><i class="uil uil-trash-alt"></i></button>
                                                     </div>
                                                     <input name="title" type="text" class="form-control mb-2" placeholder="{% tr 'Title' %}*" required value="{{ project.title }}">
