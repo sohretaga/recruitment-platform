@@ -253,7 +253,7 @@ const deleteProject = (button) => {
             $.ajax({
                 url: '/ajax/delete-project',
                 type: 'POST',
-                data: {experience_id: projectId},
+                data: {project_id: projectId},
             });
         };
     };
@@ -265,9 +265,9 @@ const addProject = () => {
     projects.insertAdjacentHTML('beforeend', `
     <div class="d-flex justify-content-between mb-5">
         <div class="w-100">
-            <input type="hidden" name="experience_id" value="">
+            <input type="hidden" name="project_id" value="">
             <div class="d-flex">
-                <input name="company_name" type="text" class="form-control mb-2" placeholder="${placeholder.companyName}" required>
+                <input name="company_name" type="text" class="form-control mb-2" placeholder="${placeholder.companyName}">
                 <button class="btn btn-danger fs-17 mb-2 ms-2" onclick="deleteProject(this)"><i class="uil uil-trash-alt"></i></button>
             </div>
             <input name="title" type="text" class="form-control mb-2" placeholder="${placeholder.title}" required>

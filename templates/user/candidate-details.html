@@ -871,7 +871,7 @@
                                                 <div class="w-100">
                                                     <input type="hidden" name="project_id" value="{{ project.id }}">
                                                     <div class="d-flex">
-                                                        <input name="company_name" type="text" class="form-control mb-2" placeholder="{% tr 'Company name' %}" required value="{{ project.company_name }}">
+                                                        <input name="company_name" type="text" class="form-control mb-2" placeholder="{% tr 'Company name' %}" value="{{ project.company_name }}">
                                                         <button class="btn btn-danger fs-17 mb-2 ms-2" onclick="deleteProject(this)"><i class="uil uil-trash-alt"></i></button>
                                                     </div>
                                                     <input name="title" type="text" class="form-control mb-2" placeholder="{% tr 'Title' %}*" required value="{{ project.title }}">
@@ -904,7 +904,7 @@
                                                 <div class="w-100">
                                                     <input type="hidden" name="project_id" value="">
                                                     <div class="d-flex">
-                                                        <input name="company_name" type="text" class="form-control mb-2" placeholder="{% tr 'Company name' %}*" required>
+                                                        <input name="company_name" type="text" class="form-control mb-2" placeholder="{% tr 'Company name' %}">
                                                         <button class="btn btn-danger fs-17 mb-2 ms-2" onclick="deleteProject(this)"><i class="uil uil-trash-alt"></i></button>
                                                     </div>
                                                     <input name="title" type="text" class="form-control mb-2" placeholder="{% tr 'Title' %}*" required>

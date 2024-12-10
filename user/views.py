@@ -668,7 +668,7 @@ def manage_project(request):
     present_ids = request.POST.getlist('present_id')
     next_url = request.POST.get('next')
 
-    for exp_id, company_name, title, start_date, end_date, description, present_id in zip(
+    for project_id, company_name, title, start_date, end_date, description, present_id in zip(
         project_ids,
         company_names,
         titles,
@@ -691,10 +691,10 @@ def manage_project(request):
             end_date_month = end_date[0]
             end_date_year = end_date[1]
 
-        if exp_id:
-            project_exists = Project.objects.filter(id=exp_id).exists()
+        if project_id:
+            project_exists = Project.objects.filter(id=project_id).exists()
             if project_exists:
-                Project.objects.filter(id=exp_id).update(
+                Project.objects.filter(id=project_id).update(
                     company_name=company_name,
                     title=title,
                     start_date_month=start_date_month,
