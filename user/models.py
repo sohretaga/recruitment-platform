@@ -227,6 +227,20 @@ class Experience(models.Model):
     present = models.BooleanField()
     description = models.TextField()
 
+class Project(models.Model):
+    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, related_name='projects')
+    company_name = models.CharField(max_length=255)
+    title = models.CharField(max_length=500)
+
+    start_date_month = models.CharField(max_length=15)
+    start_date_year = models.IntegerField()
+
+    end_date_month = models.CharField(max_length=15, blank=True, null=True)
+    end_date_year = models.IntegerField(blank=True, null=True)
+
+    present = models.BooleanField()
+    description = models.TextField()
+
 class CandidateBookmark(models.Model):
     # Employers bookmark candidates
     employer = models.ForeignKey(Employer, on_delete=models.CASCADE, related_name='bookmarks')

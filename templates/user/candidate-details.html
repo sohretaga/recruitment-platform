@@ -288,6 +288,13 @@
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="project-tab" data-bs-toggle="pill"
+                                    data-bs-target="#project" type="button" role="tab" aria-controls="project"
+                                    aria-selected="false">
+                                    {% tr 'Project' %}
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="preference-tab" data-bs-toggle="pill"
                                     data-bs-target="#preference" type="button" role="tab" aria-controls="preference"
                                     aria-selected="false">
@@ -836,6 +843,87 @@
                                         {% endfor %}
                                     </div>
                                 </div>
+                                
+                                <div class="tab-pane fade" id="project" role="tabpanel" aria-labelledby="project-tab">
+                                    <form method="post" action="{% url 'user:manage-project' %}">
+                                        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+
+                                        {% csrf_token %}
+                                        <div id="projects">
+                                            {% if projects %}
+                                            {% for project in projects %}
+                                            <div class="d-flex justify-content-between mb-5" id="{{ project.id }}">
+                                                <div class="w-100">
+                                                    <input type="hidden" name="project_id" value="{{ project.id }}">
+                                                    <div class="d-flex">
+                                                        <input name="company_name" type="text" class="form-control mb-2" placeholder="{% tr 'Company name' %}*" required value="{{ project.company_name }}">
+                                                        <button class="btn btn-danger fs-17 mb-2 ms-2" onclick="deleteProject(this)"><i class="uil uil-trash-alt"></i></button>
+                                                    </div>
+                                                    <input name="title" type="text" class="form-control mb-2" placeholder="{% tr 'Title' %}*" required value="{{ project.title }}">
+                                                    <div class="d-flex mb-2">
+                                                        <input type="text" class="form-control" data-provide="datepicker" data-date-format="M, yyyy"
+                                                            name="start_date" placeholder="{% tr 'Start date' %}*" required value="{{ project.start_date_month }}, {{ project.start_date_year }}">
+
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="M, yyyy"
+                                                                name="end_date" placeholder="{% tr 'End date' %}" required {% if project.present %}disabled="disabled"{% else %}value="{{ project.end_date_month }}, {{ project.end_date_year }}"{% endif %}>
+                                                            <input type="hidden" name="end_date" value="" {% if not project.present %}disabled="disabled"{% endif %}>
+                                                            
+                                                            <div class="input-group-append">
+                                                                <div class="input-group-text">
+                                                                    <input type="hidden" name="present_id" value="{{ project.id }}">
+                                                                    <input class="form-check-input" type="checkbox" name="present-{{ project.id }}" id="present-{{ project.id }}"
+                                                                        onclick="endDateManage(this)" {% if project.present %}checked{% endif %}>
+                                                                    <label class="form-check-label ms-2" for="present-{{ project.id }}">{% tr 'Present' %}</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                       
+                                                    </div>
+                                                    <textarea name="description" class="form-control" rows="3" placeholder="{% tr 'Description' %}*">{{ project.description }}</textarea>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                            {% else %}
+                                            <div class="d-flex justify-content-between mb-5">
+                                                <div class="w-100">
+                                                    <input type="hidden" name="project_id" value="">
+                                                    <div class="d-flex">
+                                                        <input name="company_name" type="text" class="form-control mb-2" placeholder="{% tr 'Company name' %}*" required>
+                                                        <button class="btn btn-danger fs-17 mb-2 ms-2" onclick="deleteProject(this)"><i class="uil uil-trash-alt"></i></button>
+                                                    </div>
+                                                    <input name="title" type="text" class="form-control mb-2" placeholder="{% tr 'Title' %}*" required>
+                                                    <div class="d-flex mb-2">
+                                                        <input type="text" class="form-control" data-provide="datepicker" data-date-format="M, yyyy"
+                                                            name="start_date" placeholder="{% tr 'Start date' %}*" required>
+
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="M, yyyy"
+                                                                name="end_date" placeholder="{% tr 'End date' %}" required>
+                                                            <input type="hidden" class="form-control" name="end_date" value="" disabled="disabled">
+                                                            
+                                                            <div class="input-group-append">
+                                                                <div class="input-group-text">
+                                                                    <input type="hidden" name="present_id" value="0">
+                                                                    <input class="form-check-input" type="checkbox" name="present-0" id="present-0" onclick="endDateManage(this)">
+                                                                    <label class="form-check-label ms-2" for="present-0">{% tr 'Present' %}</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <textarea name="description" class="form-control" rows="3" placeholder="{% tr 'Description' %}*"></textarea>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+    
+                                        <div class="col-lg-4">
+                                            <button class="btn btn-primary mb-2" type="button" onclick="addProject()">{% tr 'Add Project' %} <i class="uil uil-plus-circle"></i></button>
+                                            <button class="btn btn-success" type="submit">{% tr 'Save' %} <i class="uil uil-save"></i></button>
+                                        </div>
+                                    </form>
+                                </div>
+
                                 <div class="tab-pane fade" id="preference" role="tabpanel" aria-labelledby="preference-tab">
                                     <p class="text-muted"><i class="uil uil-info-circle"></i> {% tr 'You will receive notifications when new job postings are posted according to the preferences you have selected.' %}</p>
 

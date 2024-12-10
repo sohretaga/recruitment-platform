@@ -654,6 +654,92 @@ def delete_experience(request):
 
     return JsonResponse({'status': 200})
 
+
+
+
+
+
+
+
+
+@login_required
+@require_POST
+def manage_project(request):
+    project_ids = request.POST.getlist('project_id')
+    company_names = request.POST.getlist('company_name')
+    titles = request.POST.getlist('title')
+    start_dates = request.POST.getlist('start_date')
+    end_dates = request.POST.getlist('end_date')
+    descriptions = request.POST.getlist('description')
+    present_ids = request.POST.getlist('present_id')
+    next_url = request.POST.get('next')
+
+    for exp_id, company_name, title, start_date, end_date, description, present_id in zip(
+        project_ids,
+        company_names,
+        titles,
+        start_dates,
+        end_dates,
+        descriptions,
+        present_ids
+    ):
+        present = request.POST.get(f'present-{present_id}') == 'on'
+        
+        start_date = start_date.split(',')
+        start_date_month = start_date[0]
+        start_date_year = start_date[1]
+
+        end_date_month = None
+        end_date_year = None
+
+        if end_date and not present:
+            end_date = end_date.split(',')
+            end_date_month = end_date[0]
+            end_date_year = end_date[1]
+
+        if exp_id:
+            project_exists = Project.objects.filter(id=exp_id).exists()
+            if project_exists:
+                Project.objects.filter(id=exp_id).update(
+                    company_name=company_name,
+                    title=title,
+                    start_date_month=start_date_month,
+                    start_date_year=start_date_year,
+                    end_date_month=end_date_month,
+                    end_date_year=end_date_year,
+                    description=description,
+                    present=present
+                )
+        else:
+            Project.objects.create(
+                candidate=request.user.candidate,
+                company_name=company_name,
+                title=title,
+                start_date_month=start_date_month,
+                start_date_year=start_date_year,
+                end_date_month=end_date_month,
+                end_date_year=end_date_year,
+                description=description,
+                present=present
+            )
+
+    if next_url:
+        return redirect(next_url)
+
+    return redirect(reverse('user:candidate', args=[request.user]))
+    
+
+@login_required
+@require_POST
+def delete_project(request):
+    project_id = request.POST.get('project_id', 0)
+    project_exists = Project.objects.filter(id=project_id, candidate=request.user.candidate).exists()
+
+    if project_exists:
+        Project.objects.filter(id=project_id, candidate=request.user.candidate).delete()
+
+    return JsonResponse({'status': 200})
+
 @login_required
 @require_POST
 def delete_pfofile_image(request):

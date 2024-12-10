@@ -140,3 +140,10 @@ body[data-layout-mode="dark"] .edit-option {
 body[data-layout-mode="dark"] .edit-option:hover {
     background: #3d454e;
 }
+
+#pills-tab {
+    justify-content: space-around;
+}
+.profile-content-nav.nav-pills .nav-item .nav-link {
+    padding: 12px 0 !important;
+}

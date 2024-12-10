@@ -51,6 +51,18 @@ const previewImg = (input) => {
     };
 };
 
+const getGalleryPlaceholders = () => {
+    const firstDiv = galleryImages.querySelector('div');
+    const title = firstDiv.querySelector("input[name='title']").placeholder;
+    const description = firstDiv.querySelector("textarea[name='description']").placeholder;
+
+    return {
+        title: title,
+        description: description
+    }
+    
+};
+
 const previewGalleryImage = (event, id) => {
     const input = event.target;
     const reader = new FileReader();
@@ -65,22 +77,27 @@ const previewGalleryImage = (event, id) => {
 };
 
 const deleteImage = (button) => {
-    const parentDiv = button.closest('.d-flex.justify-content-between');
-    const image_id = parentDiv.id;
-    parentDiv.remove();
-    limitAlert.style.display = 'none';
+    const directDivs = Array.from(galleryImages.children).filter(el => el.tagName.toLowerCase() === 'div');
 
-    if (image_id) {
-        $.ajax({
-            url: '/ajax-delete-gallery-image',
-            type: 'POST',
-            data: {image_id: image_id},
-        });
+    if (directDivs.length > 1) {
+        const parentDiv = button.closest('.d-flex.justify-content-between');
+        const image_id = parentDiv.id;
+        parentDiv.remove();
+        limitAlert.style.display = 'none';
+
+        if (image_id) {
+            $.ajax({
+                url: '/ajax-delete-gallery-image',
+                type: 'POST',
+                data: {image_id: image_id},
+            });
+        };
     };
 };
 
 const addImage = () => {
     const galleryLength = galleryImages.children.length;
+    const placeholder = getGalleryPlaceholders();
 
     if (galleryLength < 5) {
         galleryImages.insertAdjacentHTML('beforeend', `
@@ -92,10 +109,10 @@ const addImage = () => {
             </div>
             <div class="ms-3 w-100">
                 <div class="d-flex">
-                    <input name="title" type="text" class="form-control mb-2" placeholder="Title">
+                    <input name="title" type="text" class="form-control mb-2" placeholder="${placeholder.title}">
                     <button class="btn btn-danger fs-17 mb-2 ms-3" onclick="deleteImage(this)"><i class="uil uil-trash-alt"></i></button>
                 </div>
-                <textarea name="description" class="form-control" rows="3" placeholder="Description"></textarea>
+                <textarea name="description" class="form-control" rows="3" placeholder="${placeholder.description}"></textarea>
             </div>
         </div>`);
     } else {

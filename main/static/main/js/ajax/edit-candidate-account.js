@@ -1,6 +1,7 @@
 const selects = document.querySelectorAll('select');
 const educations = document.getElementById('educations');
 const experiences = document.getElementById('experiences');
+const projects = document.getElementById('projects');
 const menus = document.querySelectorAll('.edit-menu');
 const companiesCheckboxes = '#preference-companies input[type="checkbox"]';
 const locationCheckboxes = '#preference-location input[type="checkbox"]';
@@ -64,6 +65,7 @@ const previewImg = (input) => {
         reader.readAsDataURL(input.files[0]);
     };
 };
+
 
 const getEducationPlaceholders = () => {
     const firstDiv = educations.querySelector('div');
@@ -219,6 +221,81 @@ const addExperience = () => {
 
     tempPresentId += 1;
 };
+
+const getProjectPlaceholders = () => {
+    const firstDiv = experiences.querySelector('div');
+    const companyName = firstDiv.querySelector("input[name='company_name']").placeholder;
+    const title = firstDiv.querySelector("input[name='title']").placeholder;
+    const startDate = firstDiv.querySelector("input[name='start_date']").placeholder;
+    const endDate = firstDiv.querySelector("input[name='end_date']").placeholder;
+    const present = firstDiv.querySelector(".form-check-label").textContent;
+    const description = firstDiv.querySelector("textarea[name='description']").placeholder;
+
+    return {
+        companyName: companyName,
+        title: title,
+        startDate: startDate,
+        endDate: endDate,
+        present: present,
+        description: description
+    }
+    
+};
+
+const deleteProject = (button) => {
+    const directDivs = Array.from(experiences.children).filter(el => el.tagName.toLowerCase() === 'div');
+    if (directDivs.length > 1) {
+        const parentDiv = button.closest('.d-flex.justify-content-between');
+        const experienceId = parentDiv.id;
+        parentDiv.remove();
+
+        if (experienceId) {
+            $.ajax({
+                url: '/ajax/delete-project',
+                type: 'POST',
+                data: {experience_id: experienceId},
+            });
+        };
+    };
+};
+
+const addProject = () => {
+    const placeholder = getProjectPlaceholders();
+
+    experiences.insertAdjacentHTML('beforeend', `
+    <div class="d-flex justify-content-between mb-5">
+        <div class="w-100">
+            <input type="hidden" name="experience_id" value="">
+            <div class="d-flex">
+                <input name="company_name" type="text" class="form-control mb-2" placeholder="${placeholder.companyName}" required>
+                <button class="btn btn-danger fs-17 mb-2 ms-2" onclick="deleteExperience(this)"><i class="uil uil-trash-alt"></i></button>
+            </div>
+            <input name="title" type="text" class="form-control mb-2" placeholder="${placeholder.title}" required>
+            <div class="d-flex mb-2">
+                <input type="text" class="form-control" data-provide="datepicker" data-date-format="M, yyyy"
+                    name="start_date" placeholder="${placeholder.startDate}" required>
+
+                <div class="input-group">
+                    <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="M, yyyy"
+                        name="end_date" placeholder="${placeholder.endDate}" required>
+                    <input type="hidden" name="end_date" value="" disabled="disabled">
+
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <input type="hidden" name="present_id" value="${tempPresentId}">
+                            <input class="form-check-input" type="checkbox" name="present-${tempPresentId}" id="present-t${tempPresentId}" onclick="endDateManage(this)">
+                            <label class="form-check-label ms-2" for="present-t${tempPresentId}">${placeholder.present}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <textarea name="description" class="form-control" rows="3" placeholder="${placeholder.description}"></textarea>
+        </div>
+    </div>`);
+
+    tempPresentId += 1;
+};
+
 
 const endDateManage = (input) => {
     const endDateInputText = input.closest('div.input-group').querySelector("input[name='end_date'][type='text']");
