@@ -229,7 +229,7 @@ class Experience(models.Model):
 
 class Project(models.Model):
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, related_name='projects')
-    company_name = models.CharField(max_length=255)
+    company_name = models.CharField(max_length=255, blank=True, null=True)
     title = models.CharField(max_length=500)
 
     start_date_month = models.CharField(max_length=15)

@@ -223,7 +223,7 @@ const addExperience = () => {
 };
 
 const getProjectPlaceholders = () => {
-    const firstDiv = experiences.querySelector('div');
+    const firstDiv = projects.querySelector('div');
     const companyName = firstDiv.querySelector("input[name='company_name']").placeholder;
     const title = firstDiv.querySelector("input[name='title']").placeholder;
     const startDate = firstDiv.querySelector("input[name='start_date']").placeholder;
@@ -243,17 +243,17 @@ const getProjectPlaceholders = () => {
 };
 
 const deleteProject = (button) => {
-    const directDivs = Array.from(experiences.children).filter(el => el.tagName.toLowerCase() === 'div');
+    const directDivs = Array.from(projects.children).filter(el => el.tagName.toLowerCase() === 'div');
     if (directDivs.length > 1) {
         const parentDiv = button.closest('.d-flex.justify-content-between');
-        const experienceId = parentDiv.id;
+        const projectId = parentDiv.id;
         parentDiv.remove();
 
-        if (experienceId) {
+        if (projectId) {
             $.ajax({
                 url: '/ajax/delete-project',
                 type: 'POST',
-                data: {experience_id: experienceId},
+                data: {experience_id: projectId},
             });
         };
     };
@@ -262,13 +262,13 @@ const deleteProject = (button) => {
 const addProject = () => {
     const placeholder = getProjectPlaceholders();
 
-    experiences.insertAdjacentHTML('beforeend', `
+    projects.insertAdjacentHTML('beforeend', `
     <div class="d-flex justify-content-between mb-5">
         <div class="w-100">
             <input type="hidden" name="experience_id" value="">
             <div class="d-flex">
                 <input name="company_name" type="text" class="form-control mb-2" placeholder="${placeholder.companyName}" required>
-                <button class="btn btn-danger fs-17 mb-2 ms-2" onclick="deleteExperience(this)"><i class="uil uil-trash-alt"></i></button>
+                <button class="btn btn-danger fs-17 mb-2 ms-2" onclick="deleteProject(this)"><i class="uil uil-trash-alt"></i></button>
             </div>
             <input name="title" type="text" class="form-control mb-2" placeholder="${placeholder.title}" required>
             <div class="d-flex mb-2">

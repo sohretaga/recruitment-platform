@@ -17,7 +17,7 @@ from . import forms
 from .models import Gallery, GalleryImage, CandidateBookmark, CandidatePreference
 from job.models import Vacancy
 from .decorators import logout_required
-from user.models import CustomUser, Candidate, Employer, Education, Experience, CandidateBookmark
+from user.models import CustomUser, Candidate, Employer, Education, Experience, CandidateBookmark, Project
 from job.utils import vacancy_with_related_info
 from .utils import manage_user_type_for_details
 from dashboard.forms import ManageEmployerAccountForm, ManageCandidateAccountForm
@@ -362,6 +362,7 @@ def candidate_details(request, username):
         'candidate': candidate,
         'educations': user.candidate.educations.all(),
         'experiences': user.candidate.experiences.all(),
+        'projects': user.candidate.projects.all(),
         'occupation': candidate.occupation_name,
         'languages': languages,
         **logged_user_context
@@ -653,13 +654,6 @@ def delete_experience(request):
         Experience.objects.filter(id=experience_id, candidate=request.user.candidate).delete()
 
     return JsonResponse({'status': 200})
-
-
-
-
-
-
-
 
 
 @login_required
