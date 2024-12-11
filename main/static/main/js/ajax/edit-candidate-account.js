@@ -230,6 +230,7 @@ const getProjectPlaceholders = () => {
     const endDate = firstDiv.querySelector("input[name='end_date']").placeholder;
     const present = firstDiv.querySelector(".form-check-label").textContent;
     const description = firstDiv.querySelector("textarea[name='description']").placeholder;
+    const addGallery = firstDiv.querySelector("button[type='button']").innerHTML;
 
     return {
         companyName: companyName,
@@ -237,7 +238,8 @@ const getProjectPlaceholders = () => {
         startDate: startDate,
         endDate: endDate,
         present: present,
-        description: description
+        description: description,
+        addGallery: addGallery
     }
     
 };
@@ -290,11 +292,69 @@ const addProject = () => {
                 </div>
             </div>
             <textarea name="description" class="form-control" rows="3" placeholder="${placeholder.description}"></textarea>
+            <div class="project-gallery form-control mt-2">
+                <div class="gallery-items"></div>
+                <button class="btn btn-link add-gallery-btn" type="button">${placeholder.addGallery}</button>
+                <input type="file" class="image-input" style="display: none;" accept="image/*" multiple>
+            </div>
         </div>
     </div>`);
 
     tempPresentId += 1;
 };
+
+document.addEventListener('click', (event) => {
+    if (event.target.closest('.add-gallery-btn')) {
+        const galleryContainer = event.target.closest('.project-gallery');
+        const imageInput = galleryContainer.querySelector('.image-input');
+        imageInput.click();
+    }
+});
+
+document.addEventListener('change', (event) => {
+    if (event.target.matches('.image-input')) {
+        const galleryContainer = event.target.closest('.project-gallery');
+        const galleryItems = galleryContainer.querySelector('.gallery-items');
+        const files = event.target.files;
+        let itemLength = galleryItems.children.length;
+
+        if (itemLength >= 5) {
+            return;
+        }
+
+        Array.from(files).forEach((file, index) => {
+
+            if (index >= 5 || itemLength+index >= 5) {
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                // Create gallery item
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
+
+                // Add image
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                galleryItem.appendChild(img);
+
+                // Add remove button
+                const removeBtn = document.createElement('button');
+                removeBtn.className = 'remove-btn';
+                removeBtn.innerText = 'x';
+                removeBtn.addEventListener('click', () => {
+                    galleryItems.removeChild(galleryItem);
+                });
+                galleryItem.appendChild(removeBtn);
+
+                // Add to gallery
+                galleryItems.appendChild(galleryItem);
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+});
 
 
 const endDateManage = (input) => {
