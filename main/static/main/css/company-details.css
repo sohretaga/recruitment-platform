@@ -226,6 +226,10 @@ body[data-layout-mode="dark"] .edit-option {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+.goverlay {
+    opacity: 50%;
+}
+
 body[data-layout-mode="dark"] .project-gallery {
     color: #f8f9fa;
     border-color: #3d454e;

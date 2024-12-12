@@ -354,7 +354,7 @@
                                                 <h6 class="fs-16 mb-1">{{ project.title }}</h6>
                                                 <p class="mb-2 text-muted">{{ project.company_name }} ({{ project.start_date_month }}, {{ project.start_date_year }} - {% if project.present %}Present{% else %}{{ project.end_date_month }}, {{ project.end_date_year }}{% endif %})</p>
                                                 <p class="text-muted">{{ project.description }}</p>
-                                                {% if project.images %}
+                                                {% if project.images.count %}
                                                 <div class="gallery-container zoom-icon">
                                                     <img src="{{ project.images.first.image.url }}" class="gallery-image">
                                                     <div class="overlay">
@@ -372,6 +372,10 @@
                                                         {% endif %}
                                                     {% endfor %}
                                                     </div>
+                                                </div>
+                                                {% else %}
+                                                <div class="gallery-container">
+                                                    <img src="{% static 'main/images/blog/default-blog-img.jpg' %}" class="gallery-image">
                                                 </div>
                                                 {% endif %}
                                             </div>
