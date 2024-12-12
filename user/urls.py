@@ -24,11 +24,12 @@ urlpatterns = [
 
     #AJAX
     path('ajax-delete-gallery-image', views.delete_gallery_image, name='ajax-delete-gallery-image'),
-    path('ajax/delete-profile-image', views.delete_pfofile_image, name='delete-profile-image'),
+    path('ajax/delete-profile-image', views.delete_profile_image, name='delete-profile-image'),
     path('ajax/delete-education', views.delete_education, name='ajax-delete-education'),
     path('ajax/delete-experience', views.delete_experience, name='ajax-delete-experience'),
     path('ajax/delete-project', views.delete_project, name='ajax-delete-project'),
     path('ajax/add-candidate-bookmark', views.ajax_candidate_bookmarks, name='ajax-add-candidate-bookmark'),
     path('ajax/filter-candidate', views.ajax_filter_candidate, name='ajax-filter-candidate'),
     path('ajax/manage-candidate-preference', views.ajax_manage_candidate_preference, name='manage-candidate-preference'),
+    path('ajax/delete-project-image', views.delete_project_image, name='delete-project-image'),
 ]

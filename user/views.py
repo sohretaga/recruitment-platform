@@ -17,7 +17,7 @@ from . import forms
 from .models import Gallery, GalleryImage, CandidateBookmark, CandidatePreference
 from job.models import Vacancy
 from .decorators import logout_required
-from user.models import CustomUser, Candidate, Employer, Education, Experience, CandidateBookmark, Project
+from user.models import CustomUser, Candidate, Employer, Education, Experience, CandidateBookmark, Project, ProjectImage
 from job.utils import vacancy_with_related_info
 from .utils import manage_user_type_for_details
 from dashboard.forms import ManageEmployerAccountForm, ManageCandidateAccountForm
@@ -677,7 +677,9 @@ def manage_project(request):
         descriptions,
         present_ids
     ):
+        
         present = request.POST.get(f'present-{present_id}') == 'on'
+        images = request.FILES.getlist(f'images-{present_id}')
         
         start_date = start_date.split(',')
         start_date_month = start_date[0]
@@ -694,18 +696,18 @@ def manage_project(request):
         if project_id:
             project_exists = Project.objects.filter(id=project_id).exists()
             if project_exists:
-                Project.objects.filter(id=project_id).update(
-                    company_name=company_name,
-                    title=title,
-                    start_date_month=start_date_month,
-                    start_date_year=start_date_year,
-                    end_date_month=end_date_month,
-                    end_date_year=end_date_year,
-                    description=description,
-                    present=present
-                )
+                project = Project.objects.get(id=project_id)
+                project.company_name=company_name
+                project.title=title
+                project.start_date_month=start_date_month
+                project.start_date_year=start_date_year
+                project.end_date_month=end_date_month
+                project.end_date_year=end_date_year
+                project.description=description
+                project.present=present
+                project.save()
         else:
-            Project.objects.create(
+            project = Project.objects.create(
                 candidate=request.user.candidate,
                 company_name=company_name,
                 title=title,
@@ -716,6 +718,17 @@ def manage_project(request):
                 description=description,
                 present=present
             )
+        if project and images:
+            project_images_count = ProjectImage.objects.filter(project=project).count()
+            limit_count = 5 - project_images_count
+
+            if not project_images_count >= 5:
+                if limit_count:
+                    for image in images[:limit_count]:
+                        ProjectImage.objects.create(
+                            project=project,
+                            image=image
+                        )
 
     if next_url:
         return redirect(next_url)
@@ -736,7 +749,15 @@ def delete_project(request):
 
 @login_required
 @require_POST
-def delete_pfofile_image(request):
+def delete_project_image(request):
+    image_id = request.POST.get('image_id')
+    ProjectImage.objects.filter(id=image_id).delete()
+
+    return JsonResponse({'status': 200})
+
+@login_required
+@require_POST
+def delete_profile_image(request):
     user = request.user
     image_id = request.POST.get('image_id')
 

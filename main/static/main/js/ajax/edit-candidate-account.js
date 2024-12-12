@@ -295,13 +295,24 @@ const addProject = () => {
             <div class="project-gallery form-control mt-2">
                 <div class="gallery-items"></div>
                 <button class="btn btn-link add-gallery-btn" type="button">${placeholder.addGallery}</button>
-                <input type="file" class="image-input" style="display: none;" accept="image/*" multiple>
+                <input type="file" name="images-${tempPresentId}" class="image-input" style="display: none;" accept="image/*" multiple>
             </div>
         </div>
     </div>`);
 
     tempPresentId += 1;
 };
+
+const deleteProjectImage = (element, imageId) => {
+    $.ajax({
+        url: '/ajax/delete-project-image',
+        type: 'POST',
+        data: {image_id: imageId},
+        success: () => {
+            element.closest('.gallery-item').remove();
+        }
+    })
+}
 
 document.addEventListener('click', (event) => {
     if (event.target.closest('.add-gallery-btn')) {
@@ -340,7 +351,7 @@ document.addEventListener('change', (event) => {
                 galleryItem.appendChild(img);
 
                 // Add remove button
-                const removeBtn = document.createElement('button');
+                const removeBtn = document.createElement('span');
                 removeBtn.className = 'remove-btn';
                 removeBtn.innerText = 'x';
                 removeBtn.addEventListener('click', () => {

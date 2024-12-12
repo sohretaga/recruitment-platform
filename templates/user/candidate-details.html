@@ -860,7 +860,7 @@
                                 </div>
                                 
                                 <div class="tab-pane fade" id="project" role="tabpanel" aria-labelledby="project-tab">
-                                    <form method="post" action="{% url 'user:manage-project' %}">
+                                    <form method="post" action="{% url 'user:manage-project' %}" enctype="multipart/form-data">
                                         <input type="hidden" name="next" value="{{ request.get_full_path }}">
 
                                         {% csrf_token %}
@@ -888,7 +888,7 @@
                                                                 <div class="input-group-text">
                                                                     <input type="hidden" name="present_id" value="{{ project.id }}">
                                                                     <input class="form-check-input" type="checkbox" name="present-{{ project.id }}" id="present-{{ project.id }}"
-                                                                        onclick="endDateManage(this)" {% if project.present %}checkType your texted{% endif %}>
+                                                                        onclick="endDateManage(this)" {% if project.present %}checked{% endif %}>
                                                                     <label class="form-check-label ms-2" for="present-{{ project.id }}">{% tr 'Present' %}</label>
                                                                 </div>
                                                             </div>
@@ -897,9 +897,17 @@
                                                     </div>
                                                     <textarea name="description" class="form-control" rows="3" placeholder="{% tr 'Description' %}*">{{ project.description }}</textarea>
                                                     <div class="project-gallery form-control mt-2">
-                                                        <div class="gallery-items"></div>
+                                                        <div class="gallery-items">
+                                                            {% for image in project.images.all %}
+                                                            {% if image.image %}
+                                                            <div class="gallery-item">
+                                                                <img src="{{ image.image.url }}" loading="lazy"><span class="remove-btn" onclick="deleteProjectImage(this,'{{image.id}}')">x</span>
+                                                            </div>
+                                                            {% endif %}
+                                                            {% endfor %}
+                                                        </div>
                                                         <button class="btn btn-link add-gallery-btn" type="button">{% tr 'Add Gallery' %} <i class="uil uil-image-plus"></i></button>
-                                                        <input type="file" class="image-input" style="display: none;" accept="image/*" multiple>
+                                                        <input type="file" name="images-{{ project.id }}" class="image-input" style="display: none;" accept="image/*" multiple>
                                                     </div>
                                                 </div>
                                             </div>
@@ -932,6 +940,11 @@
                                                         </div>
                                                     </div>
                                                     <textarea name="description" class="form-control" rows="3" placeholder="{% tr 'Description' %}*"></textarea>
+                                                    <div class="project-gallery form-control mt-2">
+                                                        <div class="gallery-items"></div>
+                                                        <button class="btn btn-link add-gallery-btn" type="button">{% tr 'Add Gallery' %} <i class="uil uil-image-plus"></i></button>
+                                                        <input type="file" name="images-0" class="image-input" style="display: none;" accept="image/*" multiple>
+                                                    </div>
                                                 </div>
                                             </div>
                                             {% endif %}

@@ -169,7 +169,7 @@ body[data-layout-mode="dark"] .edit-option {
     position: absolute;
     top: 5px;
     right: 5px;
-    background: red;
+    background: #ae2c38;;
     color: white;
     border: none;
     border-radius: 50%;

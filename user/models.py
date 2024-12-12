@@ -241,6 +241,10 @@ class Project(models.Model):
     present = models.BooleanField()
     description = models.TextField()
 
+class ProjectImage(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='projects/')
+
 class CandidateBookmark(models.Model):
     # Employers bookmark candidates
     employer = models.ForeignKey(Employer, on_delete=models.CASCADE, related_name='bookmarks')
