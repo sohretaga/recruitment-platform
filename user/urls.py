@@ -22,6 +22,8 @@ urlpatterns = [
 
     path('manage-project', views.manage_project, name='manage-project'),
 
+    path('profile-review', views.profile_review, name='profile-review'),
+
     #AJAX
     path('ajax-delete-gallery-image', views.delete_gallery_image, name='ajax-delete-gallery-image'),
     path('ajax/delete-profile-image', views.delete_profile_image, name='delete-profile-image'),

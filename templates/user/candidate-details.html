@@ -2,6 +2,7 @@
 {% load static %}
 {% load translate %}
 {% load math_filters %}
+{% load filters %}
 
 {% block title %}{% tr 'Candidate Details' %}{% endblock title %}
 
@@ -384,14 +385,19 @@
                                     </div>
                                     {% endif %}
                                     <div class="mt-4 pt-3">
+                                        {% for review in candidate.reviews.all %}
                                         <div class="d-sm-flex align-items-top">
                                             <div class="flex-shrink-0">
-                                                <img class="rounded-circle avatar-md img-thumbnail" src="{% static 'main/images/user/img-04.jpg' %}" alt="img">
+                                                {% if review.employer.user.profile_photo %}
+                                                <img class="rounded-circle avatar-md img-thumbnail" src="{{ review.employer.user.profile_photo.url }}" alt="{{ review.employer.user.first_name }}">
+                                                {% else %}
+                                                <img class="rounded-circle avatar-md img-thumbnail" src="{% static 'main/images/featured-job/default-company-img.jpeg' %}" alt="{{ review.employer.user.first_name }}">
+                                                {% endif %}
                                             </div>
                                             <div class="flex-grow-1 ms-sm-3">
                                                 <div>
-                                                    <p class="text-muted float-end fs-14 mb-2">Jun 23, 2021</p>
-                                                    <h6 class="mt-sm-0 mt-3 mb-1">Michelle Durant</h6>
+                                                    <p class="text-muted float-end fs-14 mb-2">{{ review.written_at|humanize_date }}</p>
+                                                    <h6 class="mt-sm-0 mt-3 mb-1">{{ review.employer.user.first_name }}</h6>
                                                     <div class="text-warning review-rating mb-2">
                                                         <i class="mdi mdi-star"></i>
                                                         <i class="mdi mdi-star"></i>
@@ -399,56 +405,30 @@
                                                         <i class="mdi mdi-star"></i>  
                                                         <i class="mdi mdi-star-half-full"></i>
                                                     </div>
-                                                    <p class="text-muted fst-italic">" There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour "</p>
+                                                    <p class="text-muted fst-italic">{{ review.review }}</p>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="d-sm-flex align-items-top mt-4">
-                                            <div class="flex-shrink-0">
-                                                <img class="rounded-circle avatar-md img-thumbnail" src="{% static 'main/images/user/img-02.jpg' %}" alt="img">
-                                            </div>
-                                            <div class="flex-grow-1 ms-sm-3">
-                                                <div>
-                                                    <p class="text-muted float-end fs-14 mb-2">Jun 25, 2021</p>
-                                                    <h6 class="mt-sm-0 mt-3 mb-1">Jeffrey Montgomery</h6>
-                                                    <div class="text-warning review-rating mb-2">
-                                                        <i class="mdi mdi-star"></i>
-                                                        <i class="mdi mdi-star"></i>
-                                                        <i class="mdi mdi-star"></i>
-                                                        <i class="mdi mdi-star-half-full"></i>
-                                                        <i class="mdi mdi-star-outline"></i>
-                                                    </div>
-                                                    <p class="text-muted fst-italic">" There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour "</p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        {% endfor %}
                                     </div>
-                                    <form action="#" class="mt-4 pt-3">
+                                    {% if user.employer %}
+                                    <form action="{% url 'user:profile-review' %}" method="post" class="mt-4 pt-3">
+                                        {% csrf_token %}
                                         <h6 class="fs-17 fw-semibold mb-2">{% tr 'Add a review' %}</h6>
                                         <p class="text-muted mb-3">{% tr 'Your Rating for this listing' %}</p>
+                                        <input type="hidden" name="candidate_id" value="{{ candidate.id }}">
+                                        <input type="hidden" name="next" value="{{ request.path }}">
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <div class="mb-3">
-                                                    <label for="inputname" class="form-label">{% tr 'Your Name' %}</label>
-                                                    <input type="text" class="form-control" id="inputname" placeholder="{% tr 'Enter your name' %}">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="mb-3">
-                                                    <label for="inputemail" class="form-label">{% tr 'Email' %}</label>
-                                                    <input type="email" class="form-control" id="inputemail" placeholder="{% tr 'Enter your email' %}">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="mb-3">
                                                     <label for="inputsubject" class="form-label">{% tr 'Subject' %}</label>
-                                                    <input type="text" class="form-control" id="inputsubject" placeholder="{% tr 'Subject' %}">
+                                                    <input type="text" name="subject" class="form-control" id="inputsubject" placeholder="{% tr 'Subject' %}">
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
                                                 <div class="mb-3">
                                                     <label for="inputcoment" class="form-label">{% tr 'Review' %}</label>
-                                                    <textarea class="form-control" id="inputcoment" rows="3" placeholder="{% tr 'Add your review' %}"></textarea>
+                                                    <textarea name="review" class="form-control" id="inputcoment" rows="3" placeholder="{% tr 'Add your review' %}"></textarea>
                                                 </div>
                                             </div>
                                         </div><!--end row-->
@@ -456,6 +436,7 @@
                                             <button type="submit" class="btn btn-primary btn-hover">{% tr 'Submit Review' %} <i class="uil uil-angle-right-b"></i></button>
                                         </div>
                                     </form>
+                                    {% endif %}
                                 </div>
                                 {% if candidate.user == request.user %}
                                 <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">

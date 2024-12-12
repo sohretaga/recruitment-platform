@@ -830,3 +830,18 @@ def ajax_manage_candidate_preference(request):
     preference.save()
     
     return JsonResponse({'status': 200})
+
+def profile_review(request):
+    if request.POST and request.user.employer:
+        next_url = request.POST.get('next')
+        form = forms.ProfileReviewForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            employer = request.user.employer
+            candidate = Candidate.objects.get(id=form.cleaned_data.get('candidate_id'))
+            
+            instance.employer = employer
+            instance.candidate = candidate
+            instance.save()
+
+    return redirect(next_url)

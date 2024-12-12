@@ -1,5 +1,5 @@
 from django import forms
-from .models import CustomUser
+from .models import CustomUser, ProfileReview
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=19)
@@ -29,3 +29,9 @@ class CustomUserCreationForm(forms.ModelForm):
             user.save()
         
         return user
+
+class ProfileReviewForm(forms.ModelForm):
+    candidate_id = forms.CharField(max_length=100)
+    class Meta:
+        model = ProfileReview
+        fields = ('subject', 'review', 'candidate_id')
