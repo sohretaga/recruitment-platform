@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load translate %}
+{% load math_filters %}
 
 {% block title %}{% tr 'Candidate Details' %}{% endblock title %}
 
@@ -353,6 +354,16 @@
                                                 <h6 class="fs-16 mb-1">{{ project.title }}</h6>
                                                 <p class="mb-2 text-muted">{{ project.company_name }} ({{ project.start_date_month }}, {{ project.start_date_year }} - {% if project.present %}Present{% else %}{{ project.end_date_month }}, {{ project.end_date_year }}{% endif %})</p>
                                                 <p class="text-muted">{{ project.description }}</p>
+                                                {% if project.images %}
+                                                <div class="gallery-container">
+                                                    <img src="{{ project.images.first.image.url }}" class="gallery-image">
+                                                    {% if project.images.count > 1 %}
+                                                    <div class="overlay">
+                                                        <span>+{{ project.images.count|subtract:1 }}</span>
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                                {% endif %}
                                             </div>
                                         </div>
                                         {% endfor %}
