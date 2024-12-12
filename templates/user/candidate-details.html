@@ -355,13 +355,23 @@
                                                 <p class="mb-2 text-muted">{{ project.company_name }} ({{ project.start_date_month }}, {{ project.start_date_year }} - {% if project.present %}Present{% else %}{{ project.end_date_month }}, {{ project.end_date_year }}{% endif %})</p>
                                                 <p class="text-muted">{{ project.description }}</p>
                                                 {% if project.images %}
-                                                <div class="gallery-container">
+                                                <div class="gallery-container zoom-icon">
                                                     <img src="{{ project.images.first.image.url }}" class="gallery-image">
-                                                    {% if project.images.count > 1 %}
                                                     <div class="overlay">
-                                                        <span>+{{ project.images.count|subtract:1 }}</span>
+                                                    {% for image in project.images.all %}
+                                                        {% if forloop.first %}
+                                                        <a href="{{ image.image.url }}" class="image-popup" data-gallery="gallery-{{ project.id }}">
+                                                            {% if project.images.count > 1 %}
+                                                            +{{ project.images.count|subtract:1 }}
+                                                            {% else %}
+                                                            <i class="uil uil-search-alt"></i>
+                                                            {% endif %}
+                                                        </a>
+                                                        {% else %}
+                                                        <a href="{{ image.image.url }}" class="image-popup" data-gallery="gallery-{{ project.id }}"></a>
+                                                        {% endif %}
+                                                    {% endfor %}
                                                     </div>
-                                                    {% endif %}
                                                 </div>
                                                 {% endif %}
                                             </div>
@@ -369,38 +379,6 @@
                                         {% endfor %}
                                     </div>
                                     {% endif %}
-                                    <div class="candidate-portfolio mt-4 pt-3">
-                                        <h6 class="fs-17 fw-bold mb-0">{% tr 'Projects' %}</h6>
-                                        <div class="row">
-                                            <div class="col-lg-4 mt-4">
-                                                <div class="candidate-portfolio-box card border-0">
-                                                    <img src="{% static 'main/images/blog/img-01.jpg' %}" alt="" class="img-fluid">
-                                                    <div class="bg-overlay"></div>
-                                                    <div class="zoom-icon">
-                                                        <a href="{% static 'main/images/blog/img-01.jpg' %}" class="image-popup text-white" data-title="The Coding Awards"><i class="uil uil-search-alt"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4 mt-4">
-                                                <div class="candidate-portfolio-box card border-0">
-                                                    <img src="{% static 'main/images/blog/img-02.jpg' %}" alt="" class="img-fluid">
-                                                    <div class="bg-overlay"></div>
-                                                    <div class="zoom-icon">
-                                                        <a href="{% static 'main/images/blog/img-02.jpg' %}" class="image-popup text-white" data-title="Project Explained"><i class="uil uil-search-alt"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4 mt-4">
-                                                <div class="candidate-portfolio-box card border-0">
-                                                    <img src="{% static 'main/images/blog/img-03.jpg' %}" alt="" class="img-fluid">
-                                                    <div class="bg-overlay"></div>
-                                                    <div class="zoom-icon">
-                                                        <a href="{% static 'main/images/blog/img-03.jpg' %}" class="image-popup text-white" data-title="Social Geek Made"><i class="uil uil-search-alt"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div><!--end candidate-portfolio-->
                                     <div class="mt-4 pt-3">
                                         <div class="d-sm-flex align-items-top">
                                             <div class="flex-shrink-0">

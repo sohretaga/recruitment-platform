@@ -217,6 +217,11 @@ body[data-layout-mode="dark"] .edit-option {
     transition: background-color 0.3s ease;
 }
 
+.overlay a {
+    text-decoration: none;
+    color: inherit;
+}
+
 .gallery-container:hover .overlay {
     background-color: rgba(0, 0, 0, 0.5);
 }
