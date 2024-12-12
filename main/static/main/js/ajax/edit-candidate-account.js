@@ -8,7 +8,7 @@ const locationCheckboxes = '#preference-location input[type="checkbox"]';
 const careerTypeCheckboxes = '#preference-career-type input[type="checkbox"]';
 const typeOfEmploymentCheckboxes = '#preference-type-of-employment input[type="checkbox"]';
 
-var tempPresentId = 1;
+var tempPresentId = 26062001;
 
 selects.forEach(select => {
     if (select.id == 'gender') {
@@ -219,7 +219,7 @@ const addExperience = () => {
         </div>
     </div>`);
 
-    tempPresentId += 1;
+    tempPresentId += 12;
 };
 
 const getProjectPlaceholders = () => {
