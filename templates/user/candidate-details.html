@@ -881,7 +881,10 @@
 
                                                         <div class="input-group">
                                                             <input type="text" class="form-control ms-2" data-provide="datepicker" data-date-format="M, yyyy"
-                                                                name="end_date" placeholder="{% tr 'End date' %}" required {% if project.present %}disabled="disabled"{% else %}value="{{ project.end_date_month }}, {{ project.end_date_year }}"{% endif %}>
+                                                                name="end_date" placeholder="{% tr 'End date' %}" required {% if project.present %}disabled="disabled"{% else %}
+                                                                {% if project.end_date_month and project.end_date_year %}
+                                                                value="{{ project.end_date_month }}, {{ project.end_date_year }}"
+                                                                {% endif %}{% endif %}>
                                                             <input type="hidden" name="end_date" value="" {% if not project.present %}disabled="disabled"{% endif %}>
                                                             
                                                             <div class="input-group-append">
