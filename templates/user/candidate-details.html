@@ -386,7 +386,7 @@
                                     {% endif %}
                                     <div class="mt-4 pt-3">
                                         {% for review in candidate.reviews.all %}
-                                        <div class="d-sm-flex align-items-top">
+                                        <div id="review-{{ review.id }}" class="d-sm-flex align-items-top">
                                             <div class="flex-shrink-0">
                                                 {% if review.employer.user.profile_photo %}
                                                 <img class="rounded-circle avatar-md img-thumbnail" src="{{ review.employer.user.profile_photo.url }}" alt="{{ review.employer.user.first_name }}">
@@ -397,7 +397,19 @@
                                             <div class="flex-grow-1 ms-sm-3">
                                                 <div>
                                                     <p class="text-muted float-end fs-14 mb-2">{{ review.written_at|humanize_date }}</p>
-                                                    <h6 class="mt-sm-0 mt-3 mb-1">{{ review.employer.user.first_name }}</h6>
+                                                    <div class="d-flex">
+                                                        <a href="{% url 'user:company' review.employer.user.username %}" class="primary-link"><h6 class="mt-sm-0 mt-3 mb-1">{{ review.employer.user.first_name }}</h6></a>
+                                                        {% if user.employer == review.employer %}
+                                                        <div class="ms-3 pb-1">
+                                                            <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="{% tr 'Edit' %}">
+                                                                <i class="uil uil-edit" onclick="editReview('{{ review.id }}')"></i>
+                                                            </a>
+                                                            <a href="javascript:void(0)" class="ms-2" style="color: #da3746 !important;" onclick="deleteRequest('{{ review.id }}')" data-bs-toggle="tooltip" data-bs-placement="top" title="{% tr 'Delete' %}">
+                                                                <i class="uil uil-trash-alt"></i>
+                                                            </a>
+                                                        </div>
+                                                        {% endif %}
+                                                    </div>
                                                     <div class="text-warning review-rating mb-2">
                                                         <i class="mdi mdi-star"></i>
                                                         <i class="mdi mdi-star"></i>
@@ -405,7 +417,7 @@
                                                         <i class="mdi mdi-star"></i>  
                                                         <i class="mdi mdi-star-half-full"></i>
                                                     </div>
-                                                    <p class="text-muted fst-italic">{{ review.review }}</p>
+                                                    <p class="text-muted fst-italic" id="review-text-{{ review.id }}">{{ review.review }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -428,12 +440,13 @@
                                             <div class="col-lg-12">
                                                 <div class="mb-3">
                                                     <label for="inputcoment" class="form-label">{% tr 'Review' %}</label>
-                                                    <textarea name="review" class="form-control" id="inputcoment" rows="3" placeholder="{% tr 'Add your review' %}"></textarea>
+                                                    <textarea name="review" id="review-input" class="form-control" id="inputcoment" rows="3" placeholder="{% tr 'Add your review' %}"></textarea>
                                                 </div>
                                             </div>
                                         </div><!--end row-->
                                         <div class="text-end">
-                                            <button type="submit" class="btn btn-primary btn-hover">{% tr 'Submit Review' %} <i class="uil uil-angle-right-b"></i></button>
+                                            <button type="submit" class="btn btn-primary btn-hover" id="submit-review-btn">{% tr 'Submit Review' %} <i class="uil uil-angle-right-b"></i></button>
+                                            <button type="button" class="btn btn-primary btn-hover" id="edit-review-btn" style="display: none;">{% tr 'Edit Review' %} <i class="uil uil-angle-right-b"></i></button>
                                         </div>
                                     </form>
                                     {% endif %}
@@ -1070,6 +1083,29 @@
         </div><!--end container-->
     </section>
     <!-- END CANDIDATE-DETAILS -->
+
+    <!-- DELETE Modal -->
+    <div class="modal fade" id="deleteReviewModal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">{% tr 'Delete Review ?' %}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <h6 class="text-danger"><i class="uil uil-exclamation-triangle"></i> {% tr 'Warning: Are you sure you want to delete review ?' %}</h6>
+                        <p class="text-muted">{% tr 'Your review will be deleted.' %}</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal">{% tr 'Cancel' %}</button>
+                    <button type="button" class="btn btn-danger btn-sm" id="delete-review-btn">{% tr 'Yes, delete' %}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END DELETE MODAL -->
 
 </div>
 <!-- End Page-content -->

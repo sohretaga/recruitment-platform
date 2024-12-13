@@ -518,3 +518,68 @@ document.getElementById('whatsapp_number').addEventListener('input', function (e
         this.value = this.value.replace(/[^0-9+]/g, '');
     }
 });
+
+
+// Employer Review Settings
+const deleteReviewModal = new bootstrap.Modal(document.getElementById('deleteReviewModal'));
+const deleteReviewBtn = document.getElementById('delete-review-btn');
+
+$('#deleteReviewModal').on('hidden.bs.modal', function(e) {
+    deleteReviewBtn.removeAttribute('onclick');
+});
+
+const deleteRequest = (id) => {
+    deleteReviewBtn.setAttribute('onclick', `deleteReview(${id})`);
+    deleteReviewModal.show();
+};
+
+const deleteReview = (id) => {
+    $.ajax({
+        url:'/ajax/delete-review',
+        type: 'POST',
+        data: {review_id: id},
+        success: (response) => {
+            if (response.success) {
+                document.getElementById(`review-${id}`).remove();
+            }
+            deleteReviewModal.hide();
+        }
+    });
+};
+
+const sendReviewBtn = document.getElementById('submit-review-btn');
+const editReviewBtn = document.getElementById('edit-review-btn');
+const reviewInput = document.getElementById('review-input');
+
+const editReview = (id) => {
+    let reviewText = document.getElementById(`review-text-${id}`).innerText;
+    reviewInput.value = reviewText;
+    
+    sendReviewBtn.style.display = 'none';
+    editReviewBtn.style.display = 'inline';
+
+    editReviewBtn.setAttribute('onclick', `editRequest('${id}')`);
+
+}
+
+const editRequest = (id) => {
+    $.ajax({
+        url: '/ajax/edit-review',
+        type: 'POST',
+        data: {
+            review_id: id,
+            new_review: reviewInput.value
+        },
+        success: (response) => {
+            if (response.success) {
+                let reviewText = document.getElementById(`review-text-${id}`);
+                reviewText.innerText = response.new_review;
+            }
+
+            reviewInput.value = '';
+            sendReviewBtn.style.display = 'inline';
+            editReviewBtn.style.display = 'none';
+            editReviewBtn.removeAttribute('onclick');
+        }
+    })
+}

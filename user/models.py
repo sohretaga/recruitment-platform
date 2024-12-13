@@ -272,3 +272,6 @@ class ProfileReview(models.Model):
     subject = models.CharField(max_length=255)
     review = models.TextField()
     written_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-written_at']

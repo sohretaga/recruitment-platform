@@ -34,4 +34,6 @@ urlpatterns = [
     path('ajax/filter-candidate', views.ajax_filter_candidate, name='ajax-filter-candidate'),
     path('ajax/manage-candidate-preference', views.ajax_manage_candidate_preference, name='manage-candidate-preference'),
     path('ajax/delete-project-image', views.delete_project_image, name='delete-project-image'),
+    path('ajax/delete-review', views.delete_review, name='delete-review'),
+    path('ajax/edit-review', views.edit_review, name='edit-review'),
 ]

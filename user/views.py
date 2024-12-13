@@ -14,7 +14,7 @@ from django.views.decorators.cache import never_cache
 
 from language.middleware import get_current_user_language
 from . import forms
-from .models import Gallery, GalleryImage, CandidateBookmark, CandidatePreference
+from .models import Gallery, GalleryImage, CandidateBookmark, CandidatePreference, ProfileReview
 from job.models import Vacancy
 from .decorators import logout_required
 from user.models import CustomUser, Candidate, Employer, Education, Experience, CandidateBookmark, Project, ProjectImage
@@ -845,3 +845,35 @@ def profile_review(request):
             instance.save()
 
     return redirect(next_url)
+
+def delete_review(request):
+    if request.POST:
+        review_id = request.POST.get('review_id')
+        try:
+            review = ProfileReview.objects.get(id=review_id)
+            if review.employer == request.user.employer:
+                review.delete()
+                return JsonResponse({'success': True})
+            
+            return JsonResponse({'success': False})
+
+        except ObjectDoesNotExist: return JsonResponse({'success': False})
+
+def edit_review(request):
+    if request.POST:
+        review_id = request.POST.get('review_id')
+        new_review = request.POST.get('new_review')
+
+        try:
+            review = ProfileReview.objects.get(id=review_id)
+            if review.employer == request.user.employer:
+                review.review = new_review
+                review.save()
+                return JsonResponse({
+                    'success': True,
+                    'new_review': new_review
+                })
+            
+            return JsonResponse({'success': False})
+
+        except ObjectDoesNotExist: return JsonResponse({'success': False})

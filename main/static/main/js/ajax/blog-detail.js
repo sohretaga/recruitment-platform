@@ -105,7 +105,6 @@ const editComment = (id) => {
     editCommentBtn.style.display = 'inline';
 
     editCommentBtn.setAttribute('onclick', `editRequest('${id}')`);
-
 }
 
 const editRequest = (id) => {
