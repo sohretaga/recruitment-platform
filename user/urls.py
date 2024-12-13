@@ -36,4 +36,5 @@ urlpatterns = [
     path('ajax/delete-project-image', views.delete_project_image, name='delete-project-image'),
     path('ajax/delete-review', views.delete_review, name='delete-review'),
     path('ajax/edit-review', views.edit_review, name='edit-review'),
+    path('ajax/manage-review-visibility', views.manage_review_visibility, name='manage-review-visibility'),
 ]

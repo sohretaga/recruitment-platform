@@ -866,12 +866,36 @@ def edit_review(request):
 
         try:
             review = ProfileReview.objects.get(id=review_id)
-            if review.employer == request.user.employer:
+            if review.employer == request.user.employer and not review.visible:
                 review.review = new_review
                 review.save()
                 return JsonResponse({
                     'success': True,
                     'new_review': new_review
+                })
+            
+            return JsonResponse({'success': False})
+
+        except ObjectDoesNotExist: return JsonResponse({'success': False})
+
+def manage_review_visibility(request):
+    if request.POST:
+        review_id = request.POST.get('review_id')
+        visibility = request.POST.get('visibility') == 'true' or False
+
+        try:
+            review = ProfileReview.objects.get(id=review_id)
+            if review.candidate == request.user.candidate:
+
+                if visibility:
+                    review.visible = True
+                else:
+                    review.visible = False
+                review.save()
+
+                return JsonResponse({
+                    'success': True,
+                    'visibility': visibility
                 })
             
             return JsonResponse({'success': False})

@@ -271,7 +271,9 @@ class ProfileReview(models.Model):
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, related_name='reviews')
     subject = models.CharField(max_length=255)
     review = models.TextField()
+    visible = models.BooleanField(default=False)
     written_at = models.DateTimeField(auto_now_add=True)
+    edited_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ['-written_at']

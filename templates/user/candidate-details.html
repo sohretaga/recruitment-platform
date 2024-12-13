@@ -396,17 +396,32 @@
                                             </div>
                                             <div class="flex-grow-1 ms-sm-3">
                                                 <div>
-                                                    <p class="text-muted float-end fs-14 mb-2">{{ review.written_at|humanize_date }}</p>
+                                                    <div class="d-flex float-end">
+                                                        <p class="text-muted fs-14 mb-2">{{ review.written_at|humanize_date }}<span id="visibility-status" {% if review.visible %}style="display:none;"{% endif %}> - (Invisible)</span></p>
+                                                    </div>
                                                     <div class="d-flex">
                                                         <a href="{% url 'user:company' review.employer.user.username %}" class="primary-link"><h6 class="mt-sm-0 mt-3 mb-1">{{ review.employer.user.first_name }}</h6></a>
                                                         {% if user.employer == review.employer %}
                                                         <div class="ms-3 pb-1">
+                                                            {% if not review.visible %}
                                                             <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="{% tr 'Edit' %}">
                                                                 <i class="uil uil-edit" onclick="editReview('{{ review.id }}')"></i>
                                                             </a>
+                                                            {% endif %}
                                                             <a href="javascript:void(0)" class="ms-2" style="color: #da3746 !important;" onclick="deleteRequest('{{ review.id }}')" data-bs-toggle="tooltip" data-bs-placement="top" title="{% tr 'Delete' %}">
                                                                 <i class="uil uil-trash-alt"></i>
                                                             </a>
+                                                        </div>
+                                                        {% endif %}
+                                                        {% if review.candidate == candidate %}
+                                                        <div class="dropdown" style="height: 0;">
+                                                            <a href="javascript:void(0)" class="ms-2" data-bs-toggle="dropdown" aria-expanded="false" >
+                                                                <i class="uil uil-ellipsis-h fs-22" data-bs-placement="top" title="{% tr 'Action' %}" data-bs-toggle="tooltip"></i>
+                                                            </a>
+                                                            <ul class="dropdown-menu">
+                                                                <li><a class="dropdown-item" href="javascript:void(0)" id="make-review-visible" {% if review.visible %}style="display: none;"{% endif %} onclick="manageReviewVisibility('{{ review.id }}', true)">{% tr 'Make Visible' %}</a></li>
+                                                                <li><a class="dropdown-item" href="javascript:void(0)" id="make-review-invisible" {% if not review.visible %}style="display: none;"{% endif %} onclick="manageReviewVisibility('{{ review.id }}', false)">{% tr 'Make Invisible' %}</a></li>
+                                                            </ul>
                                                         </div>
                                                         {% endif %}
                                                     </div>

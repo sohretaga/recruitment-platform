@@ -583,3 +583,29 @@ const editRequest = (id) => {
         }
     })
 }
+
+const makeVisibleBtn = document.getElementById('make-review-visible');
+const makeInvisibleBtn = document.getElementById('make-review-invisible');
+const visibilityStatus = document.getElementById('visibility-status');
+
+const manageReviewVisibility = (id, visibility) => {
+    $.ajax({
+        url: '/ajax/manage-review-visibility',
+        type: 'POST',
+        data: {
+            review_id: id,
+            visibility: visibility
+        },
+        success: (response) => {
+            if (response.visibility) {
+                makeVisibleBtn.style.display = 'none';
+                makeInvisibleBtn.style.display = 'block';
+                visibilityStatus.style.display = 'none';
+            } else {
+                makeVisibleBtn.style.display = 'block';
+                makeInvisibleBtn.style.display = 'none';
+                visibilityStatus.style.display = 'inline';
+            };
+        }
+    })
+}
