@@ -591,11 +591,11 @@ const editRequest = (id) => {
     })
 }
 
-const makeVisibleBtn = document.getElementById('make-review-visible');
-const makeInvisibleBtn = document.getElementById('make-review-invisible');
-const visibilityStatus = document.getElementById('visibility-status');
-
 const manageReviewVisibility = (id, visibility) => {
+    const makeVisibleBtn = document.getElementById(`make-review-visible-${id}`);
+    const makeInvisibleBtn = document.getElementById(`make-review-invisible-${id}`);
+    const visibilityStatus = document.getElementById(`visibility-status-${id}`);
+
     $.ajax({
         url: '/ajax/manage-review-visibility',
         type: 'POST',

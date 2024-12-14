@@ -250,3 +250,13 @@ body[data-layout-mode="dark"] .edit-option:hover {
 .profile-content-nav.nav-pills .nav-item .nav-link {
     padding: 12px 0 !important;
 }
+
+.review-action-menu {
+    position: relative;
+    top: -8px;
+}
+
+.review-action-btn {
+    position: relative;
+    top: -3px;
+}
