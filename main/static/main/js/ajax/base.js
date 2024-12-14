@@ -84,29 +84,34 @@ const sendNotification = (target_id, args) => {
 };
 
 const subscribeBtn = document.getElementById('subscribebtn');
-const subscribeAlert = document.getElementById('subscribe-alert');
+
+const showSubscribeAlert = (alertStatus, alertText) => {
+    const subscribeAlert = document.getElementById('subscribe-alert');
+    subscribeAlert.innerHTML = `
+    <div class="alert ${alertStatus} alert-dismissible fade show" role="alert">${alertText}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>`;
+}
+
 subscribeBtn.addEventListener('click', () => {
     const subscribeInput = document.getElementById('subscribe');
+
     if (subscribeInput.value) {
         $.ajax({
             url:'/ajax/subscribe',
             type: 'POST',
             data: {email: subscribeInput.value},
-            success: () => {
+            success: (response) => {
                 subscribeInput.value = '';
-                subscribeAlert.innerHTML = `
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    You have subscribed!
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>`;
+                if (response.valid) {
+                    showSubscribeAlert('alert-success', 'You have subscribed!');
+                } else {
+                    showSubscribeAlert('alert-danger', 'You must provide valid email!');
+                }
             }
         });
     } else {
-        subscribeAlert.innerHTML = `
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            You must write an email!
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>`;
+        showSubscribeAlert('alert-danger', 'You must provide an email!');
     }
 });
 

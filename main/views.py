@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.core.paginator import Paginator
+from django.core.exceptions import ValidationError
+from django.core.validators import EmailValidator
 from threading import Thread
 
 from job.utils import fetch_vacancies
@@ -190,6 +192,12 @@ def delete_notification(request):
 @require_POST
 def subscribe(request):
     email = request.POST.get('email')
-    Subscribe.objects.create(email=email)
+    validator = EmailValidator()
 
-    return JsonResponse({'status': 200})
+    try:
+        validator(email)
+        Subscribe.objects.create(email=email)
+        return JsonResponse({"valid": True})
+
+    except ValidationError:
+        return JsonResponse({"valid": False})
