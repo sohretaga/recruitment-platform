@@ -388,7 +388,7 @@
                                         {% for review in candidate.reviews.all %}
 
                                         {% if review.candidate.user == user or review.employer.user == user %}
-                                        <div id="review-{{ review.id }}" class="d-sm-flex align-items-top">
+                                        <div id="review-{{ review.id }}" class="d-sm-flex align-items-top mb-4">
                                             <div class="flex-shrink-0">
                                                 {% if review.employer.user.profile_photo %}
                                                 <img class="rounded-circle avatar-md img-thumbnail" src="{{ review.employer.user.profile_photo.url }}" alt="{{ review.employer.user.first_name }}">
@@ -398,9 +398,7 @@
                                             </div>
                                             <div class="flex-grow-1 ms-sm-3">
                                                 <div>
-                                                    <p class="text-muted float-end fs-14 mb-2">{{ review.written_at|humanize_date }}<span id="visibility-status-{{ review.id }}" {% if review.visible %}style="display:none;"{% endif %}> - ({% tr 'Invisible' %})</span></p>
-                                                    <div class="d-flex">
-                                                        <a href="{% url 'user:company' review.employer.user.username %}" class="primary-link"><h6 class="mt-sm-0 mt-3 mb-1">{{ review.employer.user.first_name }}</h6></a>
+                                                    <div class="d-flex float-end">
                                                         {% if review.employer.user == user %}
                                                         <div>
                                                             {% if not review.visible %}
@@ -425,6 +423,9 @@
                                                         </div>
                                                         {% endif %}
                                                     </div>
+                                                    <div class="d-flex">
+                                                        <a href="{% url 'user:company' review.employer.user.username %}" class="primary-link"><h6 class="mt-sm-0 mt-3 mb-1">{{ review.employer.user.first_name }}</h6></a>
+                                                    </div>
                                                     <div class="text-warning review-rating mb-2">
                                                         <i class="mdi mdi-star"></i>
                                                         <i class="mdi mdi-star"></i>
@@ -433,6 +434,8 @@
                                                         <i class="mdi mdi-star-half-full"></i>
                                                     </div>
                                                     <p class="text-muted fst-italic" id="review-text-{{ review.id }}">{{ review.review }}</p>
+                                                    <p class="text-muted float-end mb-2" style="font-size: 12px;">{{ review.written_at|humanize_date }}<span id="visibility-status-{{ review.id }}" {% if review.visible %}style="display:none;"{% endif %}> - ({% tr 'Invisible' %})</span></p>
+
                                                 </div>
                                             </div>
                                         </div>
