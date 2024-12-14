@@ -413,7 +413,7 @@
                                                             </a>
                                                         </div>
                                                         {% endif %}
-                                                        {% if review.candidate == candidate %}
+                                                        {% if review.candidate.user == user %}
                                                         <div class="dropdown" style="height: 0;">
                                                             <a href="javascript:void(0)" class="ms-2" data-bs-toggle="dropdown" aria-expanded="false" >
                                                                 <i class="uil uil-ellipsis-h fs-22" data-bs-placement="top" title="{% tr 'Action' %}" data-bs-toggle="tooltip"></i>

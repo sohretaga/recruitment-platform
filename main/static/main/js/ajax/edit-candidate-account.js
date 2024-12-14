@@ -52,8 +52,11 @@ const collectLanguageSkils = () => {
     });
     languageValuesInput.value = values;
 };
-collectLanguageSkils();
-languageSkils.addEventListener('change', collectLanguageSkils);
+
+if (languageSkils) {
+    collectLanguageSkils();
+    languageSkils.addEventListener('change', collectLanguageSkils);
+}
 // End
 
 const previewImg = (input) => {
@@ -419,19 +422,21 @@ document.addEventListener('click', function(event) {
 });
 
 const itemSearcher = (searchInput, items) => {
-    searchInput.addEventListener('input', function() {
-        let searchValue = this.value.toLowerCase();
-    
-        Array.prototype.forEach.call(items, function(item) {
-            const label = item.parentElement;
-    
-            if (label.textContent.toLowerCase().includes(searchValue)) {
-                label.style.display = 'block';
-            }else {
-                label.style.display = 'none';
-            }
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            let searchValue = this.value.toLowerCase();
+        
+            Array.prototype.forEach.call(items, function(item) {
+                const label = item.parentElement;
+        
+                if (label.textContent.toLowerCase().includes(searchValue)) {
+                    label.style.display = 'block';
+                }else {
+                    label.style.display = 'none';
+                }
+            });
         });
-    });
+    }
 }
 
 // Companies items searcher
@@ -511,14 +516,16 @@ const updateNextInputs = () => {
 };
 
 // WhatsApp Input
-document.getElementById('whatsapp_number').addEventListener('input', function (e) {
-    const allowedChars = /^[0-9+]*$/;
-
-    if (!allowedChars.test(this.value)) {
-        this.value = this.value.replace(/[^0-9+]/g, '');
-    }
-});
-
+const whatsappNumber = document.getElementById('whatsapp_number');
+if (whatsappNumber) {
+    whatsappNumber.addEventListener('input', function (e) {
+        const allowedChars = /^[0-9+]*$/;
+    
+        if (!allowedChars.test(this.value)) {
+            this.value = this.value.replace(/[^0-9+]/g, '');
+        }
+    });
+};
 
 // Employer Review Settings
 const deleteReviewModal = new bootstrap.Modal(document.getElementById('deleteReviewModal'));
