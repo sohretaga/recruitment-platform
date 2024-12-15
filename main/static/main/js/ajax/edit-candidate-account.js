@@ -557,6 +557,33 @@ const deleteReview = (id) => {
 const sendReviewBtn = document.getElementById('submit-review-btn');
 const editReviewBtn = document.getElementById('edit-review-btn');
 const reviewInput = document.getElementById('review-input');
+const textarea = document.getElementById('review-input');
+const charCounter = document.getElementById('char-counter');
+const minLength = 190;
+const maxLength = 950;
+
+const checkChartCount = () => {
+    const charCount = textarea.value.length;
+    charCounter.innerText = `${charCount}`;
+
+    if (charCount < minLength || charCount > maxLength) {
+        charCounter.style.setProperty('color', '#da3746', 'important');
+    } else {
+        charCounter.style.color = '#adb5bd';
+    }
+}
+
+textarea.addEventListener('input', () => {
+    checkChartCount();
+});
+
+document.getElementById('submit-review-btn').addEventListener('click', (event) => {
+    const charCount = textarea.value.length;
+    const subject = document.getElementById('inputsubject');
+    if (charCount > minLength && charCount < maxLength && subject.value) {
+        event.target.closest('form').submit();
+    }
+})
 
 const editReview = (id) => {
     let reviewText = document.getElementById(`review-text-${id}`).innerText;
@@ -566,29 +593,34 @@ const editReview = (id) => {
     editReviewBtn.style.display = 'inline';
 
     editReviewBtn.setAttribute('onclick', `editRequest('${id}')`);
-
+    checkChartCount();
 }
 
 const editRequest = (id) => {
-    $.ajax({
-        url: '/ajax/edit-review',
-        type: 'POST',
-        data: {
-            review_id: id,
-            new_review: reviewInput.value
-        },
-        success: (response) => {
-            if (response.success) {
-                let reviewText = document.getElementById(`review-text-${id}`);
-                reviewText.innerText = response.new_review;
-            }
+    const charCount = textarea.value.length;
 
-            reviewInput.value = '';
-            sendReviewBtn.style.display = 'inline';
-            editReviewBtn.style.display = 'none';
-            editReviewBtn.removeAttribute('onclick');
-        }
-    })
+    if (charCount > minLength && charCount < maxLength) {
+        $.ajax({
+            url: '/ajax/edit-review',
+            type: 'POST',
+            data: {
+                review_id: id,
+                new_review: reviewInput.value
+            },
+            success: (response) => {
+                if (response.success) {
+                    let reviewText = document.getElementById(`review-text-${id}`);
+                    reviewText.innerText = response.new_review;
+                }
+    
+                reviewInput.value = '';
+                sendReviewBtn.style.display = 'inline';
+                editReviewBtn.style.display = 'none';
+                editReviewBtn.removeAttribute('onclick');
+                checkChartCount();
+            }
+        })
+    }
 }
 
 const manageReviewVisibility = (id, visibility) => {

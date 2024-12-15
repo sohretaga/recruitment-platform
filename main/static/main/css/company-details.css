@@ -260,3 +260,8 @@ body[data-layout-mode="dark"] .edit-option:hover {
     position: relative;
     top: -3px;
 }
+
+.char-counter {
+    font-size: 0.9rem;
+    margin-top: 5px;
+}

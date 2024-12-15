@@ -477,18 +477,22 @@
                                             <div class="col-lg-12">
                                                 <div class="mb-3">
                                                     <label for="inputsubject" class="form-label">{% tr 'Subject' %}</label>
-                                                    <input type="text" name="subject" class="form-control" id="inputsubject" placeholder="{% tr 'Subject' %}">
+                                                    <input type="text" name="subject" class="form-control" id="inputsubject" placeholder="{% tr 'Subject' %}" required>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
                                                 <div class="mb-3">
-                                                    <label for="inputcoment" class="form-label">{% tr 'Review' %}</label>
-                                                    <textarea name="review" id="review-input" class="form-control" id="inputcoment" rows="3" placeholder="{% tr 'Add your review' %}"></textarea>
+                                                    <label for="review-input" class="form-label">{% tr 'Review' %}: (190-950 {% tr 'characters' %})</label>
+                                                    <textarea name="review" id="review-input" class="form-control" maxlength="950" rows="3" placeholder="{% tr 'Add your review' %}"></textarea>
+                                                    <div class="d-flex">
+                                                        <div id="char-counter" class="char-counter text-muted">0</div>
+                                                        <div class="char-counter text-muted">/950 &nbsp;{% tr 'characters' %}</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div><!--end row-->
                                         <div class="text-end">
-                                            <button type="submit" class="btn btn-primary btn-hover" id="submit-review-btn">{% tr 'Submit Review' %} <i class="uil uil-angle-right-b"></i></button>
+                                            <button type="button" class="btn btn-primary btn-hover" id="submit-review-btn">{% tr 'Submit Review' %} <i class="uil uil-angle-right-b"></i></button>
                                             <button type="button" class="btn btn-primary btn-hover" id="edit-review-btn" style="display: none;">{% tr 'Edit Review' %} <i class="uil uil-angle-right-b"></i></button>
                                         </div>
                                     </form>
