@@ -579,8 +579,7 @@ textarea.addEventListener('input', () => {
 
 document.getElementById('submit-review-btn').addEventListener('click', (event) => {
     const charCount = textarea.value.length;
-    const subject = document.getElementById('inputsubject');
-    if (charCount > minLength && charCount < maxLength && subject.value) {
+    if (charCount > minLength && charCount < maxLength) {
         event.target.closest('form').submit();
     }
 })
@@ -588,7 +587,7 @@ document.getElementById('submit-review-btn').addEventListener('click', (event) =
 const editReview = (id) => {
     let reviewText = document.getElementById(`review-text-${id}`).innerText;
     reviewInput.value = reviewText;
-    
+
     sendReviewBtn.style.display = 'none';
     editReviewBtn.style.display = 'inline';
 

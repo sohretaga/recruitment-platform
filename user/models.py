@@ -269,7 +269,6 @@ class CandidatePreference(models.Model):
 class ProfileReview(models.Model):
     employer = models.ForeignKey(Employer, on_delete=models.CASCADE, related_name='written_reviews')
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, related_name='reviews')
-    subject = models.CharField(max_length=255)
     review = models.TextField()
     visible = models.BooleanField(default=False)
     written_at = models.DateTimeField(auto_now_add=True)

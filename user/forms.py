@@ -34,4 +34,4 @@ class ProfileReviewForm(forms.ModelForm):
     candidate_id = forms.CharField(max_length=100)
     class Meta:
         model = ProfileReview
-        fields = ('subject', 'review', 'candidate_id')
+        fields = ('review', 'candidate_id')
