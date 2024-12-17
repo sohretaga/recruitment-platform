@@ -41,7 +41,7 @@ selects.forEach(select => {
 
 // Collects the values ​​selected from the Language selection into an input and prepares it for recording.
 const languageSkils = document.getElementById('languages');
-const languageValuesInput = document.getElementById('langauge-values');
+const languageValuesInput = document.getElementById('language-values');
 const collectLanguageSkils = () => {
     let values = new Array();
     languageSkils.querySelectorAll('option').forEach((option) => {
@@ -56,6 +56,26 @@ const collectLanguageSkils = () => {
 if (languageSkils) {
     collectLanguageSkils();
     languageSkils.addEventListener('change', collectLanguageSkils);
+}
+// End
+
+// Collects the values ​​selected from the Language selection into an input and prepares it for recording.
+const functionalSkils = document.getElementById('functionals');
+const functionalValuesInput = document.getElementById('functional-values');
+const collectFunctionalSkils = () => {
+    let values = new Array();
+    functionalSkils.querySelectorAll('option').forEach((option) => {
+        let value = option.value;
+        if (value) {
+            values.push(option.value);
+        }
+    });
+    functionalValuesInput.value = values;
+};
+
+if (functionalSkils) {
+    collectFunctionalSkils();
+    functionalSkils.addEventListener('change', collectFunctionalSkils);
 }
 // End
 

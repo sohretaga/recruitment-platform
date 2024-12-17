@@ -1316,13 +1316,14 @@ def competence_save(request):
                 
                 params = {
                     'behavioral_competence': hot[index].get('behavioral_competence'),
-                    'functional_competence': hot[index].get('functional_competence'),
+                    f'functional_competence_{language}': hot[index].get('functional_competence'),
                     'it_competence': hot[index].get('it_competence'),
                     'language_competence': hot[index].get('language_competence')
                 }
 
                 if name or language != 'en':
                     if pk:
+                        hot[index][f'functional_competence_{language}'] = hot[index].pop('functional_competence', None)
                         competence = cp_models.ParameterCompetence.objects.filter(pk=pk)
                         competence.custom_update(language, **hot[index])
 

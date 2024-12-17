@@ -280,10 +280,13 @@ def ajax_filter_candidate(request):
 
 
 def candidate_details(request, username):
+    language = get_current_user_language()
+
     if request.POST:
         user = request.user
         form = ManageCandidateAccountForm(request.POST, request.FILES, instance=user.candidate)
         next_url = request.POST.get('next')
+        print(form.errors.as_json(escape_html=True))
 
         if form.is_valid():
             email = form.cleaned_data.get('email')
@@ -294,10 +297,15 @@ def candidate_details(request, username):
             first_name = form.cleaned_data.get('first_name')
             last_name = form.cleaned_data.get('last_name')
             languages = form.cleaned_data.get('languages')
+            functionals = form.cleaned_data.get('functionals')
+
             instance = form.save(commit=False)
             
             if languages:
                 instance.languages.set(languages.split(','))
+
+            if functionals:
+                instance.functionals.set(functionals.split(','))
 
             instance.save()
 
@@ -326,13 +334,20 @@ def candidate_details(request, username):
 
     if username == request.user.username:
         citizenships = ParameterCountry.translation().values('id', 'name')
-        competencies = ParameterCompetence.translation().values('id', 'name')
         education_levels = ParameterEducationLevel.translation().values('id', 'name')
         companies = Employer.objects.values('id', 'user__first_name')
         career_types = ParameterCareerType.translation().values('id', 'name')
         locations = ParameterLocation.translation().values('id', 'name')
         types_of_employment = ParameterEmployeeType.translation().values('id', 'name')
         job_catalogue = ParameterJobCatalogue.translation().values('id', 'name')
+        competencies = ParameterCompetence.translation().annotate(
+            functional_competence = Case(
+                When(**{f'functional_competence_{language}__isnull':False},
+                     then=F(f'functional_competence_{language}')),
+                     default=Value(''),
+                     output_field=CharField()
+            ),
+        ).values('id', 'name', 'functional_competence')
 
         try:
             preference = {
@@ -356,7 +371,13 @@ def candidate_details(request, username):
             'preference': preference
         }
     
-    languages = ParameterCompetence.translation().filter(id__in=candidate.languages.all()).values('id', 'name')
+    languages = request.user.candidate.languages.annotate(
+        name=F(f'name_{language}')
+    ).values_list('name', flat=True)
+
+    functionals = request.user.candidate.functionals.annotate(
+        name=F(f'functional_competence_{language}')
+    ).values_list('name', flat=True)
 
     context = {
         'candidate': candidate,
@@ -365,6 +386,7 @@ def candidate_details(request, username):
         'projects': user.candidate.projects.all(),
         'occupation': candidate.occupation_name,
         'languages': languages,
+        'functionals': functionals,
         **logged_user_context
     }
 
