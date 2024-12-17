@@ -276,11 +276,11 @@ class ParameterCompetenceGrouping(ParameterCommonFields):
 
 class ParameterCompetence(ParameterCommonFields):
     grouping = models.ForeignKey(ParameterCompetenceGrouping, on_delete=models.CASCADE, null=True, blank=True)
-    behavioral_competence = models.CharField(max_length=150, null=True, blank=True)
-    functional_competence_en = models.CharField(max_length=150, null=True, blank=True)
-    functional_competence_tr = models.CharField(max_length=150, null=True, blank=True)
-    it_competence = models.CharField(max_length=150, null=True, blank=True)
-    language_competence = models.CharField(max_length=150, null=True, blank=True)
+    behavioral_competence = models.BooleanField(default=False)
+    functional_competence = models.BooleanField(default=False)
+    functional_competence = models.BooleanField(default=False)
+    it_competence = models.BooleanField(default=False)
+    language_competence = models.BooleanField(default=False)
 
     @classmethod
     def language_filter(cls, language_code):
@@ -292,14 +292,7 @@ class ParameterCompetence(ParameterCommonFields):
                      then=F(f'grouping__name_{language_code}')),
                      default=Value(''),
                      output_field=CharField()
-            ),
-
-            functional_competence = Case(
-                When(**{f'functional_competence_{language_code}__isnull':False},
-                     then=F(f'functional_competence_{language_code}')),
-                     default=Value(''),
-                     output_field=CharField()
-            ),
+            )
         )
 
         return objects
