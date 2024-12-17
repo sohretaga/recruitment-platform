@@ -1309,7 +1309,7 @@ def competence_save(request):
                 grouping_name = hot[index].pop('grouping_name', None)
                 if grouping_name:
                     try:
-                        grouping = cp_models.ParameterCompetenceGrouping.translation().get(name=grouping_name)
+                        grouping = cp_models.ParameterCompetenceGrouping.language_filter(language).get(name=grouping_name)
                         hot[index]['grouping'] = grouping
 
                     except cp_models.ParameterCompetenceGrouping.DoesNotExist: ...

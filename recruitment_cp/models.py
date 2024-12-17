@@ -275,7 +275,7 @@ class ParameterCompetenceGrouping(ParameterCommonFields):
     ...
 
 class ParameterCompetence(ParameterCommonFields):
-    grouping = models.ForeignKey(ParameterCompetenceGrouping, on_delete=models.SET_NULL, null=True, blank=True)
+    grouping = models.ForeignKey(ParameterCompetenceGrouping, on_delete=models.CASCADE, null=True, blank=True)
     behavioral_competence = models.CharField(max_length=150, null=True, blank=True)
     functional_competence_en = models.CharField(max_length=150, null=True, blank=True)
     functional_competence_tr = models.CharField(max_length=150, null=True, blank=True)
