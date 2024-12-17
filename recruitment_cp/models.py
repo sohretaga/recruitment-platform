@@ -293,6 +293,13 @@ class ParameterCompetence(ParameterCommonFields):
                      default=Value(''),
                      output_field=CharField()
             ),
+
+            functional_competence = Case(
+                When(**{f'functional_competence_{language_code}__isnull':False},
+                     then=F(f'functional_competence_{language_code}')),
+                     default=Value(''),
+                     output_field=CharField()
+            ),
         )
 
         return objects

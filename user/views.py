@@ -286,7 +286,6 @@ def candidate_details(request, username):
         user = request.user
         form = ManageCandidateAccountForm(request.POST, request.FILES, instance=user.candidate)
         next_url = request.POST.get('next')
-        print(form.errors.as_json(escape_html=True))
 
         if form.is_valid():
             email = form.cleaned_data.get('email')
@@ -298,7 +297,6 @@ def candidate_details(request, username):
             last_name = form.cleaned_data.get('last_name')
             languages = form.cleaned_data.get('languages')
             functionals = form.cleaned_data.get('functionals')
-
             instance = form.save(commit=False)
             
             if languages:
