@@ -1231,7 +1231,7 @@ def competence_grouping_load(request):
             language = request.POST.get('language')
             
             competence_grouping = cp_models.ParameterCompetenceGrouping.language_filter(language).values(
-                'id', 'no', 'name', 'definition', 'note'
+                'id', 'no', 'name', 'key', 'definition', 'note'
             )
             json_data = json.dumps(list(competence_grouping))
 

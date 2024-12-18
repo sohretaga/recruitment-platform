@@ -272,7 +272,7 @@ class ParameterFAQ(ParameterCommonFields):
     ...
 
 class ParameterCompetenceGrouping(ParameterCommonFields):
-    ...
+    key = models.CharField(max_length=50, blank=True, null=True)
 
 class ParameterCompetence(ParameterCommonFields):
     grouping = models.ForeignKey(ParameterCompetenceGrouping, on_delete=models.CASCADE, null=True, blank=True)

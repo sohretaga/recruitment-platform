@@ -338,14 +338,8 @@ def candidate_details(request, username):
         locations = ParameterLocation.translation().values('id', 'name')
         types_of_employment = ParameterEmployeeType.translation().values('id', 'name')
         job_catalogue = ParameterJobCatalogue.translation().values('id', 'name')
-        competencies = ParameterCompetence.translation().annotate(
-            functional_competence = Case(
-                When(**{f'functional_competence_{language}__isnull':False},
-                     then=F(f'functional_competence_{language}')),
-                     default=Value(''),
-                     output_field=CharField()
-            ),
-        ).values('id', 'name', 'functional_competence')
+        language_competencies = ParameterCompetence.translation().filter(grouping__key='language').values('id', 'name')
+        functional_competencies = ParameterCompetence.translation().filter(grouping__key='functional').values('id', 'name')
 
         try:
             preference = {
@@ -359,7 +353,8 @@ def candidate_details(request, username):
 
         logged_user_context = {
             'citizenships': citizenships,
-            'competencies': competencies,
+            'language_competencies': language_competencies,
+            'functional_competencies': functional_competencies,
             'education_levels': education_levels,
             'companies': companies,
             'career_types': career_types,
@@ -374,7 +369,7 @@ def candidate_details(request, username):
     ).values_list('name', flat=True)
 
     functionals = request.user.candidate.functionals.annotate(
-        name=F(f'functional_competence_{language}')
+        name=F(f'name_{language}')
     ).values_list('name', flat=True)
 
     context = {

@@ -623,7 +623,7 @@
                                                         <input type="hidden" id="language-values" name="languages">
                                                         <label for="languages" class="form-label">{% tr 'Languages' %}</label>
                                                         <select class="form-select" data-trigger id="languages" multiple>
-                                                            {% for competence in competencies %}
+                                                            {% for competence in language_competencies %}
                                                             {% if competence.name in languages %}
                                                             <option value="{{ competence.id }}" selected>{{ competence.name }}</option>
                                                             {% else %}
@@ -639,11 +639,11 @@
                                                         <input type="hidden" id="functional-values" name="functionals">
                                                         <label for="functionals" class="form-label">{% tr 'Professional Skills' %}</label>
                                                         <select class="form-select" data-trigger id="functionals" multiple>
-                                                            {% for competence in competencies %}
-                                                            {% if competence.functional_competence in functionals %}
-                                                            <option value="{{ competence.id }}" selected>{{ competence.functional_competence }}</option>
+                                                            {% for competence in functional_competencies %}
+                                                            {% if competence.name in functionals %}
+                                                            <option value="{{ competence.id }}" selected>{{ competence.name }}</option>
                                                             {% else %}
-                                                            <option value="{{ competence.id }}">{{ competence.functional_competence }}</option>
+                                                            <option value="{{ competence.id }}">{{ competence.name }}</option>
                                                             {% endif %}
                                                             {% endfor %}
                                                         </select>
