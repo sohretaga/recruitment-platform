@@ -42,6 +42,7 @@
 {% block scripts %}
 <script src="{% static 'cp/js/command.js' %}"></script>
 <script src="{% static 'cp/js/processes.js' %}"></script>
+<script src="{% static 'cp/js/renderer.js' %}"></script>
 <script>
     var hot;
     const saveUrl = "{% url 'cp:competence_save' %}";
@@ -68,6 +69,8 @@
             height: $(document).height() - 350,
             dropdownMenu:  ['filter_by_value', 'filter_action_bar'],
             licenseKey: 'non-commercial-and-evaluation',
+            fixedColumnsLeft: 4,
+            colWidths: [0, 20, 50, 100, 50, 50, 30, 30, 30, 30],
 
             hiddenColumns: {
                 columns: [0],
@@ -83,44 +86,59 @@
                 {
                     title: 'No',
                     data: 'no',
-                    className: 'htCenter htMiddle',
+                    className: 'htMiddle',
                 },
                 {
                     title: 'Grouping',
                     data: 'grouping_name',
-                    type: 'dropdown'
+                    type: 'dropdown',
+                    className: 'htMiddle',
                 },
                 {
                     title: 'Name',
-                    data: 'name'
+                    data: 'name',
+                    className: 'htMiddle',
+                },
+                {
+                    title: 'Function',
+                    data: 'function',
+                    type: 'dropdown',
+                    className: 'htMiddle',
+                },
+                {
+                    title: 'Sub Function',
+                    data: 'sub_function',
+                    type: 'dropdown',
+                    className: 'htMiddle',
                 },
                 {
                     title: 'Behavioral',
                     data: 'behavioral_competence',
                     type: 'checkbox',
-                    className: 'htCenter'
+                    className: 'htCenter htMiddle',
                 },
                 {
                     title: 'Functional',
                     data: 'functional_competence',
                     type: 'checkbox',
-                    className: 'htCenter'
+                    className: 'htCenter htMiddle',
                 },
                 {
                     title: 'IT',
                     data: 'it_competence',
                     type: 'checkbox',
-                    className: 'htCenter'
+                    className: 'htCenter htMiddle',
                 },
                 {
                     title: 'Language',
                     data: 'language_competence',
                     type: 'checkbox',
-                    className: 'htCenter'
+                    className: 'htCenter htMiddle',
                 },
                 {
                     title: 'Definition',
-                    data: 'definition'
+                    data: 'definition',
+                    renderer: scrollableTextRenderer
                 },
                 {
                     title: 'Note',
